@@ -1486,27 +1486,35 @@ Email: ${email || '—'}
     localStorage.setItem('terra_orders', JSON.stringify(orders));
   } catch(e) {}
 
-  // Try Formspree (user needs to replace URL)
+  // Send via Formspree
   const FORMSPREE_URL = 'https://formspree.io/f/xjgppdnp';
+
+  const formData = new FormData();
+  formData.append('_subject', 'Новый заказ ' + orderId + ' — ТЕРРА');
+  formData.append('Номер заказа', orderId);
+  formData.append('Имя', name);
+  formData.append('Телефон', phone);
+  formData.append('Email клиента', email || '—');
+  formData.append('Адрес доставки', address || '—');
+  formData.append('Способ оплаты', payNames[selectedPayMethod]);
+  formData.append('Товары', orderItems);
+  formData.append('Итого', total.toLocaleString('ru-RU') + ' ₽');
+  formData.append('Комментарий', comment || '—');
+  if (email) formData.append('_replyto', email);
 
   fetch(FORMSPREE_URL, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-    body: JSON.stringify({
-      _subject: `Новый заказ ${orderId} — ТЕРРА`,
-      name: name,
-      phone: phone,
-      email: email,
-      address: address,
-      payment: payNames[selectedPayMethod],
-      order_details: orderItems,
-      total: total.toLocaleString('ru-RU') + ' ₽',
-      comment: comment,
-      order_id: orderId
-    })
+    headers: { 'Accept': 'application/json' },
+    body: formData
   })
-  .then(r => { /* Email sent or not — show success anyway */ })
-  .catch(e => { /* Offline — order saved locally */ })
+  .then(r => {
+    if (r.ok) {
+      console.log('Formspree: заказ отправлен на email');
+    } else {
+      r.json().then(data => console.error('Formspree ошибка:', data));
+    }
+  })
+  .catch(e => { console.error('Formspree недоступен:', e); })
   .finally(() => {
     showOrderSuccess(orderId);
   });
@@ -1538,8 +1546,32 @@ function showToast(msg) {
 function sendForm(e) {
   e.preventDefault();
   const inputs = document.querySelectorAll('#contactForm input, #contactForm textarea');
-  if (!inputs[0].value.trim()) { showToast('Укажите ваше имя'); return; }
-  showToast('Спасибо! Мы скоро ответим');
+  const name = inputs[0].value.trim();
+  const email = inputs[1].value.trim();
+  const phone = inputs[2].value.trim();
+  const message = inputs[3].value.trim();
+
+  if (!name) { showToast('Укажите ваше имя'); return; }
+
+  const formData = new FormData();
+  formData.append('_subject', 'Заявка с сайта ТЕРРА');
+  formData.append('Имя', name);
+  formData.append('Email', email || '—');
+  formData.append('Телефон', phone || '—');
+  formData.append('Сообщение', message || '—');
+  if (email) formData.append('_replyto', email);
+
+  fetch('https://formspree.io/f/xjgppdnp', {
+    method: 'POST',
+    headers: { 'Accept': 'application/json' },
+    body: formData
+  }).then(r => {
+    if (r.ok) showToast('Спасибо! Мы скоро ответим');
+    else showToast('Ошибка отправки, попробуйте позже');
+  }).catch(() => {
+    showToast('Нет соединения, попробуйте позже');
+  });
+
   inputs.forEach(i => i.value = '');
 }
 
