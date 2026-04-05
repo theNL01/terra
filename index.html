@@ -378,6 +378,8 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
         <div class="adm-form" id="pForm">
           <div class="adm-form-title"><button class="adm-form-back" onclick="hidePF()">←</button><span id="pFTitle">Новый товар</span></div>
           <div class="adm-img-up" id="pImgUp"><div class="uicon" id="pUIco">📷</div><div class="utxt" id="pUTxt">Нажмите или перетащите фото</div><div class="uhint">JPG, PNG — до 5 МБ</div><input type="file" id="pImgIn" accept="image/*" onchange="hImg(event,'p')"></div>
+          <div style="display:flex;align-items:center;gap:.5rem;margin-top:-.5rem"><span style="font-size:.72rem;color:var(--text-muted)">или вставьте ссылку:</span></div>
+          <div class="adm-field full"><input type="text" id="pImgUrl" placeholder="https://example.com/photo.jpg" oninput="onImgUrl(this,'p')"></div>
           <div class="adm-form-row"><div class="adm-field"><label>Название</label><input type="text" id="fName"></div><div class="adm-field"><label>Цена (₽)</label><input type="number" id="fPrice"></div></div>
           <div class="adm-form-row"><div class="adm-field"><label>Категория</label><select id="fCat"><option value="tableware">Посуда</option><option value="vases">Вазы</option><option value="decor">Декор</option><option value="gifts">Подарки</option></select></div><div class="adm-field"><label>Бейдж</label><select id="fBadge"><option value="">Нет</option><option value="Хит">Хит</option><option value="Новинка">Новинка</option><option value="Подарок">Подарок</option><option value="Скидка">Скидка</option></select></div></div>
           <div class="adm-field full"><label>Описание</label><textarea id="fDesc"></textarea></div>
@@ -392,6 +394,8 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
         <div class="adm-form" id="cForm">
           <div class="adm-form-title"><button class="adm-form-back" onclick="hideCF()">←</button><span id="cFTitle">Новый мастер-класс</span></div>
           <div class="adm-img-up" id="cImgUp"><div class="uicon" id="cUIco">📷</div><div class="utxt" id="cUTxt">Нажмите или перетащите фото</div><div class="uhint">JPG, PNG — до 5 МБ</div><input type="file" id="cImgIn" accept="image/*" onchange="hImg(event,'c')"></div>
+          <div style="display:flex;align-items:center;gap:.5rem;margin-top:-.5rem"><span style="font-size:.72rem;color:var(--text-muted)">или вставьте ссылку:</span></div>
+          <div class="adm-field full"><input type="text" id="cImgUrl" placeholder="https://example.com/photo.jpg" oninput="onImgUrl(this,'c')"></div>
           <div class="adm-field full"><label>Название</label><input type="text" id="cName"></div>
           <div class="adm-field full"><label>Описание</label><textarea id="cDesc"></textarea></div>
           <div class="adm-form-row"><div class="adm-field"><label>Длительность</label><input type="text" id="cDur" placeholder="2.5 часа"></div><div class="adm-field"><label>Цена (₽)</label><input type="number" id="cPrice"></div></div>
@@ -585,7 +589,7 @@ function renderAdmP(){
 }
 function showPF(id){
   document.getElementById('pListView').style.display='none';document.getElementById('pForm').classList.add('active');
-  if(id){const p=products.find(x=>x.id===id);document.getElementById('pFTitle').textContent='Редактировать';document.getElementById('fId').value=p.id;document.getElementById('fName').value=p.name;document.getElementById('fPrice').value=p.price;document.getElementById('fCat').value=p.category;document.getElementById('fBadge').value=p.badge||'';document.getElementById('fDesc').value=p.desc;document.getElementById('fImg').value=p.img;showImgPrev('p',p.img);}
+  if(id){const p=products.find(x=>x.id===id);document.getElementById('pFTitle').textContent='Редактировать';document.getElementById('fId').value=p.id;document.getElementById('fName').value=p.name;document.getElementById('fPrice').value=p.price;document.getElementById('fCat').value=p.category;document.getElementById('fBadge').value=p.badge||'';document.getElementById('fDesc').value=p.desc;document.getElementById('fImg').value=p.img;document.getElementById('pImgUrl').value=p.img.startsWith('http')?p.img:'';showImgPrev('p',p.img);}
   else{document.getElementById('pFTitle').textContent='Новый товар';['fId','fName','fPrice','fDesc','fImg'].forEach(i=>document.getElementById(i).value='');document.getElementById('fCat').value='tableware';document.getElementById('fBadge').value='';resetImgUp('p');}
 }
 function hidePF(){document.getElementById('pListView').style.display='block';document.getElementById('pForm').classList.remove('active');resetImgUp('p');}
@@ -607,7 +611,7 @@ function renderAdmC(){
 }
 function showCF(id){
   document.getElementById('cListView').style.display='none';document.getElementById('cForm').classList.add('active');
-  if(id){const c=classes.find(x=>x.id===id);document.getElementById('cFTitle').textContent='Редактировать';document.getElementById('cId').value=c.id;document.getElementById('cName').value=c.name;document.getElementById('cDesc').value=c.desc;document.getElementById('cDur').value=c.duration;document.getElementById('cPrice').value=c.price;document.getElementById('cImg').value=c.img;showImgPrev('c',c.img);}
+  if(id){const c=classes.find(x=>x.id===id);document.getElementById('cFTitle').textContent='Редактировать';document.getElementById('cId').value=c.id;document.getElementById('cName').value=c.name;document.getElementById('cDesc').value=c.desc;document.getElementById('cDur').value=c.duration;document.getElementById('cPrice').value=c.price;document.getElementById('cImg').value=c.img;document.getElementById('cImgUrl').value=c.img.startsWith('http')?c.img:'';showImgPrev('c',c.img);}
   else{document.getElementById('cFTitle').textContent='Новый мастер-класс';['cId','cName','cDesc','cDur','cPrice','cImg'].forEach(i=>document.getElementById(i).value='');resetImgUp('c');}
 }
 function hideCF(){document.getElementById('cListView').style.display='block';document.getElementById('cForm').classList.remove('active');resetImgUp('c');}
@@ -624,7 +628,14 @@ function saveC(){
 // ===== IMAGE HANDLING =====
 function hImg(e,type){
   const file=e.target.files[0];if(!file)return;if(file.size>5*1024*1024){toast('Файл слишком большой');return;}
-  const r=new FileReader();r.onload=function(ev){document.getElementById(type==='p'?'fImg':'cImg').value=ev.target.result;showImgPrev(type,ev.target.result);};r.readAsDataURL(file);
+  const r=new FileReader();r.onload=function(ev){document.getElementById(type==='p'?'fImg':'cImg').value=ev.target.result;document.getElementById(type==='p'?'pImgUrl':'cImgUrl').value='';showImgPrev(type,ev.target.result);};r.readAsDataURL(file);
+}
+function onImgUrl(inp,type){
+  const url=inp.value.trim();
+  if(url&&(url.startsWith('http://')||url.startsWith('https://'))){
+    document.getElementById(type==='p'?'fImg':'cImg').value=url;
+    showImgPrev(type,url);
+  }
 }
 function showImgPrev(type,src){
   const up=document.getElementById(type==='p'?'pImgUp':'cImgUp');up.classList.add('has');
@@ -640,6 +651,7 @@ function resetImgUp(type){
   up.querySelector('.uhint').style.display='';
   const prev=up.querySelector('.adm-img-prev');if(prev)prev.remove();
   document.getElementById(type==='p'?'pImgIn':'cImgIn').value='';
+  document.getElementById(type==='p'?'pImgUrl':'cImgUrl').value='';
 }
 
 // ===== NAV =====
