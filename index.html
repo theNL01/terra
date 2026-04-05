@@ -5,1268 +5,398 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ТЕРРА — Гончарная мастерская</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
 <style>
-:root {
-  --sand: #f5efe6;
-  --sand-deep: #e8dfd2;
-  --cream: #faf7f2;
-  --clay: #c67d4a;
-  --clay-dark: #a86638;
-  --clay-light: #d99a6e;
-  --terracotta: #b85c38;
-  --earth: #5c4033;
-  --earth-light: #7a5c4f;
-  --sage: #8a9a7b;
-  --sage-light: #b5c4a8;
-  --text-dark: #2d2420;
-  --text-body: #5a4d44;
-  --text-muted: #9a8d82;
-  --white: #ffffff;
-  --border: rgba(92,64,51,0.1);
-  --font-display: 'Playfair Display', serif;
-  --font-body: 'DM Sans', sans-serif;
-}
-
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-
-body {
-  font-family: var(--font-body);
-  background: var(--cream);
-  color: var(--text-dark);
-  overflow-x: hidden;
-}
-
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)' opacity='0.025'/%3E%3C/svg%3E");
-  pointer-events: none;
-  z-index: 9999;
-}
-
-::-webkit-scrollbar { width: 5px; }
-::-webkit-scrollbar-track { background: var(--cream); }
-::-webkit-scrollbar-thumb { background: var(--clay-light); border-radius: 10px; }
-
-img { display: block; width: 100%; height: 100%; object-fit: cover; }
-
-/* ===== HEADER ===== */
-header {
-  position: fixed; top: 0; width: 100%; z-index: 1000;
-  padding: 1.2rem 3rem;
-  display: flex; justify-content: space-between; align-items: center;
-  background: rgba(250,247,242,0.9);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border);
-}
-.logo { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--earth); letter-spacing: 0.25em; text-transform: uppercase; }
-.logo span { color: var(--clay); }
-
-nav { display: flex; gap: 2.2rem; align-items: center; }
-nav a { font-family: var(--font-body); font-weight: 400; font-size: 0.82rem; color: var(--text-body); text-decoration: none; letter-spacing: 0.08em; transition: color 0.3s; position: relative; }
-nav a:hover { color: var(--clay); }
-nav a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1.5px; background: var(--clay); transition: width 0.3s; }
-nav a:hover::after { width: 100%; }
-
-.cart-btn { position: relative; background: var(--earth); border: none; color: var(--sand); padding: 0.55rem 1.4rem; font-family: var(--font-body); font-size: 0.78rem; letter-spacing: 0.08em; cursor: pointer; border-radius: 50px; transition: all 0.3s; }
-.cart-btn:hover { background: var(--clay-dark); }
-.cart-count { position: absolute; top: -5px; right: -5px; background: var(--terracotta); color: white; font-size: 0.6rem; width: 17px; height: 17px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; }
-
-.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
-.hamburger span { width: 22px; height: 1.5px; background: var(--earth); transition: 0.3s; }
-
-/* ===== HERO ===== */
-.hero { height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; }
-.hero-bg-img { position: absolute; inset: 0; }
-.hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(45,36,32,0.85) 0%, rgba(45,36,32,0.5) 50%, rgba(45,36,32,0.2) 100%); }
-.hero-content { position: relative; max-width: 620px; padding: 0 3rem; animation: fadeUp 1.2s ease-out; }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-
-.hero-tag { display: inline-flex; align-items: center; gap: 0.6rem; margin-bottom: 2rem; }
-.hero-tag-line { width: 40px; height: 1.5px; background: var(--clay-light); }
-.hero-tag span { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--clay-light); font-weight: 500; }
-
-.hero h1 { font-family: var(--font-display); font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 400; line-height: 1.1; color: var(--sand); margin-bottom: 1.8rem; }
-.hero h1 em { font-style: italic; color: var(--clay-light); }
-.hero p { font-size: 1.05rem; color: rgba(245,239,230,0.75); line-height: 1.8; max-width: 480px; margin-bottom: 2.5rem; font-weight: 300; }
-.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-.btn-primary { background: var(--clay); color: white; border: none; padding: 0.95rem 2.5rem; font-family: var(--font-body); font-size: 0.82rem; letter-spacing: 0.06em; cursor: pointer; border-radius: 50px; transition: all 0.3s; text-decoration: none; }
-.btn-primary:hover { background: var(--clay-dark); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(198,125,74,0.3); }
-.btn-ghost { background: transparent; color: var(--sand); border: 1.5px solid rgba(245,239,230,0.5); padding: 0.9rem 2.5rem; font-family: var(--font-body); font-size: 0.82rem; letter-spacing: 0.06em; cursor: pointer; border-radius: 50px; transition: all 0.3s; text-decoration: none; }
-.btn-ghost:hover { background: rgba(255,255,255,0.1); border-color: var(--sand); transform: translateY(-2px); }
-
-.scroll-indicator { position: absolute; bottom: 2.5rem; left: 3rem; display: flex; align-items: center; gap: 0.8rem; animation: pulse 2.5s infinite; }
-.scroll-indicator span { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,239,230,0.5); }
-.scroll-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--clay-light); }
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-/* ===== SECTIONS ===== */
-section { padding: 7rem 3rem; }
-.section-header { text-align: center; margin-bottom: 4rem; }
-.section-tag { display: inline-flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; }
-.section-tag-line { width: 30px; height: 1.5px; background: var(--clay); }
-.section-tag span { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--clay); font-weight: 500; }
-.section-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; color: var(--text-dark); margin-bottom: 0.8rem; }
-.section-title em { font-style: italic; color: var(--clay); }
-.section-desc { font-size: 0.95rem; color: var(--text-muted); max-width: 500px; margin: 0 auto; line-height: 1.7; font-weight: 300; }
-
-/* ===== ABOUT ===== */
-#about { background: var(--sand); }
-.about-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 5rem; align-items: center; }
-.about-visual { position: relative; }
-.about-img-main { width: 100%; aspect-ratio: 3/4; border-radius: 200px 200px 20px 20px; overflow: hidden; }
-.about-img-secondary { position: absolute; bottom: -30px; right: -40px; width: 180px; height: 220px; border-radius: 100px 100px 12px 12px; overflow: hidden; border: 6px solid var(--sand); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
-.about-accent { position: absolute; top: -20px; left: -20px; width: 100px; height: 100px; background: var(--sage-light); border-radius: 50%; opacity: 0.3; z-index: -1; }
-.about-text .section-tag { justify-content: flex-start; }
-.about-text .section-title { text-align: left; }
-.about-text p { color: var(--text-body); line-height: 1.85; margin-bottom: 1.3rem; font-weight: 300; font-size: 0.95rem; }
-.about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 2rem; }
-.about-feature { display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem; background: rgba(255,255,255,0.6); border-radius: 12px; }
-.about-feature-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--clay); flex-shrink: 0; }
-.about-feature span { font-size: 0.82rem; color: var(--text-body); font-weight: 400; }
-
-/* ===== SHOP ===== */
-#shop { background: var(--cream); }
-.shop-filters { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 3rem; flex-wrap: wrap; }
-.filter-btn { background: transparent; border: 1.5px solid var(--border); color: var(--text-muted); padding: 0.5rem 1.4rem; font-family: var(--font-body); font-size: 0.78rem; letter-spacing: 0.05em; cursor: pointer; border-radius: 50px; transition: all 0.3s; }
-.filter-btn.active, .filter-btn:hover { border-color: var(--clay); color: var(--clay); background: rgba(198,125,74,0.06); }
-
-.products-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 2rem; }
-.product-card { background: var(--white); border-radius: 16px; overflow: hidden; transition: all 0.4s; cursor: pointer; border: 1px solid var(--border); }
-.product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(92,64,51,0.1); }
-.product-image { aspect-ratio: 1; position: relative; overflow: hidden; background: var(--sand); }
-.product-image img { transition: transform 0.6s; }
-.product-card:hover .product-image img { transform: scale(1.08); }
-.product-badge { position: absolute; top: 14px; left: 14px; background: var(--terracotta); color: white; font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 50px; font-weight: 500; z-index: 2; }
-.product-info { padding: 1.3rem 1.5rem 1.6rem; }
-.product-category { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.4rem; font-weight: 500; }
-.product-name { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--text-dark); }
-.product-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.2rem; font-weight: 300; }
-.product-footer { display: flex; justify-content: space-between; align-items: center; }
-.product-price { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--earth); }
-.add-to-cart { background: var(--clay); border: none; color: white; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; font-size: 1.1rem; }
-.add-to-cart:hover { background: var(--clay-dark); transform: scale(1.1); }
-
-/* ===== CLASSES ===== */
-#classes { background: var(--sand); }
-.classes-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; }
-.class-card { background: var(--white); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); transition: all 0.4s; }
-.class-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(92,64,51,0.08); }
-.class-card-img { height: 200px; overflow: hidden; }
-.class-card-img img { transition: transform 0.5s; }
-.class-card:hover .class-card-img img { transform: scale(1.06); }
-.class-card-body { padding: 1.8rem; }
-.class-card h3 { font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 0.6rem; color: var(--text-dark); }
-.class-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.2rem; font-weight: 300; }
-.class-meta { display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid var(--border); }
-.class-duration { font-size: 0.72rem; color: var(--sage); font-weight: 500; letter-spacing: 0.05em; }
-.class-price { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--clay); }
-
-/* ===== PROCESS ===== */
-#process { background: var(--earth); color: var(--sand); overflow: hidden; }
-#process .section-tag span { color: var(--clay-light); }
-#process .section-tag-line { background: var(--clay-light); }
-#process .section-title { color: var(--sand); }
-#process .section-title em { color: var(--clay-light); }
-#process .section-desc { color: rgba(245,239,230,0.6); }
-.process-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
-.process-step { text-align: center; }
-.process-img { width: 160px; height: 160px; border-radius: 50%; overflow: hidden; margin: 0 auto 1.5rem; border: 3px solid rgba(217,154,110,0.3); }
-.process-num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; color: var(--clay-light); opacity: 0.3; margin-bottom: 0.5rem; }
-.process-step h4 { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--sand); }
-.process-step p { font-size: 0.8rem; color: rgba(245,239,230,0.55); line-height: 1.6; font-weight: 300; }
-
-/* ===== GALLERY ===== */
-#gallery { background: var(--cream); }
-.gallery-masonry { max-width: 1200px; margin: 0 auto; columns: 3; column-gap: 1.2rem; }
-.gallery-item { break-inside: avoid; margin-bottom: 1.2rem; border-radius: 12px; overflow: hidden; position: relative; cursor: pointer; transition: all 0.4s; }
-.gallery-item:hover { transform: scale(1.02); box-shadow: 0 12px 40px rgba(92,64,51,0.12); }
-.gallery-item img { display: block; width: 100%; height: auto; }
-.gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(45,36,32,0.75), transparent 60%); display: flex; align-items: flex-end; padding: 1.2rem; opacity: 0; transition: 0.4s; }
-.gallery-item:hover .gallery-overlay { opacity: 1; }
-.gallery-overlay span { font-family: var(--font-display); font-size: 1rem; color: white; }
-
-/* ===== CONTACT ===== */
-#contact { background: var(--cream); }
-.contact-wrapper { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(92,64,51,0.1); }
-.contact-image { position: relative; min-height: 500px; }
-.contact-image img { position: absolute; inset: 0; }
-.contact-image-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(45,36,32,0.8), rgba(45,36,32,0.3)); display: flex; flex-direction: column; justify-content: flex-end; padding: 2.5rem; }
-.contact-image-overlay h3 { font-family: var(--font-display); font-size: 1.6rem; color: var(--sand); margin-bottom: 1.5rem; }
-.contact-item { display: flex; gap: 1rem; margin-bottom: 1.2rem; align-items: flex-start; }
-.contact-icon { width: 36px; height: 36px; border: 1px solid rgba(217,154,110,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.85rem; }
-.contact-item-text label { display: block; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,239,230,0.45); margin-bottom: 0.2rem; }
-.contact-item-text p { font-size: 0.88rem; color: var(--sand); }
-.contact-form-side { background: var(--white); padding: 3rem; display: flex; flex-direction: column; justify-content: center; }
-.contact-form-side h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--text-dark); margin-bottom: 0.5rem; }
-.contact-form-side .sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem; font-weight: 300; }
-.contact-form { display: flex; flex-direction: column; gap: 0.9rem; }
-.contact-form input, .contact-form textarea { background: var(--sand); border: 1px solid var(--border); border-radius: 10px; color: var(--text-dark); padding: 0.95rem 1.2rem; font-family: var(--font-body); font-size: 0.88rem; outline: none; transition: border 0.3s; }
-.contact-form input:focus, .contact-form textarea:focus { border-color: var(--clay); }
-.contact-form textarea { min-height: 110px; resize: vertical; }
-.contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--text-muted); }
-.btn-contact { background: var(--clay); color: white; border: none; padding: 0.95rem 2rem; border-radius: 50px; font-family: var(--font-body); font-size: 0.82rem; letter-spacing: 0.06em; cursor: pointer; transition: all 0.3s; align-self: flex-start; }
-.btn-contact:hover { background: var(--clay-dark); transform: translateY(-2px); }
-
-/* ===== FOOTER ===== */
-footer { background: #3a2d25; padding: 2.5rem 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
-footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.05em; }
-.footer-links { display: flex; gap: 2rem; }
-.footer-links a { font-size: 0.78rem; color: rgba(245,239,230,0.5); text-decoration: none; transition: 0.3s; }
-.footer-links a:hover { color: var(--clay-light); }
-
-/* ===== CART ===== */
-.cart-overlay { position: fixed; inset: 0; background: rgba(45,36,32,0.5); backdrop-filter: blur(6px); z-index: 2000; opacity: 0; visibility: hidden; transition: 0.4s; }
-.cart-overlay.open { opacity: 1; visibility: visible; }
-.cart-panel { position: fixed; top: 0; right: -440px; width: 420px; max-width: 92vw; height: 100vh; background: var(--cream); border-left: 1px solid var(--border); z-index: 2001; transition: right 0.4s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; }
-.cart-panel.open { right: 0; }
-.cart-header { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 1.8rem; border-bottom: 1px solid var(--border); }
-.cart-header h3 { font-family: var(--font-display); font-size: 1.4rem; color: var(--earth); }
-.cart-close { background: none; border: none; color: var(--text-muted); font-size: 1.3rem; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
-.cart-close:hover { background: var(--sand); color: var(--terracotta); }
-.cart-items { flex: 1; overflow-y: auto; padding: 1rem 1.8rem; }
-.cart-item { display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border); align-items: center; }
-.cart-item-img { width: 56px; height: 56px; border-radius: 10px; overflow: hidden; flex-shrink: 0; background: var(--sand); }
-.cart-item-img img { width: 100%; height: 100%; object-fit: cover; }
-.cart-item-details { flex: 1; }
-.cart-item-name { font-family: var(--font-display); font-size: 0.95rem; color: var(--text-dark); }
-.cart-item-price { font-size: 0.82rem; color: var(--clay); margin-top: 0.15rem; }
-.cart-item-remove { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.9rem; transition: 0.3s; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-.cart-item-remove:hover { background: var(--sand); color: var(--terracotta); }
-.cart-empty { text-align: center; padding: 3rem 1rem; color: var(--text-muted); font-size: 0.9rem; }
-.cart-footer { padding: 1.5rem 1.8rem; border-top: 1px solid var(--border); }
-.cart-total { display: flex; justify-content: space-between; margin-bottom: 1.2rem; }
-.cart-total span { font-family: var(--font-display); font-size: 1.2rem; color: var(--text-dark); }
-.cart-total span:last-child { color: var(--earth); font-weight: 700; }
-.cart-checkout { width: 100%; background: var(--clay); color: white; border: none; padding: 0.95rem; border-radius: 50px; font-family: var(--font-body); font-size: 0.82rem; letter-spacing: 0.06em; cursor: pointer; transition: 0.3s; }
-.cart-checkout:hover { background: var(--clay-dark); }
-
-.toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--earth); color: var(--sand); padding: 0.8rem 2rem; border-radius: 50px; font-size: 0.82rem; z-index: 99999; transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); white-space: nowrap; box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
-.toast.show { transform: translateX(-50%) translateY(0); }
-
-/* ============================== */
-/* ===== PRODUCT DETAIL ======== */
-/* ============================== */
-
-.pd-overlay {
-  position: fixed; inset: 0;
-  background: rgba(45,36,32,0.6);
-  backdrop-filter: blur(6px);
-  z-index: 3500;
-  opacity: 0; visibility: hidden;
-  transition: 0.3s;
-}
-.pd-overlay.open { opacity: 1; visibility: visible; }
-
-.pd-modal {
-  position: fixed;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%) scale(0.95);
-  width: 820px; max-width: 95vw;
-  max-height: 90vh;
-  background: var(--white);
-  border-radius: 20px;
-  z-index: 3501;
-  opacity: 0; visibility: hidden;
-  transition: all 0.35s cubic-bezier(0.4,0,0.2,1);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  overflow: hidden;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.25);
-}
-.pd-modal.open { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
-
-.pd-image {
-  position: relative;
-  background: var(--sand);
-  min-height: 400px;
-  overflow: hidden;
-}
-.pd-image img {
-  width: 100%; height: 100%;
-  object-fit: cover;
-  transition: transform 8s ease;
-}
-.pd-modal.open .pd-image img { transform: scale(1.05); }
-
-.pd-image-badge {
-  position: absolute;
-  top: 16px; left: 16px;
-  background: var(--terracotta);
-  color: white;
-  font-size: 0.65rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 0.35rem 1rem;
-  border-radius: 50px;
-  font-weight: 500;
-}
-
-.pd-content {
-  padding: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-}
-
-.pd-close {
-  position: absolute;
-  top: 16px; right: 16px;
-  background: rgba(255,255,255,0.85);
-  backdrop-filter: blur(6px);
-  border: none;
-  color: var(--text-body);
-  font-size: 1.2rem;
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  transition: 0.3s;
-  z-index: 2;
-}
-.pd-close:hover { background: white; color: var(--terracotta); }
-
-.pd-category {
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--sage);
-  font-weight: 500;
-  margin-bottom: 0.6rem;
-}
-
-.pd-name {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: var(--text-dark);
-  line-height: 1.2;
-  margin-bottom: 0.8rem;
-}
-
-.pd-price {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--clay);
-  margin-bottom: 1.5rem;
-}
-
-.pd-divider {
-  width: 40px;
-  height: 2px;
-  background: var(--clay-light);
-  border-radius: 1px;
-  margin-bottom: 1.5rem;
-}
-
-.pd-desc-title {
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  font-weight: 500;
-  margin-bottom: 0.6rem;
-}
-
-.pd-desc {
-  font-size: 0.92rem;
-  color: var(--text-body);
-  line-height: 1.8;
-  font-weight: 300;
-  margin-bottom: 1.5rem;
-  flex: 1;
-}
-
-.pd-features {
-  display: flex;
-  gap: 1.5rem;
-  margin-bottom: 1.8rem;
-  flex-wrap: wrap;
-}
-
-.pd-feature {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.pd-feature-icon {
-  width: 32px; height: 32px;
-  background: var(--sand);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.85rem;
-}
-
-.pd-feature-text {
-  font-size: 0.72rem;
-  color: var(--text-muted);
-  line-height: 1.3;
-}
-.pd-feature-text strong {
-  display: block;
-  color: var(--text-dark);
-  font-weight: 500;
-  font-size: 0.75rem;
-}
-
-.pd-actions {
-  display: flex;
-  gap: 0.8rem;
-  margin-top: auto;
-}
-
-.pd-add-cart {
-  flex: 1;
-  background: var(--clay);
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 50px;
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  letter-spacing: 0.04em;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.pd-add-cart:hover { background: var(--clay-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(198,125,74,0.3); }
-
-.pd-go-cart {
-  display: none;
-  flex: 1;
-  background: var(--earth);
-  color: var(--sand);
-  border: none;
-  padding: 1rem 1.5rem;
-  border-radius: 50px;
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  letter-spacing: 0.04em;
-  cursor: pointer;
-  transition: 0.3s;
-  animation: fadeIn 0.3s ease;
-}
-.pd-go-cart.show { display: block; }
-.pd-go-cart:hover { background: var(--text-dark); transform: translateY(-2px); }
-
-@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-.pd-wishlist {
-  width: 48px; height: 48px;
-  border: 1.5px solid var(--border);
-  border-radius: 50%;
-  background: none;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  font-size: 1.1rem;
-  transition: 0.3s;
-  flex-shrink: 0;
-}
-.pd-wishlist:hover { border-color: var(--terracotta); background: rgba(184,92,56,0.05); }
-
-@media (max-width: 700px) {
-  .pd-modal { grid-template-columns: 1fr; max-height: 95vh; }
-  .pd-image { min-height: 250px; max-height: 300px; }
-  .pd-content { padding: 1.5rem; }
-  .pd-name { font-size: 1.4rem; }
-  .pd-features { gap: 1rem; }
-}
-
-/* ============================== */
-/* ===== CHECKOUT MODAL ======== */
-/* ============================== */
-
-.checkout-overlay {
-  position: fixed; inset: 0;
-  background: rgba(45,36,32,0.6);
-  backdrop-filter: blur(6px);
-  z-index: 4000;
-  opacity: 0; visibility: hidden;
-  transition: 0.3s;
-}
-.checkout-overlay.open { opacity: 1; visibility: visible; }
-
-.checkout-modal {
-  position: fixed;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%) scale(0.95);
-  width: 560px; max-width: 95vw;
-  max-height: 90vh;
-  background: var(--white);
-  border-radius: 20px;
-  z-index: 4001;
-  opacity: 0; visibility: hidden;
-  transition: all 0.3s;
-  display: flex; flex-direction: column;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.25);
-  overflow: hidden;
-}
-.checkout-modal.open { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
-
-.checkout-header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 1.5rem 2rem;
-  border-bottom: 1px solid var(--border);
-}
-.checkout-header h3 { font-family: var(--font-display); font-size: 1.4rem; color: var(--earth); }
-.checkout-close { background: none; border: none; color: var(--text-muted); font-size: 1.4rem; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
-.checkout-close:hover { background: var(--sand); color: var(--terracotta); }
-
-.checkout-body { flex: 1; overflow-y: auto; padding: 1.5rem 2rem; }
-
-.checkout-summary {
-  background: var(--sand);
-  border-radius: 12px;
-  padding: 1rem 1.2rem;
-  margin-bottom: 1.5rem;
-}
-
-.checkout-summary-item {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 0.5rem 0;
-  font-size: 0.85rem;
-  color: var(--text-body);
-}
-.checkout-summary-item + .checkout-summary-item { border-top: 1px solid var(--border); }
-.checkout-summary-item .qty { color: var(--text-muted); font-size: 0.75rem; }
-.checkout-summary-item .price { font-weight: 500; color: var(--earth); white-space: nowrap; }
-
-.checkout-summary-total {
-  display: flex; justify-content: space-between;
-  padding-top: 0.8rem;
-  margin-top: 0.5rem;
-  border-top: 2px solid var(--border);
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-}
-.checkout-summary-total span:last-child { font-weight: 700; color: var(--clay); }
-
-.checkout-form { display: flex; flex-direction: column; gap: 0.9rem; }
-
-.checkout-form label {
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  font-weight: 500;
-  margin-bottom: -0.4rem;
-}
-
-.checkout-form input,
-.checkout-form textarea,
-.checkout-form select {
-  background: var(--sand);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  color: var(--text-dark);
-  padding: 0.85rem 1rem;
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  outline: none;
-  transition: border 0.3s;
-  width: 100%;
-}
-.checkout-form input:focus,
-.checkout-form textarea:focus { border-color: var(--clay); }
-.checkout-form textarea { min-height: 60px; resize: vertical; }
-.checkout-form input::placeholder,
-.checkout-form textarea::placeholder { color: var(--text-muted); }
-
-.checkout-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
-.checkout-field { display: flex; flex-direction: column; gap: 0.3rem; }
-
-.checkout-pay-methods {
-  display: flex; gap: 0.6rem; flex-wrap: wrap;
-  margin: 0.3rem 0 0.5rem;
-}
-
-.pay-method {
-  flex: 1; min-width: 120px;
-  padding: 0.8rem 1rem;
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  background: var(--sand);
-  cursor: pointer;
-  transition: 0.3s;
-  text-align: center;
-  display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
-}
-.pay-method:hover { border-color: var(--clay-light); }
-.pay-method.selected { border-color: var(--clay); background: rgba(198,125,74,0.08); }
-.pay-method-icon { font-size: 1.3rem; }
-.pay-method-label { font-size: 0.72rem; color: var(--text-body); font-weight: 500; }
-.pay-method-hint { font-size: 0.6rem; color: var(--text-muted); }
-
-.checkout-submit {
-  width: 100%;
-  background: var(--clay);
-  color: white;
-  border: none;
-  padding: 1rem;
-  border-radius: 50px;
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  letter-spacing: 0.04em;
-  cursor: pointer;
-  transition: 0.3s;
-  margin-top: 0.5rem;
-}
-.checkout-submit:hover { background: var(--clay-dark); }
-.checkout-submit:disabled { opacity: 0.6; cursor: not-allowed; }
-
-.checkout-success {
-  display: none !important;
-}
-.checkout-success-icon { font-size: 3.5rem; margin-bottom: 1rem; }
-.checkout-success h4 { font-family: var(--font-display); font-size: 1.5rem; color: var(--earth); margin-bottom: 0.6rem; }
-.checkout-success p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
-.checkout-success .order-id { display: inline-block; margin-top: 0.8rem; background: var(--sand); padding: 0.4rem 1rem; border-radius: 8px; font-family: var(--font-display); font-size: 1rem; color: var(--clay); font-weight: 600; }
-
-@media (max-width: 700px) {
-  .checkout-row { grid-template-columns: 1fr; }
-}
-
-/* ============================== */
-/* ===== ADMIN PANEL STYLES ===== */
-/* ============================== */
-
-/* Admin FAB hidden */
-
-.admin-overlay {
-  position: fixed; inset: 0;
-  background: rgba(45,36,32,0.6);
-  backdrop-filter: blur(6px);
-  z-index: 5000;
-  opacity: 0; visibility: hidden;
-  transition: 0.3s;
-}
-.admin-overlay.open { opacity: 1; visibility: visible; }
-
-.admin-panel {
-  position: fixed;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%) scale(0.95);
-  width: 720px; max-width: 95vw;
-  max-height: 90vh;
-  background: var(--white);
-  border-radius: 20px;
-  z-index: 5001;
-  opacity: 0; visibility: hidden;
-  transition: all 0.3s;
-  display: flex; flex-direction: column;
-  box-shadow: 0 30px 80px rgba(0,0,0,0.25);
-}
-.admin-panel.open { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
-
-.admin-header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 1.5rem 2rem;
-  border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
-}
-.admin-header h2 { font-family: var(--font-display); font-size: 1.5rem; color: var(--earth); }
-.admin-header-actions { display: flex; gap: 0.5rem; }
-
-.admin-close { background: none; border: none; color: var(--text-muted); font-size: 1.4rem; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
-.admin-close:hover { background: var(--sand); color: var(--terracotta); }
-
-.admin-body { flex: 1; overflow-y: auto; padding: 1.5rem 2rem; }
-
-/* Admin: Product List */
-.admin-product-list { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
-
-.admin-product-row {
-  display: flex; align-items: center; gap: 1rem;
-  padding: 0.8rem 1rem;
-  background: var(--sand);
-  border-radius: 12px;
-  transition: 0.2s;
-}
-.admin-product-row:hover { background: var(--sand-deep); }
-
-.admin-product-thumb {
-  width: 50px; height: 50px;
-  border-radius: 8px;
-  overflow: hidden;
-  flex-shrink: 0;
-  background: var(--sand-deep);
-}
-
-.admin-product-info { flex: 1; min-width: 0; }
-.admin-product-info strong { font-family: var(--font-display); font-size: 0.95rem; color: var(--text-dark); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.admin-product-info small { font-size: 0.72rem; color: var(--text-muted); }
-
-.admin-product-price { font-family: var(--font-display); font-weight: 600; color: var(--clay); font-size: 0.95rem; white-space: nowrap; }
-
-.admin-row-actions { display: flex; gap: 0.3rem; }
-
-.admin-btn-sm {
-  background: none; border: none;
-  width: 32px; height: 32px;
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer;
-  font-size: 0.85rem;
-  transition: 0.2s;
-  color: var(--text-muted);
-}
-.admin-btn-sm:hover { background: rgba(198,125,74,0.1); color: var(--clay); }
-.admin-btn-sm.delete:hover { background: rgba(184,92,56,0.1); color: var(--terracotta); }
-
-.admin-add-btn {
-  width: 100%;
-  padding: 0.9rem;
-  border: 2px dashed var(--border);
-  border-radius: 12px;
-  background: none;
-  color: var(--clay);
-  font-family: var(--font-body);
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: 0.3s;
-  letter-spacing: 0.03em;
-}
-.admin-add-btn:hover { border-color: var(--clay); background: rgba(198,125,74,0.04); }
-
-/* Admin: Form */
-.admin-form { display: none; flex-direction: column; gap: 1rem; }
-.admin-form.active { display: flex; }
-
-.admin-form-title {
-  font-family: var(--font-display);
-  font-size: 1.2rem;
-  color: var(--earth);
-  margin-bottom: 0.5rem;
-  display: flex; align-items: center; gap: 0.8rem;
-}
-
-.admin-form-back {
-  background: none; border: none;
-  color: var(--text-muted); cursor: pointer;
-  font-size: 1rem; transition: 0.2s;
-}
-.admin-form-back:hover { color: var(--clay); }
-
-.admin-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-
-.admin-field { display: flex; flex-direction: column; gap: 0.3rem; }
-.admin-field.full { grid-column: span 2; }
-
-.admin-field label {
-  font-size: 0.68rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-  font-weight: 500;
-}
-
-.admin-field input,
-.admin-field textarea,
-.admin-field select {
-  background: var(--sand);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  color: var(--text-dark);
-  padding: 0.8rem 1rem;
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  outline: none;
-  transition: border 0.3s;
-}
-.admin-field input:focus,
-.admin-field textarea:focus,
-.admin-field select:focus { border-color: var(--clay); }
-.admin-field textarea { min-height: 70px; resize: vertical; }
-.admin-field select { cursor: pointer; }
-
-/* Image upload area */
-.admin-img-upload {
-  border: 2px dashed var(--border);
-  border-radius: 12px;
-  padding: 1.5rem;
-  text-align: center;
-  cursor: pointer;
-  transition: 0.3s;
-  position: relative;
-  overflow: hidden;
-  min-height: 140px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  background: var(--sand);
-}
-.admin-img-upload:hover { border-color: var(--clay); background: rgba(198,125,74,0.04); }
-.admin-img-upload.has-image { padding: 0; }
-
-.admin-img-upload .upload-icon { font-size: 2rem; opacity: 0.4; }
-.admin-img-upload .upload-text { font-size: 0.78rem; color: var(--text-muted); }
-.admin-img-upload .upload-hint { font-size: 0.65rem; color: var(--text-dim, #bbb); }
-
-.admin-img-upload input[type="file"] {
-  position: absolute; inset: 0; opacity: 0; cursor: pointer;
-}
-
-.admin-img-preview {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-.admin-form-actions {
-  display: flex; gap: 0.8rem; margin-top: 0.5rem;
-}
-
-.admin-save {
-  background: var(--clay);
-  color: white;
-  border: none;
-  padding: 0.8rem 2rem;
-  border-radius: 50px;
-  font-family: var(--font-body);
-  font-size: 0.82rem;
-  cursor: pointer;
-  transition: 0.3s;
-  letter-spacing: 0.04em;
-}
-.admin-save:hover { background: var(--clay-dark); }
-
-.admin-cancel {
-  background: var(--sand);
-  color: var(--text-body);
-  border: none;
-  padding: 0.8rem 2rem;
-  border-radius: 50px;
-  font-family: var(--font-body);
-  font-size: 0.82rem;
-  cursor: pointer;
-  transition: 0.3s;
-}
-.admin-cancel:hover { background: var(--sand-deep); }
-
-/* Login */
-.admin-login { display: flex; flex-direction: column; gap: 1rem; padding: 2rem; align-items: center; }
-.admin-login p { font-size: 0.85rem; color: var(--text-muted); text-align: center; }
-.admin-login input { width: 100%; max-width: 280px; background: var(--sand); border: 1px solid var(--border); border-radius: 10px; padding: 0.8rem 1rem; font-family: var(--font-body); font-size: 0.88rem; outline: none; text-align: center; }
-.admin-login input:focus { border-color: var(--clay); }
-.admin-login-btn { background: var(--clay); color: white; border: none; padding: 0.8rem 2.5rem; border-radius: 50px; font-family: var(--font-body); font-size: 0.82rem; cursor: pointer; transition: 0.3s; }
-.admin-login-btn:hover { background: var(--clay-dark); }
-.admin-login .error { color: var(--terracotta); font-size: 0.78rem; display: none; }
-
-.admin-stats {
-  display: flex; gap: 1.5rem; margin-bottom: 1.5rem;
-  padding: 1rem;
-  background: var(--sand);
-  border-radius: 12px;
-}
-.admin-stat { text-align: center; flex: 1; }
-.admin-stat-num { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--clay); }
-.admin-stat-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-top: 0.2rem; }
-
-/* ===== RESPONSIVE ===== */
-@media (max-width: 1000px) {
-  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .classes-grid { grid-template-columns: 1fr; }
-  .contact-wrapper { grid-template-columns: 1fr; }
-  .contact-image { min-height: 300px; }
-  .gallery-masonry { columns: 2; }
-  .process-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 700px) {
-  header { padding: 1rem 1.5rem; }
-  section { padding: 4rem 1.5rem; }
-  .hero-content { padding: 0 1.5rem; }
-  nav { display: none; }
-  .hamburger { display: flex; }
-  nav.open { display: flex; flex-direction: column; position: fixed; inset: 0; background: rgba(250,247,242,0.98); justify-content: center; align-items: center; gap: 2rem; z-index: 999; }
-  nav.open a { font-size: 1.2rem; color: var(--text-dark); }
-  .products-grid { grid-template-columns: 1fr; }
-  .gallery-masonry { columns: 1; }
-  .about-features { grid-template-columns: 1fr; }
-  .process-grid { grid-template-columns: 1fr; }
-  footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
-  .footer-links { justify-content: center; }
-  .admin-form-row { grid-template-columns: 1fr; }
-  .admin-field.full { grid-column: span 1; }
+:root{--sand:#f5efe6;--sand-deep:#e8dfd2;--cream:#faf7f2;--clay:#c67d4a;--clay-dark:#a86638;--clay-light:#d99a6e;--terracotta:#b85c38;--earth:#5c4033;--sage:#8a9a7b;--sage-light:#b5c4a8;--text-dark:#2d2420;--text-body:#5a4d44;--text-muted:#9a8d82;--white:#fff;--border:rgba(92,64,51,.1);--font-d:'Playfair Display',serif;--font-b:'DM Sans',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth}body{font-family:var(--font-b);background:var(--cream);color:var(--text-dark);overflow-x:hidden}
+img{display:block;width:100%;height:100%;object-fit:cover}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--cream)}::-webkit-scrollbar-thumb{background:var(--clay-light);border-radius:10px}
+
+/* HEADER */
+header{position:fixed;top:0;width:100%;z-index:1000;padding:1.2rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(250,247,242,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.logo{font-family:var(--font-d);font-size:1.8rem;font-weight:700;color:var(--earth);letter-spacing:.25em;text-transform:uppercase}.logo span{color:var(--clay)}
+nav{display:flex;gap:2.2rem;align-items:center}nav a{font-size:.82rem;color:var(--text-body);text-decoration:none;letter-spacing:.08em;transition:.3s;position:relative}nav a:hover{color:var(--clay)}nav a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1.5px;background:var(--clay);transition:.3s}nav a:hover::after{width:100%}
+.cart-btn{position:relative;background:var(--earth);border:none;color:var(--sand);padding:.55rem 1.4rem;font-family:var(--font-b);font-size:.78rem;letter-spacing:.08em;cursor:pointer;border-radius:50px;transition:.3s}.cart-btn:hover{background:var(--clay-dark)}
+.cart-count{position:absolute;top:-5px;right:-5px;background:var(--terracotta);color:#fff;font-size:.6rem;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none}.hamburger span{width:22px;height:1.5px;background:var(--earth)}
+.mobile-cart{display:none;position:relative;background:none;border:none;font-size:1.3rem;cursor:pointer;padding:4px}.mobile-cart .cart-count{position:absolute;top:-4px;right:-8px}
+
+/* HERO */
+.hero{height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero-bg-img{position:absolute;inset:0}.hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(45,36,32,.85) 0%,rgba(45,36,32,.5) 50%,rgba(45,36,32,.2) 100%)}
+.hero-content{position:relative;max-width:620px;padding:0 3rem;animation:fadeUp 1.2s ease-out}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+.hero-tag{display:inline-flex;align-items:center;gap:.6rem;margin-bottom:2rem}.hero-tag-line{width:40px;height:1.5px;background:var(--clay-light)}.hero-tag span{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--clay-light);font-weight:500}
+.hero h1{font-family:var(--font-d);font-size:clamp(3rem,7vw,5.5rem);font-weight:400;line-height:1.1;color:var(--sand);margin-bottom:1.8rem}.hero h1 em{font-style:italic;color:var(--clay-light)}
+.hero p{font-size:1.05rem;color:rgba(245,239,230,.75);line-height:1.8;max-width:480px;margin-bottom:2.5rem;font-weight:300}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-p{background:var(--clay);color:#fff;border:none;padding:.95rem 2.5rem;font-family:var(--font-b);font-size:.82rem;letter-spacing:.06em;cursor:pointer;border-radius:50px;transition:.3s;text-decoration:none}.btn-p:hover{background:var(--clay-dark);transform:translateY(-2px);box-shadow:0 8px 30px rgba(198,125,74,.3)}
+.btn-g{background:transparent;color:var(--sand);border:1.5px solid rgba(245,239,230,.5);padding:.9rem 2.5rem;font-family:var(--font-b);font-size:.82rem;letter-spacing:.06em;cursor:pointer;border-radius:50px;transition:.3s;text-decoration:none}.btn-g:hover{background:rgba(255,255,255,.1);border-color:var(--sand);transform:translateY(-2px)}
+.scroll-ind{position:absolute;bottom:2.5rem;left:3rem;display:flex;align-items:center;gap:.8rem;animation:pulse 2.5s infinite}.scroll-ind span{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(245,239,230,.5)}.scroll-dot{width:6px;height:6px;border-radius:50%;background:var(--clay-light)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+
+/* SECTIONS */
+section{padding:7rem 3rem}
+.sh{text-align:center;margin-bottom:4rem}
+.st{display:inline-flex;align-items:center;gap:.6rem;margin-bottom:1rem}.stl{width:30px;height:1.5px;background:var(--clay)}.st span{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:var(--clay);font-weight:500}
+.stitle{font-family:var(--font-d);font-size:clamp(2rem,4vw,3rem);font-weight:400;color:var(--text-dark);margin-bottom:.8rem}.stitle em{font-style:italic;color:var(--clay)}
+.sdesc{font-size:.95rem;color:var(--text-muted);max-width:500px;margin:0 auto;line-height:1.7;font-weight:300}
+
+/* ABOUT */
+#about{background:var(--sand)}
+.about-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.2fr 1fr;gap:5rem;align-items:center}
+.about-visual{position:relative}.about-img-main{width:100%;aspect-ratio:3/4;border-radius:200px 200px 20px 20px;overflow:hidden}.about-img-sec{position:absolute;bottom:-30px;right:-40px;width:180px;height:220px;border-radius:100px 100px 12px 12px;overflow:hidden;border:6px solid var(--sand);box-shadow:0 12px 40px rgba(0,0,0,.1)}.about-acc{position:absolute;top:-20px;left:-20px;width:100px;height:100px;background:var(--sage-light);border-radius:50%;opacity:.3;z-index:-1}
+.about-text .st{justify-content:flex-start}.about-text .stitle{text-align:left}
+.about-text p{color:var(--text-body);line-height:1.85;margin-bottom:1.3rem;font-weight:300;font-size:.95rem}
+.about-feats{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-top:2rem}
+.about-feat{display:flex;align-items:center;gap:.8rem;padding:.8rem;background:rgba(255,255,255,.6);border-radius:12px}.about-feat-dot{width:8px;height:8px;border-radius:50%;background:var(--clay);flex-shrink:0}.about-feat span{font-size:.82rem;color:var(--text-body)}
+
+/* SHOP */
+#shop{background:var(--cream)}
+.filters{display:flex;justify-content:center;gap:.5rem;margin-bottom:3rem;flex-wrap:wrap}
+.fbtn{background:transparent;border:1.5px solid var(--border);color:var(--text-muted);padding:.5rem 1.4rem;font-family:var(--font-b);font-size:.78rem;letter-spacing:.05em;cursor:pointer;border-radius:50px;transition:.3s}.fbtn.active,.fbtn:hover{border-color:var(--clay);color:var(--clay);background:rgba(198,125,74,.06)}
+.pgrid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:2rem}
+.pcard{background:var(--white);border-radius:16px;overflow:hidden;transition:.4s;cursor:pointer;border:1px solid var(--border)}.pcard:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(92,64,51,.1)}
+.pimg{aspect-ratio:1;position:relative;overflow:hidden;background:var(--sand)}.pimg img{transition:transform .6s}.pcard:hover .pimg img{transform:scale(1.08)}
+.pbadge{position:absolute;top:14px;left:14px;background:var(--terracotta);color:#fff;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .8rem;border-radius:50px;font-weight:500;z-index:2}
+.pinfo{padding:1.3rem 1.5rem 1.6rem}.pcat{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);margin-bottom:.4rem;font-weight:500}.pname{font-family:var(--font-d);font-size:1.25rem;font-weight:600;margin-bottom:.4rem;color:var(--text-dark)}.pdesc{font-size:.82rem;color:var(--text-muted);line-height:1.5;margin-bottom:1.2rem;font-weight:300}
+.pfooter{display:flex;justify-content:space-between;align-items:center}.pprice{font-family:var(--font-d);font-size:1.3rem;font-weight:600;color:var(--earth)}
+.add-cart{background:var(--clay);border:none;color:#fff;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.3s;font-size:1.1rem}.add-cart:hover{background:var(--clay-dark);transform:scale(1.1)}
+
+/* CLASSES */
+#classes{background:var(--sand)}
+.cgrid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1.8rem}
+.ccard{background:var(--white);border-radius:16px;overflow:hidden;border:1px solid var(--border);transition:.4s}.ccard:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(92,64,51,.08)}
+.ccimg{height:200px;overflow:hidden}.ccimg img{transition:transform .5s}.ccard:hover .ccimg img{transform:scale(1.06)}
+.ccbody{padding:1.8rem}.ccbody h3{font-family:var(--font-d);font-size:1.25rem;margin-bottom:.6rem;color:var(--text-dark)}.ccbody p{font-size:.85rem;color:var(--text-muted);line-height:1.6;margin-bottom:1.2rem;font-weight:300}
+.cmeta{display:flex;justify-content:space-between;align-items:center;padding-top:1rem;border-top:1px solid var(--border)}.cdur{font-size:.72rem;color:var(--sage);font-weight:500}.cprice{font-family:var(--font-d);font-size:1.1rem;font-weight:600;color:var(--clay)}
+
+/* PROCESS */
+#process{background:var(--earth);color:var(--sand)}#process .st span{color:var(--clay-light)}#process .stl{background:var(--clay-light)}#process .stitle{color:var(--sand)}#process .stitle em{color:var(--clay-light)}#process .sdesc{color:rgba(245,239,230,.6)}
+.proc-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+.proc-step{text-align:center}.proc-img{width:160px;height:160px;border-radius:50%;overflow:hidden;margin:0 auto 1.5rem;border:3px solid rgba(217,154,110,.3)}.proc-num{font-family:var(--font-d);font-size:2.5rem;font-weight:700;color:var(--clay-light);opacity:.3;margin-bottom:.5rem}.proc-step h4{font-family:var(--font-d);font-size:1.1rem;margin-bottom:.5rem;color:var(--sand)}.proc-step p{font-size:.8rem;color:rgba(245,239,230,.55);line-height:1.6;font-weight:300}
+
+/* GALLERY */
+#gallery{background:var(--cream)}
+.gmas{max-width:1200px;margin:0 auto;columns:3;column-gap:1.2rem}
+.gitem{break-inside:avoid;margin-bottom:1.2rem;border-radius:12px;overflow:hidden;position:relative;cursor:pointer;transition:.4s}.gitem:hover{transform:scale(1.02);box-shadow:0 12px 40px rgba(92,64,51,.12)}
+.gitem img{display:block;width:100%;height:auto}
+.gov{position:absolute;inset:0;background:linear-gradient(to top,rgba(45,36,32,.75),transparent 60%);display:flex;align-items:flex-end;padding:1.2rem;opacity:0;transition:.4s}.gitem:hover .gov{opacity:1}.gov span{font-family:var(--font-d);font-size:1rem;color:#fff}
+
+/* CONTACT */
+#contact{background:var(--cream)}
+.cont-wrap{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:0;border-radius:20px;overflow:hidden;box-shadow:0 20px 60px rgba(92,64,51,.1)}
+.cont-img{position:relative;min-height:500px}.cont-img img{position:absolute;inset:0}
+.cont-img-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(45,36,32,.8),rgba(45,36,32,.3));display:flex;flex-direction:column;justify-content:flex-end;padding:2.5rem}
+.cont-img-ov h3{font-family:var(--font-d);font-size:1.6rem;color:var(--sand);margin-bottom:1.5rem}
+.citem{display:flex;gap:1rem;margin-bottom:1.2rem;align-items:flex-start}.cicon{width:36px;height:36px;border:1px solid rgba(217,154,110,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.85rem}.citem-text label{display:block;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,239,230,.45);margin-bottom:.2rem}.citem-text p{font-size:.88rem;color:var(--sand)}
+.cont-form-side{background:var(--white);padding:3rem;display:flex;flex-direction:column;justify-content:center}
+.cont-form-side h3{font-family:var(--font-d);font-size:1.5rem;color:var(--text-dark);margin-bottom:.5rem}.cont-form-side .sub{font-size:.85rem;color:var(--text-muted);margin-bottom:2rem;font-weight:300}
+.cform{display:flex;flex-direction:column;gap:.9rem}
+.cform input,.cform textarea{background:var(--sand);border:1px solid var(--border);border-radius:10px;color:var(--text-dark);padding:.95rem 1.2rem;font-family:var(--font-b);font-size:.88rem;outline:none;transition:border .3s}.cform input:focus,.cform textarea:focus{border-color:var(--clay)}.cform textarea{min-height:110px;resize:vertical}.cform input::placeholder,.cform textarea::placeholder{color:var(--text-muted)}
+.btn-c{background:var(--clay);color:#fff;border:none;padding:.95rem 2rem;border-radius:50px;font-family:var(--font-b);font-size:.82rem;letter-spacing:.06em;cursor:pointer;transition:.3s;align-self:flex-start}.btn-c:hover{background:var(--clay-dark);transform:translateY(-2px)}
+
+/* FOOTER */
+footer{background:#3a2d25;padding:2.5rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}footer p{font-size:.72rem;color:rgba(245,239,230,.35)}.flinks{display:flex;gap:2rem}.flinks a{font-size:.78rem;color:rgba(245,239,230,.5);text-decoration:none;transition:.3s}.flinks a:hover{color:var(--clay-light)}
+
+/* PRODUCT DETAIL MODAL */
+.pd-ov{position:fixed;inset:0;background:rgba(45,36,32,.6);backdrop-filter:blur(6px);z-index:3500;opacity:0;visibility:hidden;transition:.3s}.pd-ov.open{opacity:1;visibility:visible}
+.pd-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);width:820px;max-width:95vw;max-height:90vh;background:var(--white);border-radius:20px;z-index:3501;opacity:0;visibility:hidden;transition:.35s;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.25)}.pd-modal.open{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+.pd-image{position:relative;background:var(--sand);min-height:400px;overflow:hidden}.pd-image img{transition:transform 8s}.pd-modal.open .pd-image img{transform:scale(1.05)}
+.pd-badge{position:absolute;top:16px;left:16px;background:var(--terracotta);color:#fff;font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;padding:.35rem 1rem;border-radius:50px;font-weight:500}
+.pd-body{padding:2.5rem;display:flex;flex-direction:column;overflow-y:auto}
+.pd-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.85);backdrop-filter:blur(6px);border:none;color:var(--text-body);font-size:1.2rem;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.3s;z-index:2}.pd-close:hover{background:#fff;color:var(--terracotta)}
+.pd-cat{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--sage);font-weight:500;margin-bottom:.6rem}
+.pd-name{font-family:var(--font-d);font-size:1.8rem;font-weight:600;color:var(--text-dark);line-height:1.2;margin-bottom:.8rem}
+.pd-price{font-family:var(--font-d);font-size:1.6rem;font-weight:700;color:var(--clay);margin-bottom:1.5rem}
+.pd-div{width:40px;height:2px;background:var(--clay-light);margin-bottom:1.5rem}
+.pd-desc-t{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);font-weight:500;margin-bottom:.6rem}
+.pd-desc{font-size:.92rem;color:var(--text-body);line-height:1.8;font-weight:300;margin-bottom:1.5rem;flex:1}
+.pd-feats{display:flex;gap:1.5rem;margin-bottom:1.8rem;flex-wrap:wrap}
+.pd-feat{display:flex;align-items:center;gap:.5rem}.pd-feat-icon{width:32px;height:32px;background:var(--sand);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem}.pd-feat-text{font-size:.72rem;color:var(--text-muted);line-height:1.3}.pd-feat-text strong{display:block;color:var(--text-dark);font-weight:500;font-size:.75rem}
+.pd-actions{display:flex;gap:.8rem;margin-top:auto}
+.pd-add{flex:1;background:var(--clay);color:#fff;border:none;padding:1rem 2rem;border-radius:50px;font-family:var(--font-b);font-size:.88rem;cursor:pointer;transition:.3s}.pd-add:hover{background:var(--clay-dark);transform:translateY(-2px)}
+.pd-go{display:none;flex:1;background:var(--earth);color:var(--sand);border:none;padding:1rem 1.5rem;border-radius:50px;font-family:var(--font-b);font-size:.85rem;cursor:pointer;transition:.3s;animation:fadI .3s}.pd-go.show{display:block}.pd-go:hover{background:var(--text-dark)}
+@keyframes fadI{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+
+/* CART */
+.cart-ov{position:fixed;inset:0;background:rgba(45,36,32,.5);backdrop-filter:blur(6px);z-index:2000;opacity:0;visibility:hidden;transition:.4s}.cart-ov.open{opacity:1;visibility:visible}
+.cart-pan{position:fixed;top:0;right:-440px;width:420px;max-width:92vw;height:100vh;background:var(--cream);border-left:1px solid var(--border);z-index:2001;transition:right .4s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}.cart-pan.open{right:0}
+.cart-h{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 1.8rem;border-bottom:1px solid var(--border)}.cart-h h3{font-family:var(--font-d);font-size:1.4rem;color:var(--earth)}
+.cart-cl{background:none;border:none;color:var(--text-muted);font-size:1.3rem;cursor:pointer;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.3s}.cart-cl:hover{background:var(--sand);color:var(--terracotta)}
+.cart-items{flex:1;overflow-y:auto;padding:1rem 1.8rem}
+.cart-item{display:flex;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--border);align-items:center}
+.ci-img{width:56px;height:56px;border-radius:10px;overflow:hidden;flex-shrink:0;background:var(--sand)}.ci-img img{width:100%;height:100%;object-fit:cover}
+.ci-det{flex:1}.ci-name{font-family:var(--font-d);font-size:.95rem;color:var(--text-dark)}.ci-price{font-size:.82rem;color:var(--clay);margin-top:.15rem}
+.ci-rm{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:.9rem;transition:.3s;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center}.ci-rm:hover{background:var(--sand);color:var(--terracotta)}
+.cart-empty{text-align:center;padding:3rem 1rem;color:var(--text-muted);font-size:.9rem}
+.cart-ft{padding:1.5rem 1.8rem;border-top:1px solid var(--border)}.cart-tot{display:flex;justify-content:space-between;margin-bottom:1.2rem}.cart-tot span{font-family:var(--font-d);font-size:1.2rem;color:var(--text-dark)}.cart-tot span:last-child{color:var(--earth);font-weight:700}
+.cart-co{width:100%;background:var(--clay);color:#fff;border:none;padding:.95rem;border-radius:50px;font-family:var(--font-b);font-size:.82rem;cursor:pointer;transition:.3s}.cart-co:hover{background:var(--clay-dark)}
+
+/* CHECKOUT */
+.co-ov{position:fixed;inset:0;background:rgba(45,36,32,.6);backdrop-filter:blur(6px);z-index:4000;opacity:0;visibility:hidden;transition:.3s}.co-ov.open{opacity:1;visibility:visible}
+.co-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);width:560px;max-width:95vw;max-height:90vh;background:var(--white);border-radius:20px;z-index:4001;opacity:0;visibility:hidden;transition:.3s;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.25);overflow:hidden}.co-modal.open{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+.co-h{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 2rem;border-bottom:1px solid var(--border)}.co-h h3{font-family:var(--font-d);font-size:1.4rem;color:var(--earth)}
+.co-cl{background:none;border:none;color:var(--text-muted);font-size:1.4rem;cursor:pointer;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.3s}.co-cl:hover{background:var(--sand);color:var(--terracotta)}
+.co-body{flex:1;overflow-y:auto;padding:1.5rem 2rem}
+.co-sum{background:var(--sand);border-radius:12px;padding:1rem 1.2rem;margin-bottom:1.5rem}
+.co-si{display:flex;justify-content:space-between;padding:.5rem 0;font-size:.85rem;color:var(--text-body)}.co-si+.co-si{border-top:1px solid var(--border)}.co-si .qty{color:var(--text-muted);font-size:.75rem}.co-si .pr{font-weight:500;color:var(--earth)}
+.co-tot{display:flex;justify-content:space-between;padding-top:.8rem;margin-top:.5rem;border-top:2px solid var(--border);font-family:var(--font-d);font-size:1.1rem}.co-tot span:last-child{font-weight:700;color:var(--clay)}
+.co-form{display:flex;flex-direction:column;gap:.9rem}
+.co-form label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);font-weight:500;margin-bottom:-.4rem}
+.co-form input,.co-form textarea,.co-form select{background:var(--sand);border:1px solid var(--border);border-radius:10px;color:var(--text-dark);padding:.85rem 1rem;font-family:var(--font-b);font-size:.88rem;outline:none;transition:border .3s;width:100%}.co-form input:focus,.co-form textarea:focus{border-color:var(--clay)}.co-form textarea{min-height:60px;resize:vertical}
+.co-row{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}.co-field{display:flex;flex-direction:column;gap:.3rem}
+.pay-methods{display:flex;gap:.6rem;flex-wrap:wrap;margin:.3rem 0 .5rem}
+.pay-m{flex:1;min-width:120px;padding:.8rem 1rem;border:1.5px solid var(--border);border-radius:12px;background:var(--sand);cursor:pointer;transition:.3s;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.3rem}.pay-m:hover{border-color:var(--clay-light)}.pay-m.sel{border-color:var(--clay);background:rgba(198,125,74,.08)}.pay-m-icon{font-size:1.3rem}.pay-m-label{font-size:.72rem;color:var(--text-body);font-weight:500}.pay-m-hint{font-size:.6rem;color:var(--text-muted)}
+.co-submit{width:100%;background:var(--clay);color:#fff;border:none;padding:1rem;border-radius:50px;font-family:var(--font-b);font-size:.88rem;cursor:pointer;transition:.3s;margin-top:.5rem}.co-submit:hover{background:var(--clay-dark)}.co-submit:disabled{opacity:.6;cursor:not-allowed}
+
+/* ADMIN */
+.adm-ov{position:fixed;inset:0;background:rgba(45,36,32,.6);backdrop-filter:blur(6px);z-index:5000;opacity:0;visibility:hidden;transition:.3s}.adm-ov.open{opacity:1;visibility:visible}
+.adm-pan{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);width:720px;max-width:95vw;max-height:90vh;background:var(--white);border-radius:20px;z-index:5001;opacity:0;visibility:hidden;transition:.3s;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.25)}.adm-pan.open{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+.adm-h{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 2rem;border-bottom:1px solid var(--border);flex-shrink:0}.adm-h h2{font-family:var(--font-d);font-size:1.5rem;color:var(--earth)}
+.adm-cl{background:none;border:none;color:var(--text-muted);font-size:1.4rem;cursor:pointer;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.3s}.adm-cl:hover{background:var(--sand);color:var(--terracotta)}
+.adm-tabs{display:flex;border-bottom:1px solid var(--border);padding:0 2rem;flex-shrink:0}
+.adm-tab{flex:1;padding:.8rem;background:none;border:none;border-bottom:2px solid transparent;font-family:var(--font-b);font-size:.8rem;color:var(--text-muted);cursor:pointer;font-weight:500;letter-spacing:.05em;transition:.2s}.adm-tab.active{border-bottom-color:var(--clay);color:var(--clay)}
+.adm-body{flex:1;overflow-y:auto;padding:1.5rem 2rem}
+.adm-login{display:flex;flex-direction:column;gap:1rem;padding:2rem;align-items:center}.adm-login p{font-size:.85rem;color:var(--text-muted);text-align:center}.adm-login input{width:100%;max-width:280px;background:var(--sand);border:1px solid var(--border);border-radius:10px;padding:.8rem 1rem;font-family:var(--font-b);font-size:.88rem;outline:none;text-align:center}.adm-login input:focus{border-color:var(--clay)}.adm-login .err{color:var(--terracotta);font-size:.78rem;display:none}
+.adm-login-btn{background:var(--clay);color:#fff;border:none;padding:.8rem 2.5rem;border-radius:50px;font-family:var(--font-b);font-size:.82rem;cursor:pointer;transition:.3s}.adm-login-btn:hover{background:var(--clay-dark)}
+.adm-stats{display:flex;gap:1.5rem;margin-bottom:1.5rem;padding:1rem;background:var(--sand);border-radius:12px}.adm-stat{text-align:center;flex:1}.adm-stat-n{font-family:var(--font-d);font-size:1.8rem;font-weight:700;color:var(--clay)}.adm-stat-l{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-muted);margin-top:.2rem}
+.adm-list{display:flex;flex-direction:column;gap:.8rem;margin-bottom:1.5rem}
+.adm-row{display:flex;align-items:center;gap:1rem;padding:.8rem 1rem;background:var(--sand);border-radius:12px;transition:.2s}.adm-row:hover{background:var(--sand-deep)}
+.adm-thumb{width:50px;height:50px;border-radius:8px;overflow:hidden;flex-shrink:0;background:var(--sand-deep)}
+.adm-rinfo{flex:1;min-width:0}.adm-rinfo strong{font-family:var(--font-d);font-size:.95rem;color:var(--text-dark);display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.adm-rinfo small{font-size:.72rem;color:var(--text-muted)}
+.adm-rprice{font-family:var(--font-d);font-weight:600;color:var(--clay);font-size:.95rem;white-space:nowrap}
+.adm-racts{display:flex;gap:.3rem}
+.adm-btn-sm{background:none;border:none;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.85rem;transition:.2s;color:var(--text-muted)}.adm-btn-sm:hover{background:rgba(198,125,74,.1);color:var(--clay)}.adm-btn-sm.del:hover{background:rgba(184,92,56,.1);color:var(--terracotta)}
+.adm-add-btn{width:100%;padding:.9rem;border:2px dashed var(--border);border-radius:12px;background:none;color:var(--clay);font-family:var(--font-b);font-size:.85rem;cursor:pointer;transition:.3s}.adm-add-btn:hover{border-color:var(--clay);background:rgba(198,125,74,.04)}
+.adm-form{display:none;flex-direction:column;gap:1rem}.adm-form.active{display:flex}
+.adm-form-title{font-family:var(--font-d);font-size:1.2rem;color:var(--earth);margin-bottom:.5rem;display:flex;align-items:center;gap:.8rem}
+.adm-form-back{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1rem;transition:.2s}.adm-form-back:hover{color:var(--clay)}
+.adm-form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.adm-field{display:flex;flex-direction:column;gap:.3rem}.adm-field.full{grid-column:span 2}
+.adm-field label{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);font-weight:500}
+.adm-field input,.adm-field textarea,.adm-field select{background:var(--sand);border:1px solid var(--border);border-radius:10px;color:var(--text-dark);padding:.8rem 1rem;font-family:var(--font-b);font-size:.88rem;outline:none;transition:border .3s}.adm-field input:focus,.adm-field textarea:focus,.adm-field select:focus{border-color:var(--clay)}.adm-field textarea{min-height:70px;resize:vertical}.adm-field select{cursor:pointer}
+.adm-img-up{border:2px dashed var(--border);border-radius:12px;padding:1.5rem;text-align:center;cursor:pointer;transition:.3s;position:relative;overflow:hidden;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;background:var(--sand)}.adm-img-up:hover{border-color:var(--clay)}.adm-img-up.has{padding:0}
+.adm-img-up .uicon{font-size:2rem;opacity:.4}.adm-img-up .utxt{font-size:.78rem;color:var(--text-muted)}.adm-img-up .uhint{font-size:.65rem;color:#bbb}
+.adm-img-up input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.adm-img-prev{width:100%;height:180px;object-fit:cover;border-radius:10px}
+.adm-form-acts{display:flex;gap:.8rem;margin-top:.5rem}
+.adm-save{background:var(--clay);color:#fff;border:none;padding:.8rem 2rem;border-radius:50px;font-family:var(--font-b);font-size:.82rem;cursor:pointer;transition:.3s}.adm-save:hover{background:var(--clay-dark)}
+.adm-cancel{background:var(--sand);color:var(--text-body);border:none;padding:.8rem 2rem;border-radius:50px;font-family:var(--font-b);font-size:.82rem;cursor:pointer;transition:.3s}.adm-cancel:hover{background:var(--sand-deep)}
+
+/* TOAST */
+.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--earth);color:var(--sand);padding:.8rem 2rem;border-radius:50px;font-size:.82rem;z-index:99999;transition:transform .4s cubic-bezier(.4,0,.2,1);white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.2)}.toast.show{transform:translateX(-50%) translateY(0)}
+
+/* LOADING */
+.loading{text-align:center;padding:3rem;color:var(--text-muted);font-size:.9rem}
+
+/* RESPONSIVE */
+@media(max-width:1000px){.about-grid{grid-template-columns:1fr;gap:2rem}.cgrid{grid-template-columns:1fr}.cont-wrap{grid-template-columns:1fr}.cont-img{min-height:300px}.gmas{columns:2}.proc-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){
+header{padding:1rem 1.5rem}section{padding:4rem 1.5rem}.hero-content{padding:0 1.5rem}
+nav{display:none}.hamburger{display:flex}.mobile-cart{display:block}
+nav.open{display:flex;flex-direction:column;position:fixed;inset:0;background:rgba(250,247,242,.98);justify-content:center;align-items:center;gap:2rem;z-index:999}nav.open a{font-size:1.2rem;color:var(--text-dark)}
+.pgrid{grid-template-columns:1fr}.gmas{columns:1}.about-feats{grid-template-columns:1fr}.proc-grid{grid-template-columns:1fr}
+footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justify-content:center}
+.pd-modal{grid-template-columns:1fr;max-height:95vh}.pd-image{min-height:250px;max-height:300px}.pd-body{padding:1.5rem}
+.cart-pan{width:100vw;max-width:100vw;right:-100vw}.cart-ft{position:sticky;bottom:0;background:var(--cream);box-shadow:0 -4px 20px rgba(0,0,0,.08)}
+.co-modal{width:100vw;max-width:100vw;height:100vh;max-height:100vh;border-radius:0;top:0;left:0;transform:translateY(100%)}.co-modal.open{transform:translateY(0)}.co-h{padding:1rem 1.5rem;position:sticky;top:0;background:var(--white);z-index:2}.co-body{padding:1rem 1.5rem 2rem}
+.co-row{grid-template-columns:1fr}.adm-form-row{grid-template-columns:1fr}.adm-field.full{grid-column:span 1}
 }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <div class="logo">ТЕР<span>Р</span>А</div>
   <nav id="mainNav">
-    <a href="#about">О нас</a>
-    <a href="#shop">Магазин</a>
-    <a href="#classes">Мастер-классы</a>
-    <a href="#gallery">Галерея</a>
-    <a href="#contact">Контакты</a>
+    <a href="#about">О нас</a><a href="#shop">Магазин</a><a href="#classes">Мастер-классы</a><a href="#gallery">Галерея</a><a href="#contact">Контакты</a>
     <button class="cart-btn" onclick="toggleCart()">Корзина<span class="cart-count" id="cartCount">0</span></button>
   </nav>
-  <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
+  <div style="display:flex;align-items:center;gap:.8rem">
+    <button class="mobile-cart" onclick="toggleCart()">🛒<span class="cart-count" id="cartCountM">0</span></button>
+    <button class="hamburger" onclick="document.getElementById('mainNav').classList.toggle('open')"><span></span><span></span><span></span></button>
+  </div>
 </header>
 
-<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg-img"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1600&q=80" alt="Гончарный круг"></div>
+  <div class="hero-bg-img"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1600&q=80" alt=""></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="hero-tag"><div class="hero-tag-line"></div><span>Гончарная мастерская</span></div>
     <h1>Красота,<br>рождённая <em>землёй</em></h1>
     <p>Авторская керамика ручной работы. Каждое изделие хранит тепло рук мастера и неповторимую историю глины</p>
-    <div class="hero-actions">
-      <a href="#shop" class="btn-primary">Каталог изделий</a>
-      <a href="#classes" class="btn-ghost">Мастер-классы</a>
-    </div>
+    <div class="hero-actions"><a href="#shop" class="btn-p">Каталог изделий</a><a href="#classes" class="btn-g">Мастер-классы</a></div>
   </div>
-  <div class="scroll-indicator"><div class="scroll-dot"></div><span>Листайте вниз</span></div>
+  <div class="scroll-ind"><div class="scroll-dot"></div><span>Листайте вниз</span></div>
 </section>
 
-<!-- ABOUT -->
 <section id="about">
   <div class="about-grid">
     <div class="about-visual">
-      <div class="about-accent"></div>
-      <div class="about-img-main"><img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=800&q=80" alt="Мастер"></div>
-      <div class="about-img-secondary"><img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=400&q=80" alt="Керамика"></div>
+      <div class="about-acc"></div>
+      <div class="about-img-main"><img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=800&q=80" alt=""></div>
+      <div class="about-img-sec"><img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=400&q=80" alt=""></div>
     </div>
     <div class="about-text">
-      <div class="section-tag"><div class="section-tag-line"></div><span>О мастерской</span></div>
-      <h2 class="section-title">Место, где глина <em>оживает</em></h2>
+      <div class="st"><div class="stl"></div><span>О мастерской</span></div>
+      <h2 class="stitle">Место, где глина <em>оживает</em></h2>
       <p>ТЕРРА — это пространство для тех, кто ценит настоящие вещи. Мы создаём керамику, которая несёт в себе тепло ручной работы и красоту природных форм.</p>
       <p>В нашей мастерской вы найдёте авторскую посуду, предметы интерьера и подарки — всё выполнено вручную из натуральной глины с уникальными глазурями.</p>
-      <div class="about-features">
-        <div class="about-feature"><div class="about-feature-dot"></div><span>Ручная работа</span></div>
-        <div class="about-feature"><div class="about-feature-dot"></div><span>Натуральные глазури</span></div>
-        <div class="about-feature"><div class="about-feature-dot"></div><span>Авторский дизайн</span></div>
-        <div class="about-feature"><div class="about-feature-dot"></div><span>Высокотемпературный обжиг</span></div>
+      <div class="about-feats">
+        <div class="about-feat"><div class="about-feat-dot"></div><span>Ручная работа</span></div>
+        <div class="about-feat"><div class="about-feat-dot"></div><span>Натуральные глазури</span></div>
+        <div class="about-feat"><div class="about-feat-dot"></div><span>Авторский дизайн</span></div>
+        <div class="about-feat"><div class="about-feat-dot"></div><span>Высокотемпературный обжиг</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- SHOP -->
 <section id="shop">
-  <div class="section-header">
-    <div class="section-tag"><div class="section-tag-line"></div><span>Магазин</span><div class="section-tag-line"></div></div>
-    <h2 class="section-title">Изделия <em>мастерской</em></h2>
-    <p class="section-desc">Каждый предмет уникален — форма, цвет и текстура никогда не повторяются</p>
-  </div>
-  <div class="shop-filters">
-    <button class="filter-btn active" onclick="filterProducts('all')">Все</button>
-    <button class="filter-btn" onclick="filterProducts('tableware')">Посуда</button>
-    <button class="filter-btn" onclick="filterProducts('vases')">Вазы</button>
-    <button class="filter-btn" onclick="filterProducts('decor')">Декор</button>
-    <button class="filter-btn" onclick="filterProducts('gifts')">Подарки</button>
-  </div>
-  <div class="products-grid" id="productsGrid"></div>
+  <div class="sh"><div class="st"><div class="stl"></div><span>Магазин</span><div class="stl"></div></div><h2 class="stitle">Изделия <em>мастерской</em></h2><p class="sdesc">Каждый предмет уникален — форма, цвет и текстура никогда не повторяются</p></div>
+  <div class="filters" id="filters"></div>
+  <div class="pgrid" id="pGrid"><div class="loading">Загрузка товаров...</div></div>
 </section>
 
-<!-- CLASSES -->
 <section id="classes">
-  <div class="section-header">
-    <div class="section-tag"><div class="section-tag-line"></div><span>Обучение</span><div class="section-tag-line"></div></div>
-    <h2 class="section-title">Мастер-<em>классы</em></h2>
-    <p class="section-desc">Попробуйте себя за гончарным кругом — это медитация, творчество и радость в одном</p>
-  </div>
-  <div class="classes-grid">
-    <div class="class-card"><div class="class-card-img"><img src="https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=600&q=80" alt="Круг"></div><div class="class-card-body"><h3>Знакомство с кругом</h3><p>Первый опыт работы на гончарном круге. Создадите свою первую чашку или пиалу</p><div class="class-meta"><span class="class-duration">2.5 часа</span><span class="class-price">3 500 ₽</span></div></div></div>
-    <div class="class-card"><div class="class-card-img"><img src="https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=600&q=80" alt="Чай"></div><div class="class-card-body"><h3>Чайная церемония</h3><p>Создайте набор для чайной церемонии: чайник, чашки и блюдце</p><div class="class-meta"><span class="class-duration">4 часа</span><span class="class-price">5 800 ₽</span></div></div></div>
-    <div class="class-card"><div class="class-card-img"><img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=600&q=80" alt="Глазурь"></div><div class="class-card-body"><h3>Глазурование</h3><p>Мастер-класс по работе с глазурями. Узнаете секреты цвета и текстуры</p><div class="class-meta"><span class="class-duration">3 часа</span><span class="class-price">4 200 ₽</span></div></div></div>
-  </div>
+  <div class="sh"><div class="st"><div class="stl"></div><span>Обучение</span><div class="stl"></div></div><h2 class="stitle">Мастер-<em>классы</em></h2><p class="sdesc">Попробуйте себя за гончарным кругом — это медитация, творчество и радость в одном</p></div>
+  <div class="cgrid" id="cGrid"><div class="loading">Загрузка мастер-классов...</div></div>
 </section>
 
-<!-- PROCESS -->
 <section id="process">
-  <div class="section-header">
-    <div class="section-tag"><div class="section-tag-line"></div><span>Процесс</span><div class="section-tag-line"></div></div>
-    <h2 class="section-title">Как рождается <em>керамика</em></h2>
-    <p class="section-desc">От куска глины до готового изделия — путь, полный терпения и мастерства</p>
-  </div>
-  <div class="process-grid">
-    <div class="process-step"><div class="process-img"><img src="https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80" alt=""></div><div class="process-num">01</div><h4>Подготовка</h4><p>Замешиваем и вымешиваем глину, удаляя пузырьки воздуха</p></div>
-    <div class="process-step"><div class="process-img"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400&q=80" alt=""></div><div class="process-num">02</div><h4>Формовка</h4><p>Создаём форму на гончарном круге или методом ручной лепки</p></div>
-    <div class="process-step"><div class="process-img"><img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=400&q=80" alt=""></div><div class="process-num">03</div><h4>Глазурь</h4><p>Покрываем авторскими глазурями для цвета и защиты</p></div>
-    <div class="process-step"><div class="process-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&q=80" alt=""></div><div class="process-num">04</div><h4>Обжиг</h4><p>Обжигаем при 1200°C — изделие обретает прочность и красоту</p></div>
+  <div class="sh"><div class="st"><div class="stl"></div><span>Процесс</span><div class="stl"></div></div><h2 class="stitle">Как рождается <em>керамика</em></h2><p class="sdesc">От куска глины до готового изделия</p></div>
+  <div class="proc-grid">
+    <div class="proc-step"><div class="proc-img"><img src="https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80" alt=""></div><div class="proc-num">01</div><h4>Подготовка</h4><p>Замешиваем глину, удаляя пузырьки воздуха</p></div>
+    <div class="proc-step"><div class="proc-img"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400&q=80" alt=""></div><div class="proc-num">02</div><h4>Формовка</h4><p>Создаём форму на гончарном круге</p></div>
+    <div class="proc-step"><div class="proc-img"><img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=400&q=80" alt=""></div><div class="proc-num">03</div><h4>Глазурь</h4><p>Покрываем авторскими глазурями</p></div>
+    <div class="proc-step"><div class="proc-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&q=80" alt=""></div><div class="proc-num">04</div><h4>Обжиг</h4><p>Обжигаем при 1200°C</p></div>
   </div>
 </section>
 
-<!-- GALLERY -->
 <section id="gallery">
-  <div class="section-header">
-    <div class="section-tag"><div class="section-tag-line"></div><span>Портфолио</span><div class="section-tag-line"></div></div>
-    <h2 class="section-title">Наши <em>работы</em></h2>
-  </div>
-  <div class="gallery-masonry">
-    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&q=80" alt=""><div class="gallery-overlay"><span>Набор «Утро»</span></div></div>
-    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600&q=80" alt=""><div class="gallery-overlay"><span>Ваза «Лепесток»</span></div></div>
-    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1612196808214-b7e239e5a5e2?w=600&q=80" alt=""><div class="gallery-overlay"><span>Кашпо «Терра»</span></div></div>
-    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1609881092647-6a89e1e3c060?w=600&q=80" alt=""><div class="gallery-overlay"><span>Тарелки «Песок»</span></div></div>
-    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1607893378714-007fd47c8719?w=600&q=80" alt=""><div class="gallery-overlay"><span>Подсвечник «Арка»</span></div></div>
-    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1576020799627-aeac74d58064?w=600&q=80" alt=""><div class="gallery-overlay"><span>Пиалы «Дзен»</span></div></div>
+  <div class="sh"><div class="st"><div class="stl"></div><span>Портфолио</span><div class="stl"></div></div><h2 class="stitle">Наши <em>работы</em></h2></div>
+  <div class="gmas">
+    <div class="gitem"><img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&q=80" alt=""><div class="gov"><span>Набор «Утро»</span></div></div>
+    <div class="gitem"><img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600&q=80" alt=""><div class="gov"><span>Ваза «Лепесток»</span></div></div>
+    <div class="gitem"><img src="https://images.unsplash.com/photo-1612196808214-b7e239e5a5e2?w=600&q=80" alt=""><div class="gov"><span>Кашпо «Терра»</span></div></div>
+    <div class="gitem"><img src="https://images.unsplash.com/photo-1609881092647-6a89e1e3c060?w=600&q=80" alt=""><div class="gov"><span>Тарелки «Песок»</span></div></div>
+    <div class="gitem"><img src="https://images.unsplash.com/photo-1607893378714-007fd47c8719?w=600&q=80" alt=""><div class="gov"><span>Подсвечник «Арка»</span></div></div>
+    <div class="gitem"><img src="https://images.unsplash.com/photo-1576020799627-aeac74d58064?w=600&q=80" alt=""><div class="gov"><span>Пиалы «Дзен»</span></div></div>
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
-  <div class="section-header">
-    <div class="section-tag"><div class="section-tag-line"></div><span>Контакты</span><div class="section-tag-line"></div></div>
-    <h2 class="section-title">Приходите в <em>мастерскую</em></h2>
-    <p class="section-desc">Ждём вас на чай из наших чашек и разговор о глине</p>
-  </div>
-  <div class="contact-wrapper">
-    <div class="contact-image">
-      <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=800&q=80" alt="">
-      <div class="contact-image-overlay">
-        <h3>ТЕРРА</h3>
-        <div class="contact-item"><div class="contact-icon">📍</div><div class="contact-item-text"><label>Адрес</label><p>г. Москва, Гончарная наб., д. 7</p></div></div>
-        <div class="contact-item"><div class="contact-icon">📞</div><div class="contact-item-text"><label>Телефон</label><p>+7 (495) 987-65-43</p></div></div>
-        <div class="contact-item"><div class="contact-icon">🕐</div><div class="contact-item-text"><label>Режим работы</label><p>Вт–Вс: 10:00 — 20:00</p></div></div>
+  <div class="sh"><div class="st"><div class="stl"></div><span>Контакты</span><div class="stl"></div></div><h2 class="stitle">Приходите в <em>мастерскую</em></h2><p class="sdesc">Ждём вас на чай из наших чашек</p></div>
+  <div class="cont-wrap">
+    <div class="cont-img"><img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=800&q=80" alt="">
+      <div class="cont-img-ov"><h3>ТЕРРА</h3>
+        <div class="citem"><div class="cicon">📍</div><div class="citem-text"><label>Адрес</label><p>г. Москва, Гончарная наб., д. 7</p></div></div>
+        <div class="citem"><div class="cicon">📞</div><div class="citem-text"><label>Телефон</label><p>+7 (495) 987-65-43</p></div></div>
+        <div class="citem"><div class="cicon">🕐</div><div class="citem-text"><label>Режим работы</label><p>Вт–Вс: 10:00 — 20:00</p></div></div>
       </div>
     </div>
-    <div class="contact-form-side">
-      <h3>Напишите нам</h3>
-      <p class="sub">Расскажите о вашей идее или задайте вопрос</p>
-      <div class="contact-form" id="contactForm">
-        <input type="text" placeholder="Ваше имя">
-        <input type="email" placeholder="Email">
-        <input type="tel" placeholder="Телефон">
-        <textarea placeholder="Расскажите, что бы вы хотели..."></textarea>
-        <button class="btn-contact" onclick="sendForm(event)">Отправить</button>
+    <div class="cont-form-side"><h3>Напишите нам</h3><p class="sub">Расскажите о вашей идее</p>
+      <div class="cform" id="contactForm">
+        <input type="text" placeholder="Ваше имя" id="cfName" maxlength="50">
+        <input type="email" placeholder="Email" id="cfEmail" maxlength="100">
+        <input type="tel" placeholder="Телефон" id="cfPhone" maxlength="18" oninput="fmtPhone(this)">
+        <textarea placeholder="Расскажите, что бы вы хотели..." id="cfMsg"></textarea>
+        <button class="btn-c" onclick="sendContact()">Отправить</button>
       </div>
     </div>
   </div>
 </section>
 
-<footer>
-  <p>© 2026 ТЕРРА — Гончарная мастерская</p>
-  <div class="footer-links"><a href="#about">О нас</a><a href="#shop">Магазин</a><a href="#classes">Мастер-классы</a><a href="#contact">Контакты</a></div>
-</footer>
+<footer><p>© 2026 ТЕРРА — Гончарная мастерская</p><div class="flinks"><a href="#about">О нас</a><a href="#shop">Магазин</a><a href="#classes">Мастер-классы</a><a href="#contact">Контакты</a></div></footer>
 
-<!-- Product Detail Modal -->
-<div class="pd-overlay" id="pdOverlay" onclick="closeProductDetail()"></div>
-<div class="pd-modal" id="pdModal">
-  <button class="pd-close" onclick="closeProductDetail()">✕</button>
-  <div class="pd-image" id="pdImage"></div>
-  <div class="pd-content">
-    <div class="pd-category" id="pdCategory"></div>
-    <div class="pd-name" id="pdName"></div>
-    <div class="pd-price" id="pdPrice"></div>
-    <div class="pd-divider"></div>
-    <div class="pd-desc-title">Описание</div>
-    <div class="pd-desc" id="pdDesc"></div>
-    <div class="pd-features" id="pdFeatures">
-      <div class="pd-feature">
-        <div class="pd-feature-icon">🤲</div>
-        <div class="pd-feature-text"><strong>Ручная работа</strong>Каждое изделие уникально</div>
-      </div>
-      <div class="pd-feature">
-        <div class="pd-feature-icon">🔥</div>
-        <div class="pd-feature-text"><strong>Обжиг 1200°C</strong>Прочность и долговечность</div>
-      </div>
-      <div class="pd-feature">
-        <div class="pd-feature-icon">📦</div>
-        <div class="pd-feature-text"><strong>Доставка</strong>По всей России</div>
-      </div>
-    </div>
-    <div class="pd-actions">
-      <button class="pd-add-cart" id="pdAddCart">В корзину</button>
-      <button class="pd-go-cart" id="pdGoCart" onclick="closeProductDetail(); toggleCart();">Перейти в корзину →</button>
-      <button class="pd-wishlist" title="В избранное">♡</button>
-    </div>
+<!-- Product Detail -->
+<div class="pd-ov" id="pdOv" onclick="closePD()"></div>
+<div class="pd-modal" id="pdMod">
+  <button class="pd-close" onclick="closePD()">✕</button>
+  <div class="pd-image" id="pdImg"></div>
+  <div class="pd-body">
+    <div class="pd-cat" id="pdCat"></div><div class="pd-name" id="pdName"></div><div class="pd-price" id="pdPrice"></div>
+    <div class="pd-div"></div><div class="pd-desc-t">Описание</div><div class="pd-desc" id="pdDesc"></div>
+    <div class="pd-feats"><div class="pd-feat"><div class="pd-feat-icon">🤲</div><div class="pd-feat-text"><strong>Ручная работа</strong>Уникально</div></div><div class="pd-feat"><div class="pd-feat-icon">🔥</div><div class="pd-feat-text"><strong>Обжиг 1200°C</strong>Прочность</div></div><div class="pd-feat"><div class="pd-feat-icon">📦</div><div class="pd-feat-text"><strong>Доставка</strong>По России</div></div></div>
+    <div class="pd-actions"><button class="pd-add" id="pdAdd">В корзину</button><button class="pd-go" id="pdGo" onclick="closePD();toggleCart()">Перейти в корзину →</button></div>
   </div>
 </div>
 
 <!-- Cart -->
-<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
-<div class="cart-panel" id="cartPanel">
-  <div class="cart-header"><h3>Корзина</h3><button class="cart-close" onclick="toggleCart()">✕</button></div>
+<div class="cart-ov" id="cartOv" onclick="toggleCart()"></div>
+<div class="cart-pan" id="cartPan">
+  <div class="cart-h"><h3>Корзина</h3><button class="cart-cl" onclick="toggleCart()">✕</button></div>
   <div class="cart-items" id="cartItems"><div class="cart-empty">Корзина пуста</div></div>
-  <div class="cart-footer"><div class="cart-total"><span>Итого:</span><span id="cartTotal">0 ₽</span></div><button class="cart-checkout" onclick="checkout()">Оформить заказ</button></div>
+  <div class="cart-ft"><div class="cart-tot"><span>Итого:</span><span id="cartTotal">0 ₽</span></div><button class="cart-co" onclick="checkout()">Оформить заказ</button></div>
 </div>
 
-<!-- Checkout Modal -->
-<div class="checkout-overlay" id="checkoutOverlay" onclick="closeCheckout()"></div>
-<div class="checkout-modal" id="checkoutModal">
-  <div class="checkout-header">
-    <h3>Оформление заказа</h3>
-    <button class="checkout-close" onclick="closeCheckout()">✕</button>
-  </div>
-  <div class="checkout-body">
-    <!-- Order summary -->
-    <div class="checkout-summary" id="checkoutSummary"></div>
-
-    <!-- Checkout form -->
-    <div class="checkout-form" id="checkoutForm">
-      <div class="checkout-row">
-        <div class="checkout-field">
-          <label>Имя *</label>
-          <input type="text" id="coName" placeholder="Ваше имя" required maxlength="50" autocomplete="name" oninput="this.value=this.value.replace(/[^а-яА-ЯёЁa-zA-Z\s\-]/g,'')">
-        </div>
-        <div class="checkout-field">
-          <label>Телефон *</label>
-          <input type="tel" id="coPhone" placeholder="+7 (999) 123-45-67" required maxlength="18" autocomplete="tel" oninput="formatPhone(this)">
-        </div>
-      </div>
-      <div class="checkout-field">
-        <label>Email</label>
-        <input type="email" id="coEmail" placeholder="email@example.com" maxlength="100" autocomplete="email">
-      </div>
-      <label style="font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); font-weight:500; margin-bottom:-0.2rem;">Адрес доставки</label>
-      <div class="checkout-row">
-        <div class="checkout-field">
-          <label>Индекс</label>
-          <input type="text" id="coIndex" placeholder="123456" maxlength="6" autocomplete="postal-code" oninput="this.value=this.value.replace(/\D/g,'')">
-        </div>
-        <div class="checkout-field">
-          <label>Область / Регион</label>
-          <input type="text" id="coRegion" placeholder="Московская область" maxlength="100" autocomplete="address-level1">
-        </div>
-      </div>
-      <div class="checkout-row">
-        <div class="checkout-field">
-          <label>Город / Населённый пункт</label>
-          <input type="text" id="coCity" placeholder="Москва" maxlength="100" autocomplete="address-level2">
-        </div>
-        <div class="checkout-field">
-          <label>Улица</label>
-          <input type="text" id="coStreet" placeholder="ул. Гончарная" maxlength="150" autocomplete="street-address">
-        </div>
-      </div>
-      <div class="checkout-row">
-        <div class="checkout-field">
-          <label>Дом / Корпус</label>
-          <input type="text" id="coHouse" placeholder="д. 7, корп. 2" maxlength="30">
-        </div>
-        <div class="checkout-field">
-          <label>Квартира / Офис</label>
-          <input type="text" id="coApt" placeholder="кв. 15" maxlength="20">
-        </div>
-      </div>
-
+<!-- Checkout -->
+<div class="co-ov" id="coOv" onclick="closeCO()"></div>
+<div class="co-modal" id="coMod">
+  <div class="co-h"><h3>Оформление заказа</h3><button class="co-cl" onclick="closeCO()">✕</button></div>
+  <div class="co-body">
+    <div class="co-sum" id="coSum"></div>
+    <div class="co-form" id="coForm">
+      <div class="co-row"><div class="co-field"><label>Имя *</label><input type="text" id="coName" placeholder="Ваше имя" maxlength="50" oninput="this.value=this.value.replace(/[^а-яА-ЯёЁa-zA-Z\s\-]/g,'')"></div><div class="co-field"><label>Телефон *</label><input type="tel" id="coPhone" placeholder="+7 (999) 123-45-67" maxlength="18" oninput="fmtPhone(this)"></div></div>
+      <div class="co-field"><label>Email</label><input type="email" id="coEmail" placeholder="email@example.com" maxlength="100"></div>
+      <label style="font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);font-weight:500">Адрес доставки</label>
+      <div class="co-row"><div class="co-field"><label>Индекс</label><input type="text" id="coIdx" placeholder="123456" maxlength="6" oninput="this.value=this.value.replace(/\D/g,'')"></div><div class="co-field"><label>Область</label><input type="text" id="coReg" placeholder="Московская обл." maxlength="100"></div></div>
+      <div class="co-row"><div class="co-field"><label>Город</label><input type="text" id="coCity" placeholder="Москва" maxlength="100"></div><div class="co-field"><label>Улица</label><input type="text" id="coStr" placeholder="ул. Гончарная" maxlength="150"></div></div>
+      <div class="co-row"><div class="co-field"><label>Дом/Корпус</label><input type="text" id="coHouse" placeholder="д. 7, корп. 2" maxlength="30"></div><div class="co-field"><label>Кв./Офис</label><input type="text" id="coApt" placeholder="кв. 15" maxlength="20"></div></div>
       <label>Способ оплаты</label>
-      <div class="checkout-pay-methods" id="payMethods">
-        <div class="pay-method selected" onclick="selectPay(this, 'card')" data-method="card">
-          <div class="pay-method-icon">💳</div>
-          <div class="pay-method-label">Перевод на карту</div>
-          <div class="pay-method-hint">Сбербанк / Тинькофф</div>
-        </div>
-        <div class="pay-method" onclick="selectPay(this, 'cash')" data-method="cash">
-          <div class="pay-method-icon">💵</div>
-          <div class="pay-method-label">При получении</div>
-          <div class="pay-method-hint">Наличные / карта</div>
-        </div>
-        <div class="pay-method" onclick="selectPay(this, 'sbp')" data-method="sbp">
-          <div class="pay-method-icon">📱</div>
-          <div class="pay-method-label">СБП</div>
-          <div class="pay-method-hint">Через QR-код</div>
-        </div>
+      <div class="pay-methods">
+        <div class="pay-m sel" onclick="selPay(this,'card')"><div class="pay-m-icon">💳</div><div class="pay-m-label">На карту</div><div class="pay-m-hint">Сбер/Тинькофф</div></div>
+        <div class="pay-m" onclick="selPay(this,'cash')"><div class="pay-m-icon">💵</div><div class="pay-m-label">При получении</div><div class="pay-m-hint">Наличные</div></div>
+        <div class="pay-m" onclick="selPay(this,'sbp')"><div class="pay-m-icon">📱</div><div class="pay-m-label">СБП</div><div class="pay-m-hint">QR-код</div></div>
       </div>
-
-      <div class="checkout-field">
-        <label>Комментарий к заказу</label>
-        <textarea id="coComment" placeholder="Пожелания, удобное время доставки..." maxlength="500"></textarea>
-      </div>
-
-      <button class="checkout-submit" id="checkoutSubmit" onclick="submitOrder()">
-        Подтвердить заказ
-      </button>
-    </div>
-
-    <!-- Success message (hidden) -->
-    <div class="checkout-success" id="checkoutSuccess">
-      <div class="checkout-success-icon">✅</div>
-      <h4>Заказ принят!</h4>
-      <p>Мы свяжемся с вами в ближайшее время для подтверждения заказа и уточнения деталей оплаты</p>
-      <div class="order-id" id="orderId"></div>
-      <p style="margin-top:1rem; font-size:0.8rem;">Информация о заказе отправлена на указанный email</p>
+      <div class="co-field"><label>Комментарий</label><textarea id="coCom" placeholder="Пожелания..." maxlength="500"></textarea></div>
+      <button class="co-submit" id="coSubmit" onclick="submitOrder()">Подтвердить заказ</button>
     </div>
   </div>
 </div>
 
-<!-- Admin: hidden access via ?admin URL or Ctrl+Shift+A -->
-
-<!-- Admin Panel -->
-<div class="admin-overlay" id="adminOverlay" onclick="closeAdmin()"></div>
-<div class="admin-panel" id="adminPanel">
-  <div class="admin-header">
-    <h2>Управление товарами</h2>
-    <button class="admin-close" onclick="closeAdmin()">✕</button>
-  </div>
-  <div class="admin-body">
-    <!-- Login -->
-    <div class="admin-login" id="adminLogin">
-      <p>Введите пароль для доступа<br>к панели управления</p>
-      <input type="password" id="adminPass" placeholder="Пароль" onkeydown="if(event.key==='Enter')doLogin()">
-      <button class="admin-login-btn" onclick="doLogin()">Войти</button>
-      <span class="error" id="loginError">Неверный пароль</span>
+<!-- Admin -->
+<div class="adm-ov" id="admOv" onclick="closeAdm()"></div>
+<div class="adm-pan" id="admPan">
+  <div class="adm-h"><h2>Панель управления</h2><button class="adm-cl" onclick="closeAdm()">✕</button></div>
+  <div class="adm-tabs"><button class="adm-tab active" id="tProd" onclick="switchTab('prod')">Товары</button><button class="adm-tab" id="tCls" onclick="switchTab('cls')">Мастер-классы</button></div>
+  <div class="adm-body">
+    <div class="adm-login" id="admLogin">
+      <p>Введите пароль для доступа</p>
+      <input type="password" id="admPass" placeholder="Пароль" onkeydown="if(event.key==='Enter')doLogin()">
+      <button class="adm-login-btn" onclick="doLogin()">Войти</button>
+      <span class="err" id="logErr">Неверный пароль</span>
     </div>
-    <!-- Content (hidden until login) -->
-    <div id="adminContent" style="display:none">
-      <!-- Stats -->
-      <div class="admin-stats">
-        <div class="admin-stat"><div class="admin-stat-num" id="statTotal">0</div><div class="admin-stat-label">Товаров</div></div>
-        <div class="admin-stat"><div class="admin-stat-num" id="statCats">0</div><div class="admin-stat-label">Категорий</div></div>
-        <div class="admin-stat"><div class="admin-stat-num" id="statAvg">0 ₽</div><div class="admin-stat-label">Средняя цена</div></div>
+    <div id="admContent" style="display:none">
+      <!-- Products Tab -->
+      <div id="tabProd">
+        <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sTotal">0</div><div class="adm-stat-l">Товаров</div></div><div class="adm-stat"><div class="adm-stat-n" id="sCats">0</div><div class="adm-stat-l">Категорий</div></div><div class="adm-stat"><div class="adm-stat-n" id="sAvg">0</div><div class="adm-stat-l">Ср. цена</div></div></div>
+        <div id="pListView"><div class="adm-list" id="admPList"></div><button class="adm-add-btn" onclick="showPF()">+ Добавить товар</button></div>
+        <div class="adm-form" id="pForm">
+          <div class="adm-form-title"><button class="adm-form-back" onclick="hidePF()">←</button><span id="pFTitle">Новый товар</span></div>
+          <div class="adm-img-up" id="pImgUp"><div class="uicon" id="pUIco">📷</div><div class="utxt" id="pUTxt">Нажмите или перетащите фото</div><div class="uhint">JPG, PNG — до 5 МБ</div><input type="file" id="pImgIn" accept="image/*" onchange="hImg(event,'p')"></div>
+          <div class="adm-form-row"><div class="adm-field"><label>Название</label><input type="text" id="fName"></div><div class="adm-field"><label>Цена (₽)</label><input type="number" id="fPrice"></div></div>
+          <div class="adm-form-row"><div class="adm-field"><label>Категория</label><select id="fCat"><option value="tableware">Посуда</option><option value="vases">Вазы</option><option value="decor">Декор</option><option value="gifts">Подарки</option></select></div><div class="adm-field"><label>Бейдж</label><select id="fBadge"><option value="">Нет</option><option value="Хит">Хит</option><option value="Новинка">Новинка</option><option value="Подарок">Подарок</option><option value="Скидка">Скидка</option></select></div></div>
+          <div class="adm-field full"><label>Описание</label><textarea id="fDesc"></textarea></div>
+          <input type="hidden" id="fId"><input type="hidden" id="fImg">
+          <div class="adm-form-acts"><button class="adm-save" onclick="saveP()">Сохранить</button><button class="adm-cancel" onclick="hidePF()">Отмена</button></div>
+        </div>
       </div>
-      <!-- Product List -->
-      <div id="adminListView">
-        <div class="admin-product-list" id="adminProductList"></div>
-        <button class="admin-add-btn" onclick="showForm()">+ Добавить новый товар</button>
-      </div>
-      <!-- Product Form -->
-      <div class="admin-form" id="adminForm">
-        <div class="admin-form-title">
-          <button class="admin-form-back" onclick="hideForm()">←</button>
-          <span id="formTitle">Новый товар</span>
-        </div>
-        <div class="admin-img-upload" id="imgUpload" onclick="document.getElementById('imgInput').click()">
-          <div class="upload-icon" id="uploadIcon">📷</div>
-          <div class="upload-text" id="uploadText">Нажмите или перетащите фото</div>
-          <div class="upload-hint">JPG, PNG — до 5 МБ</div>
-          <input type="file" id="imgInput" accept="image/*" onchange="handleImage(event)">
-        </div>
-        <div class="admin-form-row">
-          <div class="admin-field"><label>Название</label><input type="text" id="fName" placeholder="Например: Ваза «Каньон»"></div>
-          <div class="admin-field"><label>Цена (₽)</label><input type="number" id="fPrice" placeholder="5000"></div>
-        </div>
-        <div class="admin-form-row">
-          <div class="admin-field">
-            <label>Категория</label>
-            <select id="fCategory">
-              <option value="tableware">Посуда</option>
-              <option value="vases">Вазы</option>
-              <option value="decor">Декор</option>
-              <option value="gifts">Подарки</option>
-            </select>
-          </div>
-          <div class="admin-field">
-            <label>Бейдж (необязательно)</label>
-            <select id="fBadge">
-              <option value="">Без бейджа</option>
-              <option value="Хит">Хит</option>
-              <option value="Новинка">Новинка</option>
-              <option value="Подарок">Подарок</option>
-              <option value="Скидка">Скидка</option>
-            </select>
-          </div>
-        </div>
-        <div class="admin-field full">
-          <label>Описание</label>
-          <textarea id="fDesc" placeholder="Краткое описание изделия..."></textarea>
-        </div>
-        <input type="hidden" id="fId">
-        <input type="hidden" id="fImg">
-        <div class="admin-form-actions">
-          <button class="admin-save" onclick="saveProduct()">Сохранить</button>
-          <button class="admin-cancel" onclick="hideForm()">Отмена</button>
+      <!-- Classes Tab -->
+      <div id="tabCls" style="display:none">
+        <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sClasses">0</div><div class="adm-stat-l">Мастер-классов</div></div></div>
+        <div id="cListView"><div class="adm-list" id="admCList"></div><button class="adm-add-btn" onclick="showCF()">+ Добавить мастер-класс</button></div>
+        <div class="adm-form" id="cForm">
+          <div class="adm-form-title"><button class="adm-form-back" onclick="hideCF()">←</button><span id="cFTitle">Новый мастер-класс</span></div>
+          <div class="adm-img-up" id="cImgUp"><div class="uicon" id="cUIco">📷</div><div class="utxt" id="cUTxt">Нажмите или перетащите фото</div><div class="uhint">JPG, PNG — до 5 МБ</div><input type="file" id="cImgIn" accept="image/*" onchange="hImg(event,'c')"></div>
+          <div class="adm-field full"><label>Название</label><input type="text" id="cName"></div>
+          <div class="adm-field full"><label>Описание</label><textarea id="cDesc"></textarea></div>
+          <div class="adm-form-row"><div class="adm-field"><label>Длительность</label><input type="text" id="cDur" placeholder="2.5 часа"></div><div class="adm-field"><label>Цена (₽)</label><input type="number" id="cPrice"></div></div>
+          <input type="hidden" id="cId"><input type="hidden" id="cImg">
+          <div class="adm-form-acts"><button class="adm-save" onclick="saveC()">Сохранить</button><button class="adm-cancel" onclick="hideCF()">Отмена</button></div>
         </div>
       </div>
     </div>
@@ -1276,713 +406,256 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
 <div class="toast" id="toast"></div>
 
 <script>
-// ===== DEFAULT PRODUCTS =====
-const defaultProducts = [
-  { id:1, name:'Чашка «Рассвет»', category:'tableware', price:2800, desc:'Чашка 300 мл с персиковой глазурью, ручная лепка', badge:'Хит', img:'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=500&q=80' },
-  { id:2, name:'Ваза «Каньон»', category:'vases', price:7500, desc:'Высокая ваза с текстурой песчаника, высота 32 см', img:'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=500&q=80' },
-  { id:3, name:'Тарелка «Дюна»', category:'tableware', price:3200, desc:'Обеденная тарелка с волнистым краем, диаметр 26 см', badge:'Новинка', img:'https://images.unsplash.com/photo-1609881092647-6a89e1e3c060?w=500&q=80' },
-  { id:4, name:'Кашпо «Гнездо»', category:'decor', price:4900, desc:'Кашпо для растений с фактурой коры, диаметр 18 см', img:'https://images.unsplash.com/photo-1612196808214-b7e239e5a5e2?w=500&q=80' },
-  { id:5, name:'Пиала «Дзен»', category:'tableware', price:1900, desc:'Пиала для чая или матча, минималистичная форма', img:'https://images.unsplash.com/photo-1576020799627-aeac74d58064?w=500&q=80' },
-  { id:6, name:'Подсвечник «Арка»', category:'decor', price:3800, desc:'Подсвечник в форме арки, молочная глазурь', img:'https://images.unsplash.com/photo-1607893378714-007fd47c8719?w=500&q=80' },
-  { id:7, name:'Набор «Утро»', category:'gifts', price:8900, desc:'Чайник + 2 чашки + блюдце в подарочной коробке', badge:'Подарок', img:'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=500&q=80' },
-  { id:8, name:'Ваза «Река»', category:'vases', price:5600, desc:'Органичная форма, глазурь с эффектом текущей воды', img:'https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=500&q=80' },
-  { id:9, name:'Тарелка «Луна»', category:'tableware', price:2600, desc:'Десертная тарелка с кратерной текстурой, 20 см', img:'https://images.unsplash.com/photo-1617791160505-6f00504e3519?w=500&q=80' },
-  { id:10, name:'Ваза «Кокон»', category:'vases', price:6200, desc:'Компактная ваза округлой формы, матовый финиш', badge:'Новинка', img:'https://images.unsplash.com/photo-1602024242516-fbc9d4fda4b6?w=500&q=80' },
-  { id:11, name:'Свеча в керамике', category:'gifts', price:2400, desc:'Соевая свеча в авторском керамическом сосуде', img:'https://images.unsplash.com/photo-1602607544604-71236269dad2?w=500&q=80' },
-  { id:12, name:'Панно «Волна»', category:'decor', price:9800, desc:'Настенное панно из керамических элементов, 40×60 см', img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=500&q=80' },
+// ===== FIREBASE INIT =====
+firebase.initializeApp({
+  apiKey:"AIzaSyC_C3HEWq0q46KpCW5L5ZPLVry079RFOYA",
+  authDomain:"terra-pottery.firebaseapp.com",
+  databaseURL:"https://terra-pottery-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId:"terra-pottery",
+  storageBucket:"terra-pottery.firebasestorage.app",
+  messagingSenderId:"163776401978",
+  appId:"1:163776401978:web:402da368bca55d8de59b03"
+});
+const db = firebase.database();
+const PASS = 'terra2026';
+const catN = {tableware:'Посуда',vases:'Вазы',decor:'Декор',gifts:'Подарки'};
+
+// ===== DEFAULT DATA =====
+const defProducts = [
+  {id:1,name:'Чашка «Рассвет»',category:'tableware',price:2800,desc:'Чашка 300 мл с персиковой глазурью',badge:'Хит',img:'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=500&q=80'},
+  {id:2,name:'Ваза «Каньон»',category:'vases',price:7500,desc:'Высокая ваза с текстурой песчаника, 32 см',img:'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=500&q=80'},
+  {id:3,name:'Тарелка «Дюна»',category:'tableware',price:3200,desc:'Обеденная тарелка с волнистым краем, 26 см',badge:'Новинка',img:'https://images.unsplash.com/photo-1609881092647-6a89e1e3c060?w=500&q=80'},
+  {id:4,name:'Кашпо «Гнездо»',category:'decor',price:4900,desc:'Кашпо для растений, диаметр 18 см',img:'https://images.unsplash.com/photo-1612196808214-b7e239e5a5e2?w=500&q=80'},
+  {id:5,name:'Пиала «Дзен»',category:'tableware',price:1900,desc:'Пиала для чая или матча',img:'https://images.unsplash.com/photo-1576020799627-aeac74d58064?w=500&q=80'},
+  {id:6,name:'Подсвечник «Арка»',category:'decor',price:3800,desc:'Подсвечник, молочная глазурь',img:'https://images.unsplash.com/photo-1607893378714-007fd47c8719?w=500&q=80'},
+  {id:7,name:'Набор «Утро»',category:'gifts',price:8900,desc:'Чайник + 2 чашки + блюдце',badge:'Подарок',img:'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=500&q=80'},
+  {id:8,name:'Ваза «Река»',category:'vases',price:5600,desc:'Органичная форма, глазурь с эффектом воды',img:'https://images.unsplash.com/photo-1612198188060-c7c2a3b66eae?w=500&q=80'},
+  {id:9,name:'Тарелка «Луна»',category:'tableware',price:2600,desc:'Десертная тарелка, 20 см',img:'https://images.unsplash.com/photo-1617791160505-6f00504e3519?w=500&q=80'},
+  {id:10,name:'Ваза «Кокон»',category:'vases',price:6200,desc:'Округлая форма, матовый финиш',badge:'Новинка',img:'https://images.unsplash.com/photo-1602024242516-fbc9d4fda4b6?w=500&q=80'},
+  {id:11,name:'Свеча в керамике',category:'gifts',price:2400,desc:'Соевая свеча в керамическом сосуде',img:'https://images.unsplash.com/photo-1602607544604-71236269dad2?w=500&q=80'},
+  {id:12,name:'Панно «Волна»',category:'decor',price:9800,desc:'Настенное панно, 40×60 см',img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=500&q=80'}
+];
+const defClasses = [
+  {id:1,name:'Знакомство с кругом',desc:'Первый опыт на гончарном круге. Создадите чашку или пиалу',duration:'2.5 часа',price:3500,img:'https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=600&q=80'},
+  {id:2,name:'Чайная церемония',desc:'Создайте набор для чайной церемонии: чайник, чашки, блюдце',duration:'4 часа',price:5800,img:'https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=600&q=80'},
+  {id:3,name:'Глазурование',desc:'Мастер-класс по работе с глазурями. Секреты цвета и текстуры',duration:'3 часа',price:4200,img:'https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=600&q=80'}
 ];
 
-// ===== LOAD/SAVE =====
-const STORAGE_KEY = 'terra_products';
-const ADMIN_PASS = 'terra2026';
+let products=[], classes=[], cart=[], activeFilter='all', loggedIn=false, payMethod='card';
 
-function loadProducts() {
-  try {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved) return JSON.parse(saved);
-  } catch(e) {}
-  return [...defaultProducts];
+// ===== FIREBASE LOAD + REALTIME =====
+function initData() {
+  // Products
+  db.ref('products').on('value', snap => {
+    const d = snap.val();
+    if (d) { products = Object.values(d); } else { products = [...defProducts]; db.ref('products').set(arrToObj(defProducts)); }
+    renderP(); if(loggedIn) renderAdmP();
+  });
+  // Classes
+  db.ref('classes').on('value', snap => {
+    const d = snap.val();
+    if (d) { classes = Object.values(d); } else { classes = [...defClasses]; db.ref('classes').set(arrToObj(defClasses)); }
+    renderC(); if(loggedIn) renderAdmC();
+  });
 }
 
-function saveProducts() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(products)); } catch(e) {}
-}
-
-let products = loadProducts();
-const catNames = { tableware:'Посуда', vases:'Вазы', decor:'Декор', gifts:'Подарки' };
-let cart = [];
-let activeFilter = 'all';
-let adminLoggedIn = false;
+function arrToObj(arr) { const o={}; arr.forEach(i => o[i.id]=i); return o; }
 
 // ===== RENDER PRODUCTS =====
-function renderProducts() {
-  const grid = document.getElementById('productsGrid');
-  const filtered = activeFilter === 'all' ? products : products.filter(p => p.category === activeFilter);
-  grid.innerHTML = filtered.map(p => `
-    <div class="product-card" onclick="openProductDetail(${p.id})">
-      <div class="product-image">
-        <img src="${p.img}" alt="${p.name}" loading="lazy">
-        ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
-      </div>
-      <div class="product-info">
-        <div class="product-category">${catNames[p.category] || p.category}</div>
-        <div class="product-name">${p.name}</div>
-        <div class="product-desc">${p.desc}</div>
-        <div class="product-footer">
-          <div class="product-price">${p.price.toLocaleString('ru-RU')} ₽</div>
-          <button class="add-to-cart" onclick="event.stopPropagation(); addToCart(${p.id})" title="В корзину">+</button>
-        </div>
-      </div>
-    </div>
-  `).join('');
+function renderP() {
+  const g=document.getElementById('pGrid');
+  const f=activeFilter==='all'?products:products.filter(p=>p.category===activeFilter);
+  if(!f.length){g.innerHTML='<div class="loading">Нет товаров</div>';return;}
+  g.innerHTML=f.map(p=>`<div class="pcard" onclick="openPD(${p.id})"><div class="pimg"><img src="${p.img}" alt="${p.name}" loading="lazy">${p.badge?`<div class="pbadge">${p.badge}</div>`:''}</div><div class="pinfo"><div class="pcat">${catN[p.category]||p.category}</div><div class="pname">${p.name}</div><div class="pdesc">${p.desc}</div><div class="pfooter"><div class="pprice">${p.price.toLocaleString('ru-RU')} ₽</div><button class="add-cart" onclick="event.stopPropagation();addCart(${p.id})" title="В корзину">+</button></div></div></div>`).join('');
+  // Render filters
+  const cats=new Set(products.map(p=>p.category));
+  document.getElementById('filters').innerHTML=`<button class="fbtn ${activeFilter==='all'?'active':''}" onclick="filterP('all')">Все</button>`+[...cats].map(c=>`<button class="fbtn ${activeFilter===c?'active':''}" onclick="filterP('${c}')">${catN[c]||c}</button>`).join('');
+}
+
+function filterP(c){activeFilter=c;renderP();}
+
+// ===== RENDER CLASSES =====
+function renderC() {
+  const g=document.getElementById('cGrid');
+  if(!classes.length){g.innerHTML='<div class="loading">Нет мастер-классов</div>';return;}
+  g.innerHTML=classes.map(c=>`<div class="ccard"><div class="ccimg"><img src="${c.img}" alt="${c.name}" loading="lazy"></div><div class="ccbody"><h3>${c.name}</h3><p>${c.desc}</p><div class="cmeta"><span class="cdur">${c.duration}</span><span class="cprice">${c.price.toLocaleString('ru-RU')} ₽</span></div></div></div>`).join('');
 }
 
 // ===== PRODUCT DETAIL =====
-function openProductDetail(id) {
-  const p = products.find(x => x.id === id);
-  if (!p) return;
-
-  // Fill image
-  const imgDiv = document.getElementById('pdImage');
-  imgDiv.innerHTML = `
-    <img src="${p.img}" alt="${p.name}">
-    ${p.badge ? `<div class="pd-image-badge">${p.badge}</div>` : ''}
-  `;
-
-  // Fill info
-  document.getElementById('pdCategory').textContent = catNames[p.category] || p.category;
-  document.getElementById('pdName').textContent = p.name;
-  document.getElementById('pdPrice').textContent = p.price.toLocaleString('ru-RU') + ' ₽';
-  
-  // Extended description
-  const extDesc = p.desc + '\n\nИзделие выполнено вручную мастерами нашей мастерской из натуральной глины с использованием авторских глазурей. Благодаря высокотемпературному обжигу при 1200°C каждый предмет отличается особой прочностью и долговечностью.\n\nКаждое изделие уникально — форма, оттенок и текстура могут незначительно отличаться, что подчёркивает ручную работу и делает ваш предмет единственным в своём роде.';
-  document.getElementById('pdDesc').innerHTML = extDesc.replace(/\n/g, '<br>');
-
-  // Cart button
-  const btn = document.getElementById('pdAddCart');
-  const goBtn = document.getElementById('pdGoCart');
-  goBtn.classList.remove('show');
-  btn.onclick = function() {
-    addToCart(id);
-    btn.textContent = '✓ Добавлено';
-    btn.style.background = '#5c4033';
-    goBtn.classList.add('show');
-    setTimeout(() => {
-      btn.textContent = 'Ещё в корзину';
-      btn.style.background = '';
-    }, 1500);
-  };
-
-  // Open
-  document.getElementById('pdOverlay').classList.add('open');
-  document.getElementById('pdModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
+function openPD(id) {
+  const p=products.find(x=>x.id===id); if(!p)return;
+  document.getElementById('pdImg').innerHTML=`<img src="${p.img}" alt="${p.name}">${p.badge?`<div class="pd-badge">${p.badge}</div>`:''}`;
+  document.getElementById('pdCat').textContent=catN[p.category]||p.category;
+  document.getElementById('pdName').textContent=p.name;
+  document.getElementById('pdPrice').textContent=p.price.toLocaleString('ru-RU')+' ₽';
+  document.getElementById('pdDesc').innerHTML=(p.desc+'<br><br>Изделие выполнено вручную из натуральной глины с авторскими глазурями. Обжиг при 1200°C обеспечивает прочность.<br><br>Каждое изделие уникально — форма и оттенок могут незначительно отличаться.').replace(/\n/g,'<br>');
+  const btn=document.getElementById('pdAdd'), go=document.getElementById('pdGo');
+  go.classList.remove('show');
+  btn.textContent='В корзину'; btn.style.background='';
+  btn.onclick=function(){addCart(id);btn.textContent='✓ Добавлено';btn.style.background='#5c4033';go.classList.add('show');setTimeout(()=>{btn.textContent='Ещё';btn.style.background='';},1500);};
+  document.getElementById('pdOv').classList.add('open');document.getElementById('pdMod').classList.add('open');document.body.style.overflow='hidden';
 }
-
-function closeProductDetail() {
-  document.getElementById('pdOverlay').classList.remove('open');
-  document.getElementById('pdModal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function filterProducts(cat) {
-  activeFilter = cat;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-  renderProducts();
-}
+function closePD(){document.getElementById('pdOv').classList.remove('open');document.getElementById('pdMod').classList.remove('open');document.body.style.overflow='';}
 
 // ===== CART =====
-function addToCart(id) {
-  const p = products.find(x => x.id === id);
-  if (!p) return;
-  const ex = cart.find(c => c.id === id);
-  if (ex) ex.qty++; else cart.push({ ...p, qty: 1 });
-  updateCart();
-  showToast(`${p.name} — в корзине`);
+function addCart(id){const p=products.find(x=>x.id===id);if(!p)return;const e=cart.find(c=>c.id===id);if(e)e.qty++;else cart.push({...p,qty:1});updCart();toast(p.name+' — в корзине');}
+function rmCart(id){cart=cart.filter(c=>c.id!==id);updCart();}
+function updCart(){
+  const cnt=cart.reduce((s,c)=>s+c.qty,0),tot=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  document.getElementById('cartCount').textContent=cnt;
+  const m=document.getElementById('cartCountM');if(m)m.textContent=cnt;
+  document.getElementById('cartTotal').textContent=tot.toLocaleString('ru-RU')+' ₽';
+  const el=document.getElementById('cartItems');
+  if(!cart.length){el.innerHTML='<div class="cart-empty">Корзина пуста</div>';}
+  else{el.innerHTML=cart.map(c=>`<div class="cart-item"><div class="ci-img"><img src="${c.img}" alt="${c.name}"></div><div class="ci-det"><div class="ci-name">${c.name}${c.qty>1?' × '+c.qty:''}</div><div class="ci-price">${(c.price*c.qty).toLocaleString('ru-RU')} ₽</div></div><button class="ci-rm" onclick="rmCart(${c.id})">✕</button></div>`).join('');}
+}
+function toggleCart(){document.getElementById('cartOv').classList.toggle('open');document.getElementById('cartPan').classList.toggle('open');}
+function checkout(){if(!cart.length){toast('Корзина пуста');return;}openCO();}
+
+// ===== CHECKOUT =====
+function openCO(){
+  document.getElementById('cartOv').classList.remove('open');document.getElementById('cartPan').classList.remove('open');
+  const tot=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  document.getElementById('coSum').innerHTML=cart.map(c=>`<div class="co-si"><span>${c.name} <span class="qty">× ${c.qty}</span></span><span class="pr">${(c.price*c.qty).toLocaleString('ru-RU')} ₽</span></div>`).join('')+`<div class="co-tot"><span>Итого:</span><span>${tot.toLocaleString('ru-RU')} ₽</span></div>`;
+  document.getElementById('coSubmit').disabled=false;document.getElementById('coSubmit').textContent='Подтвердить заказ';
+  document.getElementById('coOv').classList.add('open');document.getElementById('coMod').classList.add('open');
+}
+function closeCO(){document.getElementById('coOv').classList.remove('open');document.getElementById('coMod').classList.remove('open');}
+function selPay(el,m){payMethod=m;document.querySelectorAll('.pay-m').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');}
+
+function submitOrder(){
+  const name=document.getElementById('coName').value.trim(),phone=document.getElementById('coPhone').value.trim(),email=document.getElementById('coEmail').value.trim(),com=document.getElementById('coCom').value.trim();
+  const addr=[document.getElementById('coIdx').value.trim(),document.getElementById('coReg').value.trim(),document.getElementById('coCity').value.trim(),document.getElementById('coStr').value.trim(),document.getElementById('coHouse').value.trim(),document.getElementById('coApt').value.trim()].filter(Boolean).join(', ');
+  if(!name||name.length<2){toast('Укажите имя');return;}
+  const pd=phone.replace(/\D/g,'');if(pd.length<10){toast('Введите корректный телефон');return;}
+  if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)){toast('Введите корректный email');return;}
+
+  const btn=document.getElementById('coSubmit');btn.disabled=true;btn.textContent='Отправка...';
+  const orderId='T-'+Date.now().toString(36).toUpperCase();
+  const tot=cart.reduce((s,c)=>s+c.price*c.qty,0);
+  const payN={card:'На карту',cash:'При получении',sbp:'СБП'};
+  const items=cart.map(c=>c.name+' × '+c.qty+' = '+(c.price*c.qty).toLocaleString('ru-RU')+' ₽').join('\n');
+
+  // Save order to Firebase
+  db.ref('orders/'+orderId).set({id:orderId,date:new Date().toISOString(),name,phone,email,address:addr,payment:payN[payMethod],items:cart.map(c=>({name:c.name,qty:c.qty,price:c.price})),total:tot,comment:com});
+
+  // Send to Formspree
+  fetch('https://formspree.io/f/xjgppdnp',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name,email:email||'no-email@terra.ru',phone,message:'Заказ: '+orderId+'\n'+items+'\nИтого: '+tot.toLocaleString('ru-RU')+' руб.\nОплата: '+payN[payMethod]+'\nАдрес: '+(addr||'—')+'\nКомментарий: '+(com||'—')})}).catch(()=>{});
+
+  // Show success
+  closeCO();
+  ['coName','coPhone','coEmail','coIdx','coReg','coCity','coStr','coHouse','coApt','coCom'].forEach(id=>{document.getElementById(id).value='';});
+  cart=[];updCart();
+  showSuccess(orderId);
 }
 
-function removeFromCart(id) { cart = cart.filter(c => c.id !== id); updateCart(); }
-
-function updateCart() {
-  const count = cart.reduce((s, c) => s + c.qty, 0);
-  const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
-  document.getElementById('cartCount').textContent = count;
-  document.getElementById('cartTotal').textContent = total.toLocaleString('ru-RU') + ' ₽';
-  const el = document.getElementById('cartItems');
-  if (!cart.length) { el.innerHTML = '<div class="cart-empty">Корзина пуста</div>'; }
-  else {
-    el.innerHTML = cart.map(c => `
-      <div class="cart-item">
-        <div class="cart-item-img"><img src="${c.img}" alt="${c.name}"></div>
-        <div class="cart-item-details">
-          <div class="cart-item-name">${c.name}${c.qty > 1 ? ' × '+c.qty : ''}</div>
-          <div class="cart-item-price">${(c.price*c.qty).toLocaleString('ru-RU')} ₽</div>
-        </div>
-        <button class="cart-item-remove" onclick="removeFromCart(${c.id})">✕</button>
-      </div>
-    `).join('');
-  }
+function showSuccess(oid){
+  const ov=document.createElement('div');ov.id='succOv';
+  ov.style.cssText='position:fixed;inset:0;z-index:6000;background:rgba(45,36,32,.7);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .4s';
+  ov.innerHTML=`<div style="background:#fff;border-radius:20px;padding:3rem 2.5rem;max-width:440px;width:90%;text-align:center;box-shadow:0 30px 80px rgba(0,0,0,.25);transform:scale(.9);transition:transform .4s" id="succCard"><div style="font-size:4rem;margin-bottom:1rem">✅</div><h3 style="font-family:var(--font-d);font-size:1.6rem;color:#5c4033;margin-bottom:.6rem">Заказ оформлен!</h3><p style="font-size:.92rem;color:#9a8d82;line-height:1.6;margin-bottom:1.2rem">Мы свяжемся с вами для подтверждения</p><div style="display:inline-block;background:#f5efe6;padding:.5rem 1.5rem;border-radius:10px;font-family:var(--font-d);font-size:1.1rem;color:#c67d4a;font-weight:600;margin-bottom:1.5rem">${oid}</div><br><button onclick="document.getElementById('succOv').remove()" style="background:#c67d4a;color:#fff;border:none;padding:.9rem 2.5rem;border-radius:50px;font-family:var(--font-b);font-size:.85rem;cursor:pointer">Отлично!</button></div>`;
+  document.body.appendChild(ov);requestAnimationFrame(()=>{ov.style.opacity='1';document.getElementById('succCard').style.transform='scale(1)';});
+  setTimeout(()=>{if(document.getElementById('succOv')){ov.style.opacity='0';setTimeout(()=>ov.remove(),400);}},10000);
 }
 
-function toggleCart() {
-  document.getElementById('cartOverlay').classList.toggle('open');
-  document.getElementById('cartPanel').classList.toggle('open');
+// ===== CONTACT FORM =====
+function sendContact(){
+  const n=document.getElementById('cfName').value.trim(),e=document.getElementById('cfEmail').value.trim(),p=document.getElementById('cfPhone').value.trim(),m=document.getElementById('cfMsg').value.trim();
+  if(!n||n.length<2){toast('Укажите имя');return;}
+  fetch('https://formspree.io/f/xjgppdnp',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name:n,email:e||'no-email@terra.ru',phone:p||'—',message:'Заявка с сайта:\n'+(m||'—')})}).then(r=>{if(r.ok)toast('Спасибо! Мы скоро ответим');else toast('Ошибка отправки');}).catch(()=>toast('Нет соединения'));
+  ['cfName','cfEmail','cfPhone','cfMsg'].forEach(id=>{document.getElementById(id).value='';});
 }
 
-function checkout() {
-  if (!cart.length) { showToast('Корзина пуста'); return; }
-  openCheckout();
+// ===== UTILS =====
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
+function fmtPhone(inp){let d=inp.value.replace(/\D/g,'');if(d[0]==='8')d='7'+d.slice(1);if(d.length>11)d=d.slice(0,11);let f='';if(d.length>0)f='+'+d[0];if(d.length>1)f+=' ('+d.slice(1,4);if(d.length>4)f+=') '+d.slice(4,7);if(d.length>7)f+='-'+d.slice(7,9);if(d.length>9)f+='-'+d.slice(9,11);inp.value=f;}
+
+// ===== ADMIN =====
+function openAdm(){document.getElementById('admOv').classList.add('open');document.getElementById('admPan').classList.add('open');if(loggedIn){renderAdmP();renderAdmC();}}
+function closeAdm(){document.getElementById('admOv').classList.remove('open');document.getElementById('admPan').classList.remove('open');}
+function doLogin(){if(document.getElementById('admPass').value===PASS){loggedIn=true;document.getElementById('admLogin').style.display='none';document.getElementById('admContent').style.display='block';renderAdmP();}else{document.getElementById('logErr').style.display='block';setTimeout(()=>document.getElementById('logErr').style.display='none',2000);}}
+function switchTab(t){document.getElementById('tabProd').style.display=t==='prod'?'block':'none';document.getElementById('tabCls').style.display=t==='cls'?'block':'none';document.getElementById('tProd').classList.toggle('active',t==='prod');document.getElementById('tCls').classList.toggle('active',t==='cls');if(t==='prod')renderAdmP();if(t==='cls')renderAdmC();}
+
+// Admin Products
+function renderAdmP(){
+  document.getElementById('sTotal').textContent=products.length;
+  document.getElementById('sCats').textContent=new Set(products.map(p=>p.category)).size;
+  document.getElementById('sAvg').textContent=products.length?Math.round(products.reduce((s,p)=>s+p.price,0)/products.length).toLocaleString('ru-RU')+' ₽':'0';
+  document.getElementById('admPList').innerHTML=products.map(p=>`<div class="adm-row"><div class="adm-thumb"><img src="${p.img}" alt=""></div><div class="adm-rinfo"><strong>${p.name}</strong><small>${catN[p.category]||p.category}${p.badge?' · '+p.badge:''}</small></div><div class="adm-rprice">${p.price.toLocaleString('ru-RU')} ₽</div><div class="adm-racts"><button class="adm-btn-sm" onclick="editP(${p.id})">✏️</button><button class="adm-btn-sm del" onclick="delP(${p.id})">🗑️</button></div></div>`).join('');
+  document.getElementById('pListView').style.display='block';document.getElementById('pForm').classList.remove('active');
+}
+function showPF(id){
+  document.getElementById('pListView').style.display='none';document.getElementById('pForm').classList.add('active');
+  if(id){const p=products.find(x=>x.id===id);document.getElementById('pFTitle').textContent='Редактировать';document.getElementById('fId').value=p.id;document.getElementById('fName').value=p.name;document.getElementById('fPrice').value=p.price;document.getElementById('fCat').value=p.category;document.getElementById('fBadge').value=p.badge||'';document.getElementById('fDesc').value=p.desc;document.getElementById('fImg').value=p.img;showImgPrev('p',p.img);}
+  else{document.getElementById('pFTitle').textContent='Новый товар';['fId','fName','fPrice','fDesc','fImg'].forEach(i=>document.getElementById(i).value='');document.getElementById('fCat').value='tableware';document.getElementById('fBadge').value='';resetImgUp('p');}
+}
+function hidePF(){document.getElementById('pListView').style.display='block';document.getElementById('pForm').classList.remove('active');resetImgUp('p');}
+function editP(id){showPF(id);}
+function delP(id){const p=products.find(x=>x.id===id);if(!confirm('Удалить «'+p.name+'»?'))return;db.ref('products/'+id).remove();toast('Товар удалён');}
+function saveP(){
+  const name=document.getElementById('fName').value.trim(),price=parseInt(document.getElementById('fPrice').value),cat=document.getElementById('fCat').value,badge=document.getElementById('fBadge').value,desc=document.getElementById('fDesc').value.trim(),img=document.getElementById('fImg').value,eid=document.getElementById('fId').value;
+  if(!name){toast('Введите название');return;}if(!price||price<=0){toast('Укажите цену');return;}if(!img){toast('Добавьте фото');return;}
+  if(eid){db.ref('products/'+eid).update({name,price,category:cat,badge:badge||'',desc,img});toast('Товар обновлён');}
+  else{const maxId=products.reduce((m,p)=>Math.max(m,p.id),0)+1;db.ref('products/'+maxId).set({id:maxId,name,price,category:cat,badge:badge||'',desc,img});toast('Товар добавлен');}
+  hidePF();
 }
 
-// ===== CHECKOUT MODAL =====
-let selectedPayMethod = 'card';
-
-function openCheckout() {
-  // Close cart panel
-  document.getElementById('cartOverlay').classList.remove('open');
-  document.getElementById('cartPanel').classList.remove('open');
-
-  // Build summary
-  const summary = document.getElementById('checkoutSummary');
-  const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
-  summary.innerHTML = cart.map(c => `
-    <div class="checkout-summary-item">
-      <span>${c.name} <span class="qty">× ${c.qty}</span></span>
-      <span class="price">${(c.price * c.qty).toLocaleString('ru-RU')} ₽</span>
-    </div>
-  `).join('') + `
-    <div class="checkout-summary-total">
-      <span>Итого:</span>
-      <span>${total.toLocaleString('ru-RU')} ₽</span>
-    </div>
-  `;
-
-  // Reset form
-  document.getElementById('checkoutForm').style.display = 'flex';
-  document.getElementById('checkoutSuccess').classList.remove('show');
-  document.getElementById('checkoutSubmit').disabled = false;
-  document.getElementById('checkoutSubmit').textContent = 'Подтвердить заказ';
-
-  // Show modal
-  document.getElementById('checkoutOverlay').classList.add('open');
-  document.getElementById('checkoutModal').classList.add('open');
+// Admin Classes
+function renderAdmC(){
+  document.getElementById('sClasses').textContent=classes.length;
+  document.getElementById('admCList').innerHTML=classes.map(c=>`<div class="adm-row"><div class="adm-thumb"><img src="${c.img}" alt=""></div><div class="adm-rinfo"><strong>${c.name}</strong><small>${c.duration} · ${c.price.toLocaleString('ru-RU')} ₽</small></div><div class="adm-rprice">${c.price.toLocaleString('ru-RU')} ₽</div><div class="adm-racts"><button class="adm-btn-sm" onclick="editC(${c.id})">✏️</button><button class="adm-btn-sm del" onclick="delC(${c.id})">🗑️</button></div></div>`).join('');
+  document.getElementById('cListView').style.display='block';document.getElementById('cForm').classList.remove('active');
 }
-
-function closeCheckout() {
-  document.getElementById('checkoutOverlay').classList.remove('open');
-  document.getElementById('checkoutModal').classList.remove('open');
+function showCF(id){
+  document.getElementById('cListView').style.display='none';document.getElementById('cForm').classList.add('active');
+  if(id){const c=classes.find(x=>x.id===id);document.getElementById('cFTitle').textContent='Редактировать';document.getElementById('cId').value=c.id;document.getElementById('cName').value=c.name;document.getElementById('cDesc').value=c.desc;document.getElementById('cDur').value=c.duration;document.getElementById('cPrice').value=c.price;document.getElementById('cImg').value=c.img;showImgPrev('c',c.img);}
+  else{document.getElementById('cFTitle').textContent='Новый мастер-класс';['cId','cName','cDesc','cDur','cPrice','cImg'].forEach(i=>document.getElementById(i).value='');resetImgUp('c');}
 }
-
-function selectPay(el, method) {
-  selectedPayMethod = method;
-  document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('selected'));
-  el.classList.add('selected');
-}
-
-function submitOrder() {
-  console.log('submitOrder вызван');
-  const name = document.getElementById('coName').value.trim();
-  const phone = document.getElementById('coPhone').value.trim();
-  const email = document.getElementById('coEmail').value.trim();
-  const comment = document.getElementById('coComment').value.trim();
-
-  // Collect address parts
-  const addrIndex = document.getElementById('coIndex').value.trim();
-  const addrRegion = document.getElementById('coRegion').value.trim();
-  const addrCity = document.getElementById('coCity').value.trim();
-  const addrStreet = document.getElementById('coStreet').value.trim();
-  const addrHouse = document.getElementById('coHouse').value.trim();
-  const addrApt = document.getElementById('coApt').value.trim();
-  const address = [addrIndex, addrRegion, addrCity, addrStreet, addrHouse, addrApt].filter(Boolean).join(', ');
-
-  console.log('Данные:', {name, phone, email, address});
-
-  // --- VALIDATION ---
-
-  // Name: only letters, spaces, hyphens, min 2 chars
-  if (!name || name.length < 2) { showToast('Укажите ваше имя (минимум 2 буквы)'); console.log('Ошибка: имя'); return; }
-  if (!/^[а-яА-ЯёЁa-zA-Z\s\-]+$/.test(name)) { showToast('Имя может содержать только буквы'); console.log('Ошибка: формат имени'); return; }
-
-  // Phone: must contain at least 7 digits
-  const phoneDigits = phone.replace(/\D/g, '');
-  if (!phone) { showToast('Укажите номер телефона'); console.log('Ошибка: нет телефона'); return; }
-  if (phoneDigits.length < 10 || phoneDigits.length > 15) { showToast('Введите корректный номер телефона (10–15 цифр)'); console.log('Ошибка: телефон', phoneDigits.length, 'цифр'); return; }
-
-  // Email: if filled, must be valid format
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { showToast('Введите корректный email'); console.log('Ошибка: email'); return; }
-
-  // Address: if any part filled, city is required
-  if ((addrStreet || addrHouse || addrApt || addrRegion || addrIndex) && !addrCity) { showToast('Укажите город'); console.log('Ошибка: нет города'); return; }
-  
-  // Index: if filled, must be 6 digits
-  if (addrIndex && addrIndex.length !== 6) { showToast('Индекс должен содержать 6 цифр'); console.log('Ошибка: индекс'); return; }
-
-  // Comment: max 500 chars
-  if (comment.length > 500) { showToast('Комментарий слишком длинный (макс. 500 символов)'); return; }
-
-  console.log('Валидация пройдена');
-
-  const btn = document.getElementById('checkoutSubmit');
-  btn.disabled = true;
-  btn.textContent = 'Отправка...';
-
-  // Generate order ID
-  const orderId = 'T-' + Date.now().toString(36).toUpperCase();
-  const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
-  const payNames = { card: 'Перевод на карту', cash: 'При получении', sbp: 'СБП' };
-
-  // Build order details text
-  const orderItems = cart.map(c => `${c.name} × ${c.qty} = ${(c.price * c.qty).toLocaleString('ru-RU')} ₽`).join('\n');
-  const orderText = `
-ЗАКАЗ ${orderId}
-========================
-${orderItems}
-------------------------
-ИТОГО: ${total.toLocaleString('ru-RU')} ₽
-========================
-Имя: ${name}
-Телефон: ${phone}
-Email: ${email || '—'}
-Адрес: ${address || '—'}
-Оплата: ${payNames[selectedPayMethod]}
-Комментарий: ${comment || '—'}
-  `.trim();
-
-  // Send via Formspree (replace YOUR_FORM_ID with actual ID after registration)
-  // For now, simulate sending + save to localStorage as backup
-  const order = {
-    id: orderId,
-    date: new Date().toISOString(),
-    name, phone, email, address, comment,
-    payMethod: selectedPayMethod,
-    items: cart.map(c => ({ name: c.name, qty: c.qty, price: c.price })),
-    total
-  };
-
-  // Save order locally
-  try {
-    const orders = JSON.parse(localStorage.getItem('terra_orders') || '[]');
-    orders.push({
-      id: orderId, date: new Date().toISOString(),
-      name, phone, email, address, comment,
-      payMethod: selectedPayMethod,
-      items: cart.map(c => ({ name: c.name, qty: c.qty, price: c.price })),
-      total
-    });
-    localStorage.setItem('terra_orders', JSON.stringify(orders));
-  } catch(e) {}
-
-  // Send via Formspree
-  const msg = 'Заказ: ' + orderId + '\nТовары:\n' + orderItems + '\nИтого: ' + total.toLocaleString('ru-RU') + ' руб.\nОплата: ' + payNames[selectedPayMethod] + '\nАдрес: ' + (address || '—') + '\nКомментарий: ' + (comment || '—');
-
-  // Close modal and show success immediately
-  showOrderSuccess(orderId);
-
-  // Send in background
-  try {
-    fetch('https://formspree.io/f/xjgppdnp', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify({
-        name: name,
-        email: email || 'no-email@terra.ru',
-        phone: phone,
-        message: msg
-      })
-    }).then(function(r) {
-      if (r.ok) {
-        console.log('Formspree: заказ отправлен');
-      } else {
-        console.error('Formspree ошибка:', r.status);
-      }
-    }).catch(function(e) {
-      console.error('Formspree недоступен:', e);
-    });
-  } catch(e) {
-    console.error('Fetch exception:', e);
-  }
-}
-
-function showOrderSuccess(orderId) {
-  // Close checkout modal
-  document.getElementById('checkoutOverlay').classList.remove('open');
-  document.getElementById('checkoutModal').classList.remove('open');
-
-  // Reset form for next time
-  document.getElementById('checkoutForm').style.display = 'flex';
-  document.getElementById('checkoutSuccess').classList.remove('show');
-  document.getElementById('checkoutSubmit').disabled = false;
-  document.getElementById('checkoutSubmit').textContent = 'Подтвердить заказ';
-  ['coName','coPhone','coEmail','coIndex','coRegion','coCity','coStreet','coHouse','coApt','coComment'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
-
-  // Clear cart
-  cart = [];
-  updateCart();
-
-  // Show success overlay on page
-  showSuccessOverlay(orderId);
-}
-
-function showSuccessOverlay(orderId) {
-  // Create overlay
-  const overlay = document.createElement('div');
-  overlay.id = 'successOverlay';
-  overlay.style.cssText = `
-    position: fixed; inset: 0; z-index: 6000;
-    background: rgba(45,36,32,0.7); backdrop-filter: blur(8px);
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0; transition: opacity 0.4s;
-  `;
-
-  overlay.innerHTML = `
-    <div style="
-      background: #fff; border-radius: 20px; padding: 3rem 2.5rem;
-      max-width: 440px; width: 90%; text-align: center;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.25);
-      transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
-    " id="successCard">
-      <div style="font-size: 4rem; margin-bottom: 1rem;">✅</div>
-      <h3 style="font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #5c4033; margin-bottom: 0.6rem;">Заказ оформлен!</h3>
-      <p style="font-size: 0.92rem; color: #9a8d82; line-height: 1.6; margin-bottom: 1.2rem;">Мы свяжемся с вами в ближайшее время для подтверждения заказа и уточнения деталей оплаты</p>
-      <div style="display: inline-block; background: #f5efe6; padding: 0.5rem 1.5rem; border-radius: 10px; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #c67d4a; font-weight: 600; margin-bottom: 1.5rem;">${orderId}</div>
-      <br>
-      <button onclick="document.getElementById('successOverlay').remove()" style="
-        background: #c67d4a; color: white; border: none;
-        padding: 0.9rem 2.5rem; border-radius: 50px;
-        font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
-        cursor: pointer; transition: 0.3s; letter-spacing: 0.04em;
-      " onmouseover="this.style.background='#a86638'" onmouseout="this.style.background='#c67d4a'">Отлично!</button>
-    </div>
-  `;
-
-  document.body.appendChild(overlay);
-
-  // Animate in
-  requestAnimationFrame(() => {
-    overlay.style.opacity = '1';
-    document.getElementById('successCard').style.transform = 'scale(1)';
-  });
-
-  // Auto-close after 10 seconds
-  setTimeout(() => {
-    if (document.getElementById('successOverlay')) {
-      overlay.style.opacity = '0';
-      setTimeout(() => overlay.remove(), 400);
-    }
-  }, 10000);
-}
-
-function toggleMenu() { document.getElementById('mainNav').classList.toggle('open'); }
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
-}
-
-function sendForm(e) {
-  e.preventDefault();
-  const inputs = document.querySelectorAll('#contactForm input, #contactForm textarea');
-  const name = inputs[0].value.trim();
-  const email = inputs[1].value.trim();
-  const phone = inputs[2].value.trim();
-  const message = inputs[3].value.trim();
-
-  if (!name || name.length < 2) { showToast('Укажите ваше имя (минимум 2 буквы)'); return; }
-  if (!/^[а-яА-ЯёЁa-zA-Z\s\-]+$/.test(name)) { showToast('Имя может содержать только буквы'); return; }
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { showToast('Введите корректный email'); return; }
-  if (phone) {
-    const pd = phone.replace(/\D/g, '');
-    if (pd.length < 10 || pd.length > 15) { showToast('Введите корректный номер телефона'); return; }
-  }
-
-  fetch('https://formspree.io/f/xjgppdnp', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: JSON.stringify({
-      name: name,
-      email: email || 'no-email@terra.ru',
-      phone: phone || '—',
-      message: 'Заявка с сайта:\n' + (message || '—')
-    })
-  }).then(function(r) {
-    if (r.ok) showToast('Спасибо! Мы скоро ответим');
-    else showToast('Ошибка отправки, попробуйте позже');
-  }).catch(function() {
-    showToast('Нет соединения, попробуйте позже');
-  });
-
-  inputs.forEach(i => i.value = '');
-}
-
-// ===== PHONE FORMATTER =====
-function formatPhone(input) {
-  let digits = input.value.replace(/\D/g, '');
-  
-  // Auto-add 7 if starts with 8 or nothing
-  if (digits.length > 0 && digits[0] === '8') digits = '7' + digits.slice(1);
-  if (digits.length > 11) digits = digits.slice(0, 11);
-
-  let formatted = '';
-  if (digits.length > 0) formatted = '+' + digits[0];
-  if (digits.length > 1) formatted += ' (' + digits.slice(1, 4);
-  if (digits.length > 4) formatted += ') ' + digits.slice(4, 7);
-  if (digits.length > 7) formatted += '-' + digits.slice(7, 9);
-  if (digits.length > 9) formatted += '-' + digits.slice(9, 11);
-
-  input.value = formatted;
-}
-
-document.querySelectorAll('#mainNav a').forEach(a =>
-  a.addEventListener('click', () => document.getElementById('mainNav').classList.remove('open'))
-);
-
-// ============================
-// ===== ADMIN PANEL =====
-// ============================
-
-function openAdmin() {
-  document.getElementById('adminOverlay').classList.add('open');
-  document.getElementById('adminPanel').classList.add('open');
-  if (adminLoggedIn) {
-    renderAdminList();
-  }
-}
-
-function closeAdmin() {
-  document.getElementById('adminOverlay').classList.remove('open');
-  document.getElementById('adminPanel').classList.remove('open');
-  hideForm();
-}
-
-function doLogin() {
-  const pass = document.getElementById('adminPass').value;
-  if (pass === ADMIN_PASS) {
-    adminLoggedIn = true;
-    document.getElementById('adminLogin').style.display = 'none';
-    document.getElementById('adminContent').style.display = 'block';
-    renderAdminList();
-  } else {
-    document.getElementById('loginError').style.display = 'block';
-    document.getElementById('adminPass').value = '';
-    setTimeout(() => document.getElementById('loginError').style.display = 'none', 2000);
-  }
-}
-
-function renderAdminList() {
-  // Stats
-  document.getElementById('statTotal').textContent = products.length;
-  const cats = new Set(products.map(p => p.category));
-  document.getElementById('statCats').textContent = cats.size;
-  const avg = products.length ? Math.round(products.reduce((s,p) => s + p.price, 0) / products.length) : 0;
-  document.getElementById('statAvg').textContent = avg.toLocaleString('ru-RU') + ' ₽';
-
-  // List
-  const list = document.getElementById('adminProductList');
-  list.innerHTML = products.map(p => `
-    <div class="admin-product-row">
-      <div class="admin-product-thumb"><img src="${p.img}" alt="${p.name}"></div>
-      <div class="admin-product-info">
-        <strong>${p.name}</strong>
-        <small>${catNames[p.category] || p.category}${p.badge ? ' · ' + p.badge : ''}</small>
-      </div>
-      <div class="admin-product-price">${p.price.toLocaleString('ru-RU')} ₽</div>
-      <div class="admin-row-actions">
-        <button class="admin-btn-sm" onclick="editProduct(${p.id})" title="Редактировать">✏️</button>
-        <button class="admin-btn-sm delete" onclick="deleteProduct(${p.id})" title="Удалить">🗑️</button>
-      </div>
-    </div>
-  `).join('');
-
-  document.getElementById('adminListView').style.display = 'block';
-  document.getElementById('adminForm').classList.remove('active');
-}
-
-function showForm(id) {
-  document.getElementById('adminListView').style.display = 'none';
-  document.getElementById('adminForm').classList.add('active');
-
-  if (id) {
-    const p = products.find(x => x.id === id);
-    document.getElementById('formTitle').textContent = 'Редактировать товар';
-    document.getElementById('fId').value = p.id;
-    document.getElementById('fName').value = p.name;
-    document.getElementById('fPrice').value = p.price;
-    document.getElementById('fCategory').value = p.category;
-    document.getElementById('fBadge').value = p.badge || '';
-    document.getElementById('fDesc').value = p.desc;
-    document.getElementById('fImg').value = p.img;
-    showImagePreview(p.img);
-  } else {
-    document.getElementById('formTitle').textContent = 'Новый товар';
-    document.getElementById('fId').value = '';
-    document.getElementById('fName').value = '';
-    document.getElementById('fPrice').value = '';
-    document.getElementById('fCategory').value = 'tableware';
-    document.getElementById('fBadge').value = '';
-    document.getElementById('fDesc').value = '';
-    document.getElementById('fImg').value = '';
-    resetImageUpload();
-  }
-}
-
-function hideForm() {
-  document.getElementById('adminListView').style.display = 'block';
-  document.getElementById('adminForm').classList.remove('active');
-  resetImageUpload();
-}
-
-function editProduct(id) { showForm(id); }
-
-function deleteProduct(id) {
-  const p = products.find(x => x.id === id);
-  if (!confirm(`Удалить «${p.name}»?`)) return;
-  products = products.filter(x => x.id !== id);
-  saveProducts();
-  renderProducts();
-  renderAdminList();
-  showToast('Товар удалён');
-}
-
-function saveProduct() {
-  const name = document.getElementById('fName').value.trim();
-  const price = parseInt(document.getElementById('fPrice').value);
-  const category = document.getElementById('fCategory').value;
-  const badge = document.getElementById('fBadge').value;
-  const desc = document.getElementById('fDesc').value.trim();
-  const img = document.getElementById('fImg').value;
-  const editId = document.getElementById('fId').value;
-
-  if (!name) { showToast('Введите название'); return; }
-  if (!price || price <= 0) { showToast('Укажите цену'); return; }
-  if (!img) { showToast('Добавьте фото товара'); return; }
-
-  if (editId) {
-    // Edit existing
-    const p = products.find(x => x.id === parseInt(editId));
-    if (p) {
-      p.name = name;
-      p.price = price;
-      p.category = category;
-      p.badge = badge || '';
-      p.desc = desc;
-      p.img = img;
-    }
-    showToast('Товар обновлён');
-  } else {
-    // Add new
-    const maxId = products.reduce((m, p) => Math.max(m, p.id), 0);
-    products.push({ id: maxId + 1, name, price, category, badge: badge || '', desc, img });
-    showToast('Товар добавлен');
-  }
-
-  saveProducts();
-  renderProducts();
-  renderAdminList();
+function hideCF(){document.getElementById('cListView').style.display='block';document.getElementById('cForm').classList.remove('active');resetImgUp('c');}
+function editC(id){showCF(id);}
+function delC(id){const c=classes.find(x=>x.id===id);if(!confirm('Удалить «'+c.name+'»?'))return;db.ref('classes/'+id).remove();toast('Мастер-класс удалён');}
+function saveC(){
+  const name=document.getElementById('cName').value.trim(),desc=document.getElementById('cDesc').value.trim(),dur=document.getElementById('cDur').value.trim(),price=parseInt(document.getElementById('cPrice').value),img=document.getElementById('cImg').value,eid=document.getElementById('cId').value;
+  if(!name){toast('Введите название');return;}if(!dur){toast('Укажите длительность');return;}if(!price||price<=0){toast('Укажите цену');return;}if(!img){toast('Добавьте фото');return;}
+  if(eid){db.ref('classes/'+eid).update({name,desc,duration:dur,price,img});toast('Обновлено');}
+  else{const maxId=classes.reduce((m,c)=>Math.max(m,c.id),0)+1;db.ref('classes/'+maxId).set({id:maxId,name,desc,duration:dur,price,img});toast('Мастер-класс добавлен');}
+  hideCF();
 }
 
 // ===== IMAGE HANDLING =====
-function handleImage(e) {
-  const file = e.target.files[0];
-  if (!file) return;
-
-  if (file.size > 5 * 1024 * 1024) {
-    showToast('Файл слишком большой (макс. 5 МБ)');
-    return;
-  }
-
-  const reader = new FileReader();
-  reader.onload = function(ev) {
-    document.getElementById('fImg').value = ev.target.result;
-    showImagePreview(ev.target.result);
-  };
-  reader.readAsDataURL(file);
+function hImg(e,type){
+  const file=e.target.files[0];if(!file)return;if(file.size>5*1024*1024){toast('Файл слишком большой');return;}
+  const r=new FileReader();r.onload=function(ev){document.getElementById(type==='p'?'fImg':'cImg').value=ev.target.result;showImgPrev(type,ev.target.result);};r.readAsDataURL(file);
+}
+function showImgPrev(type,src){
+  const up=document.getElementById(type==='p'?'pImgUp':'cImgUp');up.classList.add('has');
+  document.getElementById(type==='p'?'pUIco':'cUIco').style.display='none';
+  document.getElementById(type==='p'?'pUTxt':'cUTxt').style.display='none';
+  up.querySelector('.uhint').style.display='none';
+  let prev=up.querySelector('.adm-img-prev');if(!prev){prev=document.createElement('img');prev.className='adm-img-prev';up.appendChild(prev);}prev.src=src;
+}
+function resetImgUp(type){
+  const up=document.getElementById(type==='p'?'pImgUp':'cImgUp');up.classList.remove('has');
+  document.getElementById(type==='p'?'pUIco':'cUIco').style.display='';
+  document.getElementById(type==='p'?'pUTxt':'cUTxt').style.display='';
+  up.querySelector('.uhint').style.display='';
+  const prev=up.querySelector('.adm-img-prev');if(prev)prev.remove();
+  document.getElementById(type==='p'?'pImgIn':'cImgIn').value='';
 }
 
-function showImagePreview(src) {
-  const upload = document.getElementById('imgUpload');
-  upload.classList.add('has-image');
-  document.getElementById('uploadIcon').style.display = 'none';
-  document.getElementById('uploadText').style.display = 'none';
-  upload.querySelector('.upload-hint').style.display = 'none';
+// ===== NAV =====
+document.querySelectorAll('#mainNav a').forEach(a=>a.addEventListener('click',()=>document.getElementById('mainNav').classList.remove('open')));
 
-  let preview = upload.querySelector('.admin-img-preview');
-  if (!preview) {
-    preview = document.createElement('img');
-    preview.className = 'admin-img-preview';
-    upload.appendChild(preview);
-  }
-  preview.src = src;
-}
-
-function resetImageUpload() {
-  const upload = document.getElementById('imgUpload');
-  upload.classList.remove('has-image');
-  document.getElementById('uploadIcon').style.display = '';
-  document.getElementById('uploadText').style.display = '';
-  upload.querySelector('.upload-hint').style.display = '';
-  const preview = upload.querySelector('.admin-img-preview');
-  if (preview) preview.remove();
-  document.getElementById('imgInput').value = '';
-}
-
-// Drag and drop
-const imgUpload = document.getElementById('imgUpload');
-imgUpload.addEventListener('dragover', e => { e.preventDefault(); imgUpload.style.borderColor = '#c67d4a'; });
-imgUpload.addEventListener('dragleave', () => { imgUpload.style.borderColor = ''; });
-imgUpload.addEventListener('drop', e => {
-  e.preventDefault();
-  imgUpload.style.borderColor = '';
-  const file = e.dataTransfer.files[0];
-  if (file && file.type.startsWith('image/')) {
-    document.getElementById('imgInput').files = e.dataTransfer.files;
-    handleImage({ target: { files: [file] } });
-  }
-});
-
-// ===== SECRET ADMIN ACCESS =====
-
-// Method 1: URL ?admin
-if (window.location.search.includes('admin')) {
-  openAdmin();
-}
-
-// Method 2: Type the word "terra" anywhere on the page
-let secretBuffer = '';
-document.addEventListener('keydown', function(e) {
-  // ESC to close modals
-  if (e.key === 'Escape') {
-    if (document.getElementById('pdModal').classList.contains('open')) { closeProductDetail(); return; }
-    if (document.getElementById('checkoutModal').classList.contains('open')) { closeCheckout(); return; }
-    if (document.getElementById('cartPanel').classList.contains('open')) { toggleCart(); return; }
-    if (document.getElementById('adminPanel').classList.contains('open')) { closeAdmin(); return; }
-  }
-
-  // Ignore if typing in an input/textarea
-  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-  
-  secretBuffer += e.key.toLowerCase();
-  // Keep only last 5 characters
-  if (secretBuffer.length > 5) secretBuffer = secretBuffer.slice(-5);
-  
-  if (secretBuffer === 'terra') {
-    secretBuffer = '';
-    openAdmin();
-  }
+// ===== SECRET ACCESS =====
+if(window.location.search.includes('admin'))openAdm();
+let sb='';document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){if(document.getElementById('pdMod').classList.contains('open')){closePD();return;}if(document.getElementById('coMod').classList.contains('open')){closeCO();return;}if(document.getElementById('cartPan').classList.contains('open')){toggleCart();return;}if(document.getElementById('admPan').classList.contains('open')){closeAdm();return;}}
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  sb+=e.key.toLowerCase();if(sb.length>10)sb=sb.slice(-10);
+  if(sb.endsWith('terra')||sb.endsWith('admin')){sb='';openAdm();}
 });
 
 // ===== INIT =====
-renderProducts();
+initData();
 </script>
-
 </body>
 </html>
