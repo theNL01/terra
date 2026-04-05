@@ -1090,20 +1090,20 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
       <div class="checkout-row">
         <div class="checkout-field">
           <label>Имя *</label>
-          <input type="text" id="coName" placeholder="Ваше имя" required>
+          <input type="text" id="coName" placeholder="Ваше имя" required maxlength="50" autocomplete="name" oninput="this.value=this.value.replace(/[^а-яА-ЯёЁa-zA-Z\s\-]/g,'')">
         </div>
         <div class="checkout-field">
           <label>Телефон *</label>
-          <input type="tel" id="coPhone" placeholder="+7 (___) ___-__-__" required>
+          <input type="tel" id="coPhone" placeholder="+7 (999) 123-45-67" required maxlength="18" autocomplete="tel" oninput="formatPhone(this)">
         </div>
       </div>
       <div class="checkout-field">
         <label>Email</label>
-        <input type="email" id="coEmail" placeholder="email@example.com">
+        <input type="email" id="coEmail" placeholder="email@example.com" maxlength="100" autocomplete="email">
       </div>
       <div class="checkout-field">
         <label>Адрес доставки</label>
-        <input type="text" id="coAddress" placeholder="Город, улица, дом, квартира">
+        <input type="text" id="coAddress" placeholder="Город, улица, дом, квартира" maxlength="200" autocomplete="street-address">
       </div>
 
       <label>Способ оплаты</label>
@@ -1127,7 +1127,7 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
 
       <div class="checkout-field">
         <label>Комментарий к заказу</label>
-        <textarea id="coComment" placeholder="Пожелания, удобное время доставки..."></textarea>
+        <textarea id="coComment" placeholder="Пожелания, удобное время доставки..." maxlength="500"></textarea>
       </div>
 
       <button class="checkout-submit" id="checkoutSubmit" onclick="submitOrder()">
@@ -1439,8 +1439,25 @@ function submitOrder() {
   const address = document.getElementById('coAddress').value.trim();
   const comment = document.getElementById('coComment').value.trim();
 
-  if (!name) { showToast('Укажите ваше имя'); return; }
+  // --- VALIDATION ---
+
+  // Name: only letters, spaces, hyphens, min 2 chars
+  if (!name || name.length < 2) { showToast('Укажите ваше имя (минимум 2 буквы)'); return; }
+  if (!/^[а-яА-ЯёЁa-zA-Z\s\-]+$/.test(name)) { showToast('Имя может содержать только буквы'); return; }
+
+  // Phone: must contain at least 7 digits
+  const phoneDigits = phone.replace(/\D/g, '');
   if (!phone) { showToast('Укажите номер телефона'); return; }
+  if (phoneDigits.length < 10 || phoneDigits.length > 15) { showToast('Введите корректный номер телефона (10–15 цифр)'); return; }
+
+  // Email: if filled, must be valid format
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { showToast('Введите корректный email'); return; }
+
+  // Address: if filled, min 5 chars, no gibberish (must contain at least one letter)
+  if (address && (address.length < 5 || !/[а-яА-ЯёЁa-zA-Z]/.test(address))) { showToast('Введите корректный адрес доставки'); return; }
+
+  // Comment: max 500 chars
+  if (comment.length > 500) { showToast('Комментарий слишком длинный (макс. 500 символов)'); return; }
 
   const btn = document.getElementById('checkoutSubmit');
   btn.disabled = true;
@@ -1482,40 +1499,47 @@ Email: ${email || '—'}
   // Save order locally
   try {
     const orders = JSON.parse(localStorage.getItem('terra_orders') || '[]');
-    orders.push(order);
+    orders.push({
+      id: orderId, date: new Date().toISOString(),
+      name, phone, email, address, comment,
+      payMethod: selectedPayMethod,
+      items: cart.map(c => ({ name: c.name, qty: c.qty, price: c.price })),
+      total
+    });
     localStorage.setItem('terra_orders', JSON.stringify(orders));
   } catch(e) {}
 
   // Send via Formspree
-  const FORMSPREE_URL = 'https://formspree.io/f/xjgppdnp';
+  const msg = 'Заказ: ' + orderId + '\nТовары:\n' + orderItems + '\nИтого: ' + total.toLocaleString('ru-RU') + ' руб.\nОплата: ' + payNames[selectedPayMethod] + '\nАдрес: ' + (address || '—') + '\nКомментарий: ' + (comment || '—');
 
-  const formData = new FormData();
-  formData.append('_subject', 'Новый заказ ' + orderId + ' — ТЕРРА');
-  formData.append('Номер заказа', orderId);
-  formData.append('Имя', name);
-  formData.append('Телефон', phone);
-  formData.append('Email клиента', email || '—');
-  formData.append('Адрес доставки', address || '—');
-  formData.append('Способ оплаты', payNames[selectedPayMethod]);
-  formData.append('Товары', orderItems);
-  formData.append('Итого', total.toLocaleString('ru-RU') + ' ₽');
-  formData.append('Комментарий', comment || '—');
-  if (email) formData.append('_replyto', email);
-
-  fetch(FORMSPREE_URL, {
+  fetch('https://formspree.io/f/xjgppdnp', {
     method: 'POST',
-    headers: { 'Accept': 'application/json' },
-    body: formData
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      name: name,
+      email: email || 'no-email@terra.ru',
+      phone: phone,
+      message: msg
+    })
   })
-  .then(r => {
-    if (r.ok) {
-      console.log('Formspree: заказ отправлен на email');
-    } else {
-      r.json().then(data => console.error('Formspree ошибка:', data));
-    }
+  .then(function(r) {
+    return r.json().then(function(data) {
+      if (r.ok) {
+        console.log('Formspree OK:', data);
+      } else {
+        console.error('Formspree ОШИБКА:', r.status, data);
+        alert('Ошибка отправки: ' + JSON.stringify(data));
+      }
+    });
   })
-  .catch(e => { console.error('Formspree недоступен:', e); })
-  .finally(() => {
+  .catch(function(e) {
+    console.error('Fetch ошибка:', e);
+    alert('Не удалось отправить заказ. Проверьте интернет-соединение.');
+  })
+  .finally(function() {
     showOrderSuccess(orderId);
   });
 }
@@ -1607,28 +1631,52 @@ function sendForm(e) {
   const phone = inputs[2].value.trim();
   const message = inputs[3].value.trim();
 
-  if (!name) { showToast('Укажите ваше имя'); return; }
-
-  const formData = new FormData();
-  formData.append('_subject', 'Заявка с сайта ТЕРРА');
-  formData.append('Имя', name);
-  formData.append('Email', email || '—');
-  formData.append('Телефон', phone || '—');
-  formData.append('Сообщение', message || '—');
-  if (email) formData.append('_replyto', email);
+  if (!name || name.length < 2) { showToast('Укажите ваше имя (минимум 2 буквы)'); return; }
+  if (!/^[а-яА-ЯёЁa-zA-Z\s\-]+$/.test(name)) { showToast('Имя может содержать только буквы'); return; }
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { showToast('Введите корректный email'); return; }
+  if (phone) {
+    const pd = phone.replace(/\D/g, '');
+    if (pd.length < 10 || pd.length > 15) { showToast('Введите корректный номер телефона'); return; }
+  }
 
   fetch('https://formspree.io/f/xjgppdnp', {
     method: 'POST',
-    headers: { 'Accept': 'application/json' },
-    body: formData
-  }).then(r => {
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      name: name,
+      email: email || 'no-email@terra.ru',
+      phone: phone || '—',
+      message: 'Заявка с сайта:\n' + (message || '—')
+    })
+  }).then(function(r) {
     if (r.ok) showToast('Спасибо! Мы скоро ответим');
     else showToast('Ошибка отправки, попробуйте позже');
-  }).catch(() => {
+  }).catch(function() {
     showToast('Нет соединения, попробуйте позже');
   });
 
   inputs.forEach(i => i.value = '');
+}
+
+// ===== PHONE FORMATTER =====
+function formatPhone(input) {
+  let digits = input.value.replace(/\D/g, '');
+  
+  // Auto-add 7 if starts with 8 or nothing
+  if (digits.length > 0 && digits[0] === '8') digits = '7' + digits.slice(1);
+  if (digits.length > 11) digits = digits.slice(0, 11);
+
+  let formatted = '';
+  if (digits.length > 0) formatted = '+' + digits[0];
+  if (digits.length > 1) formatted += ' (' + digits.slice(1, 4);
+  if (digits.length > 4) formatted += ') ' + digits.slice(4, 7);
+  if (digits.length > 7) formatted += '-' + digits.slice(7, 9);
+  if (digits.length > 9) formatted += '-' + digits.slice(9, 11);
+
+  input.value = formatted;
 }
 
 document.querySelectorAll('#mainNav a').forEach(a =>
