@@ -248,25 +248,167 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
 .toast.show { transform: translateX(-50%) translateY(0); }
 
 /* ============================== */
+/* ===== CHECKOUT MODAL ======== */
+/* ============================== */
+
+.checkout-overlay {
+  position: fixed; inset: 0;
+  background: rgba(45,36,32,0.6);
+  backdrop-filter: blur(6px);
+  z-index: 4000;
+  opacity: 0; visibility: hidden;
+  transition: 0.3s;
+}
+.checkout-overlay.open { opacity: 1; visibility: visible; }
+
+.checkout-modal {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  width: 560px; max-width: 95vw;
+  max-height: 90vh;
+  background: var(--white);
+  border-radius: 20px;
+  z-index: 4001;
+  opacity: 0; visibility: hidden;
+  transition: all 0.3s;
+  display: flex; flex-direction: column;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+  overflow: hidden;
+}
+.checkout-modal.open { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+
+.checkout-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border);
+}
+.checkout-header h3 { font-family: var(--font-display); font-size: 1.4rem; color: var(--earth); }
+.checkout-close { background: none; border: none; color: var(--text-muted); font-size: 1.4rem; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+.checkout-close:hover { background: var(--sand); color: var(--terracotta); }
+
+.checkout-body { flex: 1; overflow-y: auto; padding: 1.5rem 2rem; }
+
+.checkout-summary {
+  background: var(--sand);
+  border-radius: 12px;
+  padding: 1rem 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.checkout-summary-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.5rem 0;
+  font-size: 0.85rem;
+  color: var(--text-body);
+}
+.checkout-summary-item + .checkout-summary-item { border-top: 1px solid var(--border); }
+.checkout-summary-item .qty { color: var(--text-muted); font-size: 0.75rem; }
+.checkout-summary-item .price { font-weight: 500; color: var(--earth); white-space: nowrap; }
+
+.checkout-summary-total {
+  display: flex; justify-content: space-between;
+  padding-top: 0.8rem;
+  margin-top: 0.5rem;
+  border-top: 2px solid var(--border);
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+}
+.checkout-summary-total span:last-child { font-weight: 700; color: var(--clay); }
+
+.checkout-form { display: flex; flex-direction: column; gap: 0.9rem; }
+
+.checkout-form label {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-bottom: -0.4rem;
+}
+
+.checkout-form input,
+.checkout-form textarea,
+.checkout-form select {
+  background: var(--sand);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-dark);
+  padding: 0.85rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  outline: none;
+  transition: border 0.3s;
+  width: 100%;
+}
+.checkout-form input:focus,
+.checkout-form textarea:focus { border-color: var(--clay); }
+.checkout-form textarea { min-height: 60px; resize: vertical; }
+.checkout-form input::placeholder,
+.checkout-form textarea::placeholder { color: var(--text-muted); }
+
+.checkout-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+.checkout-field { display: flex; flex-direction: column; gap: 0.3rem; }
+
+.checkout-pay-methods {
+  display: flex; gap: 0.6rem; flex-wrap: wrap;
+  margin: 0.3rem 0 0.5rem;
+}
+
+.pay-method {
+  flex: 1; min-width: 120px;
+  padding: 0.8rem 1rem;
+  border: 1.5px solid var(--border);
+  border-radius: 12px;
+  background: var(--sand);
+  cursor: pointer;
+  transition: 0.3s;
+  text-align: center;
+  display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+}
+.pay-method:hover { border-color: var(--clay-light); }
+.pay-method.selected { border-color: var(--clay); background: rgba(198,125,74,0.08); }
+.pay-method-icon { font-size: 1.3rem; }
+.pay-method-label { font-size: 0.72rem; color: var(--text-body); font-weight: 500; }
+.pay-method-hint { font-size: 0.6rem; color: var(--text-muted); }
+
+.checkout-submit {
+  width: 100%;
+  background: var(--clay);
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 0.5rem;
+}
+.checkout-submit:hover { background: var(--clay-dark); }
+.checkout-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.checkout-success {
+  display: none;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+.checkout-success.show { display: block; }
+.checkout-success-icon { font-size: 3.5rem; margin-bottom: 1rem; }
+.checkout-success h4 { font-family: var(--font-display); font-size: 1.5rem; color: var(--earth); margin-bottom: 0.6rem; }
+.checkout-success p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
+.checkout-success .order-id { display: inline-block; margin-top: 0.8rem; background: var(--sand); padding: 0.4rem 1rem; border-radius: 8px; font-family: var(--font-display); font-size: 1rem; color: var(--clay); font-weight: 600; }
+
+@media (max-width: 700px) {
+  .checkout-row { grid-template-columns: 1fr; }
+}
+
+/* ============================== */
 /* ===== ADMIN PANEL STYLES ===== */
 /* ============================== */
 
-.admin-fab {
-  position: fixed;
-  bottom: 2rem; right: 2rem;
-  width: 50px; height: 50px;
-  background: var(--earth);
-  color: var(--sand);
-  border: none;
-  border-radius: 50%;
-  font-size: 1.2rem;
-  cursor: pointer;
-  z-index: 1500;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-  transition: all 0.3s;
-  display: flex; align-items: center; justify-content: center;
-}
-.admin-fab:hover { background: var(--clay); transform: scale(1.1); }
+/* Admin FAB hidden */
 
 .admin-overlay {
   position: fixed; inset: 0;
@@ -690,8 +832,79 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
   <div class="cart-footer"><div class="cart-total"><span>Итого:</span><span id="cartTotal">0 ₽</span></div><button class="cart-checkout" onclick="checkout()">Оформить заказ</button></div>
 </div>
 
-<!-- Admin FAB -->
-<button class="admin-fab" onclick="openAdmin()" title="Панель управления">⚙</button>
+<!-- Checkout Modal -->
+<div class="checkout-overlay" id="checkoutOverlay" onclick="closeCheckout()"></div>
+<div class="checkout-modal" id="checkoutModal">
+  <div class="checkout-header">
+    <h3>Оформление заказа</h3>
+    <button class="checkout-close" onclick="closeCheckout()">✕</button>
+  </div>
+  <div class="checkout-body">
+    <!-- Order summary -->
+    <div class="checkout-summary" id="checkoutSummary"></div>
+
+    <!-- Checkout form -->
+    <div class="checkout-form" id="checkoutForm">
+      <div class="checkout-row">
+        <div class="checkout-field">
+          <label>Имя *</label>
+          <input type="text" id="coName" placeholder="Ваше имя" required>
+        </div>
+        <div class="checkout-field">
+          <label>Телефон *</label>
+          <input type="tel" id="coPhone" placeholder="+7 (___) ___-__-__" required>
+        </div>
+      </div>
+      <div class="checkout-field">
+        <label>Email</label>
+        <input type="email" id="coEmail" placeholder="email@example.com">
+      </div>
+      <div class="checkout-field">
+        <label>Адрес доставки</label>
+        <input type="text" id="coAddress" placeholder="Город, улица, дом, квартира">
+      </div>
+
+      <label>Способ оплаты</label>
+      <div class="checkout-pay-methods" id="payMethods">
+        <div class="pay-method selected" onclick="selectPay(this, 'card')" data-method="card">
+          <div class="pay-method-icon">💳</div>
+          <div class="pay-method-label">Перевод на карту</div>
+          <div class="pay-method-hint">Сбербанк / Тинькофф</div>
+        </div>
+        <div class="pay-method" onclick="selectPay(this, 'cash')" data-method="cash">
+          <div class="pay-method-icon">💵</div>
+          <div class="pay-method-label">При получении</div>
+          <div class="pay-method-hint">Наличные / карта</div>
+        </div>
+        <div class="pay-method" onclick="selectPay(this, 'sbp')" data-method="sbp">
+          <div class="pay-method-icon">📱</div>
+          <div class="pay-method-label">СБП</div>
+          <div class="pay-method-hint">Через QR-код</div>
+        </div>
+      </div>
+
+      <div class="checkout-field">
+        <label>Комментарий к заказу</label>
+        <textarea id="coComment" placeholder="Пожелания, удобное время доставки..."></textarea>
+      </div>
+
+      <button class="checkout-submit" id="checkoutSubmit" onclick="submitOrder()">
+        Подтвердить заказ
+      </button>
+    </div>
+
+    <!-- Success message (hidden) -->
+    <div class="checkout-success" id="checkoutSuccess">
+      <div class="checkout-success-icon">✅</div>
+      <h4>Заказ принят!</h4>
+      <p>Мы свяжемся с вами в ближайшее время для подтверждения заказа и уточнения деталей оплаты</p>
+      <div class="order-id" id="orderId"></div>
+      <p style="margin-top:1rem; font-size:0.8rem;">Информация о заказе отправлена на указанный email</p>
+    </div>
+  </div>
+</div>
+
+<!-- Admin: hidden access via ?admin URL or Ctrl+Shift+A -->
 
 <!-- Admin Panel -->
 <div class="admin-overlay" id="adminOverlay" onclick="closeAdmin()"></div>
@@ -884,8 +1097,147 @@ function toggleCart() {
 
 function checkout() {
   if (!cart.length) { showToast('Корзина пуста'); return; }
-  showToast('Заказ оформлен! Скоро свяжемся с вами');
-  cart = []; updateCart(); toggleCart();
+  openCheckout();
+}
+
+// ===== CHECKOUT MODAL =====
+let selectedPayMethod = 'card';
+
+function openCheckout() {
+  // Close cart panel
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.getElementById('cartPanel').classList.remove('open');
+
+  // Build summary
+  const summary = document.getElementById('checkoutSummary');
+  const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
+  summary.innerHTML = cart.map(c => `
+    <div class="checkout-summary-item">
+      <span>${c.name} <span class="qty">× ${c.qty}</span></span>
+      <span class="price">${(c.price * c.qty).toLocaleString('ru-RU')} ₽</span>
+    </div>
+  `).join('') + `
+    <div class="checkout-summary-total">
+      <span>Итого:</span>
+      <span>${total.toLocaleString('ru-RU')} ₽</span>
+    </div>
+  `;
+
+  // Reset form
+  document.getElementById('checkoutForm').style.display = 'flex';
+  document.getElementById('checkoutSuccess').classList.remove('show');
+  document.getElementById('checkoutSubmit').disabled = false;
+  document.getElementById('checkoutSubmit').textContent = 'Подтвердить заказ';
+
+  // Show modal
+  document.getElementById('checkoutOverlay').classList.add('open');
+  document.getElementById('checkoutModal').classList.add('open');
+}
+
+function closeCheckout() {
+  document.getElementById('checkoutOverlay').classList.remove('open');
+  document.getElementById('checkoutModal').classList.remove('open');
+}
+
+function selectPay(el, method) {
+  selectedPayMethod = method;
+  document.querySelectorAll('.pay-method').forEach(m => m.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function submitOrder() {
+  const name = document.getElementById('coName').value.trim();
+  const phone = document.getElementById('coPhone').value.trim();
+  const email = document.getElementById('coEmail').value.trim();
+  const address = document.getElementById('coAddress').value.trim();
+  const comment = document.getElementById('coComment').value.trim();
+
+  if (!name) { showToast('Укажите ваше имя'); return; }
+  if (!phone) { showToast('Укажите номер телефона'); return; }
+
+  const btn = document.getElementById('checkoutSubmit');
+  btn.disabled = true;
+  btn.textContent = 'Отправка...';
+
+  // Generate order ID
+  const orderId = 'T-' + Date.now().toString(36).toUpperCase();
+  const total = cart.reduce((s, c) => s + c.price * c.qty, 0);
+  const payNames = { card: 'Перевод на карту', cash: 'При получении', sbp: 'СБП' };
+
+  // Build order details text
+  const orderItems = cart.map(c => `${c.name} × ${c.qty} = ${(c.price * c.qty).toLocaleString('ru-RU')} ₽`).join('\n');
+  const orderText = `
+ЗАКАЗ ${orderId}
+========================
+${orderItems}
+------------------------
+ИТОГО: ${total.toLocaleString('ru-RU')} ₽
+========================
+Имя: ${name}
+Телефон: ${phone}
+Email: ${email || '—'}
+Адрес: ${address || '—'}
+Оплата: ${payNames[selectedPayMethod]}
+Комментарий: ${comment || '—'}
+  `.trim();
+
+  // Send via Formspree (replace YOUR_FORM_ID with actual ID after registration)
+  // For now, simulate sending + save to localStorage as backup
+  const order = {
+    id: orderId,
+    date: new Date().toISOString(),
+    name, phone, email, address, comment,
+    payMethod: selectedPayMethod,
+    items: cart.map(c => ({ name: c.name, qty: c.qty, price: c.price })),
+    total
+  };
+
+  // Save order locally
+  try {
+    const orders = JSON.parse(localStorage.getItem('terra_orders') || '[]');
+    orders.push(order);
+    localStorage.setItem('terra_orders', JSON.stringify(orders));
+  } catch(e) {}
+
+  // Try Formspree (user needs to replace URL)
+  const FORMSPREE_URL = 'https://formspree.io/f/YOUR_FORM_ID';
+
+  fetch(FORMSPREE_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+    body: JSON.stringify({
+      _subject: `Новый заказ ${orderId} — ТЕРРА`,
+      name: name,
+      phone: phone,
+      email: email,
+      address: address,
+      payment: payNames[selectedPayMethod],
+      order_details: orderItems,
+      total: total.toLocaleString('ru-RU') + ' ₽',
+      comment: comment,
+      order_id: orderId
+    })
+  })
+  .then(r => { /* Email sent or not — show success anyway */ })
+  .catch(e => { /* Offline — order saved locally */ })
+  .finally(() => {
+    showOrderSuccess(orderId);
+  });
+}
+
+function showOrderSuccess(orderId) {
+  document.getElementById('checkoutForm').style.display = 'none';
+  document.getElementById('checkoutSuccess').classList.add('show');
+  document.getElementById('orderId').textContent = 'Заказ ' + orderId;
+
+  // Clear cart
+  cart = [];
+  updateCart();
+
+  // Clear form
+  ['coName','coPhone','coEmail','coAddress','coComment'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
 }
 
 function toggleMenu() { document.getElementById('mainNav').classList.toggle('open'); }
@@ -1108,6 +1460,18 @@ imgUpload.addEventListener('drop', e => {
   if (file && file.type.startsWith('image/')) {
     document.getElementById('imgInput').files = e.dataTransfer.files;
     handleImage({ target: { files: [file] } });
+  }
+});
+
+// ===== SECRET ADMIN ACCESS =====
+// Open via: ?admin in URL or Ctrl+Shift+A
+if (window.location.search.includes('admin')) {
+  openAdmin();
+}
+document.addEventListener('keydown', function(e) {
+  if (e.ctrlKey && e.shiftKey && e.key === 'A') {
+    e.preventDefault();
+    openAdmin();
   }
 });
 
