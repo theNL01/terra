@@ -1119,9 +1119,36 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
         <label>Email</label>
         <input type="email" id="coEmail" placeholder="email@example.com" maxlength="100" autocomplete="email">
       </div>
-      <div class="checkout-field">
-        <label>Адрес доставки</label>
-        <input type="text" id="coAddress" placeholder="Город, улица, дом, квартира" maxlength="200" autocomplete="street-address">
+      <label style="font-size:0.68rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--text-muted); font-weight:500; margin-bottom:-0.2rem;">Адрес доставки</label>
+      <div class="checkout-row">
+        <div class="checkout-field">
+          <label>Индекс</label>
+          <input type="text" id="coIndex" placeholder="123456" maxlength="6" autocomplete="postal-code" oninput="this.value=this.value.replace(/\D/g,'')">
+        </div>
+        <div class="checkout-field">
+          <label>Область / Регион</label>
+          <input type="text" id="coRegion" placeholder="Московская область" maxlength="100" autocomplete="address-level1">
+        </div>
+      </div>
+      <div class="checkout-row">
+        <div class="checkout-field">
+          <label>Город / Населённый пункт</label>
+          <input type="text" id="coCity" placeholder="Москва" maxlength="100" autocomplete="address-level2">
+        </div>
+        <div class="checkout-field">
+          <label>Улица</label>
+          <input type="text" id="coStreet" placeholder="ул. Гончарная" maxlength="150" autocomplete="street-address">
+        </div>
+      </div>
+      <div class="checkout-row">
+        <div class="checkout-field">
+          <label>Дом / Корпус</label>
+          <input type="text" id="coHouse" placeholder="д. 7, корп. 2" maxlength="30">
+        </div>
+        <div class="checkout-field">
+          <label>Квартира / Офис</label>
+          <input type="text" id="coApt" placeholder="кв. 15" maxlength="20">
+        </div>
       </div>
 
       <label>Способ оплаты</label>
@@ -1458,8 +1485,16 @@ function submitOrder() {
   const name = document.getElementById('coName').value.trim();
   const phone = document.getElementById('coPhone').value.trim();
   const email = document.getElementById('coEmail').value.trim();
-  const address = document.getElementById('coAddress').value.trim();
   const comment = document.getElementById('coComment').value.trim();
+
+  // Collect address parts
+  const addrIndex = document.getElementById('coIndex').value.trim();
+  const addrRegion = document.getElementById('coRegion').value.trim();
+  const addrCity = document.getElementById('coCity').value.trim();
+  const addrStreet = document.getElementById('coStreet').value.trim();
+  const addrHouse = document.getElementById('coHouse').value.trim();
+  const addrApt = document.getElementById('coApt').value.trim();
+  const address = [addrIndex, addrRegion, addrCity, addrStreet, addrHouse, addrApt].filter(Boolean).join(', ');
 
   console.log('Данные:', {name, phone, email, address});
 
@@ -1477,8 +1512,11 @@ function submitOrder() {
   // Email: if filled, must be valid format
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { showToast('Введите корректный email'); console.log('Ошибка: email'); return; }
 
-  // Address: if filled, min 5 chars, no gibberish (must contain at least one letter)
-  if (address && (address.length < 5 || !/[а-яА-ЯёЁa-zA-Z]/.test(address))) { showToast('Введите корректный адрес доставки'); console.log('Ошибка: адрес'); return; }
+  // Address: if any part filled, city is required
+  if ((addrStreet || addrHouse || addrApt || addrRegion || addrIndex) && !addrCity) { showToast('Укажите город'); console.log('Ошибка: нет города'); return; }
+  
+  // Index: if filled, must be 6 digits
+  if (addrIndex && addrIndex.length !== 6) { showToast('Индекс должен содержать 6 цифр'); console.log('Ошибка: индекс'); return; }
 
   // Comment: max 500 chars
   if (comment.length > 500) { showToast('Комментарий слишком длинный (макс. 500 символов)'); return; }
@@ -1579,7 +1617,7 @@ function showOrderSuccess(orderId) {
   document.getElementById('checkoutSuccess').classList.remove('show');
   document.getElementById('checkoutSubmit').disabled = false;
   document.getElementById('checkoutSubmit').textContent = 'Подтвердить заказ';
-  ['coName','coPhone','coEmail','coAddress','coComment'].forEach(id => {
+  ['coName','coPhone','coEmail','coIndex','coRegion','coCity','coStreet','coHouse','coApt','coComment'].forEach(id => {
     document.getElementById(id).value = '';
   });
 
