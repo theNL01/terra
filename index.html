@@ -54,841 +54,452 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 /* ===== HEADER ===== */
 header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
+  position: fixed; top: 0; width: 100%; z-index: 1000;
   padding: 1.2rem 3rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  display: flex; justify-content: space-between; align-items: center;
   background: rgba(250,247,242,0.9);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
-
-.logo {
-  font-family: var(--font-display);
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--earth);
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-}
+.logo { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--earth); letter-spacing: 0.25em; text-transform: uppercase; }
 .logo span { color: var(--clay); }
 
 nav { display: flex; gap: 2.2rem; align-items: center; }
-
-nav a {
-  font-family: var(--font-body);
-  font-weight: 400;
-  font-size: 0.82rem;
-  color: var(--text-body);
-  text-decoration: none;
-  letter-spacing: 0.08em;
-  transition: color 0.3s;
-  position: relative;
-}
+nav a { font-family: var(--font-body); font-weight: 400; font-size: 0.82rem; color: var(--text-body); text-decoration: none; letter-spacing: 0.08em; transition: color 0.3s; position: relative; }
 nav a:hover { color: var(--clay); }
-nav a::after {
-  content: '';
-  position: absolute;
-  bottom: -4px; left: 0;
-  width: 0; height: 1.5px;
-  background: var(--clay);
-  transition: width 0.3s;
-}
+nav a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1.5px; background: var(--clay); transition: width 0.3s; }
 nav a:hover::after { width: 100%; }
 
-.cart-btn {
-  position: relative;
-  background: var(--earth);
-  border: none;
-  color: var(--sand);
-  padding: 0.55rem 1.4rem;
-  font-family: var(--font-body);
-  font-size: 0.78rem;
-  letter-spacing: 0.08em;
-  cursor: pointer;
-  border-radius: 50px;
-  transition: all 0.3s;
-}
+.cart-btn { position: relative; background: var(--earth); border: none; color: var(--sand); padding: 0.55rem 1.4rem; font-family: var(--font-body); font-size: 0.78rem; letter-spacing: 0.08em; cursor: pointer; border-radius: 50px; transition: all 0.3s; }
 .cart-btn:hover { background: var(--clay-dark); }
+.cart-count { position: absolute; top: -5px; right: -5px; background: var(--terracotta); color: white; font-size: 0.6rem; width: 17px; height: 17px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; }
 
-.cart-count {
-  position: absolute;
-  top: -5px; right: -5px;
-  background: var(--terracotta);
-  color: white;
-  font-size: 0.6rem;
-  width: 17px; height: 17px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-}
-
-.hamburger {
-  display: none;
-  flex-direction: column;
-  gap: 5px;
-  cursor: pointer;
-  background: none;
-  border: none;
-}
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
 .hamburger span { width: 22px; height: 1.5px; background: var(--earth); transition: 0.3s; }
 
 /* ===== HERO ===== */
-.hero {
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-}
+.hero { height: 100vh; display: flex; align-items: center; position: relative; overflow: hidden; }
+.hero-bg-img { position: absolute; inset: 0; }
+.hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(45,36,32,0.85) 0%, rgba(45,36,32,0.5) 50%, rgba(45,36,32,0.2) 100%); }
+.hero-content { position: relative; max-width: 620px; padding: 0 3rem; animation: fadeUp 1.2s ease-out; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
-.hero-bg-img {
-  position: absolute;
-  inset: 0;
-}
-
-.hero-overlay {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(90deg, rgba(45,36,32,0.85) 0%, rgba(45,36,32,0.5) 50%, rgba(45,36,32,0.2) 100%);
-}
-
-.hero-content {
-  position: relative;
-  max-width: 620px;
-  padding: 0 3rem;
-  animation: fadeUp 1.2s ease-out;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(40px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.hero-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 2rem;
-}
+.hero-tag { display: inline-flex; align-items: center; gap: 0.6rem; margin-bottom: 2rem; }
 .hero-tag-line { width: 40px; height: 1.5px; background: var(--clay-light); }
-.hero-tag span {
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--clay-light);
-  font-weight: 500;
-}
+.hero-tag span { font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--clay-light); font-weight: 500; }
 
-.hero h1 {
-  font-family: var(--font-display);
-  font-size: clamp(3rem, 7vw, 5.5rem);
-  font-weight: 400;
-  line-height: 1.1;
-  color: var(--sand);
-  margin-bottom: 1.8rem;
-}
+.hero h1 { font-family: var(--font-display); font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 400; line-height: 1.1; color: var(--sand); margin-bottom: 1.8rem; }
 .hero h1 em { font-style: italic; color: var(--clay-light); }
-
-.hero p {
-  font-size: 1.05rem;
-  color: rgba(245,239,230,0.75);
-  line-height: 1.8;
-  max-width: 480px;
-  margin-bottom: 2.5rem;
-  font-weight: 300;
-}
-
+.hero p { font-size: 1.05rem; color: rgba(245,239,230,0.75); line-height: 1.8; max-width: 480px; margin-bottom: 2.5rem; font-weight: 300; }
 .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
 
-.btn-primary {
-  background: var(--clay);
-  color: white;
-  border: none;
-  padding: 0.95rem 2.5rem;
-  font-family: var(--font-body);
-  font-size: 0.82rem;
-  letter-spacing: 0.06em;
-  cursor: pointer;
-  border-radius: 50px;
-  transition: all 0.3s;
-  text-decoration: none;
-}
-.btn-primary:hover {
-  background: var(--clay-dark);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(198,125,74,0.3);
-}
+.btn-primary { background: var(--clay); color: white; border: none; padding: 0.95rem 2.5rem; font-family: var(--font-body); font-size: 0.82rem; letter-spacing: 0.06em; cursor: pointer; border-radius: 50px; transition: all 0.3s; text-decoration: none; }
+.btn-primary:hover { background: var(--clay-dark); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(198,125,74,0.3); }
+.btn-ghost { background: transparent; color: var(--sand); border: 1.5px solid rgba(245,239,230,0.5); padding: 0.9rem 2.5rem; font-family: var(--font-body); font-size: 0.82rem; letter-spacing: 0.06em; cursor: pointer; border-radius: 50px; transition: all 0.3s; text-decoration: none; }
+.btn-ghost:hover { background: rgba(255,255,255,0.1); border-color: var(--sand); transform: translateY(-2px); }
 
-.btn-ghost {
-  background: transparent;
-  color: var(--sand);
-  border: 1.5px solid rgba(245,239,230,0.5);
-  padding: 0.9rem 2.5rem;
-  font-family: var(--font-body);
-  font-size: 0.82rem;
-  letter-spacing: 0.06em;
-  cursor: pointer;
-  border-radius: 50px;
-  transition: all 0.3s;
-  text-decoration: none;
-}
-.btn-ghost:hover {
-  background: rgba(255,255,255,0.1);
-  border-color: var(--sand);
-  transform: translateY(-2px);
-}
-
-.scroll-indicator {
-  position: absolute;
-  bottom: 2.5rem; left: 3rem;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  animation: pulse 2.5s infinite;
-}
-.scroll-indicator span {
-  font-size: 0.65rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(245,239,230,0.5);
-}
+.scroll-indicator { position: absolute; bottom: 2.5rem; left: 3rem; display: flex; align-items: center; gap: 0.8rem; animation: pulse 2.5s infinite; }
+.scroll-indicator span { font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(245,239,230,0.5); }
 .scroll-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--clay-light); }
-
 @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
 /* ===== SECTIONS ===== */
 section { padding: 7rem 3rem; }
-
 .section-header { text-align: center; margin-bottom: 4rem; }
-
-.section-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-bottom: 1rem;
-}
+.section-tag { display: inline-flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; }
 .section-tag-line { width: 30px; height: 1.5px; background: var(--clay); }
-.section-tag span {
-  font-size: 0.68rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--clay);
-  font-weight: 500;
-}
-
-.section-title {
-  font-family: var(--font-display);
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 400;
-  color: var(--text-dark);
-  margin-bottom: 0.8rem;
-}
+.section-tag span { font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--clay); font-weight: 500; }
+.section-title { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); font-weight: 400; color: var(--text-dark); margin-bottom: 0.8rem; }
 .section-title em { font-style: italic; color: var(--clay); }
-
-.section-desc {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  max-width: 500px;
-  margin: 0 auto;
-  line-height: 1.7;
-  font-weight: 300;
-}
+.section-desc { font-size: 0.95rem; color: var(--text-muted); max-width: 500px; margin: 0 auto; line-height: 1.7; font-weight: 300; }
 
 /* ===== ABOUT ===== */
 #about { background: var(--sand); }
-
-.about-grid {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: 5rem;
-  align-items: center;
-}
-
+.about-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1.2fr 1fr; gap: 5rem; align-items: center; }
 .about-visual { position: relative; }
-
-.about-img-main {
-  width: 100%;
-  aspect-ratio: 3/4;
-  border-radius: 200px 200px 20px 20px;
-  overflow: hidden;
-  position: relative;
-}
-
-.about-img-secondary {
-  position: absolute;
-  bottom: -30px;
-  right: -40px;
-  width: 180px;
-  height: 220px;
-  border-radius: 100px 100px 12px 12px;
-  overflow: hidden;
-  border: 6px solid var(--sand);
-  box-shadow: 0 12px 40px rgba(0,0,0,0.1);
-}
-
-.about-accent {
-  position: absolute;
-  top: -20px; left: -20px;
-  width: 100px; height: 100px;
-  background: var(--sage-light);
-  border-radius: 50%;
-  opacity: 0.3;
-  z-index: -1;
-}
-
+.about-img-main { width: 100%; aspect-ratio: 3/4; border-radius: 200px 200px 20px 20px; overflow: hidden; }
+.about-img-secondary { position: absolute; bottom: -30px; right: -40px; width: 180px; height: 220px; border-radius: 100px 100px 12px 12px; overflow: hidden; border: 6px solid var(--sand); box-shadow: 0 12px 40px rgba(0,0,0,0.1); }
+.about-accent { position: absolute; top: -20px; left: -20px; width: 100px; height: 100px; background: var(--sage-light); border-radius: 50%; opacity: 0.3; z-index: -1; }
 .about-text .section-tag { justify-content: flex-start; }
 .about-text .section-title { text-align: left; }
-
-.about-text p {
-  color: var(--text-body);
-  line-height: 1.85;
-  margin-bottom: 1.3rem;
-  font-weight: 300;
-  font-size: 0.95rem;
-}
-
-.about-features {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.2rem;
-  margin-top: 2rem;
-}
-
-.about-feature {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  padding: 0.8rem;
-  background: rgba(255,255,255,0.6);
-  border-radius: 12px;
-}
-.about-feature-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: var(--clay);
-  flex-shrink: 0;
-}
+.about-text p { color: var(--text-body); line-height: 1.85; margin-bottom: 1.3rem; font-weight: 300; font-size: 0.95rem; }
+.about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 2rem; }
+.about-feature { display: flex; align-items: center; gap: 0.8rem; padding: 0.8rem; background: rgba(255,255,255,0.6); border-radius: 12px; }
+.about-feature-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--clay); flex-shrink: 0; }
 .about-feature span { font-size: 0.82rem; color: var(--text-body); font-weight: 400; }
 
 /* ===== SHOP ===== */
 #shop { background: var(--cream); }
+.shop-filters { display: flex; justify-content: center; gap: 0.5rem; margin-bottom: 3rem; flex-wrap: wrap; }
+.filter-btn { background: transparent; border: 1.5px solid var(--border); color: var(--text-muted); padding: 0.5rem 1.4rem; font-family: var(--font-body); font-size: 0.78rem; letter-spacing: 0.05em; cursor: pointer; border-radius: 50px; transition: all 0.3s; }
+.filter-btn.active, .filter-btn:hover { border-color: var(--clay); color: var(--clay); background: rgba(198,125,74,0.06); }
 
-.shop-filters {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 3rem;
-  flex-wrap: wrap;
-}
-
-.filter-btn {
-  background: transparent;
-  border: 1.5px solid var(--border);
-  color: var(--text-muted);
-  padding: 0.5rem 1.4rem;
-  font-family: var(--font-body);
-  font-size: 0.78rem;
-  letter-spacing: 0.05em;
-  cursor: pointer;
-  border-radius: 50px;
-  transition: all 0.3s;
-}
-.filter-btn.active,
-.filter-btn:hover {
-  border-color: var(--clay);
-  color: var(--clay);
-  background: rgba(198,125,74,0.06);
-}
-
-.products-grid {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-  gap: 2rem;
-}
-
-.product-card {
-  background: var(--white);
-  border-radius: 16px;
-  overflow: hidden;
-  transition: all 0.4s;
-  cursor: pointer;
-  border: 1px solid var(--border);
-}
-.product-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 50px rgba(92,64,51,0.1);
-}
-
-.product-image {
-  aspect-ratio: 1;
-  position: relative;
-  overflow: hidden;
-  background: var(--sand);
-}
-
+.products-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: 2rem; }
+.product-card { background: var(--white); border-radius: 16px; overflow: hidden; transition: all 0.4s; cursor: pointer; border: 1px solid var(--border); }
+.product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 50px rgba(92,64,51,0.1); }
+.product-image { aspect-ratio: 1; position: relative; overflow: hidden; background: var(--sand); }
 .product-image img { transition: transform 0.6s; }
 .product-card:hover .product-image img { transform: scale(1.08); }
-
-.product-badge {
-  position: absolute;
-  top: 14px; left: 14px;
-  background: var(--terracotta);
-  color: white;
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  padding: 0.3rem 0.8rem;
-  border-radius: 50px;
-  font-weight: 500;
-  z-index: 2;
-}
-
+.product-badge { position: absolute; top: 14px; left: 14px; background: var(--terracotta); color: white; font-size: 0.62rem; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0.8rem; border-radius: 50px; font-weight: 500; z-index: 2; }
 .product-info { padding: 1.3rem 1.5rem 1.6rem; }
-
-.product-category {
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--sage);
-  margin-bottom: 0.4rem;
-  font-weight: 500;
-}
-
-.product-name {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-bottom: 0.4rem;
-  color: var(--text-dark);
-}
-
-.product-desc {
-  font-size: 0.82rem;
-  color: var(--text-muted);
-  line-height: 1.5;
-  margin-bottom: 1.2rem;
-  font-weight: 300;
-}
-
-.product-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.product-price {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--earth);
-}
-
-.add-to-cart {
-  background: var(--clay);
-  border: none;
-  color: white;
-  width: 38px; height: 38px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s;
-  font-size: 1.1rem;
-}
+.product-category { font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); margin-bottom: 0.4rem; font-weight: 500; }
+.product-name { font-family: var(--font-display); font-size: 1.25rem; font-weight: 600; margin-bottom: 0.4rem; color: var(--text-dark); }
+.product-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 1.2rem; font-weight: 300; }
+.product-footer { display: flex; justify-content: space-between; align-items: center; }
+.product-price { font-family: var(--font-display); font-size: 1.3rem; font-weight: 600; color: var(--earth); }
+.add-to-cart { background: var(--clay); border: none; color: white; width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s; font-size: 1.1rem; }
 .add-to-cart:hover { background: var(--clay-dark); transform: scale(1.1); }
 
 /* ===== CLASSES ===== */
 #classes { background: var(--sand); }
-
-.classes-grid {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.8rem;
-}
-
-.class-card {
-  background: var(--white);
-  border-radius: 16px;
-  overflow: hidden;
-  border: 1px solid var(--border);
-  transition: all 0.4s;
-}
-.class-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 40px rgba(92,64,51,0.08);
-}
-
+.classes-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.8rem; }
+.class-card { background: var(--white); border-radius: 16px; overflow: hidden; border: 1px solid var(--border); transition: all 0.4s; }
+.class-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(92,64,51,0.08); }
 .class-card-img { height: 200px; overflow: hidden; }
 .class-card-img img { transition: transform 0.5s; }
 .class-card:hover .class-card-img img { transform: scale(1.06); }
-
 .class-card-body { padding: 1.8rem; }
-
-.class-card h3 {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
-  margin-bottom: 0.6rem;
-  color: var(--text-dark);
-}
-
-.class-card p {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  line-height: 1.6;
-  margin-bottom: 1.2rem;
-  font-weight: 300;
-}
-
-.class-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border);
-}
-.class-duration {
-  font-size: 0.72rem;
-  color: var(--sage);
-  font-weight: 500;
-  letter-spacing: 0.05em;
-}
-.class-price {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--clay);
-}
+.class-card h3 { font-family: var(--font-display); font-size: 1.25rem; margin-bottom: 0.6rem; color: var(--text-dark); }
+.class-card p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.2rem; font-weight: 300; }
+.class-meta { display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid var(--border); }
+.class-duration { font-size: 0.72rem; color: var(--sage); font-weight: 500; letter-spacing: 0.05em; }
+.class-price { font-family: var(--font-display); font-size: 1.1rem; font-weight: 600; color: var(--clay); }
 
 /* ===== PROCESS ===== */
 #process { background: var(--earth); color: var(--sand); overflow: hidden; }
-
 #process .section-tag span { color: var(--clay-light); }
 #process .section-tag-line { background: var(--clay-light); }
 #process .section-title { color: var(--sand); }
 #process .section-title em { color: var(--clay-light); }
 #process .section-desc { color: rgba(245,239,230,0.6); }
-
-.process-grid {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2rem;
-}
-
+.process-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; }
 .process-step { text-align: center; }
-
-.process-img {
-  width: 160px; height: 160px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin: 0 auto 1.5rem;
-  border: 3px solid rgba(217,154,110,0.3);
-}
-
-.process-num {
-  font-family: var(--font-display);
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--clay-light);
-  opacity: 0.3;
-  margin-bottom: 0.5rem;
-}
-
-.process-step h4 {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-  color: var(--sand);
-}
-
-.process-step p {
-  font-size: 0.8rem;
-  color: rgba(245,239,230,0.55);
-  line-height: 1.6;
-  font-weight: 300;
-}
+.process-img { width: 160px; height: 160px; border-radius: 50%; overflow: hidden; margin: 0 auto 1.5rem; border: 3px solid rgba(217,154,110,0.3); }
+.process-num { font-family: var(--font-display); font-size: 2.5rem; font-weight: 700; color: var(--clay-light); opacity: 0.3; margin-bottom: 0.5rem; }
+.process-step h4 { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--sand); }
+.process-step p { font-size: 0.8rem; color: rgba(245,239,230,0.55); line-height: 1.6; font-weight: 300; }
 
 /* ===== GALLERY ===== */
 #gallery { background: var(--cream); }
-
-.gallery-masonry {
-  max-width: 1200px;
-  margin: 0 auto;
-  columns: 3;
-  column-gap: 1.2rem;
-}
-
-.gallery-item {
-  break-inside: avoid;
-  margin-bottom: 1.2rem;
-  border-radius: 12px;
-  overflow: hidden;
-  position: relative;
-  cursor: pointer;
-  transition: all 0.4s;
-}
-.gallery-item:hover {
-  transform: scale(1.02);
-  box-shadow: 0 12px 40px rgba(92,64,51,0.12);
-}
-
+.gallery-masonry { max-width: 1200px; margin: 0 auto; columns: 3; column-gap: 1.2rem; }
+.gallery-item { break-inside: avoid; margin-bottom: 1.2rem; border-radius: 12px; overflow: hidden; position: relative; cursor: pointer; transition: all 0.4s; }
+.gallery-item:hover { transform: scale(1.02); box-shadow: 0 12px 40px rgba(92,64,51,0.12); }
 .gallery-item img { display: block; width: 100%; height: auto; }
-
-.gallery-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(45,36,32,0.75), transparent 60%);
-  display: flex;
-  align-items: flex-end;
-  padding: 1.2rem;
-  opacity: 0;
-  transition: 0.4s;
-}
+.gallery-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(45,36,32,0.75), transparent 60%); display: flex; align-items: flex-end; padding: 1.2rem; opacity: 0; transition: 0.4s; }
 .gallery-item:hover .gallery-overlay { opacity: 1; }
-
-.gallery-overlay span {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  color: white;
-}
+.gallery-overlay span { font-family: var(--font-display); font-size: 1rem; color: white; }
 
 /* ===== CONTACT ===== */
 #contact { background: var(--cream); }
-
-.contact-wrapper {
-  max-width: 1100px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 20px 60px rgba(92,64,51,0.1);
-}
-
+.contact-wrapper { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-radius: 20px; overflow: hidden; box-shadow: 0 20px 60px rgba(92,64,51,0.1); }
 .contact-image { position: relative; min-height: 500px; }
 .contact-image img { position: absolute; inset: 0; }
-.contact-image-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to top, rgba(45,36,32,0.8), rgba(45,36,32,0.3));
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 2.5rem;
-}
-
-.contact-image-overlay h3 {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  color: var(--sand);
-  margin-bottom: 1.5rem;
-}
-
-.contact-item {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.2rem;
-  align-items: flex-start;
-}
-.contact-icon {
-  width: 36px; height: 36px;
-  border: 1px solid rgba(217,154,110,0.3);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  font-size: 0.85rem;
-}
-.contact-item-text label {
-  display: block;
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(245,239,230,0.45);
-  margin-bottom: 0.2rem;
-}
+.contact-image-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(45,36,32,0.8), rgba(45,36,32,0.3)); display: flex; flex-direction: column; justify-content: flex-end; padding: 2.5rem; }
+.contact-image-overlay h3 { font-family: var(--font-display); font-size: 1.6rem; color: var(--sand); margin-bottom: 1.5rem; }
+.contact-item { display: flex; gap: 1rem; margin-bottom: 1.2rem; align-items: flex-start; }
+.contact-icon { width: 36px; height: 36px; border: 1px solid rgba(217,154,110,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.85rem; }
+.contact-item-text label { display: block; font-size: 0.62rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(245,239,230,0.45); margin-bottom: 0.2rem; }
 .contact-item-text p { font-size: 0.88rem; color: var(--sand); }
-
-.contact-form-side {
-  background: var(--white);
-  padding: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.contact-form-side h3 {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  color: var(--text-dark);
-  margin-bottom: 0.5rem;
-}
-
-.contact-form-side .sub {
-  font-size: 0.85rem;
-  color: var(--text-muted);
-  margin-bottom: 2rem;
-  font-weight: 300;
-}
-
+.contact-form-side { background: var(--white); padding: 3rem; display: flex; flex-direction: column; justify-content: center; }
+.contact-form-side h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--text-dark); margin-bottom: 0.5rem; }
+.contact-form-side .sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 2rem; font-weight: 300; }
 .contact-form { display: flex; flex-direction: column; gap: 0.9rem; }
-
-.contact-form input,
-.contact-form textarea {
-  background: var(--sand);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  color: var(--text-dark);
-  padding: 0.95rem 1.2rem;
-  font-family: var(--font-body);
-  font-size: 0.88rem;
-  outline: none;
-  transition: border 0.3s;
-}
-.contact-form input:focus,
-.contact-form textarea:focus { border-color: var(--clay); }
-
+.contact-form input, .contact-form textarea { background: var(--sand); border: 1px solid var(--border); border-radius: 10px; color: var(--text-dark); padding: 0.95rem 1.2rem; font-family: var(--font-body); font-size: 0.88rem; outline: none; transition: border 0.3s; }
+.contact-form input:focus, .contact-form textarea:focus { border-color: var(--clay); }
 .contact-form textarea { min-height: 110px; resize: vertical; }
-.contact-form input::placeholder,
-.contact-form textarea::placeholder { color: var(--text-muted); }
-
-.btn-contact {
-  background: var(--clay);
-  color: white;
-  border: none;
-  padding: 0.95rem 2rem;
-  border-radius: 50px;
-  font-family: var(--font-body);
-  font-size: 0.82rem;
-  letter-spacing: 0.06em;
-  cursor: pointer;
-  transition: all 0.3s;
-  align-self: flex-start;
-}
+.contact-form input::placeholder, .contact-form textarea::placeholder { color: var(--text-muted); }
+.btn-contact { background: var(--clay); color: white; border: none; padding: 0.95rem 2rem; border-radius: 50px; font-family: var(--font-body); font-size: 0.82rem; letter-spacing: 0.06em; cursor: pointer; transition: all 0.3s; align-self: flex-start; }
 .btn-contact:hover { background: var(--clay-dark); transform: translateY(-2px); }
 
 /* ===== FOOTER ===== */
-footer {
-  background: #3a2d25;
-  padding: 2.5rem 3rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-}
+footer { background: #3a2d25; padding: 2.5rem 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
 footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.05em; }
 .footer-links { display: flex; gap: 2rem; }
 .footer-links a { font-size: 0.78rem; color: rgba(245,239,230,0.5); text-decoration: none; transition: 0.3s; }
 .footer-links a:hover { color: var(--clay-light); }
 
 /* ===== CART ===== */
-.cart-overlay {
-  position: fixed; inset: 0;
-  background: rgba(45,36,32,0.5);
-  backdrop-filter: blur(6px);
-  z-index: 2000;
-  opacity: 0; visibility: hidden;
-  transition: 0.4s;
-}
+.cart-overlay { position: fixed; inset: 0; background: rgba(45,36,32,0.5); backdrop-filter: blur(6px); z-index: 2000; opacity: 0; visibility: hidden; transition: 0.4s; }
 .cart-overlay.open { opacity: 1; visibility: visible; }
-
-.cart-panel {
-  position: fixed;
-  top: 0; right: -440px;
-  width: 420px; max-width: 92vw;
-  height: 100vh;
-  background: var(--cream);
-  border-left: 1px solid var(--border);
-  z-index: 2001;
-  transition: right 0.4s cubic-bezier(0.4,0,0.2,1);
-  display: flex;
-  flex-direction: column;
-}
+.cart-panel { position: fixed; top: 0; right: -440px; width: 420px; max-width: 92vw; height: 100vh; background: var(--cream); border-left: 1px solid var(--border); z-index: 2001; transition: right 0.4s cubic-bezier(0.4,0,0.2,1); display: flex; flex-direction: column; }
 .cart-panel.open { right: 0; }
-
-.cart-header {
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 1.5rem 1.8rem;
-  border-bottom: 1px solid var(--border);
-}
+.cart-header { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 1.8rem; border-bottom: 1px solid var(--border); }
 .cart-header h3 { font-family: var(--font-display); font-size: 1.4rem; color: var(--earth); }
-
-.cart-close {
-  background: none; border: none; color: var(--text-muted);
-  font-size: 1.3rem; cursor: pointer;
-  width: 36px; height: 36px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center; transition: 0.3s;
-}
+.cart-close { background: none; border: none; color: var(--text-muted); font-size: 1.3rem; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
 .cart-close:hover { background: var(--sand); color: var(--terracotta); }
-
 .cart-items { flex: 1; overflow-y: auto; padding: 1rem 1.8rem; }
-
-.cart-item {
-  display: flex; gap: 1rem; padding: 1rem 0;
-  border-bottom: 1px solid var(--border); align-items: center;
-}
-.cart-item-img {
-  width: 56px; height: 56px; border-radius: 10px;
-  overflow: hidden; flex-shrink: 0; background: var(--sand);
-}
+.cart-item { display: flex; gap: 1rem; padding: 1rem 0; border-bottom: 1px solid var(--border); align-items: center; }
+.cart-item-img { width: 56px; height: 56px; border-radius: 10px; overflow: hidden; flex-shrink: 0; background: var(--sand); }
 .cart-item-img img { width: 100%; height: 100%; object-fit: cover; }
-
 .cart-item-details { flex: 1; }
 .cart-item-name { font-family: var(--font-display); font-size: 0.95rem; color: var(--text-dark); }
 .cart-item-price { font-size: 0.82rem; color: var(--clay); margin-top: 0.15rem; }
-
-.cart-item-remove {
-  background: none; border: none; color: var(--text-muted);
-  cursor: pointer; font-size: 0.9rem; transition: 0.3s;
-  width: 30px; height: 30px; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-}
+.cart-item-remove { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.9rem; transition: 0.3s; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 .cart-item-remove:hover { background: var(--sand); color: var(--terracotta); }
-
 .cart-empty { text-align: center; padding: 3rem 1rem; color: var(--text-muted); font-size: 0.9rem; }
-
 .cart-footer { padding: 1.5rem 1.8rem; border-top: 1px solid var(--border); }
 .cart-total { display: flex; justify-content: space-between; margin-bottom: 1.2rem; }
 .cart-total span { font-family: var(--font-display); font-size: 1.2rem; color: var(--text-dark); }
 .cart-total span:last-child { color: var(--earth); font-weight: 700; }
-
-.cart-checkout {
-  width: 100%; background: var(--clay); color: white; border: none;
-  padding: 0.95rem; border-radius: 50px;
-  font-family: var(--font-body); font-size: 0.82rem;
-  letter-spacing: 0.06em; cursor: pointer; transition: 0.3s;
-}
+.cart-checkout { width: 100%; background: var(--clay); color: white; border: none; padding: 0.95rem; border-radius: 50px; font-family: var(--font-body); font-size: 0.82rem; letter-spacing: 0.06em; cursor: pointer; transition: 0.3s; }
 .cart-checkout:hover { background: var(--clay-dark); }
 
-.toast {
-  position: fixed; bottom: 2rem; left: 50%;
-  transform: translateX(-50%) translateY(80px);
-  background: var(--earth); color: var(--sand);
-  padding: 0.8rem 2rem; border-radius: 50px;
-  font-size: 0.82rem; z-index: 3000;
-  transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
-  white-space: nowrap; box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-}
+.toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--earth); color: var(--sand); padding: 0.8rem 2rem; border-radius: 50px; font-size: 0.82rem; z-index: 3000; transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); white-space: nowrap; box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
 .toast.show { transform: translateX(-50%) translateY(0); }
+
+/* ============================== */
+/* ===== ADMIN PANEL STYLES ===== */
+/* ============================== */
+
+.admin-fab {
+  position: fixed;
+  bottom: 2rem; right: 2rem;
+  width: 50px; height: 50px;
+  background: var(--earth);
+  color: var(--sand);
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 1500;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  transition: all 0.3s;
+  display: flex; align-items: center; justify-content: center;
+}
+.admin-fab:hover { background: var(--clay); transform: scale(1.1); }
+
+.admin-overlay {
+  position: fixed; inset: 0;
+  background: rgba(45,36,32,0.6);
+  backdrop-filter: blur(6px);
+  z-index: 5000;
+  opacity: 0; visibility: hidden;
+  transition: 0.3s;
+}
+.admin-overlay.open { opacity: 1; visibility: visible; }
+
+.admin-panel {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  width: 720px; max-width: 95vw;
+  max-height: 90vh;
+  background: var(--white);
+  border-radius: 20px;
+  z-index: 5001;
+  opacity: 0; visibility: hidden;
+  transition: all 0.3s;
+  display: flex; flex-direction: column;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+}
+.admin-panel.open { opacity: 1; visibility: visible; transform: translate(-50%, -50%) scale(1); }
+
+.admin-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.admin-header h2 { font-family: var(--font-display); font-size: 1.5rem; color: var(--earth); }
+.admin-header-actions { display: flex; gap: 0.5rem; }
+
+.admin-close { background: none; border: none; color: var(--text-muted); font-size: 1.4rem; cursor: pointer; width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+.admin-close:hover { background: var(--sand); color: var(--terracotta); }
+
+.admin-body { flex: 1; overflow-y: auto; padding: 1.5rem 2rem; }
+
+/* Admin: Product List */
+.admin-product-list { display: flex; flex-direction: column; gap: 0.8rem; margin-bottom: 1.5rem; }
+
+.admin-product-row {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 0.8rem 1rem;
+  background: var(--sand);
+  border-radius: 12px;
+  transition: 0.2s;
+}
+.admin-product-row:hover { background: var(--sand-deep); }
+
+.admin-product-thumb {
+  width: 50px; height: 50px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: var(--sand-deep);
+}
+
+.admin-product-info { flex: 1; min-width: 0; }
+.admin-product-info strong { font-family: var(--font-display); font-size: 0.95rem; color: var(--text-dark); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.admin-product-info small { font-size: 0.72rem; color: var(--text-muted); }
+
+.admin-product-price { font-family: var(--font-display); font-weight: 600; color: var(--clay); font-size: 0.95rem; white-space: nowrap; }
+
+.admin-row-actions { display: flex; gap: 0.3rem; }
+
+.admin-btn-sm {
+  background: none; border: none;
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: 0.2s;
+  color: var(--text-muted);
+}
+.admin-btn-sm:hover { background: rgba(198,125,74,0.1); color: var(--clay); }
+.admin-btn-sm.delete:hover { background: rgba(184,92,56,0.1); color: var(--terracotta); }
+
+.admin-add-btn {
+  width: 100%;
+  padding: 0.9rem;
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  background: none;
+  color: var(--clay);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: 0.3s;
+  letter-spacing: 0.03em;
+}
+.admin-add-btn:hover { border-color: var(--clay); background: rgba(198,125,74,0.04); }
+
+/* Admin: Form */
+.admin-form { display: none; flex-direction: column; gap: 1rem; }
+.admin-form.active { display: flex; }
+
+.admin-form-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  color: var(--earth);
+  margin-bottom: 0.5rem;
+  display: flex; align-items: center; gap: 0.8rem;
+}
+
+.admin-form-back {
+  background: none; border: none;
+  color: var(--text-muted); cursor: pointer;
+  font-size: 1rem; transition: 0.2s;
+}
+.admin-form-back:hover { color: var(--clay); }
+
+.admin-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+
+.admin-field { display: flex; flex-direction: column; gap: 0.3rem; }
+.admin-field.full { grid-column: span 2; }
+
+.admin-field label {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.admin-field input,
+.admin-field textarea,
+.admin-field select {
+  background: var(--sand);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-dark);
+  padding: 0.8rem 1rem;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  outline: none;
+  transition: border 0.3s;
+}
+.admin-field input:focus,
+.admin-field textarea:focus,
+.admin-field select:focus { border-color: var(--clay); }
+.admin-field textarea { min-height: 70px; resize: vertical; }
+.admin-field select { cursor: pointer; }
+
+/* Image upload area */
+.admin-img-upload {
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: center;
+  cursor: pointer;
+  transition: 0.3s;
+  position: relative;
+  overflow: hidden;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--sand);
+}
+.admin-img-upload:hover { border-color: var(--clay); background: rgba(198,125,74,0.04); }
+.admin-img-upload.has-image { padding: 0; }
+
+.admin-img-upload .upload-icon { font-size: 2rem; opacity: 0.4; }
+.admin-img-upload .upload-text { font-size: 0.78rem; color: var(--text-muted); }
+.admin-img-upload .upload-hint { font-size: 0.65rem; color: var(--text-dim, #bbb); }
+
+.admin-img-upload input[type="file"] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer;
+}
+
+.admin-img-preview {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.admin-form-actions {
+  display: flex; gap: 0.8rem; margin-top: 0.5rem;
+}
+
+.admin-save {
+  background: var(--clay);
+  color: white;
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: 0.3s;
+  letter-spacing: 0.04em;
+}
+.admin-save:hover { background: var(--clay-dark); }
+
+.admin-cancel {
+  background: var(--sand);
+  color: var(--text-body);
+  border: none;
+  padding: 0.8rem 2rem;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.admin-cancel:hover { background: var(--sand-deep); }
+
+/* Login */
+.admin-login { display: flex; flex-direction: column; gap: 1rem; padding: 2rem; align-items: center; }
+.admin-login p { font-size: 0.85rem; color: var(--text-muted); text-align: center; }
+.admin-login input { width: 100%; max-width: 280px; background: var(--sand); border: 1px solid var(--border); border-radius: 10px; padding: 0.8rem 1rem; font-family: var(--font-body); font-size: 0.88rem; outline: none; text-align: center; }
+.admin-login input:focus { border-color: var(--clay); }
+.admin-login-btn { background: var(--clay); color: white; border: none; padding: 0.8rem 2.5rem; border-radius: 50px; font-family: var(--font-body); font-size: 0.82rem; cursor: pointer; transition: 0.3s; }
+.admin-login-btn:hover { background: var(--clay-dark); }
+.admin-login .error { color: var(--terracotta); font-size: 0.78rem; display: none; }
+
+.admin-stats {
+  display: flex; gap: 1.5rem; margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: var(--sand);
+  border-radius: 12px;
+}
+.admin-stat { text-align: center; flex: 1; }
+.admin-stat-num { font-family: var(--font-display); font-size: 1.8rem; font-weight: 700; color: var(--clay); }
+.admin-stat-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-top: 0.2rem; }
 
 /* ===== RESPONSIVE ===== */
 @media (max-width: 1000px) {
@@ -899,20 +510,13 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
   .gallery-masonry { columns: 2; }
   .process-grid { grid-template-columns: repeat(2, 1fr); }
 }
-
 @media (max-width: 700px) {
   header { padding: 1rem 1.5rem; }
   section { padding: 4rem 1.5rem; }
   .hero-content { padding: 0 1.5rem; }
   nav { display: none; }
   .hamburger { display: flex; }
-  nav.open {
-    display: flex; flex-direction: column;
-    position: fixed; inset: 0;
-    background: rgba(250,247,242,0.98);
-    justify-content: center; align-items: center;
-    gap: 2rem; z-index: 999;
-  }
+  nav.open { display: flex; flex-direction: column; position: fixed; inset: 0; background: rgba(250,247,242,0.98); justify-content: center; align-items: center; gap: 2rem; z-index: 999; }
   nav.open a { font-size: 1.2rem; color: var(--text-dark); }
   .products-grid { grid-template-columns: 1fr; }
   .gallery-masonry { columns: 1; }
@@ -920,6 +524,8 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
   .process-grid { grid-template-columns: 1fr; }
   footer { flex-direction: column; text-align: center; padding: 2rem 1.5rem; }
   .footer-links { justify-content: center; }
+  .admin-form-row { grid-template-columns: 1fr; }
+  .admin-field.full { grid-column: span 1; }
 }
 </style>
 </head>
@@ -934,27 +540,17 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
     <a href="#classes">Мастер-классы</a>
     <a href="#gallery">Галерея</a>
     <a href="#contact">Контакты</a>
-    <button class="cart-btn" onclick="toggleCart()">
-      Корзина
-      <span class="cart-count" id="cartCount">0</span>
-    </button>
+    <button class="cart-btn" onclick="toggleCart()">Корзина<span class="cart-count" id="cartCount">0</span></button>
   </nav>
-  <button class="hamburger" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
-  </button>
+  <button class="hamburger" onclick="toggleMenu()"><span></span><span></span><span></span></button>
 </header>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-bg-img">
-    <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1600&q=80" alt="Гончарный круг">
-  </div>
+  <div class="hero-bg-img"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1600&q=80" alt="Гончарный круг"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-tag">
-      <div class="hero-tag-line"></div>
-      <span>Гончарная мастерская</span>
-    </div>
+    <div class="hero-tag"><div class="hero-tag-line"></div><span>Гончарная мастерская</span></div>
     <h1>Красота,<br>рождённая <em>землёй</em></h1>
     <p>Авторская керамика ручной работы. Каждое изделие хранит тепло рук мастера и неповторимую историю глины</p>
     <div class="hero-actions">
@@ -962,10 +558,7 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
       <a href="#classes" class="btn-ghost">Мастер-классы</a>
     </div>
   </div>
-  <div class="scroll-indicator">
-    <div class="scroll-dot"></div>
-    <span>Листайте вниз</span>
-  </div>
+  <div class="scroll-indicator"><div class="scroll-dot"></div><span>Листайте вниз</span></div>
 </section>
 
 <!-- ABOUT -->
@@ -973,18 +566,11 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
   <div class="about-grid">
     <div class="about-visual">
       <div class="about-accent"></div>
-      <div class="about-img-main">
-        <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=800&q=80" alt="Мастер за гончарным кругом">
-      </div>
-      <div class="about-img-secondary">
-        <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=400&q=80" alt="Керамические изделия">
-      </div>
+      <div class="about-img-main"><img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=800&q=80" alt="Мастер"></div>
+      <div class="about-img-secondary"><img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=400&q=80" alt="Керамика"></div>
     </div>
     <div class="about-text">
-      <div class="section-tag">
-        <div class="section-tag-line"></div>
-        <span>О мастерской</span>
-      </div>
+      <div class="section-tag"><div class="section-tag-line"></div><span>О мастерской</span></div>
       <h2 class="section-title">Место, где глина <em>оживает</em></h2>
       <p>ТЕРРА — это пространство для тех, кто ценит настоящие вещи. Мы создаём керамику, которая несёт в себе тепло ручной работы и красоту природных форм.</p>
       <p>В нашей мастерской вы найдёте авторскую посуду, предметы интерьера и подарки — всё выполнено вручную из натуральной глины с уникальными глазурями.</p>
@@ -1023,30 +609,9 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
     <p class="section-desc">Попробуйте себя за гончарным кругом — это медитация, творчество и радость в одном</p>
   </div>
   <div class="classes-grid">
-    <div class="class-card">
-      <div class="class-card-img"><img src="https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=600&q=80" alt="Гончарный круг"></div>
-      <div class="class-card-body">
-        <h3>Знакомство с кругом</h3>
-        <p>Первый опыт работы на гончарном круге. Создадите свою первую чашку или пиалу под руководством мастера</p>
-        <div class="class-meta"><span class="class-duration">2.5 часа</span><span class="class-price">3 500 ₽</span></div>
-      </div>
-    </div>
-    <div class="class-card">
-      <div class="class-card-img"><img src="https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=600&q=80" alt="Чайный набор"></div>
-      <div class="class-card-body">
-        <h3>Чайная церемония</h3>
-        <p>Создайте набор для чайной церемонии: чайник, чашки и блюдце. Познакомитесь с техниками декорирования</p>
-        <div class="class-meta"><span class="class-duration">4 часа</span><span class="class-price">5 800 ₽</span></div>
-      </div>
-    </div>
-    <div class="class-card">
-      <div class="class-card-img"><img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=600&q=80" alt="Глазурование"></div>
-      <div class="class-card-body">
-        <h3>Глазурование</h3>
-        <p>Мастер-класс по работе с глазурями. Узнаете секреты цвета и текстуры, покроете своё изделие</p>
-        <div class="class-meta"><span class="class-duration">3 часа</span><span class="class-price">4 200 ₽</span></div>
-      </div>
-    </div>
+    <div class="class-card"><div class="class-card-img"><img src="https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=600&q=80" alt="Круг"></div><div class="class-card-body"><h3>Знакомство с кругом</h3><p>Первый опыт работы на гончарном круге. Создадите свою первую чашку или пиалу</p><div class="class-meta"><span class="class-duration">2.5 часа</span><span class="class-price">3 500 ₽</span></div></div></div>
+    <div class="class-card"><div class="class-card-img"><img src="https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=600&q=80" alt="Чай"></div><div class="class-card-body"><h3>Чайная церемония</h3><p>Создайте набор для чайной церемонии: чайник, чашки и блюдце</p><div class="class-meta"><span class="class-duration">4 часа</span><span class="class-price">5 800 ₽</span></div></div></div>
+    <div class="class-card"><div class="class-card-img"><img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=600&q=80" alt="Глазурь"></div><div class="class-card-body"><h3>Глазурование</h3><p>Мастер-класс по работе с глазурями. Узнаете секреты цвета и текстуры</p><div class="class-meta"><span class="class-duration">3 часа</span><span class="class-price">4 200 ₽</span></div></div></div>
   </div>
 </section>
 
@@ -1058,30 +623,10 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
     <p class="section-desc">От куска глины до готового изделия — путь, полный терпения и мастерства</p>
   </div>
   <div class="process-grid">
-    <div class="process-step">
-      <div class="process-img"><img src="https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80" alt="Подготовка глины"></div>
-      <div class="process-num">01</div>
-      <h4>Подготовка</h4>
-      <p>Замешиваем и вымешиваем глину, удаляя пузырьки воздуха</p>
-    </div>
-    <div class="process-step">
-      <div class="process-img"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400&q=80" alt="Формовка"></div>
-      <div class="process-num">02</div>
-      <h4>Формовка</h4>
-      <p>Создаём форму на гончарном круге или методом ручной лепки</p>
-    </div>
-    <div class="process-step">
-      <div class="process-img"><img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=400&q=80" alt="Глазурование"></div>
-      <div class="process-num">03</div>
-      <h4>Глазурь</h4>
-      <p>Покрываем авторскими глазурями для цвета и защиты</p>
-    </div>
-    <div class="process-step">
-      <div class="process-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&q=80" alt="Обжиг"></div>
-      <div class="process-num">04</div>
-      <h4>Обжиг</h4>
-      <p>Обжигаем при 1200°C — изделие обретает прочность и красоту</p>
-    </div>
+    <div class="process-step"><div class="process-img"><img src="https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80" alt=""></div><div class="process-num">01</div><h4>Подготовка</h4><p>Замешиваем и вымешиваем глину, удаляя пузырьки воздуха</p></div>
+    <div class="process-step"><div class="process-img"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400&q=80" alt=""></div><div class="process-num">02</div><h4>Формовка</h4><p>Создаём форму на гончарном круге или методом ручной лепки</p></div>
+    <div class="process-step"><div class="process-img"><img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=400&q=80" alt=""></div><div class="process-num">03</div><h4>Глазурь</h4><p>Покрываем авторскими глазурями для цвета и защиты</p></div>
+    <div class="process-step"><div class="process-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&q=80" alt=""></div><div class="process-num">04</div><h4>Обжиг</h4><p>Обжигаем при 1200°C — изделие обретает прочность и красоту</p></div>
   </div>
 </section>
 
@@ -1092,30 +637,12 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
     <h2 class="section-title">Наши <em>работы</em></h2>
   </div>
   <div class="gallery-masonry">
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&q=80" alt="Керамический набор">
-      <div class="gallery-overlay"><span>Набор «Утро»</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600&q=80" alt="Ваза">
-      <div class="gallery-overlay"><span>Ваза «Лепесток»</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1612196808214-b7e239e5a5e2?w=600&q=80" alt="Кашпо">
-      <div class="gallery-overlay"><span>Кашпо «Терра»</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1609881092647-6a89e1e3c060?w=600&q=80" alt="Тарелки">
-      <div class="gallery-overlay"><span>Тарелки «Песок»</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1607893378714-007fd47c8719?w=600&q=80" alt="Подсвечник">
-      <div class="gallery-overlay"><span>Подсвечник «Арка»</span></div>
-    </div>
-    <div class="gallery-item">
-      <img src="https://images.unsplash.com/photo-1576020799627-aeac74d58064?w=600&q=80" alt="Пиалы">
-      <div class="gallery-overlay"><span>Пиалы «Дзен»</span></div>
-    </div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&q=80" alt=""><div class="gallery-overlay"><span>Набор «Утро»</span></div></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600&q=80" alt=""><div class="gallery-overlay"><span>Ваза «Лепесток»</span></div></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1612196808214-b7e239e5a5e2?w=600&q=80" alt=""><div class="gallery-overlay"><span>Кашпо «Терра»</span></div></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1609881092647-6a89e1e3c060?w=600&q=80" alt=""><div class="gallery-overlay"><span>Тарелки «Песок»</span></div></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1607893378714-007fd47c8719?w=600&q=80" alt=""><div class="gallery-overlay"><span>Подсвечник «Арка»</span></div></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1576020799627-aeac74d58064?w=600&q=80" alt=""><div class="gallery-overlay"><span>Пиалы «Дзен»</span></div></div>
   </div>
 </section>
 
@@ -1128,21 +655,12 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
   </div>
   <div class="contact-wrapper">
     <div class="contact-image">
-      <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=800&q=80" alt="Мастерская">
+      <img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=800&q=80" alt="">
       <div class="contact-image-overlay">
         <h3>ТЕРРА</h3>
-        <div class="contact-item">
-          <div class="contact-icon">📍</div>
-          <div class="contact-item-text"><label>Адрес</label><p>г. Москва, Гончарная наб., д. 7</p></div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">📞</div>
-          <div class="contact-item-text"><label>Телефон</label><p>+7 (495) 987-65-43</p></div>
-        </div>
-        <div class="contact-item">
-          <div class="contact-icon">🕐</div>
-          <div class="contact-item-text"><label>Режим работы</label><p>Вт–Вс: 10:00 — 20:00</p></div>
-        </div>
+        <div class="contact-item"><div class="contact-icon">📍</div><div class="contact-item-text"><label>Адрес</label><p>г. Москва, Гончарная наб., д. 7</p></div></div>
+        <div class="contact-item"><div class="contact-icon">📞</div><div class="contact-item-text"><label>Телефон</label><p>+7 (495) 987-65-43</p></div></div>
+        <div class="contact-item"><div class="contact-icon">🕐</div><div class="contact-item-text"><label>Режим работы</label><p>Вт–Вс: 10:00 — 20:00</p></div></div>
       </div>
     </div>
     <div class="contact-form-side">
@@ -1161,31 +679,105 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
 
 <footer>
   <p>© 2026 ТЕРРА — Гончарная мастерская</p>
-  <div class="footer-links">
-    <a href="#about">О нас</a>
-    <a href="#shop">Магазин</a>
-    <a href="#classes">Мастер-классы</a>
-    <a href="#contact">Контакты</a>
-  </div>
+  <div class="footer-links"><a href="#about">О нас</a><a href="#shop">Магазин</a><a href="#classes">Мастер-классы</a><a href="#contact">Контакты</a></div>
 </footer>
 
+<!-- Cart -->
 <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
 <div class="cart-panel" id="cartPanel">
-  <div class="cart-header">
-    <h3>Корзина</h3>
-    <button class="cart-close" onclick="toggleCart()">✕</button>
-  </div>
+  <div class="cart-header"><h3>Корзина</h3><button class="cart-close" onclick="toggleCart()">✕</button></div>
   <div class="cart-items" id="cartItems"><div class="cart-empty">Корзина пуста</div></div>
-  <div class="cart-footer">
-    <div class="cart-total"><span>Итого:</span><span id="cartTotal">0 ₽</span></div>
-    <button class="cart-checkout" onclick="checkout()">Оформить заказ</button>
+  <div class="cart-footer"><div class="cart-total"><span>Итого:</span><span id="cartTotal">0 ₽</span></div><button class="cart-checkout" onclick="checkout()">Оформить заказ</button></div>
+</div>
+
+<!-- Admin FAB -->
+<button class="admin-fab" onclick="openAdmin()" title="Панель управления">⚙</button>
+
+<!-- Admin Panel -->
+<div class="admin-overlay" id="adminOverlay" onclick="closeAdmin()"></div>
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-header">
+    <h2>Управление товарами</h2>
+    <button class="admin-close" onclick="closeAdmin()">✕</button>
+  </div>
+  <div class="admin-body">
+    <!-- Login -->
+    <div class="admin-login" id="adminLogin">
+      <p>Введите пароль для доступа<br>к панели управления</p>
+      <input type="password" id="adminPass" placeholder="Пароль" onkeydown="if(event.key==='Enter')doLogin()">
+      <button class="admin-login-btn" onclick="doLogin()">Войти</button>
+      <span class="error" id="loginError">Неверный пароль</span>
+    </div>
+    <!-- Content (hidden until login) -->
+    <div id="adminContent" style="display:none">
+      <!-- Stats -->
+      <div class="admin-stats">
+        <div class="admin-stat"><div class="admin-stat-num" id="statTotal">0</div><div class="admin-stat-label">Товаров</div></div>
+        <div class="admin-stat"><div class="admin-stat-num" id="statCats">0</div><div class="admin-stat-label">Категорий</div></div>
+        <div class="admin-stat"><div class="admin-stat-num" id="statAvg">0 ₽</div><div class="admin-stat-label">Средняя цена</div></div>
+      </div>
+      <!-- Product List -->
+      <div id="adminListView">
+        <div class="admin-product-list" id="adminProductList"></div>
+        <button class="admin-add-btn" onclick="showForm()">+ Добавить новый товар</button>
+      </div>
+      <!-- Product Form -->
+      <div class="admin-form" id="adminForm">
+        <div class="admin-form-title">
+          <button class="admin-form-back" onclick="hideForm()">←</button>
+          <span id="formTitle">Новый товар</span>
+        </div>
+        <div class="admin-img-upload" id="imgUpload" onclick="document.getElementById('imgInput').click()">
+          <div class="upload-icon" id="uploadIcon">📷</div>
+          <div class="upload-text" id="uploadText">Нажмите или перетащите фото</div>
+          <div class="upload-hint">JPG, PNG — до 5 МБ</div>
+          <input type="file" id="imgInput" accept="image/*" onchange="handleImage(event)">
+        </div>
+        <div class="admin-form-row">
+          <div class="admin-field"><label>Название</label><input type="text" id="fName" placeholder="Например: Ваза «Каньон»"></div>
+          <div class="admin-field"><label>Цена (₽)</label><input type="number" id="fPrice" placeholder="5000"></div>
+        </div>
+        <div class="admin-form-row">
+          <div class="admin-field">
+            <label>Категория</label>
+            <select id="fCategory">
+              <option value="tableware">Посуда</option>
+              <option value="vases">Вазы</option>
+              <option value="decor">Декор</option>
+              <option value="gifts">Подарки</option>
+            </select>
+          </div>
+          <div class="admin-field">
+            <label>Бейдж (необязательно)</label>
+            <select id="fBadge">
+              <option value="">Без бейджа</option>
+              <option value="Хит">Хит</option>
+              <option value="Новинка">Новинка</option>
+              <option value="Подарок">Подарок</option>
+              <option value="Скидка">Скидка</option>
+            </select>
+          </div>
+        </div>
+        <div class="admin-field full">
+          <label>Описание</label>
+          <textarea id="fDesc" placeholder="Краткое описание изделия..."></textarea>
+        </div>
+        <input type="hidden" id="fId">
+        <input type="hidden" id="fImg">
+        <div class="admin-form-actions">
+          <button class="admin-save" onclick="saveProduct()">Сохранить</button>
+          <button class="admin-cancel" onclick="hideForm()">Отмена</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-const products = [
+// ===== DEFAULT PRODUCTS =====
+const defaultProducts = [
   { id:1, name:'Чашка «Рассвет»', category:'tableware', price:2800, desc:'Чашка 300 мл с персиковой глазурью, ручная лепка', badge:'Хит', img:'https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?w=500&q=80' },
   { id:2, name:'Ваза «Каньон»', category:'vases', price:7500, desc:'Высокая ваза с текстурой песчаника, высота 32 см', img:'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=500&q=80' },
   { id:3, name:'Тарелка «Дюна»', category:'tableware', price:3200, desc:'Обеденная тарелка с волнистым краем, диаметр 26 см', badge:'Новинка', img:'https://images.unsplash.com/photo-1609881092647-6a89e1e3c060?w=500&q=80' },
@@ -1200,10 +792,29 @@ const products = [
   { id:12, name:'Панно «Волна»', category:'decor', price:9800, desc:'Настенное панно из керамических элементов, 40×60 см', img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=500&q=80' },
 ];
 
+// ===== LOAD/SAVE =====
+const STORAGE_KEY = 'terra_products';
+const ADMIN_PASS = 'terra2026';
+
+function loadProducts() {
+  try {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) return JSON.parse(saved);
+  } catch(e) {}
+  return [...defaultProducts];
+}
+
+function saveProducts() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(products)); } catch(e) {}
+}
+
+let products = loadProducts();
 const catNames = { tableware:'Посуда', vases:'Вазы', decor:'Декор', gifts:'Подарки' };
 let cart = [];
 let activeFilter = 'all';
+let adminLoggedIn = false;
 
+// ===== RENDER PRODUCTS =====
 function renderProducts() {
   const grid = document.getElementById('productsGrid');
   const filtered = activeFilter === 'all' ? products : products.filter(p => p.category === activeFilter);
@@ -1214,7 +825,7 @@ function renderProducts() {
         ${p.badge ? `<div class="product-badge">${p.badge}</div>` : ''}
       </div>
       <div class="product-info">
-        <div class="product-category">${catNames[p.category]}</div>
+        <div class="product-category">${catNames[p.category] || p.category}</div>
         <div class="product-name">${p.name}</div>
         <div class="product-desc">${p.desc}</div>
         <div class="product-footer">
@@ -1233,18 +844,17 @@ function filterProducts(cat) {
   renderProducts();
 }
 
+// ===== CART =====
 function addToCart(id) {
   const p = products.find(x => x.id === id);
+  if (!p) return;
   const ex = cart.find(c => c.id === id);
   if (ex) ex.qty++; else cart.push({ ...p, qty: 1 });
   updateCart();
   showToast(`${p.name} — в корзине`);
 }
 
-function removeFromCart(id) {
-  cart = cart.filter(c => c.id !== id);
-  updateCart();
-}
+function removeFromCart(id) { cart = cart.filter(c => c.id !== id); updateCart(); }
 
 function updateCart() {
   const count = cart.reduce((s, c) => s + c.qty, 0);
@@ -1252,9 +862,8 @@ function updateCart() {
   document.getElementById('cartCount').textContent = count;
   document.getElementById('cartTotal').textContent = total.toLocaleString('ru-RU') + ' ₽';
   const el = document.getElementById('cartItems');
-  if (!cart.length) {
-    el.innerHTML = '<div class="cart-empty">Корзина пуста</div>';
-  } else {
+  if (!cart.length) { el.innerHTML = '<div class="cart-empty">Корзина пуста</div>'; }
+  else {
     el.innerHTML = cart.map(c => `
       <div class="cart-item">
         <div class="cart-item-img"><img src="${c.img}" alt="${c.name}"></div>
@@ -1299,6 +908,210 @@ document.querySelectorAll('#mainNav a').forEach(a =>
   a.addEventListener('click', () => document.getElementById('mainNav').classList.remove('open'))
 );
 
+// ============================
+// ===== ADMIN PANEL =====
+// ============================
+
+function openAdmin() {
+  document.getElementById('adminOverlay').classList.add('open');
+  document.getElementById('adminPanel').classList.add('open');
+  if (adminLoggedIn) {
+    renderAdminList();
+  }
+}
+
+function closeAdmin() {
+  document.getElementById('adminOverlay').classList.remove('open');
+  document.getElementById('adminPanel').classList.remove('open');
+  hideForm();
+}
+
+function doLogin() {
+  const pass = document.getElementById('adminPass').value;
+  if (pass === ADMIN_PASS) {
+    adminLoggedIn = true;
+    document.getElementById('adminLogin').style.display = 'none';
+    document.getElementById('adminContent').style.display = 'block';
+    renderAdminList();
+  } else {
+    document.getElementById('loginError').style.display = 'block';
+    document.getElementById('adminPass').value = '';
+    setTimeout(() => document.getElementById('loginError').style.display = 'none', 2000);
+  }
+}
+
+function renderAdminList() {
+  // Stats
+  document.getElementById('statTotal').textContent = products.length;
+  const cats = new Set(products.map(p => p.category));
+  document.getElementById('statCats').textContent = cats.size;
+  const avg = products.length ? Math.round(products.reduce((s,p) => s + p.price, 0) / products.length) : 0;
+  document.getElementById('statAvg').textContent = avg.toLocaleString('ru-RU') + ' ₽';
+
+  // List
+  const list = document.getElementById('adminProductList');
+  list.innerHTML = products.map(p => `
+    <div class="admin-product-row">
+      <div class="admin-product-thumb"><img src="${p.img}" alt="${p.name}"></div>
+      <div class="admin-product-info">
+        <strong>${p.name}</strong>
+        <small>${catNames[p.category] || p.category}${p.badge ? ' · ' + p.badge : ''}</small>
+      </div>
+      <div class="admin-product-price">${p.price.toLocaleString('ru-RU')} ₽</div>
+      <div class="admin-row-actions">
+        <button class="admin-btn-sm" onclick="editProduct(${p.id})" title="Редактировать">✏️</button>
+        <button class="admin-btn-sm delete" onclick="deleteProduct(${p.id})" title="Удалить">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('adminListView').style.display = 'block';
+  document.getElementById('adminForm').classList.remove('active');
+}
+
+function showForm(id) {
+  document.getElementById('adminListView').style.display = 'none';
+  document.getElementById('adminForm').classList.add('active');
+
+  if (id) {
+    const p = products.find(x => x.id === id);
+    document.getElementById('formTitle').textContent = 'Редактировать товар';
+    document.getElementById('fId').value = p.id;
+    document.getElementById('fName').value = p.name;
+    document.getElementById('fPrice').value = p.price;
+    document.getElementById('fCategory').value = p.category;
+    document.getElementById('fBadge').value = p.badge || '';
+    document.getElementById('fDesc').value = p.desc;
+    document.getElementById('fImg').value = p.img;
+    showImagePreview(p.img);
+  } else {
+    document.getElementById('formTitle').textContent = 'Новый товар';
+    document.getElementById('fId').value = '';
+    document.getElementById('fName').value = '';
+    document.getElementById('fPrice').value = '';
+    document.getElementById('fCategory').value = 'tableware';
+    document.getElementById('fBadge').value = '';
+    document.getElementById('fDesc').value = '';
+    document.getElementById('fImg').value = '';
+    resetImageUpload();
+  }
+}
+
+function hideForm() {
+  document.getElementById('adminListView').style.display = 'block';
+  document.getElementById('adminForm').classList.remove('active');
+  resetImageUpload();
+}
+
+function editProduct(id) { showForm(id); }
+
+function deleteProduct(id) {
+  const p = products.find(x => x.id === id);
+  if (!confirm(`Удалить «${p.name}»?`)) return;
+  products = products.filter(x => x.id !== id);
+  saveProducts();
+  renderProducts();
+  renderAdminList();
+  showToast('Товар удалён');
+}
+
+function saveProduct() {
+  const name = document.getElementById('fName').value.trim();
+  const price = parseInt(document.getElementById('fPrice').value);
+  const category = document.getElementById('fCategory').value;
+  const badge = document.getElementById('fBadge').value;
+  const desc = document.getElementById('fDesc').value.trim();
+  const img = document.getElementById('fImg').value;
+  const editId = document.getElementById('fId').value;
+
+  if (!name) { showToast('Введите название'); return; }
+  if (!price || price <= 0) { showToast('Укажите цену'); return; }
+  if (!img) { showToast('Добавьте фото товара'); return; }
+
+  if (editId) {
+    // Edit existing
+    const p = products.find(x => x.id === parseInt(editId));
+    if (p) {
+      p.name = name;
+      p.price = price;
+      p.category = category;
+      p.badge = badge || '';
+      p.desc = desc;
+      p.img = img;
+    }
+    showToast('Товар обновлён');
+  } else {
+    // Add new
+    const maxId = products.reduce((m, p) => Math.max(m, p.id), 0);
+    products.push({ id: maxId + 1, name, price, category, badge: badge || '', desc, img });
+    showToast('Товар добавлен');
+  }
+
+  saveProducts();
+  renderProducts();
+  renderAdminList();
+}
+
+// ===== IMAGE HANDLING =====
+function handleImage(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  if (file.size > 5 * 1024 * 1024) {
+    showToast('Файл слишком большой (макс. 5 МБ)');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    document.getElementById('fImg').value = ev.target.result;
+    showImagePreview(ev.target.result);
+  };
+  reader.readAsDataURL(file);
+}
+
+function showImagePreview(src) {
+  const upload = document.getElementById('imgUpload');
+  upload.classList.add('has-image');
+  document.getElementById('uploadIcon').style.display = 'none';
+  document.getElementById('uploadText').style.display = 'none';
+  upload.querySelector('.upload-hint').style.display = 'none';
+
+  let preview = upload.querySelector('.admin-img-preview');
+  if (!preview) {
+    preview = document.createElement('img');
+    preview.className = 'admin-img-preview';
+    upload.appendChild(preview);
+  }
+  preview.src = src;
+}
+
+function resetImageUpload() {
+  const upload = document.getElementById('imgUpload');
+  upload.classList.remove('has-image');
+  document.getElementById('uploadIcon').style.display = '';
+  document.getElementById('uploadText').style.display = '';
+  upload.querySelector('.upload-hint').style.display = '';
+  const preview = upload.querySelector('.admin-img-preview');
+  if (preview) preview.remove();
+  document.getElementById('imgInput').value = '';
+}
+
+// Drag and drop
+const imgUpload = document.getElementById('imgUpload');
+imgUpload.addEventListener('dragover', e => { e.preventDefault(); imgUpload.style.borderColor = '#c67d4a'; });
+imgUpload.addEventListener('dragleave', () => { imgUpload.style.borderColor = ''; });
+imgUpload.addEventListener('drop', e => {
+  e.preventDefault();
+  imgUpload.style.borderColor = '';
+  const file = e.dataTransfer.files[0];
+  if (file && file.type.startsWith('image/')) {
+    document.getElementById('imgInput').files = e.dataTransfer.files;
+    handleImage({ target: { files: [file] } });
+  }
+});
+
+// ===== INIT =====
 renderProducts();
 </script>
 
