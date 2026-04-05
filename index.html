@@ -435,6 +435,26 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
 }
 .pd-add-cart:hover { background: var(--clay-dark); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(198,125,74,0.3); }
 
+.pd-go-cart {
+  display: none;
+  flex: 1;
+  background: var(--earth);
+  color: var(--sand);
+  border: none;
+  padding: 1rem 1.5rem;
+  border-radius: 50px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: 0.3s;
+  animation: fadeIn 0.3s ease;
+}
+.pd-go-cart.show { display: block; }
+.pd-go-cart:hover { background: var(--text-dark); transform: translateY(-2px); }
+
+@keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
 .pd-wishlist {
   width: 48px; height: 48px;
   border: 1.5px solid var(--border);
@@ -1061,6 +1081,7 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
     </div>
     <div class="pd-actions">
       <button class="pd-add-cart" id="pdAddCart">В корзину</button>
+      <button class="pd-go-cart" id="pdGoCart" onclick="closeProductDetail(); toggleCart();">Перейти в корзину →</button>
       <button class="pd-wishlist" title="В избранное">♡</button>
     </div>
   </div>
@@ -1315,12 +1336,15 @@ function openProductDetail(id) {
 
   // Cart button
   const btn = document.getElementById('pdAddCart');
+  const goBtn = document.getElementById('pdGoCart');
+  goBtn.classList.remove('show');
   btn.onclick = function() {
     addToCart(id);
     btn.textContent = '✓ Добавлено';
     btn.style.background = '#5c4033';
+    goBtn.classList.add('show');
     setTimeout(() => {
-      btn.textContent = 'В корзину';
+      btn.textContent = 'Ещё в корзину';
       btn.style.background = '';
     }, 1500);
   };
