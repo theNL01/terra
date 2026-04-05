@@ -244,7 +244,7 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
 .cart-checkout { width: 100%; background: var(--clay); color: white; border: none; padding: 0.95rem; border-radius: 50px; font-family: var(--font-body); font-size: 0.82rem; letter-spacing: 0.06em; cursor: pointer; transition: 0.3s; }
 .cart-checkout:hover { background: var(--clay-dark); }
 
-.toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--earth); color: var(--sand); padding: 0.8rem 2rem; border-radius: 50px; font-size: 0.82rem; z-index: 3000; transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); white-space: nowrap; box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
+.toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--earth); color: var(--sand); padding: 0.8rem 2rem; border-radius: 50px; font-size: 0.82rem; z-index: 99999; transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); white-space: nowrap; box-shadow: 0 8px 30px rgba(0,0,0,0.2); }
 .toast.show { transform: translateX(-50%) translateY(0); }
 
 /* ============================== */
@@ -1454,31 +1454,36 @@ function selectPay(el, method) {
 }
 
 function submitOrder() {
+  console.log('submitOrder вызван');
   const name = document.getElementById('coName').value.trim();
   const phone = document.getElementById('coPhone').value.trim();
   const email = document.getElementById('coEmail').value.trim();
   const address = document.getElementById('coAddress').value.trim();
   const comment = document.getElementById('coComment').value.trim();
 
+  console.log('Данные:', {name, phone, email, address});
+
   // --- VALIDATION ---
 
   // Name: only letters, spaces, hyphens, min 2 chars
-  if (!name || name.length < 2) { showToast('Укажите ваше имя (минимум 2 буквы)'); return; }
-  if (!/^[а-яА-ЯёЁa-zA-Z\s\-]+$/.test(name)) { showToast('Имя может содержать только буквы'); return; }
+  if (!name || name.length < 2) { showToast('Укажите ваше имя (минимум 2 буквы)'); console.log('Ошибка: имя'); return; }
+  if (!/^[а-яА-ЯёЁa-zA-Z\s\-]+$/.test(name)) { showToast('Имя может содержать только буквы'); console.log('Ошибка: формат имени'); return; }
 
   // Phone: must contain at least 7 digits
   const phoneDigits = phone.replace(/\D/g, '');
-  if (!phone) { showToast('Укажите номер телефона'); return; }
-  if (phoneDigits.length < 10 || phoneDigits.length > 15) { showToast('Введите корректный номер телефона (10–15 цифр)'); return; }
+  if (!phone) { showToast('Укажите номер телефона'); console.log('Ошибка: нет телефона'); return; }
+  if (phoneDigits.length < 10 || phoneDigits.length > 15) { showToast('Введите корректный номер телефона (10–15 цифр)'); console.log('Ошибка: телефон', phoneDigits.length, 'цифр'); return; }
 
   // Email: if filled, must be valid format
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { showToast('Введите корректный email'); return; }
+  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { showToast('Введите корректный email'); console.log('Ошибка: email'); return; }
 
   // Address: if filled, min 5 chars, no gibberish (must contain at least one letter)
-  if (address && (address.length < 5 || !/[а-яА-ЯёЁa-zA-Z]/.test(address))) { showToast('Введите корректный адрес доставки'); return; }
+  if (address && (address.length < 5 || !/[а-яА-ЯёЁa-zA-Z]/.test(address))) { showToast('Введите корректный адрес доставки'); console.log('Ошибка: адрес'); return; }
 
   // Comment: max 500 chars
   if (comment.length > 500) { showToast('Комментарий слишком длинный (макс. 500 символов)'); return; }
+
+  console.log('Валидация пройдена');
 
   const btn = document.getElementById('checkoutSubmit');
   btn.disabled = true;
