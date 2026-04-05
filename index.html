@@ -619,11 +619,8 @@ footer p { font-size: 0.72rem; color: rgba(245,239,230,0.35); letter-spacing: 0.
 .checkout-submit:disabled { opacity: 0.6; cursor: not-allowed; }
 
 .checkout-success {
-  display: none;
-  text-align: center;
-  padding: 2rem 1rem;
+  display: none !important;
 }
-.checkout-success.show { display: block; }
 .checkout-success-icon { font-size: 3.5rem; margin-bottom: 1rem; }
 .checkout-success h4 { font-family: var(--font-display); font-size: 1.5rem; color: var(--earth); margin-bottom: 0.6rem; }
 .checkout-success p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; }
@@ -1536,36 +1533,35 @@ Email: ${email || '—'}
   // Send via Formspree
   const msg = 'Заказ: ' + orderId + '\nТовары:\n' + orderItems + '\nИтого: ' + total.toLocaleString('ru-RU') + ' руб.\nОплата: ' + payNames[selectedPayMethod] + '\nАдрес: ' + (address || '—') + '\nКомментарий: ' + (comment || '—');
 
-  fetch('https://formspree.io/f/xjgppdnp', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    },
-    body: JSON.stringify({
-      name: name,
-      email: email || 'no-email@terra.ru',
-      phone: phone,
-      message: msg
-    })
-  })
-  .then(function(r) {
-    return r.json().then(function(data) {
+  // Close modal and show success immediately
+  showOrderSuccess(orderId);
+
+  // Send in background
+  try {
+    fetch('https://formspree.io/f/xjgppdnp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        name: name,
+        email: email || 'no-email@terra.ru',
+        phone: phone,
+        message: msg
+      })
+    }).then(function(r) {
       if (r.ok) {
-        console.log('Formspree OK:', data);
+        console.log('Formspree: заказ отправлен');
       } else {
-        console.error('Formspree ОШИБКА:', r.status, data);
-        alert('Ошибка отправки: ' + JSON.stringify(data));
+        console.error('Formspree ошибка:', r.status);
       }
+    }).catch(function(e) {
+      console.error('Formspree недоступен:', e);
     });
-  })
-  .catch(function(e) {
-    console.error('Fetch ошибка:', e);
-    alert('Не удалось отправить заказ. Проверьте интернет-соединение.');
-  })
-  .finally(function() {
-    showOrderSuccess(orderId);
-  });
+  } catch(e) {
+    console.error('Fetch exception:', e);
+  }
 }
 
 function showOrderSuccess(orderId) {
