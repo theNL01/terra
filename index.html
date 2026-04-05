@@ -22,6 +22,7 @@ nav{display:flex;gap:2.2rem;align-items:center}nav a{font-size:.82rem;color:var(
 .cart-count{position:absolute;top:-5px;right:-5px;background:var(--terracotta);color:#fff;font-size:.6rem;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none}.hamburger span{width:22px;height:1.5px;background:var(--earth)}
 .mobile-cart{display:none;position:relative;background:none;border:none;font-size:1.3rem;cursor:pointer;padding:4px}.mobile-cart .cart-count{position:absolute;top:-4px;right:-8px}
+.mob-controls{display:none!important}
 
 /* HERO */
 .hero{height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
@@ -196,7 +197,7 @@ footer{background:#3a2d25;padding:2.5rem 3rem;display:flex;justify-content:space
 @media(max-width:1000px){.about-grid{grid-template-columns:1fr;gap:2rem}.cgrid{grid-template-columns:1fr}.cont-wrap{grid-template-columns:1fr}.cont-img{min-height:300px}.gmas{columns:2}.proc-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){
 header{padding:1rem 1.5rem}section{padding:4rem 1.5rem}.hero-content{padding:0 1.5rem}
-nav{display:none}.hamburger{display:flex}.mobile-cart{display:block}
+nav{display:none}.hamburger{display:flex}.mobile-cart{display:block}.mob-controls{display:flex!important}
 nav.open{display:flex;flex-direction:column;position:fixed;inset:0;background:rgba(250,247,242,.98);justify-content:center;align-items:center;gap:2rem;z-index:999}nav.open a{font-size:1.2rem;color:var(--text-dark)}
 .pgrid{grid-template-columns:1fr}.gmas{columns:1}.about-feats{grid-template-columns:1fr}.proc-grid{grid-template-columns:1fr}
 footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justify-content:center}
@@ -215,7 +216,7 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
     <a href="#about">О нас</a><a href="#shop">Магазин</a><a href="#classes">Мастер-классы</a><a href="#gallery">Галерея</a><a href="#contact">Контакты</a>
     <button class="cart-btn" onclick="toggleCart()">Корзина<span class="cart-count" id="cartCount">0</span></button>
   </nav>
-  <div style="display:flex;align-items:center;gap:.8rem">
+  <div class="mob-controls" style="display:flex;align-items:center;gap:.8rem">
     <button class="mobile-cart" onclick="toggleCart()">🛒<span class="cart-count" id="cartCountM">0</span></button>
     <button class="hamburger" onclick="document.getElementById('mainNav').classList.toggle('open')"><span></span><span></span><span></span></button>
   </div>
