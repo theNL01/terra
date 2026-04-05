@@ -187,6 +187,7 @@ footer{background:#3a2d25;padding:2.5rem 3rem;display:flex;justify-content:space
 .adm-form-acts{display:flex;gap:.8rem;margin-top:.5rem}
 .adm-save{background:var(--clay);color:#fff;border:none;padding:.8rem 2rem;border-radius:50px;font-family:var(--font-b);font-size:.82rem;cursor:pointer;transition:.3s}.adm-save:hover{background:var(--clay-dark)}
 .adm-cancel{background:var(--sand);color:var(--text-body);border:none;padding:.8rem 2rem;border-radius:50px;font-family:var(--font-b);font-size:.82rem;cursor:pointer;transition:.3s}.adm-cancel:hover{background:var(--sand-deep)}
+.ai-btn{background:linear-gradient(135deg,var(--clay),var(--terracotta));color:#fff;border:none;padding:.5rem 1.2rem;border-radius:50px;font-family:var(--font-b);font-size:.72rem;cursor:pointer;transition:.3s;margin-top:.4rem;letter-spacing:.03em}.ai-btn:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(198,125,74,.3)}
 
 /* TOAST */
 .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--earth);color:var(--sand);padding:.8rem 2rem;border-radius:50px;font-size:.82rem;z-index:99999;transition:transform .4s cubic-bezier(.4,0,.2,1);white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.2)}.toast.show{transform:translateX(-50%) translateY(0)}
@@ -385,7 +386,7 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
           <div class="adm-field full"><input type="text" id="pImgUrl" placeholder="https://example.com/photo.jpg" oninput="onImgUrl(this,'p')"></div>
           <div class="adm-form-row"><div class="adm-field"><label>Название</label><input type="text" id="fName"></div><div class="adm-field"><label>Цена (₽)</label><input type="number" id="fPrice"></div></div>
           <div class="adm-form-row"><div class="adm-field"><label>Категория</label><select id="fCat"><option value="tableware">Посуда</option><option value="vases">Вазы</option><option value="decor">Декор</option><option value="gifts">Подарки</option></select></div><div class="adm-field"><label>Бейдж</label><select id="fBadge"><option value="">Нет</option><option value="Хит">Хит</option><option value="Новинка">Новинка</option><option value="Подарок">Подарок</option><option value="Скидка">Скидка</option></select></div></div>
-          <div class="adm-field full"><label>Описание</label><textarea id="fDesc"></textarea></div>
+          <div class="adm-field full"><label>Описание</label><textarea id="fDesc"></textarea><button type="button" class="ai-btn" onclick="aiDescribe('p')">✨ Описать с ИИ</button></div>
           <input type="hidden" id="fId"><input type="hidden" id="fImg">
           <div class="adm-form-acts"><button class="adm-save" onclick="saveP()">Сохранить</button><button class="adm-cancel" onclick="hidePF()">Отмена</button></div>
         </div>
@@ -401,7 +402,7 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
           <div style="display:flex;align-items:center;gap:.5rem;margin-top:-.5rem"><span style="font-size:.72rem;color:var(--text-muted)">или вставьте ссылку:</span></div>
           <div class="adm-field full"><input type="text" id="cImgUrl" placeholder="https://example.com/photo.jpg" oninput="onImgUrl(this,'c')"></div>
           <div class="adm-field full"><label>Название</label><input type="text" id="cName"></div>
-          <div class="adm-field full"><label>Описание</label><textarea id="cDesc"></textarea></div>
+          <div class="adm-field full"><label>Описание</label><textarea id="cDesc"></textarea><button type="button" class="ai-btn" onclick="aiDescribe('c')">✨ Описать с ИИ</button></div>
           <div class="adm-form-row"><div class="adm-field"><label>Длительность</label><input type="text" id="cDur" placeholder="2.5 часа"></div><div class="adm-field"><label>Цена (₽)</label><input type="number" id="cPrice"></div></div>
           <input type="hidden" id="cId"><input type="hidden" id="cImg">
           <div class="adm-form-acts"><button class="adm-save" onclick="saveC()">Сохранить</button><button class="adm-cancel" onclick="hideCF()">Отмена</button></div>
@@ -695,6 +696,53 @@ function resetImgUp(type){
   document.getElementById(type==='p'?'pImgIn':'cImgIn').value='';
   document.getElementById(type==='p'?'pImgUrl':'cImgUrl').value='';
   document.getElementById(type==='p'?'pImgStatus':'cImgStatus').textContent='';
+}
+
+// ===== AI DESCRIBE =====
+function aiDescribe(type) {
+  const name = document.getElementById(type==='p'?'fName':'cName').value.trim();
+  const imgUrl = document.getElementById(type==='p'?'fImg':'cImg').value;
+  
+  let prompt;
+  if (type === 'p') {
+    const cat = document.getElementById('fCat');
+    const catText = cat.options[cat.selectedIndex].text;
+    prompt = 'Ты — копирайтер гончарной мастерской «ТЕРРА». Напиши короткое продающее описание товара для интернет-магазина (2-3 предложения, до 150 символов).\n\n';
+    prompt += 'Товар: ' + (name || 'керамическое изделие') + '\n';
+    prompt += 'Категория: ' + catText + '\n';
+    prompt += 'Стиль: тёплый, уютный, подчёркивающий ручную работу и уникальность.\n\n';
+    if (imgUrl && imgUrl.startsWith('http')) {
+      prompt += 'Фото товара прикреплено — опиши что видишь на фото и используй это в описании.\n\n';
+    }
+    prompt += 'Дай только текст описания, без кавычек и пояснений.';
+  } else {
+    prompt = 'Ты — копирайтер гончарной мастерской «ТЕРРА». Напиши короткое привлекательное описание мастер-класса (2-3 предложения, до 150 символов).\n\n';
+    prompt += 'Мастер-класс: ' + (name || 'гончарный мастер-класс') + '\n';
+    prompt += 'Стиль: вдохновляющий, тёплый, передающий атмосферу творчества.\n\n';
+    if (imgUrl && imgUrl.startsWith('http')) {
+      prompt += 'Фото прикреплено — опиши что видишь и используй это в описании.\n\n';
+    }
+    prompt += 'Дай только текст описания, без кавычек и пояснений.';
+  }
+
+  // Copy prompt to clipboard
+  navigator.clipboard.writeText(prompt).then(function() {
+    toast('📋 Промпт скопирован! Вставьте в Claude');
+  }).catch(function() {
+    // Fallback
+    const ta = document.createElement('textarea');
+    ta.value = prompt;
+    document.body.appendChild(ta);
+    ta.select();
+    document.execCommand('copy');
+    document.body.removeChild(ta);
+    toast('📋 Промпт скопирован! Вставьте в Claude');
+  });
+
+  // Open Claude in new tab
+  setTimeout(function() {
+    window.open('https://claude.ai/new', '_blank');
+  }, 500);
 }
 
 // ===== NAV =====
