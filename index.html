@@ -1521,18 +1521,74 @@ Email: ${email || '—'}
 }
 
 function showOrderSuccess(orderId) {
-  document.getElementById('checkoutForm').style.display = 'none';
-  document.getElementById('checkoutSuccess').classList.add('show');
-  document.getElementById('orderId').textContent = 'Заказ ' + orderId;
+  // Close checkout modal
+  document.getElementById('checkoutOverlay').classList.remove('open');
+  document.getElementById('checkoutModal').classList.remove('open');
+
+  // Reset form for next time
+  document.getElementById('checkoutForm').style.display = 'flex';
+  document.getElementById('checkoutSuccess').classList.remove('show');
+  document.getElementById('checkoutSubmit').disabled = false;
+  document.getElementById('checkoutSubmit').textContent = 'Подтвердить заказ';
+  ['coName','coPhone','coEmail','coAddress','coComment'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
 
   // Clear cart
   cart = [];
   updateCart();
 
-  // Clear form
-  ['coName','coPhone','coEmail','coAddress','coComment'].forEach(id => {
-    document.getElementById(id).value = '';
+  // Show success overlay on page
+  showSuccessOverlay(orderId);
+}
+
+function showSuccessOverlay(orderId) {
+  // Create overlay
+  const overlay = document.createElement('div');
+  overlay.id = 'successOverlay';
+  overlay.style.cssText = `
+    position: fixed; inset: 0; z-index: 6000;
+    background: rgba(45,36,32,0.7); backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.4s;
+  `;
+
+  overlay.innerHTML = `
+    <div style="
+      background: #fff; border-radius: 20px; padding: 3rem 2.5rem;
+      max-width: 440px; width: 90%; text-align: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.25);
+      transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+    " id="successCard">
+      <div style="font-size: 4rem; margin-bottom: 1rem;">✅</div>
+      <h3 style="font-family: 'Playfair Display', serif; font-size: 1.6rem; color: #5c4033; margin-bottom: 0.6rem;">Заказ оформлен!</h3>
+      <p style="font-size: 0.92rem; color: #9a8d82; line-height: 1.6; margin-bottom: 1.2rem;">Мы свяжемся с вами в ближайшее время для подтверждения заказа и уточнения деталей оплаты</p>
+      <div style="display: inline-block; background: #f5efe6; padding: 0.5rem 1.5rem; border-radius: 10px; font-family: 'Playfair Display', serif; font-size: 1.1rem; color: #c67d4a; font-weight: 600; margin-bottom: 1.5rem;">${orderId}</div>
+      <br>
+      <button onclick="document.getElementById('successOverlay').remove()" style="
+        background: #c67d4a; color: white; border: none;
+        padding: 0.9rem 2.5rem; border-radius: 50px;
+        font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+        cursor: pointer; transition: 0.3s; letter-spacing: 0.04em;
+      " onmouseover="this.style.background='#a86638'" onmouseout="this.style.background='#c67d4a'">Отлично!</button>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  // Animate in
+  requestAnimationFrame(() => {
+    overlay.style.opacity = '1';
+    document.getElementById('successCard').style.transform = 'scale(1)';
   });
+
+  // Auto-close after 10 seconds
+  setTimeout(() => {
+    if (document.getElementById('successOverlay')) {
+      overlay.style.opacity = '0';
+      setTimeout(() => overlay.remove(), 400);
+    }
+  }, 10000);
 }
 
 function toggleMenu() { document.getElementById('mainNav').classList.toggle('open'); }
