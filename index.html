@@ -182,6 +182,7 @@ footer{background:#3a2d25;padding:2.5rem 3rem;display:flex;justify-content:space
 .adm-img-up{border:2px dashed var(--border);border-radius:12px;padding:1.5rem;text-align:center;cursor:pointer;transition:.3s;position:relative;overflow:hidden;min-height:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;background:var(--sand)}.adm-img-up:hover{border-color:var(--clay)}.adm-img-up.has{padding:0}
 .adm-img-up .uicon{font-size:2rem;opacity:.4}.adm-img-up .utxt{font-size:.78rem;color:var(--text-muted)}.adm-img-up .uhint{font-size:.65rem;color:#bbb}
 .adm-img-up input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.adm-img-status{font-size:.75rem;padding:.3rem 0;min-height:1.2rem;text-align:center;transition:.3s}.adm-img-status.uploading{color:var(--clay)}.adm-img-status.done{color:var(--sage)}.adm-img-status.err{color:var(--terracotta)}
 .adm-img-prev{width:100%;height:180px;object-fit:cover;border-radius:10px}
 .adm-form-acts{display:flex;gap:.8rem;margin-top:.5rem}
 .adm-save{background:var(--clay);color:#fff;border:none;padding:.8rem 2rem;border-radius:50px;font-family:var(--font-b);font-size:.82rem;cursor:pointer;transition:.3s}.adm-save:hover{background:var(--clay-dark)}
@@ -378,7 +379,8 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
         <div id="pListView"><div class="adm-list" id="admPList"></div><button class="adm-add-btn" onclick="showPF()">+ Добавить товар</button></div>
         <div class="adm-form" id="pForm">
           <div class="adm-form-title"><button class="adm-form-back" onclick="hidePF()">←</button><span id="pFTitle">Новый товар</span></div>
-          <div class="adm-img-up" id="pImgUp"><div class="uicon" id="pUIco">📷</div><div class="utxt" id="pUTxt">Нажмите или перетащите фото</div><div class="uhint">JPG, PNG — до 5 МБ</div><input type="file" id="pImgIn" accept="image/*" onchange="hImg(event,'p')"></div>
+          <div class="adm-img-up" id="pImgUp"><div class="uicon" id="pUIco">📷</div><div class="utxt" id="pUTxt">Нажмите или перетащите фото</div><div class="uhint">Автозагрузка на хостинг ImgBB</div><input type="file" id="pImgIn" accept="image/*" onchange="hImg(event,'p')"></div>
+          <div class="adm-img-status" id="pImgStatus"></div>
           <div style="display:flex;align-items:center;gap:.5rem;margin-top:-.5rem"><span style="font-size:.72rem;color:var(--text-muted)">или вставьте ссылку:</span></div>
           <div class="adm-field full"><input type="text" id="pImgUrl" placeholder="https://example.com/photo.jpg" oninput="onImgUrl(this,'p')"></div>
           <div class="adm-form-row"><div class="adm-field"><label>Название</label><input type="text" id="fName"></div><div class="adm-field"><label>Цена (₽)</label><input type="number" id="fPrice"></div></div>
@@ -394,7 +396,8 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
         <div id="cListView"><div class="adm-list" id="admCList"></div><button class="adm-add-btn" onclick="showCF()">+ Добавить мастер-класс</button></div>
         <div class="adm-form" id="cForm">
           <div class="adm-form-title"><button class="adm-form-back" onclick="hideCF()">←</button><span id="cFTitle">Новый мастер-класс</span></div>
-          <div class="adm-img-up" id="cImgUp"><div class="uicon" id="cUIco">📷</div><div class="utxt" id="cUTxt">Нажмите или перетащите фото</div><div class="uhint">JPG, PNG — до 5 МБ</div><input type="file" id="cImgIn" accept="image/*" onchange="hImg(event,'c')"></div>
+          <div class="adm-img-up" id="cImgUp"><div class="uicon" id="cUIco">📷</div><div class="utxt" id="cUTxt">Нажмите или перетащите фото</div><div class="uhint">Автозагрузка на хостинг ImgBB</div><input type="file" id="cImgIn" accept="image/*" onchange="hImg(event,'c')"></div>
+          <div class="adm-img-status" id="cImgStatus"></div>
           <div style="display:flex;align-items:center;gap:.5rem;margin-top:-.5rem"><span style="font-size:.72rem;color:var(--text-muted)">или вставьте ссылку:</span></div>
           <div class="adm-field full"><input type="text" id="cImgUrl" placeholder="https://example.com/photo.jpg" oninput="onImgUrl(this,'c')"></div>
           <div class="adm-field full"><label>Название</label><input type="text" id="cName"></div>
@@ -627,9 +630,47 @@ function saveC(){
 }
 
 // ===== IMAGE HANDLING =====
+const IMGBB_KEY='453e9fb1872694aa7bdcf5f623338cef';
+
 function hImg(e,type){
-  const file=e.target.files[0];if(!file)return;if(file.size>5*1024*1024){toast('Файл слишком большой');return;}
-  const r=new FileReader();r.onload=function(ev){document.getElementById(type==='p'?'fImg':'cImg').value=ev.target.result;document.getElementById(type==='p'?'pImgUrl':'cImgUrl').value='';showImgPrev(type,ev.target.result);};r.readAsDataURL(file);
+  const file=e.target.files[0];if(!file)return;
+  if(file.size>10*1024*1024){toast('Файл слишком большой (макс. 10 МБ)');return;}
+
+  const status=document.getElementById(type==='p'?'pImgStatus':'cImgStatus');
+  status.textContent='⏳ Загрузка на хостинг...';status.className='adm-img-status uploading';
+
+  // Show local preview immediately
+  const localReader=new FileReader();
+  localReader.onload=function(ev){showImgPrev(type,ev.target.result);};
+  localReader.readAsDataURL(file);
+
+  // Upload to ImgBB
+  const formData=new FormData();
+  formData.append('image',file);
+  
+  fetch('https://api.imgbb.com/1/upload?key='+IMGBB_KEY,{method:'POST',body:formData})
+  .then(r=>r.json())
+  .then(data=>{
+    if(data.success){
+      const url=data.data.display_url;
+      document.getElementById(type==='p'?'fImg':'cImg').value=url;
+      document.getElementById(type==='p'?'pImgUrl':'cImgUrl').value=url;
+      showImgPrev(type,url);
+      status.textContent='✅ Фото загружено на хостинг';status.className='adm-img-status done';
+      setTimeout(()=>{status.textContent='';},3000);
+    } else {
+      status.textContent='❌ Ошибка загрузки: '+(data.error?.message||'попробуйте снова');status.className='adm-img-status err';
+      // Fallback: use base64
+      const r2=new FileReader();r2.onload=function(ev2){document.getElementById(type==='p'?'fImg':'cImg').value=ev2.target.result;};r2.readAsDataURL(file);
+    }
+  })
+  .catch(err=>{
+    console.error('ImgBB error:',err);
+    status.textContent='⚠️ Хостинг недоступен, фото сохранено локально';status.className='adm-img-status err';
+    // Fallback: use base64
+    const r3=new FileReader();r3.onload=function(ev3){document.getElementById(type==='p'?'fImg':'cImg').value=ev3.target.result;};r3.readAsDataURL(file);
+    setTimeout(()=>{status.textContent='';},4000);
+  });
 }
 function onImgUrl(inp,type){
   const url=inp.value.trim();
@@ -653,6 +694,7 @@ function resetImgUp(type){
   const prev=up.querySelector('.adm-img-prev');if(prev)prev.remove();
   document.getElementById(type==='p'?'pImgIn':'cImgIn').value='';
   document.getElementById(type==='p'?'pImgUrl':'cImgUrl').value='';
+  document.getElementById(type==='p'?'pImgStatus':'cImgStatus').textContent='';
 }
 
 // ===== NAV =====
