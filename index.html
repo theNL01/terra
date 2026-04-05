@@ -1464,13 +1464,24 @@ imgUpload.addEventListener('drop', e => {
 });
 
 // ===== SECRET ADMIN ACCESS =====
-// Open via: ?admin in URL or Ctrl+Shift+A
+
+// Method 1: URL ?admin
 if (window.location.search.includes('admin')) {
   openAdmin();
 }
+
+// Method 2: Type the word "terra" anywhere on the page
+let secretBuffer = '';
 document.addEventListener('keydown', function(e) {
-  if (e.ctrlKey && e.shiftKey && e.key === 'A') {
-    e.preventDefault();
+  // Ignore if typing in an input/textarea
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  
+  secretBuffer += e.key.toLowerCase();
+  // Keep only last 5 characters
+  if (secretBuffer.length > 5) secretBuffer = secretBuffer.slice(-5);
+  
+  if (secretBuffer === 'terra') {
+    secretBuffer = '';
     openAdmin();
   }
 });
