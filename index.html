@@ -168,7 +168,44 @@ footer{background:#3a2d25;padding:2.5rem 3rem;display:flex;justify-content:space
 .page-banner h1{font-family:var(--font-d);font-size:clamp(2rem,5vw,3.5rem);color:var(--sand);font-weight:400;margin-bottom:.8rem}.page-banner h1 em{color:var(--clay-light);font-style:italic}
 .page-banner p{font-size:1rem;color:rgba(245,239,230,.65);max-width:540px;line-height:1.7;font-weight:300}
 
-/* SCHEDULE PAGE */
+/* SCHEDULE MODAL */
+.sm-ov{position:fixed;inset:0;background:rgba(45,36,32,.65);backdrop-filter:blur(8px);z-index:4000;opacity:0;visibility:hidden;transition:.3s}.sm-ov.open{opacity:1;visibility:visible}
+.sm-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);width:680px;max-width:95vw;max-height:90vh;background:var(--white);border-radius:22px;z-index:4001;opacity:0;visibility:hidden;transition:.35s;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.3)}.sm-modal.open{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+.sm-cover{height:260px;overflow:hidden;flex-shrink:0;position:relative}.sm-cover img{width:100%;height:100%;object-fit:cover}
+.sm-cover-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(45,36,32,.75) 0%,transparent 50%)}
+.sm-cover-badge{position:absolute;top:14px;left:14px;background:var(--clay);color:#fff;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .8rem;border-radius:50px;font-weight:600}
+.sm-close{position:absolute;top:12px;right:12px;background:rgba(255,255,255,.85);backdrop-filter:blur(6px);border:none;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;z-index:2;transition:.2s}.sm-close:hover{background:#fff;color:var(--terracotta)}
+.sm-body{padding:1.8rem 2rem 2rem;overflow-y:auto;flex:1}
+.sm-breadcrumb{font-size:.7rem;color:var(--text-muted);margin-bottom:.8rem}
+.sm-breadcrumb span{color:var(--clay)}
+.sm-title{font-family:var(--font-d);font-size:1.6rem;font-weight:600;color:var(--text-dark);line-height:1.2;margin-bottom:1rem}
+.sm-desc{font-size:.9rem;color:var(--text-body);line-height:1.8;font-weight:300;margin-bottom:1.2rem}
+.sm-important{background:rgba(184,92,56,.07);border-left:3px solid var(--terracotta);border-radius:0 8px 8px 0;padding:.8rem 1rem;margin-bottom:1.2rem;font-size:.82rem;color:var(--text-body);line-height:1.6}
+.sm-important strong{color:var(--terracotta);display:block;margin-bottom:.2rem}
+.sm-details-box{background:var(--sand);border-radius:14px;padding:1.2rem 1.5rem;margin-bottom:1.4rem}
+.sm-detail-row{display:flex;justify-content:space-between;align-items:center;padding:.4rem 0;border-bottom:1px solid rgba(92,64,51,.08)}.sm-detail-row:last-child{border:none}
+.sm-detail-label{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);font-weight:500}
+.sm-detail-val{font-size:.88rem;color:var(--text-dark);font-weight:500}
+.sm-detail-val.price{font-family:var(--font-d);font-size:1.1rem;color:var(--clay);font-weight:700}
+.sm-detail-val.seats-low{color:var(--terracotta)}
+.sm-counter-row{display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem}
+.sm-counter-label{font-size:.82rem;color:var(--text-muted)}
+.sm-counter{display:flex;align-items:center;gap:.6rem}
+.sm-counter-btn{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);background:var(--white);color:var(--text-dark);font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s}.sm-counter-btn:hover{border-color:var(--clay);color:var(--clay)}
+.sm-counter-num{font-family:var(--font-d);font-size:1.1rem;font-weight:600;color:var(--text-dark);min-width:24px;text-align:center}
+.sm-total{font-size:.82rem;color:var(--text-muted)}
+.sm-enroll-btn{width:100%;background:var(--clay);color:#fff;border:none;padding:1.1rem;border-radius:50px;font-family:var(--font-b);font-size:.92rem;cursor:pointer;transition:.3s;font-weight:500}.sm-enroll-btn:hover{background:var(--clay-dark);transform:translateY(-2px)}
+.sm-price-note{font-size:.72rem;color:var(--text-muted);text-align:center;margin-top:.6rem}
+.sm-tags{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:1.2rem}
+.sm-tag{display:flex;align-items:center;gap:.4rem;background:var(--sand);border-radius:8px;padding:.4rem .8rem;font-size:.75rem;color:var(--text-body)}
+.sm-reviews{margin-top:1.5rem;border-top:1px solid var(--border);padding-top:1.2rem}
+.sm-reviews-title{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);font-weight:500;margin-bottom:1rem}
+.sm-review{display:flex;gap:.8rem;margin-bottom:1rem}
+.sm-review-av{width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0;background:var(--sand-deep)}.sm-review-av img{width:100%;height:100%;object-fit:cover}
+.sm-review-body{flex:1}
+.sm-review-name{font-size:.78rem;font-weight:600;color:var(--text-dark)}
+.sm-review-text{font-size:.78rem;color:var(--text-muted);line-height:1.5;margin-top:.2rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+@media(max-width:700px){.sm-modal{width:100vw;max-width:100vw;max-height:100vh;border-radius:0;top:0;left:0;transform:translateY(100%)}.sm-modal.open{transform:translateY(0)}.sm-cover{height:200px}.sm-body{padding:1.2rem 1.2rem 2rem}.sm-title{font-size:1.3rem}}
 .sched-page-wrap{max-width:1100px;margin:0 auto;padding:4rem 3rem}
 .sched-week-nav{display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem;flex-wrap:wrap}
 .sched-week-nav h2{font-family:var(--font-d);font-size:1.4rem;color:var(--text-dark);flex:1}
@@ -529,7 +566,7 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
 <body>
 
 <header>
-  <a href="#" class="logo" style="text-decoration:none">ТЕР<span>Р</span>А</a>
+  <a href="#" class="logo" style="text-decoration:none" onclick="showPage('home');window.scrollTo({top:0,behavior:'smooth'});return false">ТЕР<span>Р</span>А</a>
   <nav id="mainNav">
     <a href="#" onclick="showPage('shop');return false" class="nav-page" data-page="shop">Магазин</a>
     <a href="#" onclick="showPage('schedule');return false" class="nav-page" data-page="schedule">Расписание</a>
@@ -801,59 +838,7 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
     <p>Подарите близким незабываемый опыт — занятие гончарством в нашей студии.</p>
   </div>
   <div class="cert-page-wrap">
-    <div class="cert-grid">
-      <div class="cert-card">
-        <div class="cert-preview">
-          <div class="cert-preview-deco"></div>
-          <div class="cert-preview-inner">
-            <div class="cert-preview-logo">ТЕРРА</div>
-            <div class="cert-preview-title">Подарочный сертификат</div>
-            <div style="font-size:2rem;font-family:var(--font-d);color:var(--clay-light);margin:.5rem 0">1 занятие</div>
-            <div class="cert-preview-name">Знакомство с гончарным кругом</div>
-          </div>
-        </div>
-        <div class="cert-body">
-          <h3>Пробное занятие</h3>
-          <p>Одно занятие на гончарном круге для взрослого или ребёнка. Все материалы включены.</p>
-          <div class="cert-price">2 500 ₽</div>
-          <button class="cert-buy" onclick="buyCert('Пробное занятие', 2500)">Купить сертификат</button>
-        </div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-preview">
-          <div class="cert-preview-deco"></div>
-          <div class="cert-preview-inner">
-            <div class="cert-preview-logo">ТЕРРА</div>
-            <div class="cert-preview-title">Подарочный сертификат</div>
-            <div style="font-size:2rem;font-family:var(--font-d);color:var(--clay-light);margin:.5rem 0">4 занятия</div>
-            <div class="cert-preview-name">Детский курс гончарства</div>
-          </div>
-        </div>
-        <div class="cert-body">
-          <h3>Детский абонемент</h3>
-          <p>4 занятия для ребёнка по выбранной программе. Срок действия 2 месяца.</p>
-          <div class="cert-price">6 500 ₽</div>
-          <button class="cert-buy" onclick="buyCert('Детский абонемент', 6500)">Купить сертификат</button>
-        </div>
-      </div>
-      <div class="cert-card">
-        <div class="cert-preview">
-          <div class="cert-preview-deco"></div>
-          <div class="cert-preview-inner">
-            <div class="cert-preview-logo">ТЕРРА</div>
-            <div class="cert-preview-title">Подарочный сертификат</div>
-            <div style="font-size:2rem;font-family:var(--font-d);color:var(--clay-light);margin:.5rem 0">8 занятий</div>
-            <div class="cert-preview-name">Полный курс мастерства</div>
-          </div>
-        </div>
-        <div class="cert-body">
-          <h3>Полный курс</h3>
-          <p>8 занятий — полный базовый курс гончарства. Ребёнок освоит круг и создаст целую коллекцию.</p>
-          <div class="cert-price">11 500 ₽</div>
-          <button class="cert-buy" onclick="buyCert('Полный курс', 11500)">Купить сертификат</button>
-        </div>
-      </div>
-    </div>
+    <div class="cert-grid" id="certGrid"></div>
     <div class="cert-custom">
       <h3>Сертификат на любую сумму</h3>
       <p>Выберите сумму или укажите свою — получатель сам выберет занятие</p>
@@ -985,7 +970,7 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
 <div class="adm-ov" id="admOv" onclick="closeAdm()"></div>
 <div class="adm-pan" id="admPan">
   <div class="adm-h"><h2>Панель управления</h2><button class="adm-cl" onclick="closeAdm()">✕</button></div>
-  <div class="adm-tabs"><button class="adm-tab active" id="tProd" onclick="switchTab('prod')">Товары</button><button class="adm-tab" id="tCls" onclick="switchTab('cls')">Мастер-классы</button><button class="adm-tab" id="tBlog" onclick="switchTab('blog')">Блог</button><button class="adm-tab" id="tOrders" onclick="switchTab('orders')">Заказы</button><button class="adm-tab" id="tSite" onclick="switchTab('site')">Сайт</button></div>
+  <div class="adm-tabs" style="flex-wrap:wrap"><button class="adm-tab active" id="tProd" onclick="switchTab('prod')">Товары</button><button class="adm-tab" id="tCls" onclick="switchTab('cls')">МК</button><button class="adm-tab" id="tBlog" onclick="switchTab('blog')">Блог</button><button class="adm-tab" id="tSched" onclick="switchTab('sched')">Расписание</button><button class="adm-tab" id="tCerts" onclick="switchTab('certs')">Сертификаты</button><button class="adm-tab" id="tEvts" onclick="switchTab('evts')">Мероприятия</button><button class="adm-tab" id="tOrders" onclick="switchTab('orders')">Заказы</button><button class="adm-tab" id="tSite" onclick="switchTab('site')">Сайт</button></div>
   <div class="adm-body">
     <div class="adm-login" id="admLogin">
       <p>Введите пароль для доступа</p>
@@ -1070,6 +1055,90 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
         <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sOrdersCount">0</div><div class="adm-stat-l">Заказов</div></div><div class="adm-stat"><div class="adm-stat-n" id="sOrdersSum">0</div><div class="adm-stat-l">Сумма (₽)</div></div></div>
         <div class="orders-list" id="ordersList"><div class="loading">Загрузка заказов...</div></div>
       </div>
+
+      <!-- Schedule Admin Tab -->
+      <div id="tabSched" style="display:none">
+        <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sSchedCount">0</div><div class="adm-stat-l">Занятий</div></div></div>
+        <div id="schedListView"><div class="adm-list" id="admSchedList"></div><button class="adm-add-btn" onclick="showSchedF()">+ Добавить занятие</button></div>
+        <div class="adm-form" id="schedForm">
+          <div class="adm-form-title"><button class="adm-form-back" onclick="hideSchedF()">←</button><span id="schedFTitle">Новое занятие</span></div>
+          <div class="adm-img-up" id="schedImgUp"><div class="uicon" id="schedUIco">📷</div><div class="utxt" id="schedUTxt">Фото занятия</div><div class="uhint">Автозагрузка на ImgBB</div><input type="file" id="schedImgIn" accept="image/*" onchange="hImg(event,'sched')"></div>
+          <div class="adm-img-status" id="schedImgStatus"></div>
+          <div class="adm-field full"><input type="text" id="schedImgUrl" placeholder="или ссылка на фото..." oninput="onImgUrl(this,'sched')"></div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Название</label><input type="text" id="schedName" placeholder="Гончарный круг"></div>
+            <div class="adm-field"><label>Возраст</label><input type="text" id="schedAge" placeholder="8–11 лет"></div>
+          </div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>День недели</label><select id="schedDay"><option value="1">Понедельник</option><option value="2">Вторник</option><option value="3">Среда</option><option value="4">Четверг</option><option value="5">Пятница</option><option value="6">Суббота</option><option value="0">Воскресенье</option></select></div>
+            <div class="adm-field"><label>Тип</label><select id="schedType"><option value="kids">Детское</option><option value="adults">Взрослое</option><option value="all">Все возрасты</option></select></div>
+          </div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Начало</label><input type="text" id="schedTime" placeholder="10:00"></div>
+            <div class="adm-field"><label>Конец</label><input type="text" id="schedEndTime" placeholder="11:30"></div>
+          </div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Цена (₽)</label><input type="number" id="schedPrice"></div>
+            <div class="adm-field"><label>Мест</label><input type="number" id="schedSeats" placeholder="6"></div>
+          </div>
+          <div class="adm-field full"><label>Описание</label><textarea id="schedDesc" style="min-height:80px"></textarea></div>
+          <div class="adm-field full"><label>Важно (необязательно)</label><input type="text" id="schedImportant" placeholder="Важная информация для участников"></div>
+          <input type="hidden" id="schedId"><input type="hidden" id="schedImg">
+          <div class="adm-form-acts"><button class="adm-save" onclick="saveSched()">Сохранить</button><button class="adm-cancel" onclick="hideSchedF()">Отмена</button></div>
+        </div>
+      </div>
+
+      <!-- Certificates Admin Tab -->
+      <div id="tabCerts" style="display:none">
+        <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sCertsCount">0</div><div class="adm-stat-l">Сертификатов</div></div></div>
+        <div id="certsListView"><div class="adm-list" id="admCertsList"></div><button class="adm-add-btn" onclick="showCertF()">+ Добавить сертификат</button></div>
+        <div class="adm-form" id="certForm">
+          <div class="adm-form-title"><button class="adm-form-back" onclick="hideCertF()">←</button><span id="certFTitle">Новый сертификат</span></div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Название</label><input type="text" id="certName" placeholder="Пробное занятие"></div>
+            <div class="adm-field"><label>Цена (₽)</label><input type="number" id="certPrice"></div>
+          </div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Подзаголовок на сертификате</label><input type="text" id="certSubtitle" placeholder="1 занятие"></div>
+            <div class="adm-field"><label>Программа на сертификате</label><input type="text" id="certProgram" placeholder="Знакомство с гончарным кругом"></div>
+          </div>
+          <div class="adm-field full"><label>Описание</label><textarea id="certDesc" style="min-height:80px"></textarea></div>
+          <input type="hidden" id="certId">
+          <div class="adm-form-acts"><button class="adm-save" onclick="saveCert()">Сохранить</button><button class="adm-cancel" onclick="hideCertF()">Отмена</button></div>
+        </div>
+      </div>
+
+      <!-- Events Admin Tab -->
+      <div id="tabEvts" style="display:none">
+        <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sEvtsCount">0</div><div class="adm-stat-l">Мероприятий</div></div></div>
+        <div id="evtsListView"><div class="adm-list" id="admEvtsList"></div><button class="adm-add-btn" onclick="showEvtF()">+ Добавить мероприятие</button></div>
+        <div class="adm-form" id="evtForm">
+          <div class="adm-form-title"><button class="adm-form-back" onclick="hideEvtF()">←</button><span id="evtFTitle">Новое мероприятие</span></div>
+          <div class="adm-img-up" id="evtImgUp"><div class="uicon" id="evtUIco">📷</div><div class="utxt" id="evtUTxt">Фото мероприятия</div><div class="uhint">Автозагрузка на ImgBB</div><input type="file" id="evtImgIn" accept="image/*" onchange="hImg(event,'evt')"></div>
+          <div class="adm-img-status" id="evtImgStatus"></div>
+          <div class="adm-field full"><input type="text" id="evtImgUrl" placeholder="или ссылка на фото..." oninput="onImgUrl(this,'evt')"></div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Название</label><input type="text" id="evtTitle"></div>
+            <div class="adm-field"><label>Тип</label><input type="text" id="evtType" placeholder="Праздник, Корпоратив, Выставка..."></div>
+          </div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Цвет типа</label><input type="color" id="evtTypeColor" value="#c67d4a"></div>
+            <div class="adm-field"><label>Дата (число)</label><input type="number" id="evtDay" min="1" max="31" placeholder="19"></div>
+          </div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Месяц</label><input type="text" id="evtMonth" placeholder="апр"></div>
+            <div class="adm-field"><label>Длительность</label><input type="text" id="evtDuration" placeholder="2–3 часа"></div>
+          </div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Группа</label><input type="text" id="evtGroup" placeholder="до 12 чел."></div>
+            <div class="adm-field"><label>Цена</label><input type="text" id="evtPrice" placeholder="от 2 500 ₽/чел."></div>
+          </div>
+          <div class="adm-field full"><label>Описание</label><textarea id="evtDesc" style="min-height:80px"></textarea></div>
+          <input type="hidden" id="evtId"><input type="hidden" id="evtImg">
+          <div class="adm-form-acts"><button class="adm-save" onclick="saveEvt()">Сохранить</button><button class="adm-cancel" onclick="hideEvtF()">Отмена</button></div>
+        </div>
+      </div>
+
       <!-- Site Tab -->
       <div id="tabSite" style="display:none">
 
@@ -1156,6 +1225,42 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
   <input type="text" id="qbName" placeholder="Ваше имя *" maxlength="50">
   <input type="tel" id="qbPhone" placeholder="Телефон *" maxlength="18" oninput="fmtPhone(this)">
   <button class="qb-submit" onclick="submitQB()">Оставить заявку</button>
+</div>
+
+<!-- Schedule Event Modal -->
+<div class="sm-ov" id="smOv" onclick="closeSM()"></div>
+<div class="sm-modal" id="smModal">
+  <div class="sm-cover" id="smCover">
+    <img id="smImg" src="" alt="">
+    <div class="sm-cover-ov"></div>
+    <span class="sm-cover-badge" id="smBadge"></span>
+    <button class="sm-close" onclick="closeSM()">✕</button>
+  </div>
+  <div class="sm-body">
+    <div class="sm-breadcrumb">Расписание • <span id="smBreadcrumb"></span></div>
+    <div class="sm-title" id="smTitle"></div>
+    <div class="sm-tags" id="smTags"></div>
+    <div class="sm-desc" id="smDesc"></div>
+    <div class="sm-important" id="smImportant" style="display:none"><strong>ВАЖНО!</strong><span id="smImportantText"></span></div>
+    <div class="sm-details-box">
+      <div class="sm-detail-row"><span class="sm-detail-label">Дата и время</span><span class="sm-detail-val" id="smDateTime"></span></div>
+      <div class="sm-detail-row"><span class="sm-detail-label">Адрес</span><span class="sm-detail-val">г. Москва, Гончарная наб., д. 7</span></div>
+      <div class="sm-detail-row"><span class="sm-detail-label">Стоимость</span><span class="sm-detail-val price" id="smPrice"></span></div>
+      <div class="sm-detail-row"><span class="sm-detail-label">Свободных мест</span><span class="sm-detail-val" id="smSeats"></span></div>
+    </div>
+    <div class="sm-counter-row">
+      <span class="sm-counter-label">Количество гостей:</span>
+      <div class="sm-counter">
+        <button class="sm-counter-btn" onclick="smCount(-1)">−</button>
+        <span class="sm-counter-num" id="smCountNum">1</span>
+        <button class="sm-counter-btn" onclick="smCount(1)">+</button>
+      </div>
+      <span class="sm-total" id="smTotal"></span>
+    </div>
+    <button class="sm-enroll-btn" onclick="smEnroll()">Записаться</button>
+    <div class="sm-price-note">Стоимость указана за 1 гостя</div>
+    <div class="sm-reviews" id="smReviews"></div>
+  </div>
 </div>
 
 <!-- Zoom overlay -->
@@ -1409,13 +1514,19 @@ function openAdm(){document.getElementById('admOv').classList.add('open');docume
 function closeAdm(){document.getElementById('admOv').classList.remove('open');document.getElementById('admPan').classList.remove('open');}
 function doLogin(){if(document.getElementById('admPass').value===PASS){loggedIn=true;document.getElementById('admLogin').style.display='none';document.getElementById('admContent').style.display='block';renderAdmP();loadApiKeyUI();}else{document.getElementById('logErr').style.display='block';setTimeout(()=>document.getElementById('logErr').style.display='none',2000);}}
 function switchTab(t){
-  ['prod','cls','blog','orders','site'].forEach(tab=>{
-    document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1)).style.display=t===tab?'block':'none';
-    document.getElementById('t'+tab.charAt(0).toUpperCase()+tab.slice(1)).classList.toggle('active',t===tab);
+  const tabs=['prod','cls','blog','sched','certs','evts','orders','site'];
+  tabs.forEach(tab=>{
+    const tabEl=document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1));
+    const btnEl=document.getElementById('t'+tab.charAt(0).toUpperCase()+tab.slice(1));
+    if(tabEl)tabEl.style.display=t===tab?'block':'none';
+    if(btnEl)btnEl.classList.toggle('active',t===tab);
   });
   if(t==='prod')renderAdmP();
   if(t==='cls')renderAdmC();
   if(t==='blog')renderAdmBlog();
+  if(t==='sched')renderAdmSched();
+  if(t==='certs')renderAdmCerts();
+  if(t==='evts')renderAdmEvts();
   if(t==='orders')renderOrders();
   if(t==='site'){if(!Object.keys(siteData).length)loadSiteData();else fillSiteTab();}
 }
@@ -1493,17 +1604,18 @@ function uploadToStorage(file, path, onSuccess, onError){
 function hImg(e,type){
   const file=e.target.files[0];if(!file)return;
   if(file.size>10*1024*1024){toast('Файл слишком большой (макс. 10 МБ)');return;}
-  const statusId={p:'pImgStatus',c:'cImgStatus',blog:'blogImgStatus'}[type]||'pImgStatus';
-  const status=document.getElementById(statusId);
+  const statusMap={p:'pImgStatus',c:'cImgStatus',blog:'blogImgStatus',sched:'schedImgStatus',evt:'evtImgStatus'};
+  const status=document.getElementById(statusMap[type]||'pImgStatus');
   status.textContent='⏳ Загрузка...';status.className='adm-img-status uploading';
-  // Local preview immediately
   const localReader=new FileReader();
   localReader.onload=ev=>showImgPrev(type,ev.target.result);
   localReader.readAsDataURL(file);
-  const folder={p:'products',c:'classes',blog:'blog'}[type]||'misc';
+  const folder={p:'products',c:'classes',blog:'blog',sched:'schedule',evt:'events'}[type]||'misc';
   uploadToStorage(file, folder, url=>{
-    document.getElementById({p:'fImg',c:'cImg',blog:'blogImg'}[type]).value=url;
-    document.getElementById({p:'pImgUrl',c:'cImgUrl',blog:'blogImgUrl'}[type]).value=url;
+    const hidMap={p:'fImg',c:'cImg',blog:'blogImg',sched:'schedImg',evt:'evtImg'};
+    const urlMap={p:'pImgUrl',c:'cImgUrl',blog:'blogImgUrl',sched:'schedImgUrl',evt:'evtImgUrl'};
+    document.getElementById(hidMap[type]).value=url;
+    document.getElementById(urlMap[type]).value=url;
     showImgPrev(type,url);
     status.textContent='✅ Фото загружено';status.className='adm-img-status done';
     setTimeout(()=>{status.textContent='';},3000);
@@ -1514,35 +1626,38 @@ function hImg(e,type){
 function onImgUrl(inp,type){
   const url=inp.value.trim();
   if(url&&(url.startsWith('http://')||url.startsWith('https://'))){
-    document.getElementById({p:'fImg',c:'cImg',blog:'blogImg'}[type]||'fImg').value=url;
+    const hidMap={p:'fImg',c:'cImg',blog:'blogImg',sched:'schedImg',evt:'evtImg'};
+    document.getElementById(hidMap[type]||'fImg').value=url;
     showImgPrev(type,url);
   }
 }
 function showImgPrev(type,src){
-  const upId={p:'pImgUp',c:'cImgUp',blog:'blogImgUp'}[type]||'pImgUp';
-  const icoId={p:'pUIco',c:'cUIco',blog:'blogUIco'}[type]||'pUIco';
-  const txtId={p:'pUTxt',c:'cUTxt',blog:'blogUTxt'}[type]||'pUTxt';
-  const up=document.getElementById(upId);up.classList.add('has');
-  document.getElementById(icoId).style.display='none';
-  document.getElementById(txtId).style.display='none';
-  up.querySelector('.uhint').style.display='none';
+  const upMap={p:'pImgUp',c:'cImgUp',blog:'blogImgUp',sched:'schedImgUp',evt:'evtImgUp'};
+  const icoMap={p:'pUIco',c:'cUIco',blog:'blogUIco',sched:'schedUIco',evt:'evtUIco'};
+  const txtMap={p:'pUTxt',c:'cUTxt',blog:'blogUTxt',sched:'schedUTxt',evt:'evtUTxt'};
+  const up=document.getElementById(upMap[type]||'pImgUp');if(!up)return;
+  up.classList.add('has');
+  const ico=document.getElementById(icoMap[type]);if(ico)ico.style.display='none';
+  const txt=document.getElementById(txtMap[type]);if(txt)txt.style.display='none';
+  const hint=up.querySelector('.uhint');if(hint)hint.style.display='none';
   let prev=up.querySelector('.adm-img-prev');if(!prev){prev=document.createElement('img');prev.className='adm-img-prev';up.appendChild(prev);}prev.src=src;
 }
 function resetImgUp(type){
-  const upId={p:'pImgUp',c:'cImgUp',blog:'blogImgUp'}[type]||'pImgUp';
-  const icoId={p:'pUIco',c:'cUIco',blog:'blogUIco'}[type]||'pUIco';
-  const txtId={p:'pUTxt',c:'cUTxt',blog:'blogUTxt'}[type]||'pUTxt';
-  const statusId={p:'pImgStatus',c:'cImgStatus',blog:'blogImgStatus'}[type]||'pImgStatus';
-  const inId={p:'pImgIn',c:'cImgIn',blog:'blogImgIn'}[type]||'pImgIn';
-  const urlId={p:'pImgUrl',c:'cImgUrl',blog:'blogImgUrl'}[type]||'pImgUrl';
-  const up=document.getElementById(upId);up.classList.remove('has');
-  document.getElementById(icoId).style.display='';
-  document.getElementById(txtId).style.display='';
-  up.querySelector('.uhint').style.display='';
+  const upMap={p:'pImgUp',c:'cImgUp',blog:'blogImgUp',sched:'schedImgUp',evt:'evtImgUp'};
+  const icoMap={p:'pUIco',c:'cUIco',blog:'blogUIco',sched:'schedUIco',evt:'evtUIco'};
+  const txtMap={p:'pUTxt',c:'cUTxt',blog:'blogUTxt',sched:'schedUTxt',evt:'evtUTxt'};
+  const statusMap={p:'pImgStatus',c:'cImgStatus',blog:'blogImgStatus',sched:'schedImgStatus',evt:'evtImgStatus'};
+  const inMap={p:'pImgIn',c:'cImgIn',blog:'blogImgIn',sched:'schedImgIn',evt:'evtImgIn'};
+  const urlMap={p:'pImgUrl',c:'cImgUrl',blog:'blogImgUrl',sched:'schedImgUrl',evt:'evtImgUrl'};
+  const up=document.getElementById(upMap[type]||'pImgUp');if(!up)return;
+  up.classList.remove('has');
+  const ico=document.getElementById(icoMap[type]);if(ico)ico.style.display='';
+  const txt=document.getElementById(txtMap[type]);if(txt)txt.style.display='';
+  const hint=up.querySelector('.uhint');if(hint)hint.style.display='';
   const prev=up.querySelector('.adm-img-prev');if(prev)prev.remove();
-  document.getElementById(inId).value='';
-  document.getElementById(urlId).value='';
-  document.getElementById(statusId).textContent='';
+  const inEl=document.getElementById(inMap[type]);if(inEl)inEl.value='';
+  const urlEl=document.getElementById(urlMap[type]);if(urlEl)urlEl.value='';
+  const stEl=document.getElementById(statusMap[type]);if(stEl)stEl.textContent='';
 }
 
 // ===== AI DESCRIBE (Google Gemini Flash, vision, бесплатно) =====
@@ -2395,42 +2510,91 @@ function showPage(page){
     const el=document.getElementById(p==='home'?'homePage':p+'Page');
     if(el) el.style.display = p===page ? 'block' : 'none';
   });
-  // Update nav active states
   document.querySelectorAll('.nav-page').forEach(a=>{
     a.classList.toggle('nav-active', a.dataset.page===page);
   });
   window.scrollTo({top:0,behavior:'smooth'});
-  // Init page content
   if(page==='shop'){renderP();renderReviews();renderFAQ();}
   if(page==='schedule')initSchedule();
-  if(page==='certificates')initCerts();
-  if(page==='events')initEvents();
+  if(page==='certificates'){initCerts();renderCertsPage();}
+  if(page==='events'){initEvents();}
 }
 
 // ===== SCHEDULE PAGE =====
 let schedOffset = 0;
+let smGuests = 1;
+let smCurrentEvent = null;
+
 const schedEvents = [
-  {day:1,time:'10:00',name:'Первые шаги',age:'5–7 лет',type:'kids',duration:60},
-  {day:1,time:'12:00',name:'Гончарный круг',age:'8–11 лет',type:'kids',duration:90},
-  {day:1,time:'17:00',name:'Продвинутый курс',age:'12–17 лет',type:'kids',duration:120},
-  {day:1,time:'19:30',name:'Взрослый МК',age:'18+',type:'adults',duration:120},
-  {day:2,time:'10:00',name:'Первые шаги',age:'5–7 лет',type:'kids',duration:60},
-  {day:2,time:'16:00',name:'Гончарный круг',age:'8–11 лет',type:'kids',duration:90},
-  {day:3,time:'10:00',name:'Продвинутый курс',age:'12–17 лет',type:'kids',duration:120},
-  {day:3,time:'18:00',name:'Взрослый МК',age:'18+',type:'adults',duration:120},
-  {day:3,time:'20:00',name:'Чайная церемония',age:'18+',type:'adults',duration:120},
-  {day:4,time:'10:00',name:'Первые шаги',age:'5–7 лет',type:'kids',duration:60},
-  {day:4,time:'15:00',name:'Гончарный круг',age:'8–11 лет',type:'kids',duration:90},
-  {day:4,time:'19:30',name:'Взрослый МК',age:'18+',type:'adults',duration:120},
-  {day:5,time:'16:00',name:'Продвинутый курс',age:'12–17 лет',type:'kids',duration:120},
-  {day:5,time:'18:00',name:'Глазурование',age:'18+',type:'adults',duration:90},
-  {day:6,time:'11:00',name:'Все возрасты',age:'5+ лет',type:'all',duration:90},
-  {day:6,time:'14:00',name:'Взрослый МК',age:'18+',type:'adults',duration:120},
-  {day:6,time:'16:00',name:'Продвинутый курс',age:'12–17 лет',type:'kids',duration:120},
-  {day:0,time:'11:00',name:'Все возрасты',age:'5+ лет',type:'all',duration:90},
-  {day:0,time:'14:00',name:'День рождения',age:'Группа',type:'all',duration:150},
+  {id:1, day:1, time:'10:00', endTime:'11:00', name:'Первые шаги', age:'5–7 лет', type:'kids', duration:60, price:1800, seats:6, img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80',
+   desc:'Знакомство с глиной через лепку руками. Дети создают зверушек, тарелочки и украшения. Занятие развивает мелкую моторику, воображение и усидчивость. Все материалы включены, форма выдаётся на месте.',
+   important:'Наденьте одежду, которую не жалко запачкать. Глина стирается, но лучше перестраховаться.',
+   tags:['📚 1 урок, 1 час', '🤲 Лепка руками', '👶 5–7 лет']},
+  {id:2, day:1, time:'12:00', endTime:'13:30', name:'Гончарный круг', age:'8–11 лет', type:'kids', duration:90, price:2200, seats:4, img:'https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=800&q=80',
+   desc:'Учимся работать на настоящем гончарном круге. Формуем чашки, миски, вазы. В конце занятия расписываем изделие глазурями. Готовую работу можно забрать через 7–10 дней после обжига.',
+   important:'Приходите за 5 минут до начала — нужно надеть фартук и подготовить рабочее место.',
+   tags:['📚 1 урок, 1.5 часа', '🎡 Гончарный круг', '👦 8–11 лет']},
+  {id:3, day:1, time:'17:00', endTime:'19:00', name:'Продвинутый курс', age:'12–17 лет', type:'kids', duration:120, price:3500, seats:5, img:'https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=800&q=80',
+   desc:'Сложные техники: сборка из пластин, рельеф, авторская роспись. Создаём полноценные предметы сервировки и декора. Подходит для тех, кто уже имеет базовый опыт лепки.',
+   important:'Рекомендуется базовый опыт работы с глиной. Если это первое занятие — запишитесь на "Гончарный круг".',
+   tags:['📚 1 урок, 2 часа', '🎨 Авторская роспись', '🧒 12–17 лет']},
+  {id:4, day:1, time:'19:30', endTime:'21:30', name:'Взрослый МК', age:'18+', type:'adults', duration:120, price:3100, seats:2, img:'https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80',
+   desc:'Вечерний мастер-класс на гончарном круге для взрослых. Создаёте чашку или небольшую вазу. Атмосфера спокойная, музыка тихая — настоящая медитация после рабочего дня.',
+   important:'Осталось 2 места! Записывайтесь заранее, группа небольшая.',
+   tags:['📚 1 урок, 2 часа', '🎡 Гончарный круг', '🔞 18+']},
+  {id:5, day:2, time:'10:00', endTime:'11:00', name:'Первые шаги', age:'5–7 лет', type:'kids', duration:60, price:1800, seats:6, img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80',
+   desc:'Знакомство с глиной через лепку руками. Дети создают зверушек, тарелочки и украшения.',
+   tags:['📚 1 урок, 1 час', '🤲 Лепка руками', '👶 5–7 лет']},
+  {id:6, day:2, time:'16:00', endTime:'17:30', name:'Гончарный круг', age:'8–11 лет', type:'kids', duration:90, price:2200, seats:5, img:'https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=800&q=80',
+   desc:'Учимся работать на настоящем гончарном круге. Формуем чашки, миски, вазы.',
+   tags:['📚 1 урок, 1.5 часа', '🎡 Гончарный круг', '👦 8–11 лет']},
+  {id:7, day:3, time:'10:00', endTime:'12:00', name:'Продвинутый курс', age:'12–17 лет', type:'kids', duration:120, price:3500, seats:4, img:'https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=800&q=80',
+   desc:'Сложные техники: сборка из пластин, рельеф, авторская роспись.',
+   tags:['📚 1 урок, 2 часа', '🎨 Авторская роспись', '🧒 12–17 лет']},
+  {id:8, day:3, time:'18:00', endTime:'20:00', name:'Взрослый МК', age:'18+', type:'adults', duration:120, price:3100, seats:6, img:'https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80',
+   desc:'Вечерний мастер-класс на гончарном круге для взрослых.',
+   tags:['📚 1 урок, 2 часа', '🎡 Гончарный круг', '🔞 18+']},
+  {id:9, day:3, time:'20:00', endTime:'22:00', name:'Чайная церемония', age:'18+', type:'adults', duration:120, price:5800, seats:3, img:'https://images.unsplash.com/photo-1609881092647-6a89e1e3c060?w=800&q=80',
+   desc:'Создайте набор для чайной церемонии: чайник, чашки, блюдце. Авторская техника формовки.',
+   important:'Требуется базовый опыт работы на круге.',
+   tags:['📚 1 урок, 2 часа', '🍵 Чайный набор', '🔞 18+']},
+  {id:10, day:4, time:'10:00', endTime:'11:00', name:'Первые шаги', age:'5–7 лет', type:'kids', duration:60, price:1800, seats:6, img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80',
+   desc:'Знакомство с глиной через лепку руками.',
+   tags:['📚 1 урок, 1 час', '🤲 Лепка руками', '👶 5–7 лет']},
+  {id:11, day:4, time:'15:00', endTime:'16:30', name:'Гончарный круг', age:'8–11 лет', type:'kids', duration:90, price:2200, seats:5, img:'https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=800&q=80',
+   desc:'Учимся работать на настоящем гончарном круге.',
+   tags:['📚 1 урок, 1.5 часа', '🎡 Гончарный круг', '👦 8–11 лет']},
+  {id:12, day:4, time:'19:30', endTime:'21:30', name:'Взрослый МК', age:'18+', type:'adults', duration:120, price:3100, seats:6, img:'https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80',
+   desc:'Вечерний мастер-класс на гончарном круге для взрослых.',
+   tags:['📚 1 урок, 2 часа', '🎡 Гончарный круг', '🔞 18+']},
+  {id:13, day:5, time:'16:00', endTime:'18:00', name:'Продвинутый курс', age:'12–17 лет', type:'kids', duration:120, price:3500, seats:5, img:'https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=800&q=80',
+   desc:'Сложные техники: сборка из пластин, рельеф, авторская роспись.',
+   tags:['📚 1 урок, 2 часа', '🎨 Авторская роспись', '🧒 12–17 лет']},
+  {id:14, day:5, time:'18:00', endTime:'19:30', name:'Глазурование', age:'18+', type:'adults', duration:90, price:2800, seats:8, img:'https://images.unsplash.com/photo-1612196808214-b7e239e5a5e2?w=800&q=80',
+   desc:'Мастер-класс по работе с глазурями. Секреты цвета, текстуры и техник нанесения. Создаём уникальные эффекты.',
+   important:'Недоступны красный, чёрный и белый цвета для данного мастер-класса.',
+   tags:['📚 1 урок, 1.5 часа', '🎨 Глазури', '🔞 18+']},
+  {id:15, day:6, time:'11:00', endTime:'12:30', name:'Все возрасты', age:'5+ лет', type:'all', duration:90, price:2500, seats:8, img:'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800&q=80',
+   desc:'Занятие для всей семьи! Дети и взрослые лепят вместе за одним столом. Каждый создаёт что-то своё в своём темпе.',
+   tags:['📚 1 урок, 1.5 часа', '👨‍👩‍👧 Семья', '🎉 Все возрасты']},
+  {id:16, day:6, time:'14:00', endTime:'16:00', name:'Взрослый МК', age:'18+', type:'adults', duration:120, price:3100, seats:6, img:'https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80',
+   desc:'Субботний мастер-класс на гончарном круге.',
+   tags:['📚 1 урок, 2 часа', '🎡 Гончарный круг', '🔞 18+']},
+  {id:17, day:0, time:'11:00', endTime:'12:30', name:'Все возрасты', age:'5+ лет', type:'all', duration:90, price:2500, seats:8, img:'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800&q=80',
+   desc:'Воскресное занятие для всей семьи!',
+   tags:['📚 1 урок, 1.5 часа', '👨‍👩‍👧 Семья', '🎉 Все возрасты']},
+  {id:18, day:0, time:'14:00', endTime:'16:30', name:'День рождения', age:'Группа', type:'all', duration:150, price:2500, seats:12, img:'https://images.unsplash.com/photo-1576020799627-aeac74d58064?w=800&q=80',
+   desc:'Проведите день рождения за гончарным кругом! Каждый гость лепит подарок имениннику. Мы украсим студию и позаботимся об атмосфере.',
+   important:'Минимальная группа 6 человек. Бронирование за 3+ дня.',
+   tags:['⏱ 2.5 часа', '🎂 День рождения', '👥 6–12 чел.']},
 ];
-const dayNames=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+
+const smReviewsData = [
+  {name:'@alinaikonopistseva', text:'Глина — мой отдельный вид медитации 🧘‍♀️ Приходила уже 4 раза и каждый раз что-то новое!', img:'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80'},
+  {name:'@Екатерина К.', text:'Ходили с дочкой 6,5 лет, делали конфетницу. Коллектив доброжелательный, внимательный. Ребёнок был в восторге!', img:'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80'},
+  {name:'@malenkiyvalyshik', text:'Незабываемые ощущения от взаимодействия с глиной! Через час забываешь обо всём на свете.', img:'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80'},
+];
+
 const dayNamesShort=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
 const monthNames=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
 function schedWeek(dir){schedOffset+=dir;initSchedule();}
@@ -2453,18 +2617,80 @@ function initSchedule(){
       </div>
       <div class="sched-col-body">
         ${evs.length?evs.map(e=>`
-          <div class="sched-event ${e.type}" onclick="schedEnroll('${e.name}','${e.time}','${dayNamesShort[dayOfWeek]} ${d.getDate()} ${monthNames[d.getMonth()]}')">
-            <div class="sched-ev-time">${e.time}</div>
+          <div class="sched-event ${e.type}" onclick="openSM(${e.id})">
+            <div class="sched-ev-time">${e.time}–${e.endTime}</div>
             <div class="sched-ev-name">${e.name}</div>
-            <div class="sched-ev-age">${e.age} · ${e.duration} мин</div>
+            <div class="sched-ev-age">${e.age} · ${e.seats} мест</div>
           </div>`).join(''):'<div style="font-size:.7rem;color:var(--text-muted);padding:.5rem;text-align:center">Нет занятий</div>'}
       </div>
     </div>`;
   }).join('');
 }
-function schedEnroll(name, time, date){
+
+function openSM(eventId){
+  const ev=schedEvents.find(e=>e.id===eventId);if(!ev)return;
+  smCurrentEvent=ev;
+  smGuests=1;
+  // Fill modal
+  document.getElementById('smImg').src=ev.img;
+  document.getElementById('smBadge').textContent=ev.age;
+  document.getElementById('smBadge').style.background=ev.type==='kids'?'#4a90c4':ev.type==='adults'?'var(--sage)':'var(--clay)';
+  document.getElementById('smBreadcrumb').textContent=ev.name;
+  document.getElementById('smTitle').textContent=ev.name;
+  document.getElementById('smTags').innerHTML=(ev.tags||[]).map(t=>`<div class="sm-tag">${t}</div>`).join('');
+  document.getElementById('smDesc').textContent=ev.desc;
+  if(ev.important){
+    document.getElementById('smImportant').style.display='block';
+    document.getElementById('smImportantText').textContent=ev.important;
+  } else {
+    document.getElementById('smImportant').style.display='none';
+  }
+  // Get day name for display
+  const today=new Date();
+  const monday=new Date(today);
+  monday.setDate(today.getDate()-((today.getDay()||7)-1)+schedOffset*7);
+  const days=Array.from({length:7},(_,i)=>{const d=new Date(monday);d.setDate(monday.getDate()+i);return d;});
+  const dayDate=days.find(d=>d.getDay()===ev.day)||days[0];
+  const dayStr=`${dayDate.getDate()} ${monthNames[dayDate.getMonth()]}, ${dayNamesShort[dayDate.getDay()]}`;
+  document.getElementById('smDateTime').textContent=`${dayStr} · ${ev.time}–${ev.endTime}`;
+  document.getElementById('smPrice').textContent=ev.price.toLocaleString('ru-RU')+' ₽';
+  const seatsEl=document.getElementById('smSeats');
+  seatsEl.textContent=`${ev.seats} мест`;
+  seatsEl.className='sm-detail-val'+(ev.seats<=3?' seats-low':'');
+  updateSmTotal();
+  // Reviews
+  document.getElementById('smReviews').innerHTML=`
+    <div class="sm-reviews-title">Отзывы</div>
+    ${smReviewsData.map(r=>`<div class="sm-review">
+      <div class="sm-review-av"><img src="${r.img}" alt="${r.name}"></div>
+      <div class="sm-review-body"><div class="sm-review-name">${r.name}</div><div class="sm-review-text">${r.text}</div></div>
+    </div>`).join('')}`;
+  document.getElementById('smCountNum').textContent=1;
+  document.getElementById('smOv').classList.add('open');
+  document.getElementById('smModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeSM(){
+  document.getElementById('smOv').classList.remove('open');
+  document.getElementById('smModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+function smCount(dir){
+  if(!smCurrentEvent)return;
+  smGuests=Math.max(1,Math.min(smCurrentEvent.seats,smGuests+dir));
+  document.getElementById('smCountNum').textContent=smGuests;
+  updateSmTotal();
+}
+function updateSmTotal(){
+  if(!smCurrentEvent)return;
+  const tot=(smCurrentEvent.price*smGuests).toLocaleString('ru-RU');
+  document.getElementById('smTotal').textContent=`Итого: ${tot} ₽`;
+}
+function smEnroll(){
+  if(!smCurrentEvent)return;
+  closeSM();
   openQB(null);
-  document.getElementById('qbProduct').textContent=`${name} — ${date} в ${time}`;
+  document.getElementById('qbProduct').textContent=`${smCurrentEvent.name} — ${smCurrentEvent.time}, ${smGuests} гост${smGuests===1?'ь':smGuests<5?'я':'ей'} · ${(smCurrentEvent.price*smGuests).toLocaleString('ru-RU')} ₽`;
   document.getElementById('qbModal').querySelector('h3').textContent='Записаться на занятие';
 }
 
@@ -2477,16 +2703,52 @@ function setCertAmount(amount, btn){
   document.querySelectorAll('.cert-amount').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
 }
+function addCertToCart(name, price){
+  const certItem={id:'cert_'+name.replace(/\s/g,'_'),name:`🎁 Сертификат «${name}»`,price,img:'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=200&q=80',qty:1,isCert:true};
+  const existing=cart.find(c=>c.id===certItem.id);
+  if(existing){existing.qty++;}else{cart.push(certItem);}
+  updCart();
+  toast(`🎁 Сертификат «${name}» добавлен в корзину`);
+  setTimeout(()=>{document.getElementById('cartOv').classList.add('open');document.getElementById('cartPan').classList.add('open');},400);
+}
 function buyCert(name, price){
   certAmount=price;
   document.getElementById('certCustomAmount').value=price;
   openQB(null);
   document.getElementById('qbProduct').textContent=`Сертификат «${name}» — ${price.toLocaleString('ru-RU')} ₽`;
-  document.getElementById('qbModal').querySelector('h3').textContent='Купить сертификат';
+  document.getElementById('qbModal').querySelector('h3').textContent='Купить сертификат в 1 клик';
 }
 function buyCertCustom(){
   const amount=parseInt(document.getElementById('certCustomAmount').value)||certAmount;
-  buyCert(`на ${amount.toLocaleString('ru-RU')} ₽`, amount);
+  if(!amount||amount<500){toast('Минимальная сумма — 500 ₽');return;}
+  addCertToCart(`на ${amount.toLocaleString('ru-RU')} ₽`, amount);
+}
+
+function renderCertsPage(){
+  const grid=document.getElementById('certGrid');if(!grid)return;
+  const certs=adminCerts&&adminCerts.length?adminCerts:[
+    {id:1,name:'Пробное занятие',price:2500,subtitle:'1 занятие',program:'Знакомство с гончарным кругом',desc:'Одно занятие на гончарном круге для взрослого или ребёнка. Все материалы включены.'},
+    {id:2,name:'Детский абонемент',price:6500,subtitle:'4 занятия',program:'Детский курс гончарства',desc:'4 занятия для ребёнка по выбранной программе. Срок действия 2 месяца.'},
+    {id:3,name:'Полный курс',price:11500,subtitle:'8 занятий',program:'Полный курс мастерства',desc:'8 занятий — полный базовый курс гончарства. Ребёнок освоит круг и создаст целую коллекцию.'},
+  ];
+  grid.innerHTML=certs.map(c=>`
+    <div class="cert-card">
+      <div class="cert-preview">
+        <div class="cert-preview-deco"></div>
+        <div class="cert-preview-inner">
+          <div class="cert-preview-logo">ТЕРРА</div>
+          <div class="cert-preview-title">Подарочный сертификат</div>
+          <div style="font-size:2rem;font-family:var(--font-d);color:var(--clay-light);margin:.5rem 0">${c.subtitle||''}</div>
+          <div class="cert-preview-name">${c.program||''}</div>
+        </div>
+      </div>
+      <div class="cert-body">
+        <h3>${c.name}</h3>
+        <p>${c.desc||''}</p>
+        <div class="cert-price">${c.price.toLocaleString('ru-RU')} ₽</div>
+        <button class="cert-buy" onclick="addCertToCart(${JSON.stringify(c.name)},${c.price})">🛒 В корзину</button>
+      </div>
+    </div>`).join('');
 }
 
 // ===== EVENTS PAGE =====
@@ -2534,6 +2796,7 @@ let sb='';document.addEventListener('keydown',function(e){
   if(e.key==='Escape'){
     if(document.getElementById('zoomOv').classList.contains('open')){closeZoom();return;}
     if(document.getElementById('subModal').classList.contains('open')){closeSub();return;}
+    if(document.getElementById('smModal').classList.contains('open')){closeSM();return;}
     if(document.getElementById('pdMod').classList.contains('open')){closePD();return;}
     if(document.getElementById('clMod').classList.contains('open')){closeCL();return;}
     if(document.getElementById('bmModal').classList.contains('open')){closeBM();return;}
@@ -2551,6 +2814,9 @@ let sb='';document.addEventListener('keydown',function(e){
 initData();
 loadSiteData();
 initBlog();
+loadAdminSched();
+loadAdminCerts();
+loadAdminEvts();
 if(!localStorage.getItem('terra_gemini_key'))localStorage.setItem('terra_gemini_key','AIzaSyB-_cvSaMWlr15tQct-0Etfn4yvFLU4_cY');
 setTimeout(openSub, 15000);
 
