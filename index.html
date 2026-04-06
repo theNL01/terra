@@ -163,6 +163,47 @@ footer{background:#3a2d25;padding:2.5rem 3rem;display:flex;justify-content:space
 .shop-page-header{background:var(--sand);padding:3rem 3rem 1rem;border-bottom:1px solid var(--border)}
 .search-hl{background:rgba(198,125,74,.2);border-radius:3px}
 
+/* EDUCATION SECTIONS */
+#kids{background:linear-gradient(135deg,#fdf6ee 0%,#faf0e4 100%)}
+.kids-hero{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-bottom:4rem}
+.kids-hero-text .stitle{text-align:left}
+.kids-hero-text p{font-size:.95rem;color:var(--text-body);line-height:1.8;font-weight:300;margin-bottom:1.5rem}
+.kids-age-tabs{display:flex;gap:.5rem;margin-bottom:2rem;flex-wrap:wrap}
+.age-tab{background:var(--white);border:1.5px solid var(--border);color:var(--text-muted);padding:.5rem 1.2rem;font-family:var(--font-b);font-size:.78rem;cursor:pointer;border-radius:50px;transition:.3s}.age-tab.active,.age-tab:hover{border-color:var(--clay);color:var(--clay);background:rgba(198,125,74,.06)}
+.kids-programs{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem}
+.kids-card{background:var(--white);border-radius:20px;overflow:hidden;border:1px solid var(--border);transition:.4s;position:relative}.kids-card:hover{transform:translateY(-5px);box-shadow:0 20px 50px rgba(92,64,51,.1)}
+.kids-card-img{height:190px;overflow:hidden;position:relative}.kids-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}.kids-card:hover .kids-card-img img{transform:scale(1.06)}
+.kids-age-badge{position:absolute;top:12px;left:12px;background:var(--clay);color:#fff;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .8rem;border-radius:50px;font-weight:600}
+.kids-card-body{padding:1.3rem 1.5rem 1.6rem}
+.kids-card-body h3{font-family:var(--font-d);font-size:1.1rem;margin-bottom:.5rem;color:var(--text-dark)}
+.kids-card-body p{font-size:.82rem;color:var(--text-muted);line-height:1.6;margin-bottom:1rem;font-weight:300}
+.kids-card-meta{display:flex;justify-content:space-between;align-items:center;padding-top:.8rem;border-top:1px solid var(--border)}
+.kids-card-dur{font-size:.72rem;color:var(--sage);font-weight:500}
+.kids-card-price{font-family:var(--font-d);font-size:1.05rem;font-weight:600;color:var(--clay)}
+.kids-enroll-btn{display:block;width:100%;background:var(--clay);color:#fff;border:none;padding:.75rem;border-radius:50px;font-family:var(--font-b);font-size:.8rem;cursor:pointer;transition:.3s;margin-top:1rem}.kids-enroll-btn:hover{background:var(--clay-dark)}
+.kids-hero-img{border-radius:24px;overflow:hidden;box-shadow:0 20px 60px rgba(92,64,51,.15)}.kids-hero-img img{width:100%;height:100%;object-fit:cover}
+.kids-features{max-width:1100px;margin:3rem auto 0;display:grid;grid-template-columns:repeat(4,1fr);gap:1.2rem}
+.kids-feat{background:var(--white);border-radius:16px;padding:1.4rem;text-align:center;border:1px solid var(--border)}
+.kids-feat-icon{font-size:1.8rem;margin-bottom:.8rem}
+.kids-feat h4{font-family:var(--font-d);font-size:.95rem;color:var(--text-dark);margin-bottom:.3rem}
+.kids-feat p{font-size:.78rem;color:var(--text-muted);line-height:1.5;font-weight:300}
+.schedule-wrap{max-width:1100px;margin:3rem auto 0}
+.schedule-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.8rem}
+.sched-day{background:var(--white);border-radius:14px;padding:1rem;border:1px solid var(--border)}
+.sched-day-name{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--clay);font-weight:600;margin-bottom:.8rem;text-align:center}
+.sched-slot{background:var(--sand);border-radius:8px;padding:.5rem .7rem;margin-bottom:.5rem;cursor:pointer;transition:.2s}.sched-slot:hover{background:rgba(198,125,74,.12)}
+.sched-time{font-size:.72rem;font-weight:600;color:var(--text-dark)}
+.sched-name{font-size:.65rem;color:var(--text-muted);margin-top:.1rem}
+.sched-age{font-size:.6rem;color:var(--clay);font-weight:500}
+.enroll-form-wrap{max-width:700px;margin:3rem auto 0;background:var(--white);border-radius:20px;padding:2.5rem;border:1px solid var(--border);box-shadow:0 8px 30px rgba(92,64,51,.07)}
+.enroll-form-wrap h3{font-family:var(--font-d);font-size:1.4rem;color:var(--earth);margin-bottom:.4rem}
+.enroll-form-wrap .sub{font-size:.85rem;color:var(--text-muted);margin-bottom:1.5rem;font-weight:300}
+.enroll-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:.8rem}
+.enroll-form-wrap input,.enroll-form-wrap select,.enroll-form-wrap textarea{background:var(--sand);border:1px solid var(--border);border-radius:10px;padding:.8rem 1rem;font-family:var(--font-b);font-size:.88rem;outline:none;transition:border .2s;width:100%;color:var(--text-dark)}.enroll-form-wrap input:focus,.enroll-form-wrap select:focus{border-color:var(--clay)}
+.enroll-submit{background:var(--clay);color:#fff;border:none;padding:.95rem 2.5rem;border-radius:50px;font-family:var(--font-b);font-size:.88rem;cursor:pointer;transition:.3s;margin-top:.5rem}.enroll-submit:hover{background:var(--clay-dark);transform:translateY(-2px)}
+@media(max-width:1000px){.kids-hero{grid-template-columns:1fr}.kids-hero-img{display:none}.kids-programs{grid-template-columns:1fr 1fr}.kids-features{grid-template-columns:1fr 1fr}.schedule-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.kids-programs{grid-template-columns:1fr}.kids-features{grid-template-columns:1fr 1fr}.enroll-row{grid-template-columns:1fr}.schedule-grid{grid-template-columns:1fr 1fr}}
+
 @media(max-width:700px){.stats-bar{padding:.8rem 1.5rem}.stat-num{font-size:1.2rem}.shop-controls{flex-direction:column;align-items:stretch}.search-wrap{max-width:100%}.wa-btn{bottom:1.2rem;right:1.2rem;width:48px;height:48px;font-size:1.3rem}}
 
 /* PHOTO ZOOM */
@@ -420,13 +461,11 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
 <header>
   <a href="#" class="logo" style="text-decoration:none">ТЕР<span>Р</span>А</a>
   <nav id="mainNav">
-    <a href="#" onclick="showPage('home');return false" class="nav-home">О нас</a>
+    <a href="#" onclick="showPage('home');return false" class="nav-home">Главная</a>
     <a href="#" onclick="showPage('shop');return false" class="nav-shop" style="font-weight:500">Магазин</a>
-    <a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('classes').scrollIntoView({behavior:'smooth'}),100);return false">Мастер-классы</a>
+    <a href="#kids">Детям</a>
+    <a href="#enroll">Запись</a>
     <a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('blog').scrollIntoView({behavior:'smooth'}),100);return false">Блог</a>
-    <a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('delivery').scrollIntoView({behavior:'smooth'}),100);return false">Доставка</a>
-    <a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('faq').scrollIntoView({behavior:'smooth'}),100);return false">FAQ</a>
-    <a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('reviews').scrollIntoView({behavior:'smooth'}),100);return false">Отзывы</a>
     <a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100);return false">Контакты</a>
     <button class="cart-btn" onclick="toggleCart()">Корзина<span class="cart-count" id="cartCount">0</span></button>
   </nav>
@@ -489,9 +528,88 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
   </div>
 </section>
 
-<section id="classes">
-  <div class="sh"><div class="st"><div class="stl"></div><span>Обучение</span><div class="stl"></div></div><h2 class="stitle">Мастер-<em>классы</em></h2><p class="sdesc">Попробуйте себя за гончарным кругом — это медитация, творчество и радость в одном</p></div>
-  <div class="cgrid" id="cGrid"><div class="loading">Загрузка мастер-классов...</div></div>
+<!-- ДЕТСКАЯ СТУДИЯ -->
+<section id="kids">
+  <div class="sh"><div class="st"><div class="stl"></div><span>Детская студия</span><div class="stl"></div></div><h2 class="stitle">Гончарство для <em>детей</em></h2><p class="sdesc">Развиваем творческое мышление, моторику и усидчивость через работу с глиной</p></div>
+
+  <div class="kids-hero">
+    <div class="kids-hero-text">
+      <div class="st" style="justify-content:flex-start"><div class="stl"></div><span>Почему это важно</span></div>
+      <h2 class="stitle" style="text-align:left;font-size:clamp(1.6rem,3vw,2.2rem)">Глина развивает <em>ребёнка</em></h2>
+      <p>Гончарный круг — это не просто лепка. Это концентрация, терпение, пространственное мышление и радость от создания чего-то настоящего своими руками.</p>
+      <p>Наши педагоги работают с детьми с 5 лет. Маленькие группы (до 6 человек) гарантируют внимание каждому ребёнку.</p>
+      <div class="kids-age-tabs">
+        <button class="age-tab active" onclick="filterKids('all',this)">Все возрасты</button>
+        <button class="age-tab" onclick="filterKids('5-7',this)">5–7 лет</button>
+        <button class="age-tab" onclick="filterKids('8-11',this)">8–11 лет</button>
+        <button class="age-tab" onclick="filterKids('12-17',this)">12–17 лет</button>
+      </div>
+      <a href="#enroll" class="btn-p" style="display:inline-block;text-decoration:none">Записать ребёнка →</a>
+    </div>
+    <div class="kids-hero-img">
+      <img src="https://images.unsplash.com/photo-1536094349997-b4f4a3b3c3d8?w=600&q=80" alt="Дети на гончарном кружке" onerror="this.src='https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=600&q=80'">
+    </div>
+  </div>
+
+  <div class="kids-programs" id="kidsGrid">
+    <div class="kids-card" data-age="5-7">
+      <div class="kids-card-img"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=500&q=80" alt="" loading="lazy"><div class="kids-age-badge">5–7 лет</div></div>
+      <div class="kids-card-body">
+        <h3>Первые шаги</h3>
+        <p>Знакомство с глиной через лепку руками. Создаём зверушек, тарелочки и украшения. Развиваем моторику и фантазию.</p>
+        <div class="kids-card-meta"><span class="kids-card-dur">⏱ 1 час · 1 раз/нед.</span><span class="kids-card-price">1 800 ₽</span></div>
+        <button class="kids-enroll-btn" onclick="scrollToEnroll('Первые шаги (5–7 лет)')">Записаться</button>
+      </div>
+    </div>
+    <div class="kids-card" data-age="8-11">
+      <div class="kids-card-img"><img src="https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=500&q=80" alt="" loading="lazy"><div class="kids-age-badge">8–11 лет</div></div>
+      <div class="kids-card-body">
+        <h3>Гончарный круг</h3>
+        <p>Учимся работать на настоящем гончарном круге. Формуем чашки, миски, вазы. Расписываем глазурями.</p>
+        <div class="kids-card-meta"><span class="kids-card-dur">⏱ 1.5 часа · 1 раз/нед.</span><span class="kids-card-price">2 200 ₽</span></div>
+        <button class="kids-enroll-btn" onclick="scrollToEnroll('Гончарный круг (8–11 лет)')">Записаться</button>
+      </div>
+    </div>
+    <div class="kids-card" data-age="12-17">
+      <div class="kids-card-img"><img src="https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=500&q=80" alt="" loading="lazy"><div class="kids-age-badge">12–17 лет</div></div>
+      <div class="kids-card-body">
+        <h3>Продвинутый курс</h3>
+        <p>Сложные техники: сборка, рельеф, авторская роспись. Создаём полноценные предметы сервировки и декора.</p>
+        <div class="kids-card-meta"><span class="kids-card-dur">⏱ 2 часа · 2 раза/нед.</span><span class="kids-card-price">3 500 ₽</span></div>
+        <button class="kids-enroll-btn" onclick="scrollToEnroll('Продвинутый курс (12–17 лет)')">Записаться</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="kids-features">
+    <div class="kids-feat"><div class="kids-feat-icon">👶</div><h4>С 5 лет</h4><p>Программы адаптированы под каждый возраст</p></div>
+    <div class="kids-feat"><div class="kids-feat-icon">👥</div><h4>До 6 человек</h4><p>Маленькие группы — внимание каждому</p></div>
+    <div class="kids-feat"><div class="kids-feat-icon">🎁</div><h4>Уносят домой</h4><p>Готовое изделие после обжига</p></div>
+    <div class="kids-feat"><div class="kids-feat-icon">🏆</div><h4>Сертификаты</h4><p>Грамоты и дипломы за успехи</p></div>
+  </div>
+
+  <!-- ФОРМА ЗАПИСИ -->
+  <div id="enroll" style="max-width:700px;margin:4rem auto 0">
+    <div class="enroll-form-wrap">
+      <h3>Записать ребёнка</h3>
+      <p class="sub">Мы свяжемся в течение 2 часов и подберём удобное время</p>
+      <div class="enroll-row">
+        <input type="text" id="enrName" placeholder="Имя ребёнка *" maxlength="50">
+        <input type="text" id="enrAge" placeholder="Возраст" maxlength="10">
+      </div>
+      <div class="enroll-row">
+        <input type="tel" id="enrPhone" placeholder="Телефон родителя *" maxlength="18" oninput="fmtPhone(this)">
+        <input type="email" id="enrEmail" placeholder="Email" maxlength="100">
+      </div>
+      <select id="enrProgram" style="margin-bottom:.8rem">
+        <option value="">Выберите программу</option>
+        <option>Первые шаги (5–7 лет)</option>
+        <option>Гончарный круг (8–11 лет)</option>
+        <option>Продвинутый курс (12–17 лет)</option>
+      </select>
+      <button class="enroll-submit" onclick="submitEnroll()">Записаться на занятие →</button>
+    </div>
+  </div>
 </section>
 
 <section id="process">
@@ -514,34 +632,6 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
     <div class="gitem"><img src="https://images.unsplash.com/photo-1607893378714-007fd47c8719?w=600&q=80" alt=""><div class="gov"><span>Подсвечник «Арка»</span></div></div>
     <div class="gitem"><img src="https://images.unsplash.com/photo-1576020799627-aeac74d58064?w=600&q=80" alt=""><div class="gov"><span>Пиалы «Дзен»</span></div></div>
   </div>
-</section>
-
-<section id="reviews">
-  <div class="sh"><div class="st"><div class="stl"></div><span>Отзывы</span><div class="stl"></div></div><h2 class="stitle">Что говорят <em>покупатели</em></h2></div>
-  <div class="reviews-summary">
-    <div class="reviews-big">4.9</div>
-    <div><div class="reviews-stars-big">★★★★★</div><div class="reviews-count">На основе 127 отзывов</div></div>
-  </div>
-  <div class="reviews-grid" id="reviewsGrid"></div>
-</section>
-
-<section id="delivery">
-  <div class="sh"><div class="st"><div class="stl"></div><span>Доставка и оплата</span><div class="stl"></div></div><h2 class="stitle">Доставим <em>бережно</em></h2></div>
-  <div class="delivery-grid">
-    <div class="delivery-card"><div class="delivery-icon">📦</div><h3>Почта России / СДЭК</h3><p>Доставляем по всей России. Каждое изделие упаковываем в несколько слоёв защитного материала.</p><span class="price-tag">от 350 ₽ · 3–7 дней</span></div>
-    <div class="delivery-card"><div class="delivery-icon">🚗</div><h3>Курьер по Москве</h3><p>Доставка курьером в день заказа или на следующий день. Бесплатно при заказе от 5 000 ₽.</p><span class="price-tag">300 ₽ · 1–2 дня</span></div>
-    <div class="delivery-card"><div class="delivery-icon">🏪</div><h3>Самовывоз</h3><p>Заберите заказ из нашей мастерской на Гончарной набережной. Пн–Вс 10:00–20:00.</p><span class="price-tag">Бесплатно</span></div>
-  </div>
-  <div style="max-width:1100px;margin:2.5rem auto 0;background:rgba(198,125,74,.06);border:1px solid rgba(198,125,74,.15);border-radius:16px;padding:1.5rem 2rem;display:flex;gap:3rem;flex-wrap:wrap">
-    <div><div style="font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--clay);font-weight:500;margin-bottom:.5rem">Оплата</div><p style="font-size:.88rem;color:var(--text-body);line-height:1.6;font-weight:300">Банковская карта, СБП, наличные при получении</p></div>
-    <div><div style="font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--clay);font-weight:500;margin-bottom:.5rem">Возврат</div><p style="font-size:.88rem;color:var(--text-body);line-height:1.6;font-weight:300">Возврат в течение 14 дней, если изделие не подошло</p></div>
-    <div><div style="font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--clay);font-weight:500;margin-bottom:.5rem">Гарантия</div><p style="font-size:.88rem;color:var(--text-body);line-height:1.6;font-weight:300">Заменим изделие если оно пришло с повреждениями</p></div>
-  </div>
-</section>
-
-<section id="faq">
-  <div class="sh"><div class="st"><div class="stl"></div><span>Вопросы и ответы</span><div class="stl"></div></div><h2 class="stitle">Частые <em>вопросы</em></h2></div>
-  <div class="faq-wrap" id="faqWrap"></div>
 </section>
 
 <section id="contact">
@@ -583,6 +673,34 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
       <div class="sort-wrap"><select id="shopSort" onchange="filterP()"><option value="">По умолчанию</option><option value="price_asc">Цена ↑</option><option value="price_desc">Цена ↓</option><option value="new">Новинки</option></select></div>
     </div>
     <div class="pgrid" id="pGrid"><div class="loading">Загрузка товаров...</div></div>
+  </section>
+
+  <section id="reviews" style="background:var(--sand)">
+    <div class="sh"><div class="st"><div class="stl"></div><span>Отзывы</span><div class="stl"></div></div><h2 class="stitle">Что говорят <em>покупатели</em></h2></div>
+    <div class="reviews-summary">
+      <div class="reviews-big">4.9</div>
+      <div><div class="reviews-stars-big">★★★★★</div><div class="reviews-count">На основе 127 отзывов</div></div>
+    </div>
+    <div class="reviews-grid" id="reviewsGrid"></div>
+  </section>
+
+  <section id="delivery">
+    <div class="sh"><div class="st"><div class="stl"></div><span>Доставка и оплата</span><div class="stl"></div></div><h2 class="stitle">Доставим <em>бережно</em></h2></div>
+    <div class="delivery-grid">
+      <div class="delivery-card"><div class="delivery-icon">📦</div><h3>Почта России / СДЭК</h3><p>Доставляем по всей России. Каждое изделие упаковываем в несколько слоёв защитного материала.</p><span class="price-tag">от 350 ₽ · 3–7 дней</span></div>
+      <div class="delivery-card"><div class="delivery-icon">🚗</div><h3>Курьер по Москве</h3><p>Доставка курьером в день заказа или на следующий день. Бесплатно при заказе от 5 000 ₽.</p><span class="price-tag">300 ₽ · 1–2 дня</span></div>
+      <div class="delivery-card"><div class="delivery-icon">🏪</div><h3>Самовывоз</h3><p>Заберите заказ из нашей мастерской на Гончарной набережной. Пн–Вс 10:00–20:00.</p><span class="price-tag">Бесплатно</span></div>
+    </div>
+    <div style="max-width:1100px;margin:2.5rem auto 0;background:rgba(198,125,74,.06);border:1px solid rgba(198,125,74,.15);border-radius:16px;padding:1.5rem 2rem;display:flex;gap:3rem;flex-wrap:wrap">
+      <div><div style="font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--clay);font-weight:500;margin-bottom:.5rem">Оплата</div><p style="font-size:.88rem;color:var(--text-body);line-height:1.6;font-weight:300">Банковская карта, СБП, наличные при получении</p></div>
+      <div><div style="font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--clay);font-weight:500;margin-bottom:.5rem">Возврат</div><p style="font-size:.88rem;color:var(--text-body);line-height:1.6;font-weight:300">Возврат в течение 14 дней, если изделие не подошло</p></div>
+      <div><div style="font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--clay);font-weight:500;margin-bottom:.5rem">Гарантия</div><p style="font-size:.88rem;color:var(--text-body);line-height:1.6;font-weight:300">Заменим изделие если оно пришло с повреждениями</p></div>
+    </div>
+  </section>
+
+  <section id="faq" style="background:var(--sand)">
+    <div class="sh"><div class="st"><div class="stl"></div><span>Вопросы и ответы</span><div class="stl"></div></div><h2 class="stitle">Частые <em>вопросы</em></h2></div>
+    <div class="faq-wrap" id="faqWrap"></div>
   </section>
 </div><!-- /shopPage -->
 
@@ -2056,6 +2174,43 @@ function getViews(productId,cb){
   });
 }
 
+// ===== KIDS EDUCATION =====
+function filterKids(age, btn){
+  document.querySelectorAll('.age-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.kids-card').forEach(c=>{
+    c.style.display=(age==='all'||c.dataset.age===age)?'block':'none';
+  });
+}
+function scrollToEnroll(program){
+  document.getElementById('enroll').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{
+    const sel=document.getElementById('enrProgram');
+    if(sel&&program){
+      for(let o of sel.options){if(o.value&&program.toLowerCase().includes(o.value.toLowerCase().split('(')[0].trim().toLowerCase())){sel.value=o.value;break;}}
+    }
+  },600);
+}
+function submitEnroll(){
+  const name=document.getElementById('enrName').value.trim();
+  const phone=document.getElementById('enrPhone').value.trim();
+  const age=document.getElementById('enrAge').value.trim();
+  const email=document.getElementById('enrEmail').value.trim();
+  const program=document.getElementById('enrProgram').value;
+  const time=document.getElementById('enrTime').value;
+  if(!name){toast('Укажите имя');return;}
+  if(phone.replace(/\D/g,'').length<10){toast('Введите корректный телефон');return;}
+  fetch('https://formspree.io/f/xjgppdnp',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({
+    name,phone,email:email||'—',
+    message:`📚 Запись на занятие!\n\nИмя: ${name}\nВозраст: ${age||'—'}\nТелефон: ${phone}\nEmail: ${email||'—'}\nПрограмма: ${program||'—'}\nВремя: ${time||'—'}`
+  })}).catch(()=>{});
+  dbSave('enrollments/edu_'+Date.now(),{name,phone,email,age,program,time,date:new Date().toISOString()});
+  ['enrName','enrAge','enrPhone','enrEmail'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('enrProgram').value='';
+  document.getElementById('enrTime').value='';
+  toast('✓ Заявка принята! Мы позвоним вам в течение 2 часов');
+}
+
 // ===== PAGE SWITCHING =====
 function showPage(page){
   const home=document.getElementById('homePage');
@@ -2067,6 +2222,8 @@ function showPage(page){
     navShop.classList.add('active');
     window.scrollTo({top:0,behavior:'smooth'});
     renderP();
+    renderReviews();
+    renderFAQ();
   } else {
     shop.style.display='none';
     home.style.display='block';
@@ -2100,10 +2257,7 @@ let sb='';document.addEventListener('keydown',function(e){
 initData();
 loadSiteData();
 initBlog();
-renderReviews();
-renderFAQ();
 if(!localStorage.getItem('terra_gemini_key'))localStorage.setItem('terra_gemini_key','AIzaSyB-_cvSaMWlr15tQct-0Etfn4yvFLU4_cY');
-// Show subscribe popup after 15 seconds
 setTimeout(openSub, 15000);
 
 // Load API key UI after login
