@@ -507,13 +507,13 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
             <div>
               <div style="font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);font-weight:500;margin-bottom:.4rem">Главное фото</div>
-              <div class="adm-img-up" id="aboutImg1Up"><div class="uicon" id="aboutImg1UIco">📷</div><div class="utxt" id="aboutImg1UTxt">Основное фото</div><div class="uhint">ImgBB</div><input type="file" id="aboutImg1In" accept="image/*" onchange="hImgSite(event,'aboutImg1')"></div>
+              <div class="adm-img-up" id="aboutImg1Up"><div class="uicon" id="aboutImg1UIco">📷</div><div class="utxt" id="aboutImg1UTxt">Нажмите или перетащите</div><div class="uhint">Автозагрузка на ImgBB</div><input type="file" id="aboutImg1In" accept="image/*" onchange="hImgSite(event,'aboutImg1')"></div>
               <div class="adm-img-status" id="aboutImg1Status"></div>
               <input type="text" id="aboutImg1Url" style="margin-top:.4rem;background:var(--sand);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;font-family:var(--font-b);font-size:.82rem;width:100%;outline:none" placeholder="или ссылка..." oninput="onImgUrlSite(this,'aboutImg1')">
             </div>
             <div>
               <div style="font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);font-weight:500;margin-bottom:.4rem">Дополнительное фото</div>
-              <div class="adm-img-up" id="aboutImg2Up"><div class="uicon" id="aboutImg2UIco">📷</div><div class="utxt" id="aboutImg2UTxt">Малое фото</div><div class="uhint">ImgBB</div><input type="file" id="aboutImg2In" accept="image/*" onchange="hImgSite(event,'aboutImg2')"></div>
+              <div class="adm-img-up" id="aboutImg2Up"><div class="uicon" id="aboutImg2UIco">📷</div><div class="utxt" id="aboutImg2UTxt">Нажмите или перетащите</div><div class="uhint">Автозагрузка на ImgBB</div><input type="file" id="aboutImg2In" accept="image/*" onchange="hImgSite(event,'aboutImg2')"></div>
               <div class="adm-img-status" id="aboutImg2Status"></div>
               <input type="text" id="aboutImg2Url" style="margin-top:.4rem;background:var(--sand);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;font-family:var(--font-b);font-size:.82rem;width:100%;outline:none" placeholder="или ссылка..." oninput="onImgUrlSite(this,'aboutImg2')">
             </div>
@@ -1144,13 +1144,32 @@ function renderGalleryAdmin(){
   const items=siteData.gallery||defSite.gallery;
   list.innerHTML=items.map((g,i)=>`
     <div class="gallery-adm-item" id="galItem${i}">
-      <img class="gallery-adm-thumb" src="${g.img}" alt="" id="galThumb${i}">
+      <div style="position:relative;cursor:pointer" title="Нажмите для смены фото">
+        <img class="gallery-adm-thumb" src="${g.img||''}" alt="" id="galThumb${i}" onerror="this.src=''">
+        <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.35);border-radius:6px;opacity:0;transition:.2s" class="gal-up-hover">📷</div>
+        <input type="file" accept="image/*" style="position:absolute;inset:0;opacity:0;cursor:pointer" onchange="hImgGallery(event,${i})">
+      </div>
       <div class="gallery-adm-fields">
-        <input type="text" value="${g.img}" id="galImg${i}" placeholder="URL фото" oninput="document.getElementById('galThumb'+${i}).src=this.value">
-        <input type="text" value="${g.caption}" id="galCap${i}" placeholder="Подпись">
+        <input type="text" value="${g.img||''}" id="galImg${i}" placeholder="URL фото" oninput="document.getElementById('galThumb'+${i}).src=this.value">
+        <input type="text" value="${g.caption||''}" id="galCap${i}" placeholder="Подпись">
       </div>
       <button class="gallery-adm-del" onclick="removeGalleryItem(${i})">🗑️</button>
     </div>`).join('');
+  // hover effect
+  list.querySelectorAll('.gallery-adm-item > div').forEach(d=>{
+    d.addEventListener('mouseenter',()=>{const h=d.querySelector('.gal-up-hover');if(h)h.style.opacity='1';});
+    d.addEventListener('mouseleave',()=>{const h=d.querySelector('.gal-up-hover');if(h)h.style.opacity='0';});
+  });
+}
+
+function hImgGallery(e,idx){
+  const file=e.target.files[0]; if(!file)return;
+  toast('⏳ Загрузка фото...');
+  uploadToImgBB(file, url=>{
+    document.getElementById('galThumb'+idx).src=url;
+    document.getElementById('galImg'+idx).value=url;
+    toast('✓ Фото загружено');
+  }, ()=>toast('❌ Ошибка загрузки'));
 }
 
 function addGalleryItem(){
@@ -1175,14 +1194,23 @@ function hImgProc(e,idx){
 }
 
 // Site image upload helpers
+const siteImgMap = {
+  hero:      {up:'heroImgUp',     ico:'heroUIco',      txt:'heroUTxt',      status:'heroImgStatus'},
+  aboutImg1: {up:'aboutImg1Up',   ico:'aboutImg1UIco', txt:'aboutImg1UTxt', status:'aboutImg1Status'},
+  aboutImg2: {up:'aboutImg2Up',   ico:'aboutImg2UIco', txt:'aboutImg2UTxt', status:'aboutImg2Status'},
+  contact:   {up:'contactImgUp',  ico:'contactUIco',   txt:'contactUTxt',   status:'contactImgStatus'},
+};
 function hImgSite(e,type){
   const file=e.target.files[0]; if(!file)return;
-  const statusId=type+'ImgStatus'||type+'Status';
-  const st=document.getElementById(type==='hero'?'heroImgStatus':type==='contact'?'contactImgStatus':type+'Status');
+  const m=siteImgMap[type]; if(!m)return;
+  const st=document.getElementById(m.status);
   if(st){st.className='adm-img-status uploading';st.textContent='Загрузка...';}
   uploadToImgBB(file, url=>{
     showSiteImgPrev(type,url);
-    if(st){st.className='adm-img-status done';st.textContent='✓ Загружено';}
+    if(st){st.className='adm-img-status done';st.textContent='✓ Загружено на ImgBB';}
+    // also update url input if present
+    const urlInp=document.getElementById(type+'Url')||document.getElementById(type.replace('Img','').toLowerCase()+'ImgUrl');
+    if(urlInp) urlInp.value=url;
   }, ()=>{if(st){st.className='adm-img-status err';st.textContent='Ошибка загрузки';}});
 }
 function onImgUrlSite(inp,type){
@@ -1191,12 +1219,12 @@ function onImgUrlSite(inp,type){
 }
 function showSiteImgPrev(type,src){
   if(!src)return;
-  const upId={hero:'heroImgUp',aboutImg1:'aboutImg1Up',aboutImg2:'aboutImg2Up',contact:'contactImgUp'}[type];
-  if(!upId)return;
-  const up=document.getElementById(upId); if(!up)return;
+  const m=siteImgMap[type]; if(!m)return;
+  const up=document.getElementById(m.up); if(!up)return;
   up.classList.add('has');
-  ['UIco','UTxt'].forEach(s=>{const el=document.getElementById(type+s);if(el)el.style.display='none';});
-  const hint=up.querySelector('.uhint');if(hint)hint.style.display='none';
+  const ico=document.getElementById(m.ico); if(ico)ico.style.display='none';
+  const txt=document.getElementById(m.txt); if(txt)txt.style.display='none';
+  const hint=up.querySelector('.uhint'); if(hint)hint.style.display='none';
   let prev=up.querySelector('.adm-img-prev');
   if(!prev){prev=document.createElement('img');prev.className='adm-img-prev';up.appendChild(prev);}
   prev.src=src;
