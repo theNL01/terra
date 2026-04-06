@@ -233,6 +233,32 @@ footer{background:#3a2d25;padding:2.5rem 3rem;display:flex;justify-content:space
 .proc-adm-img input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
 .proc-adm-fields{display:flex;flex-direction:column;gap:.4rem}
 .proc-adm-fields input{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:.45rem .7rem;font-family:var(--font-b);font-size:.82rem;outline:none;transition:border .2s}.proc-adm-fields input:focus{border-color:var(--clay)}
+
+/* BLOG */
+#blog{background:var(--sand)}
+.blog-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:2rem}
+.blog-card{background:var(--white);border-radius:16px;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:.4s}.blog-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(92,64,51,.1)}
+.blog-card-img{aspect-ratio:16/9;overflow:hidden;background:var(--sand-deep)}.blog-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}.blog-card:hover .blog-card-img img{transform:scale(1.06)}
+.blog-card-body{padding:1.4rem 1.6rem 1.8rem}
+.blog-card-meta{display:flex;align-items:center;gap:.8rem;margin-bottom:.7rem}
+.blog-card-tag{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--white);background:var(--clay);padding:.25rem .7rem;border-radius:50px;font-weight:500}
+.blog-card-date{font-size:.72rem;color:var(--text-muted)}
+.blog-card-title{font-family:var(--font-d);font-size:1.2rem;font-weight:600;color:var(--text-dark);margin-bottom:.6rem;line-height:1.3}
+.blog-card-excerpt{font-size:.85rem;color:var(--text-muted);line-height:1.6;font-weight:300;margin-bottom:1.1rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.blog-card-read{font-size:.78rem;color:var(--clay);font-weight:500;letter-spacing:.04em}
+
+/* BLOG MODAL */
+.bm-ov{position:fixed;inset:0;background:rgba(45,36,32,.6);backdrop-filter:blur(6px);z-index:3500;opacity:0;visibility:hidden;transition:.3s}.bm-ov.open{opacity:1;visibility:visible}
+.bm-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);width:760px;max-width:95vw;max-height:90vh;background:var(--white);border-radius:20px;z-index:3501;opacity:0;visibility:hidden;transition:.35s;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.25)}.bm-modal.open{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+.bm-cover{height:280px;overflow:hidden;flex-shrink:0;position:relative;background:var(--sand-deep)}.bm-cover img{width:100%;height:100%;object-fit:cover;transition:transform 8s}.bm-modal.open .bm-cover img{transform:scale(1.04)}
+.bm-close{position:absolute;top:14px;right:14px;background:rgba(255,255,255,.85);backdrop-filter:blur(6px);border:none;color:var(--text-body);font-size:1.2rem;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:2;transition:.2s}.bm-close:hover{background:#fff;color:var(--terracotta)}
+.bm-body{padding:2.2rem 2.5rem 2.5rem;overflow-y:auto;flex:1}
+.bm-meta{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.bm-tag{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--white);background:var(--clay);padding:.25rem .7rem;border-radius:50px;font-weight:500}
+.bm-date{font-size:.75rem;color:var(--text-muted)}
+.bm-title{font-family:var(--font-d);font-size:2rem;font-weight:600;color:var(--text-dark);line-height:1.2;margin-bottom:1.5rem}
+.bm-content{font-size:.95rem;color:var(--text-body);line-height:1.9;font-weight:300}.bm-content p{margin-bottom:1.1rem}.bm-content p:last-child{margin-bottom:0}
+@media(max-width:700px){.bm-modal{width:100vw;max-width:100vw;height:100vh;max-height:100vh;border-radius:0;top:0;left:0;transform:translateY(100%)}.bm-modal.open{transform:translateY(0)}.bm-cover{height:200px}.bm-body{padding:1.4rem 1.5rem 2rem}.bm-title{font-size:1.5rem}}
 .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--earth);color:var(--sand);padding:.8rem 2rem;border-radius:50px;font-size:.82rem;z-index:99999;transition:transform .4s cubic-bezier(.4,0,.2,1);white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.2)}.toast.show{transform:translateX(-50%) translateY(0)}
 
 /* LOADING */
@@ -258,7 +284,7 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
 <header>
   <div class="logo">ТЕР<span>Р</span>А</div>
   <nav id="mainNav">
-    <a href="#about">О нас</a><a href="#shop">Магазин</a><a href="#classes">Мастер-классы</a><a href="#gallery">Галерея</a><a href="#contact">Контакты</a>
+    <a href="#about">О нас</a><a href="#shop">Магазин</a><a href="#classes">Мастер-классы</a><a href="#blog">Блог</a><a href="#gallery">Галерея</a><a href="#contact">Контакты</a>
     <button class="cart-btn" onclick="toggleCart()">Корзина<span class="cart-count" id="cartCount">0</span></button>
   </nav>
   <div class="mob-controls" style="display:flex;align-items:center;gap:.8rem">
@@ -322,6 +348,11 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
   </div>
 </section>
 
+<section id="blog">
+  <div class="sh"><div class="st"><div class="stl"></div><span>Блог</span><div class="stl"></div></div><h2 class="stitle">Истории из <em>мастерской</em></h2><p class="sdesc">Делимся секретами гончарного дела, вдохновением и закулисьем творческого процесса</p></div>
+  <div class="blog-grid" id="blogGrid"><div class="loading">Загрузка...</div></div>
+</section>
+
 <section id="gallery">
   <div class="sh"><div class="st"><div class="stl"></div><span>Портфолио</span><div class="stl"></div></div><h2 class="stitle">Наши <em>работы</em></h2></div>
   <div class="gmas">
@@ -356,7 +387,7 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
   </div>
 </section>
 
-<footer><p>© 2026 ТЕРРА — Гончарная мастерская</p><div class="flinks"><a href="#about">О нас</a><a href="#shop">Магазин</a><a href="#classes">Мастер-классы</a><a href="#contact">Контакты</a></div></footer>
+<footer><p>© 2026 ТЕРРА — Гончарная мастерская</p><div class="flinks"><a href="#about">О нас</a><a href="#shop">Магазин</a><a href="#classes">Мастер-классы</a><a href="#blog">Блог</a><a href="#contact">Контакты</a></div></footer>
 
 <!-- Product Detail -->
 <div class="pd-ov" id="pdOv" onclick="closePD()"></div>
@@ -368,6 +399,17 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
     <div class="pd-div"></div><div class="pd-desc-t">Описание</div><div class="pd-desc" id="pdDesc"></div>
     <div class="pd-feats"><div class="pd-feat"><div class="pd-feat-icon">🤲</div><div class="pd-feat-text"><strong>Ручная работа</strong>Уникально</div></div><div class="pd-feat"><div class="pd-feat-icon">🔥</div><div class="pd-feat-text"><strong>Обжиг 1200°C</strong>Прочность</div></div><div class="pd-feat"><div class="pd-feat-icon">📦</div><div class="pd-feat-text"><strong>Доставка</strong>По России</div></div></div>
     <div class="pd-actions"><button class="pd-add" id="pdAdd">В корзину</button><button class="pd-go" id="pdGo" onclick="closePD();toggleCart()">Перейти в корзину →</button></div>
+  </div>
+</div>
+
+<!-- Blog Modal -->
+<div class="bm-ov" id="bmOv" onclick="closeBM()"></div>
+<div class="bm-modal" id="bmModal">
+  <div class="bm-cover"><img id="bmCoverImg" src="" alt=""><button class="bm-close" onclick="closeBM()">✕</button></div>
+  <div class="bm-body">
+    <div class="bm-meta"><span class="bm-tag" id="bmTag"></span><span class="bm-date" id="bmDate"></span></div>
+    <div class="bm-title" id="bmTitle"></div>
+    <div class="bm-content" id="bmContent"></div>
   </div>
 </div>
 
@@ -432,7 +474,7 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
 <div class="adm-ov" id="admOv" onclick="closeAdm()"></div>
 <div class="adm-pan" id="admPan">
   <div class="adm-h"><h2>Панель управления</h2><button class="adm-cl" onclick="closeAdm()">✕</button></div>
-  <div class="adm-tabs"><button class="adm-tab active" id="tProd" onclick="switchTab('prod')">Товары</button><button class="adm-tab" id="tCls" onclick="switchTab('cls')">Мастер-классы</button><button class="adm-tab" id="tSite" onclick="switchTab('site')">Сайт</button></div>
+  <div class="adm-tabs"><button class="adm-tab active" id="tProd" onclick="switchTab('prod')">Товары</button><button class="adm-tab" id="tCls" onclick="switchTab('cls')">Мастер-классы</button><button class="adm-tab" id="tBlog" onclick="switchTab('blog')">Блог</button><button class="adm-tab" id="tSite" onclick="switchTab('site')">Сайт</button></div>
   <div class="adm-body">
     <div class="adm-login" id="admLogin">
       <p>Введите пароль для доступа</p>
@@ -485,6 +527,30 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
           <div class="adm-form-row"><div class="adm-field"><label>Длительность</label><input type="text" id="cDur" placeholder="2.5 часа"></div><div class="adm-field"><label>Цена (₽)</label><input type="number" id="cPrice"></div></div>
           <input type="hidden" id="cId"><input type="hidden" id="cImg">
           <div class="adm-form-acts"><button class="adm-save" onclick="saveC()">Сохранить</button><button class="adm-cancel" onclick="hideCF()">Отмена</button></div>
+        </div>
+      </div>
+      <!-- Blog Tab -->
+      <div id="tabBlog" style="display:none">
+        <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sBlogPosts">0</div><div class="adm-stat-l">Статей</div></div></div>
+        <div id="blogListView"><div class="adm-list" id="admBlogList"></div><button class="adm-add-btn" onclick="showBF()">+ Написать статью</button></div>
+        <div class="adm-form" id="blogForm">
+          <div class="adm-form-title"><button class="adm-form-back" onclick="hideBF()">←</button><span id="blogFTitle">Новая статья</span></div>
+          <div class="adm-img-up" id="blogImgUp"><div class="uicon" id="blogUIco">📷</div><div class="utxt" id="blogUTxt">Обложка статьи</div><div class="uhint">Автозагрузка на ImgBB</div><input type="file" id="blogImgIn" accept="image/*" onchange="hImg(event,'blog')"></div>
+          <div class="adm-img-status" id="blogImgStatus"></div>
+          <div style="display:flex;align-items:center;gap:.5rem;margin-top:-.5rem"><span style="font-size:.72rem;color:var(--text-muted)">или вставьте ссылку:</span></div>
+          <div class="adm-field full"><input type="text" id="blogImgUrl" placeholder="https://example.com/photo.jpg" oninput="onImgUrl(this,'blog')"></div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Заголовок</label><input type="text" id="blogTitle"></div>
+            <div class="adm-field"><label>Тег / рубрика</label><input type="text" id="blogTag" placeholder="Мастерство, Глазури, Вдохновение..."></div>
+          </div>
+          <div class="adm-field full"><label>Анонс (краткое описание)</label><textarea id="blogExcerpt" style="min-height:60px"></textarea></div>
+          <div class="adm-field full">
+            <label>Полный текст статьи</label>
+            <textarea id="blogContent" style="min-height:160px"></textarea>
+            <button type="button" class="ai-btn" onclick="aiBlogWrite()">✨ Написать с ИИ</button>
+          </div>
+          <input type="hidden" id="blogId"><input type="hidden" id="blogImg">
+          <div class="adm-form-acts"><button class="adm-save" onclick="saveBlog()">Опубликовать</button><button class="adm-cancel" onclick="hideBF()">Отмена</button></div>
         </div>
       </div>
       <!-- Site Tab -->
@@ -746,12 +812,15 @@ function doLogin(){if(document.getElementById('admPass').value===PASS){loggedIn=
 function switchTab(t){
   document.getElementById('tabProd').style.display=t==='prod'?'block':'none';
   document.getElementById('tabCls').style.display=t==='cls'?'block':'none';
+  document.getElementById('tabBlog').style.display=t==='blog'?'block':'none';
   document.getElementById('tabSite').style.display=t==='site'?'block':'none';
   document.getElementById('tProd').classList.toggle('active',t==='prod');
   document.getElementById('tCls').classList.toggle('active',t==='cls');
+  document.getElementById('tBlog').classList.toggle('active',t==='blog');
   document.getElementById('tSite').classList.toggle('active',t==='site');
   if(t==='prod')renderAdmP();
   if(t==='cls')renderAdmC();
+  if(t==='blog')renderAdmBlog();
   if(t==='site'){if(!Object.keys(siteData).length)loadSiteData();else fillSiteTab();}
 }
 
@@ -816,66 +885,66 @@ const IMGBB_KEY='453e9fb1872694aa7bdcf5f623338cef';
 function hImg(e,type){
   const file=e.target.files[0];if(!file)return;
   if(file.size>10*1024*1024){toast('Файл слишком большой (макс. 10 МБ)');return;}
-
-  const status=document.getElementById(type==='p'?'pImgStatus':'cImgStatus');
+  const statusId={p:'pImgStatus',c:'cImgStatus',blog:'blogImgStatus'}[type]||'pImgStatus';
+  const status=document.getElementById(statusId);
   status.textContent='⏳ Загрузка на хостинг...';status.className='adm-img-status uploading';
-
-  // Show local preview immediately
   const localReader=new FileReader();
   localReader.onload=function(ev){showImgPrev(type,ev.target.result);};
   localReader.readAsDataURL(file);
-
-  // Upload to ImgBB
-  const formData=new FormData();
-  formData.append('image',file);
-  
+  const formData=new FormData();formData.append('image',file);
   fetch('https://api.imgbb.com/1/upload?key='+IMGBB_KEY,{method:'POST',body:formData})
   .then(r=>r.json())
   .then(data=>{
     if(data.success){
       const url=data.data.display_url;
-      document.getElementById(type==='p'?'fImg':'cImg').value=url;
-      document.getElementById(type==='p'?'pImgUrl':'cImgUrl').value=url;
+      document.getElementById({p:'fImg',c:'cImg',blog:'blogImg'}[type]).value=url;
+      document.getElementById({p:'pImgUrl',c:'cImgUrl',blog:'blogImgUrl'}[type]).value=url;
       showImgPrev(type,url);
       status.textContent='✅ Фото загружено на хостинг';status.className='adm-img-status done';
       setTimeout(()=>{status.textContent='';},3000);
     } else {
-      status.textContent='❌ Ошибка загрузки: '+(data.error?.message||'попробуйте снова');status.className='adm-img-status err';
-      // Fallback: use base64
-      const r2=new FileReader();r2.onload=function(ev2){document.getElementById(type==='p'?'fImg':'cImg').value=ev2.target.result;};r2.readAsDataURL(file);
+      status.textContent='❌ Ошибка загрузки';status.className='adm-img-status err';
+      const r2=new FileReader();r2.onload=function(ev2){document.getElementById({p:'fImg',c:'cImg',blog:'blogImg'}[type]).value=ev2.target.result;};r2.readAsDataURL(file);
     }
   })
   .catch(err=>{
-    console.error('ImgBB error:',err);
     status.textContent='⚠️ Хостинг недоступен, фото сохранено локально';status.className='adm-img-status err';
-    // Fallback: use base64
-    const r3=new FileReader();r3.onload=function(ev3){document.getElementById(type==='p'?'fImg':'cImg').value=ev3.target.result;};r3.readAsDataURL(file);
+    const r3=new FileReader();r3.onload=function(ev3){document.getElementById({p:'fImg',c:'cImg',blog:'blogImg'}[type]).value=ev3.target.result;};r3.readAsDataURL(file);
     setTimeout(()=>{status.textContent='';},4000);
   });
 }
 function onImgUrl(inp,type){
   const url=inp.value.trim();
   if(url&&(url.startsWith('http://')||url.startsWith('https://'))){
-    document.getElementById(type==='p'?'fImg':'cImg').value=url;
+    document.getElementById({p:'fImg',c:'cImg',blog:'blogImg'}[type]||'fImg').value=url;
     showImgPrev(type,url);
   }
 }
 function showImgPrev(type,src){
-  const up=document.getElementById(type==='p'?'pImgUp':'cImgUp');up.classList.add('has');
-  document.getElementById(type==='p'?'pUIco':'cUIco').style.display='none';
-  document.getElementById(type==='p'?'pUTxt':'cUTxt').style.display='none';
+  const upId={p:'pImgUp',c:'cImgUp',blog:'blogImgUp'}[type]||'pImgUp';
+  const icoId={p:'pUIco',c:'cUIco',blog:'blogUIco'}[type]||'pUIco';
+  const txtId={p:'pUTxt',c:'cUTxt',blog:'blogUTxt'}[type]||'pUTxt';
+  const up=document.getElementById(upId);up.classList.add('has');
+  document.getElementById(icoId).style.display='none';
+  document.getElementById(txtId).style.display='none';
   up.querySelector('.uhint').style.display='none';
   let prev=up.querySelector('.adm-img-prev');if(!prev){prev=document.createElement('img');prev.className='adm-img-prev';up.appendChild(prev);}prev.src=src;
 }
 function resetImgUp(type){
-  const up=document.getElementById(type==='p'?'pImgUp':'cImgUp');up.classList.remove('has');
-  document.getElementById(type==='p'?'pUIco':'cUIco').style.display='';
-  document.getElementById(type==='p'?'pUTxt':'cUTxt').style.display='';
+  const upId={p:'pImgUp',c:'cImgUp',blog:'blogImgUp'}[type]||'pImgUp';
+  const icoId={p:'pUIco',c:'cUIco',blog:'blogUIco'}[type]||'pUIco';
+  const txtId={p:'pUTxt',c:'cUTxt',blog:'blogUTxt'}[type]||'pUTxt';
+  const statusId={p:'pImgStatus',c:'cImgStatus',blog:'blogImgStatus'}[type]||'pImgStatus';
+  const inId={p:'pImgIn',c:'cImgIn',blog:'blogImgIn'}[type]||'pImgIn';
+  const urlId={p:'pImgUrl',c:'cImgUrl',blog:'blogImgUrl'}[type]||'pImgUrl';
+  const up=document.getElementById(upId);up.classList.remove('has');
+  document.getElementById(icoId).style.display='';
+  document.getElementById(txtId).style.display='';
   up.querySelector('.uhint').style.display='';
   const prev=up.querySelector('.adm-img-prev');if(prev)prev.remove();
-  document.getElementById(type==='p'?'pImgIn':'cImgIn').value='';
-  document.getElementById(type==='p'?'pImgUrl':'cImgUrl').value='';
-  document.getElementById(type==='p'?'pImgStatus':'cImgStatus').textContent='';
+  document.getElementById(inId).value='';
+  document.getElementById(urlId).value='';
+  document.getElementById(statusId).textContent='';
 }
 
 // ===== AI DESCRIBE (Google Gemini Flash, vision, бесплатно) =====
@@ -1321,12 +1390,162 @@ function saveSiteSection(section){
     siteData.contact=data; db.ref('site/contact').set(data); applySiteData(); toast('✓ Контакты сохранены');
   }
 }
+// ===== BLOG =====
+let blogPosts = [];
+
+const defBlogPosts = [
+  {id:1, title:'Как выбрать глину для начинающих', tag:'Мастерство', excerpt:'Разбираемся в видах глины — какая подойдёт для первых изделий, чем отличается шамотная от белой и почему это важно.', content:'Выбор глины — первый и один из самых важных шагов в гончарном деле. Для начинающих мы рекомендуем шамотную глину: она прощает ошибки, хорошо держит форму и не трескается при сушке.\n\nШамот содержит обожжённые частицы глины, которые создают характерную текстуру и делают изделие более прочным. Белая глина — более капризная, зато после обжига даёт чистый цвет, идеальный для глазурей.\n\nВ мастерской ТЕРРА мы используем смесь нескольких видов глины, добиваясь баланса между пластичностью и прочностью. Приходите на мастер-класс — покажем всё своими руками!', img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80', date:'2026-03-15'},
+  {id:2, title:'Секреты глазури: цвет, который живёт', tag:'Глазури', excerpt:'Как получить тот самый «живой» цвет, который переливается и удивляет. Делимся техниками работы с глазурями.', content:'Глазурь — это не просто краска. Это стекловидное покрытие, которое плавится при высокой температуре и создаёт уникальный эффект на каждом изделии.\n\nОдна из наших любимых техник — наслоение: мы наносим два-три слоя разных глазурей, и при обжиге они смешиваются непредсказуемым образом. Именно поэтому каждое изделие получается уникальным.\n\nДля тёплых терракотовых оттенков мы используем оксид железа. Для молочно-белых — диоксид олова. А сочетание медного карбоната с восстановительным обжигом даёт потрясающие переливы от зелёного к красному.\n\nГлазурь — это магия химии и огня. Результат никогда не предсказуем полностью, и в этом вся прелесть.', img:'https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80', date:'2026-03-28'},
+  {id:3, title:'Медитация за гончарным кругом', tag:'Вдохновение', excerpt:'Почему работа с глиной — это не просто хобби, а настоящая практика осознанности. Личный опыт мастера.', content:'Когда я впервые сел за гончарный круг, я думал, что пришёл учиться делать чашки. Но получил нечто большее — умение присутствовать в моменте.\n\nГончарный круг не прощает отвлечённости. Стоит уйти мыслями куда-то, и глина тут же напомнит о себе — деформируется, сломается, потеряет форму. Это учит концентрации лучше любой медитации.\n\nВ мастерской ТЕРРА мы заметили одну закономерность: люди приходят первый раз с напряжёнными плечами и тревожным взглядом, а уходят с улыбкой и лёгкостью в теле. Глина вытягивает стресс буквально.\n\nПопробуйте сами — запишитесь на наш базовый мастер-класс. Первый раз за кругом незабываем.', img:'https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=800&q=80', date:'2026-04-02'}
+];
+
+function initBlog(){
+  db.ref('blog').on('value', snap=>{
+    const d=snap.val();
+    if(d){blogPosts=Object.values(d).sort((a,b)=>new Date(b.date)-new Date(a.date));}
+    else{blogPosts=[...defBlogPosts];db.ref('blog').set(arrToObj(defBlogPosts));}
+    renderBlog();
+    if(loggedIn)renderAdmBlog();
+  });
+}
+
+function renderBlog(){
+  const g=document.getElementById('blogGrid');if(!g)return;
+  if(!blogPosts.length){g.innerHTML='<div class="loading">Статей пока нет</div>';return;}
+  g.innerHTML=blogPosts.map(p=>`
+    <div class="blog-card" onclick="openBM(${p.id})">
+      <div class="blog-card-img"><img src="${p.img}" alt="${p.title}" loading="lazy"></div>
+      <div class="blog-card-body">
+        <div class="blog-card-meta"><span class="blog-card-tag">${p.tag||'Блог'}</span><span class="blog-card-date">${fmtDate(p.date)}</span></div>
+        <div class="blog-card-title">${p.title}</div>
+        <div class="blog-card-excerpt">${p.excerpt}</div>
+        <div class="blog-card-read">Читать далее →</div>
+      </div>
+    </div>`).join('');
+}
+
+function fmtDate(d){
+  if(!d)return'';
+  const months=['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  const dt=new Date(d);
+  return `${dt.getDate()} ${months[dt.getMonth()]} ${dt.getFullYear()}`;
+}
+
+function openBM(id){
+  const p=blogPosts.find(x=>x.id===id);if(!p)return;
+  document.getElementById('bmCoverImg').src=p.img;
+  document.getElementById('bmTag').textContent=p.tag||'Блог';
+  document.getElementById('bmDate').textContent=fmtDate(p.date);
+  document.getElementById('bmTitle').textContent=p.title;
+  document.getElementById('bmContent').innerHTML=p.content.split('\n\n').map(par=>`<p>${par}</p>`).join('');
+  document.getElementById('bmOv').classList.add('open');
+  document.getElementById('bmModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeBM(){
+  document.getElementById('bmOv').classList.remove('open');
+  document.getElementById('bmModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+function renderAdmBlog(){
+  document.getElementById('sBlogPosts').textContent=blogPosts.length;
+  document.getElementById('admBlogList').innerHTML=blogPosts.map(p=>`
+    <div class="adm-row">
+      <div class="adm-thumb"><img src="${p.img}" alt=""></div>
+      <div class="adm-rinfo"><strong>${p.title}</strong><small>${p.tag||'Блог'} · ${fmtDate(p.date)}</small></div>
+      <div class="adm-racts"><button class="adm-btn-sm" onclick="editBlog(${p.id})">✏️</button><button class="adm-btn-sm del" onclick="delBlog(${p.id})">🗑️</button></div>
+    </div>`).join('');
+  document.getElementById('blogListView').style.display='block';
+  document.getElementById('blogForm').classList.remove('active');
+}
+
+function showBF(id){
+  document.getElementById('blogListView').style.display='none';
+  document.getElementById('blogForm').classList.add('active');
+  if(id){
+    const p=blogPosts.find(x=>x.id===id);
+    document.getElementById('blogFTitle').textContent='Редактировать';
+    document.getElementById('blogId').value=p.id;
+    document.getElementById('blogTitle').value=p.title;
+    document.getElementById('blogTag').value=p.tag||'';
+    document.getElementById('blogExcerpt').value=p.excerpt;
+    document.getElementById('blogContent').value=p.content;
+    document.getElementById('blogImg').value=p.img;
+    document.getElementById('blogImgUrl').value=p.img.startsWith('http')?p.img:'';
+    showImgPrev('blog',p.img);
+  } else {
+    document.getElementById('blogFTitle').textContent='Новая статья';
+    ['blogId','blogTitle','blogTag','blogExcerpt','blogContent','blogImg'].forEach(i=>document.getElementById(i).value='');
+    resetImgUp('blog');
+  }
+}
+function hideBF(){document.getElementById('blogListView').style.display='block';document.getElementById('blogForm').classList.remove('active');resetImgUp('blog');}
+function editBlog(id){showBF(id);}
+function delBlog(id){
+  const p=blogPosts.find(x=>x.id===id);if(!confirm('Удалить «'+p.title+'»?'))return;
+  dbRemove('blog/'+id);toast('Статья удалена');
+}
+function saveBlog(){
+  const title=document.getElementById('blogTitle').value.trim();
+  const tag=document.getElementById('blogTag').value.trim()||'Блог';
+  const excerpt=document.getElementById('blogExcerpt').value.trim();
+  const content=document.getElementById('blogContent').value.trim();
+  const img=document.getElementById('blogImg').value;
+  const eid=document.getElementById('blogId').value;
+  if(!title){toast('Введите заголовок');return;}
+  if(!content){toast('Напишите текст статьи');return;}
+  if(!img){toast('Добавьте обложку');return;}
+  const date=new Date().toISOString().split('T')[0];
+  if(eid){dbUpdate('blog/'+eid,{title,tag,excerpt,content,img});toast('✓ Статья обновлена');}
+  else{const maxId=blogPosts.reduce((m,p)=>Math.max(m,p.id),0)+1;dbSave('blog/'+maxId,{id:maxId,title,tag,excerpt,content,img,date});toast('✓ Статья опубликована');}
+  hideBF();
+}
+
+async function aiBlogWrite(){
+  const apiKey=localStorage.getItem('terra_gemini_key');
+  if(!apiKey){toast('⚠️ Сначала сохраните Gemini API Key');return;}
+  const title=document.getElementById('blogTitle').value.trim();
+  const tag=document.getElementById('blogTag').value.trim();
+  const imgUrl=document.getElementById('blogImg').value;
+  const imgFile=document.getElementById('blogImgIn').files[0];
+  if(!title){toast('Сначала введите заголовок');return;}
+  const btn=document.querySelector('#blogForm .ai-btn');
+  btn.disabled=true;btn.textContent='⏳ Пишу статью...';
+  const prompt=`Ты — автор блога гончарной мастерской «ТЕРРА». Напиши интересную статью для блога.\n\nЗаголовок: ${title}\nРубрика: ${tag||'Блог'}\n${imgFile||imgUrl?'На фото — сцена из гончарной мастерской, используй её как вдохновение.':''}\n\nТребования:\n- 3-4 абзаца, каждый отделён пустой строкой\n- Тёплый, живой стиль от лица мастерской\n- В конце мягко упомяни мастер-классы или магазин ТЕРРА\n- Только текст статьи, без заголовка и пояснений`;
+  const parts=[];
+  if(imgFile){
+    try{const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(imgFile);});parts.push({inline_data:{mime_type:imgFile.type||'image/jpeg',data:b64}});}catch(e){}
+  } else if(imgUrl&&imgUrl.startsWith('http')){
+    try{const blob=await fetch(imgUrl).then(r=>r.blob());const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(blob);});parts.push({inline_data:{mime_type:blob.type||'image/jpeg',data:b64}});}catch(e){}
+  }
+  parts.push({text:prompt});
+  const excerptPrompt=`Напиши анонс (2 предложения, до 150 символов) для статьи «${title}». Только текст анонса, без кавычек.`;
+  try{
+    const [r1,r2]=await Promise.all([
+      fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts}]})}),
+      fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:excerptPrompt}]}]})})
+    ]);
+    const d1=await r1.json(),d2=await r2.json();
+    const text=d1?.candidates?.[0]?.content?.parts?.[0]?.text||'';
+    const exc=d2?.candidates?.[0]?.content?.parts?.[0]?.text||'';
+    if(text){
+      const ta=document.getElementById('blogContent');
+      ta.value=text.trim();ta.style.transition='background .4s';ta.style.background='rgba(138,154,123,.15)';
+      setTimeout(()=>{ta.style.background='';},1200);
+    }
+    if(exc&&!document.getElementById('blogExcerpt').value)document.getElementById('blogExcerpt').value=exc.trim();
+    toast('✨ Статья написана!');
+  }catch(e){toast('❌ Ошибка: '+e.message);}
+  finally{btn.disabled=false;btn.textContent='✨ Написать с ИИ';}
+}
+
 document.querySelectorAll('#mainNav a').forEach(a=>a.addEventListener('click',()=>document.getElementById('mainNav').classList.remove('open')));
 
 // ===== SECRET ACCESS =====
 if(window.location.search.includes('admin'))openAdm();
 let sb='';document.addEventListener('keydown',function(e){
-  if(e.key==='Escape'){if(document.getElementById('pdMod').classList.contains('open')){closePD();return;}if(document.getElementById('clMod').classList.contains('open')){closeCL();return;}if(document.getElementById('coMod').classList.contains('open')){closeCO();return;}if(document.getElementById('cartPan').classList.contains('open')){toggleCart();return;}if(document.getElementById('admPan').classList.contains('open')){closeAdm();return;}}
+  if(e.key==='Escape'){if(document.getElementById('pdMod').classList.contains('open')){closePD();return;}if(document.getElementById('clMod').classList.contains('open')){closeCL();return;}if(document.getElementById('bmModal').classList.contains('open')){closeBM();return;}if(document.getElementById('coMod').classList.contains('open')){closeCO();return;}if(document.getElementById('cartPan').classList.contains('open')){toggleCart();return;}if(document.getElementById('admPan').classList.contains('open')){closeAdm();return;}}
   if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
   sb+=e.key.toLowerCase();if(sb.length>10)sb=sb.slice(-10);
   if(sb.endsWith('terra')||sb.endsWith('admin')){sb='';openAdm();}
@@ -1335,6 +1554,7 @@ let sb='';document.addEventListener('keydown',function(e){
 // ===== INIT =====
 initData();
 loadSiteData();
+initBlog();
 
 // Load API key UI after login
 const _origShowAdm=window.openAdm;
