@@ -1548,15 +1548,23 @@ async function aiBlogWrite(){
   if(!title){toast('Сначала введите заголовок');return;}
   const btn=document.querySelector('#blogForm .ai-btn');
   btn.disabled=true;btn.textContent='⏳ Пишу статью...';
-  const prompt=`Ты — автор блога гончарной мастерской «ТЕРРА». Напиши интересную статью для блога.\n\nЗаголовок: ${title}\nРубрика: ${tag||'Блог'}\n${imgFile||imgUrl?'На фото — сцена из гончарной мастерской, используй её как вдохновение.':''}\n\nТребования:\n- 3-4 абзаца, каждый отделён пустой строкой\n- Тёплый, живой стиль от лица мастерской\n- В конце мягко упомяни мастер-классы или магазин ТЕРРА\n- Только текст статьи, без заголовка и пояснений`;
+
   const parts=[];
+
+  // Only attach image if it's a local file upload (avoids CORS issues with external URLs)
   if(imgFile){
-    try{const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(imgFile);});parts.push({inline_data:{mime_type:imgFile.type||'image/jpeg',data:b64}});}catch(e){}
-  } else if(imgUrl&&imgUrl.startsWith('http')){
-    try{const blob=await fetch(imgUrl).then(r=>r.blob());const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(blob);});parts.push({inline_data:{mime_type:blob.type||'image/jpeg',data:b64}});}catch(e){}
+    try{
+      const b64=await new Promise((res,rej)=>{const r=new FileReader();r.onload=()=>res(r.result.split(',')[1]);r.onerror=rej;r.readAsDataURL(imgFile);});
+      parts.push({inline_data:{mime_type:imgFile.type||'image/jpeg',data:b64}});
+    }catch(e){}
   }
+
+  const hasImg=imgFile||imgUrl;
+  const prompt=`Ты — автор блога гончарной мастерской «ТЕРРА». Напиши интересную статью для блога.\n\nЗаголовок: «${title}»\nРубрика: ${tag||'Блог'}\n${hasImg?'Статья сопровождается фото из мастерской — упомяни визуальные детали керамики, глазурей или процесса работы.':''}\n\nТребования:\n- 3-4 абзаца, каждый отделён пустой строкой\n- Тёплый, живой стиль от лица мастерской\n- В конце мягко упомяни мастер-классы или магазин ТЕРРА\n- Только текст статьи, без заголовка и пояснений`;
   parts.push({text:prompt});
+
   const excerptPrompt=`Напиши анонс (2 предложения, до 150 символов) для статьи «${title}». Только текст анонса, без кавычек.`;
+
   try{
     const [r1,r2]=await Promise.all([
       fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts}]})}),
@@ -1567,11 +1575,15 @@ async function aiBlogWrite(){
     const exc=d2?.candidates?.[0]?.content?.parts?.[0]?.text||'';
     if(text){
       const ta=document.getElementById('blogContent');
-      ta.value=text.trim();ta.style.transition='background .4s';ta.style.background='rgba(138,154,123,.15)';
+      ta.value=text.trim();
+      ta.style.transition='background .4s';ta.style.background='rgba(138,154,123,.15)';
       setTimeout(()=>{ta.style.background='';},1200);
+      toast('✨ Статья написана!');
+    } else {
+      toast('⚠️ Модель не вернула текст, попробуйте ещё раз');
     }
-    if(exc&&!document.getElementById('blogExcerpt').value)document.getElementById('blogExcerpt').value=exc.trim();
-    toast('✨ Статья написана!');
+    if(exc&&!document.getElementById('blogExcerpt').value)
+      document.getElementById('blogExcerpt').value=exc.trim();
   }catch(e){toast('❌ Ошибка: '+e.message);}
   finally{btn.disabled=false;btn.textContent='✨ Написать с ИИ';}
 }
