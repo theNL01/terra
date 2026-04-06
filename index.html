@@ -1301,10 +1301,23 @@ const useLocalStorage = false;
 const PASS = 'terra2026';
 const catN = {tableware:'Посуда',vases:'Вазы',decor:'Декор',gifts:'Подарки'};
 
-// ===== EARLY DECLARATIONS (used before definition otherwise) =====
+// ===== EARLY DECLARATIONS =====
 const allPages = ['home','shop','schedule','certificates','events'];
 const dayNamesShort=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
 const monthNames=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+let schedOffset = 0;
+let smGuests = 1;
+let smCurrentEvent = null;
+let certAmount = 3000;
+
+const eventsData = [
+  {id:1,title:'День рождения в студии',type:'Праздник',typeColor:'#e87d4a',img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80',day:19,month:'апр',desc:'Незабываемый день рождения за гончарным кругом. Каждый гость лепит подарок имениннику.',duration:'2–3 часа',group:'до 12 чел.',price:'от 2 500 ₽/чел.'},
+  {id:2,title:'Корпоратив «Гончарный круг»',type:'Корпоратив',typeColor:'#5c8a7b',img:'https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=600&q=80',day:25,month:'апр',desc:'Командообразующий мастер-класс для коллег.',duration:'2 часа',group:'до 20 чел.',price:'от 1 800 ₽/чел.'},
+  {id:3,title:'Выставка детских работ',type:'Выставка',typeColor:'#c67d4a',img:'https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=600&q=80',day:3,month:'май',desc:'Ежеквартальная выставка лучших работ наших юных гончаров.',duration:'Весь день',group:'Все желающие',price:'Бесплатно'},
+  {id:4,title:'Мастер-класс для пар',type:'Романтика',typeColor:'#b85c38',img:'https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=600&q=80',day:10,month:'май',desc:'Создайте что-то красивое вместе. Атмосфера, глина, творчество и бокал вина.',duration:'2.5 часа',group:'2 человека',price:'4 000 ₽/пара'},
+  {id:5,title:'Летний лагерь «Глина»',type:'Лагерь',typeColor:'#7ab8e8',img:'https://images.unsplash.com/photo-1609881092647-6a89e1e3c060?w=600&q=80',day:2,month:'июн',desc:'Недельный интенсив для детей 7–14 лет.',duration:'5 дней × 3 ч.',group:'до 8 детей',price:'от 12 000 ₽'},
+  {id:6,title:'Открытый день студии',type:'Событие',typeColor:'#8a9a7b',img:'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&q=80',day:15,month:'июн',desc:'Приходите познакомиться с нашей мастерской.',duration:'3 часа',group:'Все желающие',price:'Бесплатно'},
+];
 
 const schedEvents = [
   {id:1, day:1, time:'10:00', endTime:'11:00', name:'Первые шаги', age:'5–7 лет', type:'kids', duration:60, price:1800, seats:6, img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80', desc:'Знакомство с глиной через лепку руками. Дети создают зверушек, тарелочки и украшения. Занятие развивает мелкую моторику, воображение и усидчивость. Все материалы включены, форма выдаётся на месте.', important:'Наденьте одежду, которую не жалко запачкать. Глина стирается, но лучше перестраховаться.', tags:['📚 1 урок, 1 час', '🤲 Лепка руками', '👶 5–7 лет']},
@@ -2783,10 +2796,6 @@ function showPage(page){
 }
 
 // ===== SCHEDULE PAGE =====
-let schedOffset = 0;
-let smGuests = 1;
-let smCurrentEvent = null;
-
 
 function schedWeek(dir){schedOffset+=dir;initSchedule();}
 function initSchedule(){
@@ -2886,7 +2895,6 @@ function smEnroll(){
 }
 
 // ===== CERTIFICATES PAGE =====
-let certAmount=3000;
 function initCerts(){} // static content
 function setCertAmount(amount, btn){
   certAmount=amount;
@@ -2943,14 +2951,6 @@ function renderCertsPage(){
 }
 
 // ===== EVENTS PAGE =====
-const eventsData = [
-  {id:1,title:'День рождения в студии',type:'Праздник',typeColor:'#e87d4a',img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80',day:19,month:'апр',desc:'Незабываемый день рождения за гончарным кругом. Каждый гость лепит подарок имениннику.',duration:'2–3 часа',group:'до 12 чел.',price:'от 2 500 ₽/чел.'},
-  {id:2,title:'Корпоратив «Гончарный круг»',type:'Корпоратив',typeColor:'#5c8a7b',img:'https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=600&q=80',day:25,month:'апр',desc:'Командообразующий мастер-класс для коллег. Создаём керамику вместе — весело и душевно.',duration:'2 часа',group:'до 20 чел.',price:'от 1 800 ₽/чел.'},
-  {id:3,title:'Выставка детских работ',type:'Выставка',typeColor:'#c67d4a',img:'https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=600&q=80',day:3,month:'май',desc:'Ежеквартальная выставка лучших работ наших юных гончаров. Вход свободный.',duration:'Весь день',group:'Все желающие',price:'Бесплатно'},
-  {id:4,title:'Мастер-класс для пар',type:'Романтика',typeColor:'#b85c38',img:'https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=600&q=80',day:10,month:'май',desc:'Создайте что-то красивое вместе. Атмосфера, глина, творчество и бокал вина.',duration:'2.5 часа',group:'2 человека',price:'4 000 ₽/пара'},
-  {id:5,title:'Летний лагерь «Глина»',type:'Лагерь',typeColor:'#7ab8e8',img:'https://images.unsplash.com/photo-1609881092647-6a89e1e3c060?w=600&q=80',day:2,month:'июн',desc:'Недельный интенсив для детей 7–14 лет. Каждый день — новая техника и новое изделие.',duration:'5 дней × 3 ч.',group:'до 8 детей',price:'от 12 000 ₽'},
-  {id:6,title:'Открытый день студии',type:'Событие',typeColor:'#8a9a7b',img:'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&q=80',day:15,month:'июн',desc:'Приходите познакомиться с нашей мастерской, попробовать лепку и пообщаться с мастерами.',duration:'3 часа',group:'Все желающие',price:'Бесплатно'},
-];
 function initEvents(){
   const grid=document.getElementById('eventsGrid');if(!grid)return;
   grid.innerHTML=eventsData.map(e=>`
