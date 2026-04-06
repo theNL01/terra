@@ -2466,6 +2466,237 @@ function getViews(productId,cb){
   });
 }
 
+// ===== ADMIN SCHEDULE =====
+let adminSchedEvents = [...schedEvents];
+function renderAdmSched(){
+  document.getElementById('sSchedCount').textContent=adminSchedEvents.length;
+  document.getElementById('admSchedList').innerHTML=adminSchedEvents.map(e=>`
+    <div class="adm-row">
+      <div class="adm-thumb" style="background:var(--sand);border-radius:8px;overflow:hidden"><img src="${e.img||''}" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'"></div>
+      <div class="adm-rinfo"><strong>${e.name}</strong><small>${['Вс','Пн','Вт','Ср','Чт','Пт','Сб'][e.day]} ${e.time}–${e.endTime||''} · ${e.age}</small></div>
+      <div class="adm-rprice">${(e.price||0).toLocaleString('ru-RU')} ₽</div>
+      <div class="adm-racts"><button class="adm-btn-sm" onclick="editSched(${e.id})">✏️</button><button class="adm-btn-sm del" onclick="delSched(${e.id})">🗑️</button></div>
+    </div>`).join('');
+  document.getElementById('schedListView').style.display='block';
+  document.getElementById('schedForm').classList.remove('active');
+}
+function showSchedF(id){
+  document.getElementById('schedListView').style.display='none';
+  const form=document.getElementById('schedForm');
+  form.classList.add('active');
+  form.style.display='flex';
+  if(id){
+    const e=adminSchedEvents.find(x=>x.id===id)||schedEvents.find(x=>x.id===id);
+    if(!e)return;
+    document.getElementById('schedFTitle').textContent='Редактировать занятие';
+    document.getElementById('schedId').value=e.id;
+    document.getElementById('schedName').value=e.name||'';
+    document.getElementById('schedAge').value=e.age||'';
+    document.getElementById('schedDay').value=e.day||'1';
+    document.getElementById('schedType').value=e.type||'kids';
+    document.getElementById('schedTime').value=e.time||'';
+    document.getElementById('schedEndTime').value=e.endTime||'';
+    document.getElementById('schedPrice').value=e.price||'';
+    document.getElementById('schedSeats').value=e.seats||'';
+    document.getElementById('schedDesc').value=e.desc||'';
+    document.getElementById('schedImportant').value=e.important||'';
+    document.getElementById('schedImg').value=e.img||'';
+    document.getElementById('schedImgUrl').value=e.img||'';
+    if(e.img)showImgPrev('sched',e.img);
+  } else {
+    document.getElementById('schedFTitle').textContent='Новое занятие';
+    ['schedId','schedName','schedAge','schedTime','schedEndTime','schedPrice','schedSeats','schedDesc','schedImportant','schedImg','schedImgUrl'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+    document.getElementById('schedDay').value='1';
+    document.getElementById('schedType').value='kids';
+    resetImgUp('sched');
+  }
+}
+function hideSchedF(){document.getElementById('schedListView').style.display='block';const f=document.getElementById('schedForm');f.classList.remove('active');f.style.display='';resetImgUp('sched');}
+function editSched(id){showSchedF(id);}
+function delSched(id){
+  if(!confirm('Удалить занятие?'))return;
+  adminSchedEvents=adminSchedEvents.filter(e=>e.id!==id);
+  const idx=schedEvents.findIndex(e=>e.id===id);if(idx>=0)schedEvents.splice(idx,1);
+  saveSchedToDb();renderAdmSched();toast('Занятие удалено');
+}
+function saveSched(){
+  const name=document.getElementById('schedName').value.trim();
+  const time=document.getElementById('schedTime').value.trim();
+  if(!name){toast('Введите название');return;}
+  if(!time){toast('Введите время начала');return;}
+  const eid=parseInt(document.getElementById('schedId').value)||0;
+  const data={
+    id:eid||Date.now(),
+    name,
+    age:document.getElementById('schedAge').value.trim()||'Все',
+    day:parseInt(document.getElementById('schedDay').value)||1,
+    type:document.getElementById('schedType').value||'kids',
+    time,
+    endTime:document.getElementById('schedEndTime').value.trim(),
+    price:parseInt(document.getElementById('schedPrice').value)||0,
+    seats:parseInt(document.getElementById('schedSeats').value)||6,
+    desc:document.getElementById('schedDesc').value.trim(),
+    important:document.getElementById('schedImportant').value.trim(),
+    img:document.getElementById('schedImg').value||'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80',
+    tags:[`⏱ ${time}${document.getElementById('schedEndTime').value?'–'+document.getElementById('schedEndTime').value:''}`,document.getElementById('schedAge').value.trim()||'Все']
+  };
+  if(eid){
+    adminSchedEvents=adminSchedEvents.map(e=>e.id===eid?data:e);
+    const idx=schedEvents.findIndex(e=>e.id===eid);if(idx>=0)schedEvents[idx]=data;
+  } else {
+    adminSchedEvents.push(data);
+    schedEvents.push(data);
+  }
+  saveSchedToDb();hideSchedF();renderAdmSched();toast('✓ Занятие сохранено');
+}
+function saveSchedToDb(){const obj={};adminSchedEvents.forEach(e=>{obj[e.id]=e;});db.ref('adminSchedule').set(obj);}
+function loadAdminSched(){
+  db.ref('adminSchedule').once('value',snap=>{
+    const d=snap.val();
+    if(d){
+      const loaded=Object.values(d);
+      loaded.forEach(e=>{const idx=schedEvents.findIndex(x=>x.id===e.id);if(idx>=0)schedEvents[idx]=e;else schedEvents.push(e);});
+      adminSchedEvents=[...schedEvents];
+    } else {
+      adminSchedEvents=[...schedEvents];
+    }
+  });
+}
+
+// ===== ADMIN CERTIFICATES =====
+let adminCerts = [
+  {id:1,name:'Пробное занятие',price:2500,subtitle:'1 занятие',program:'Знакомство с гончарным кругом',desc:'Одно занятие на гончарном круге для взрослого или ребёнка. Все материалы включены.'},
+  {id:2,name:'Детский абонемент',price:6500,subtitle:'4 занятия',program:'Детский курс гончарства',desc:'4 занятия для ребёнка по выбранной программе. Срок действия 2 месяца.'},
+  {id:3,name:'Полный курс',price:11500,subtitle:'8 занятий',program:'Полный курс мастерства',desc:'8 занятий — полный базовый курс гончарства.'},
+];
+function renderAdmCerts(){
+  document.getElementById('sCertsCount').textContent=adminCerts.length;
+  document.getElementById('admCertsList').innerHTML=adminCerts.map(c=>`
+    <div class="adm-row">
+      <div class="adm-thumb" style="background:var(--earth);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.4rem">🎁</div>
+      <div class="adm-rinfo"><strong>${c.name}</strong><small>${c.subtitle||''} · ${c.program||''}</small></div>
+      <div class="adm-rprice">${(c.price||0).toLocaleString('ru-RU')} ₽</div>
+      <div class="adm-racts"><button class="adm-btn-sm" onclick="editCert(${c.id})">✏️</button><button class="adm-btn-sm del" onclick="delCert(${c.id})">🗑️</button></div>
+    </div>`).join('');
+  document.getElementById('certsListView').style.display='block';
+  document.getElementById('certForm').classList.remove('active');
+}
+function showCertF(id){
+  document.getElementById('certsListView').style.display='none';
+  const form=document.getElementById('certForm');
+  form.classList.add('active');
+  form.style.display='flex';
+  if(id){
+    const c=adminCerts.find(x=>x.id===id);if(!c)return;
+    document.getElementById('certFTitle').textContent='Редактировать';
+    document.getElementById('certId').value=c.id;
+    document.getElementById('certName').value=c.name||'';
+    document.getElementById('certPrice').value=c.price||'';
+    document.getElementById('certSubtitle').value=c.subtitle||'';
+    document.getElementById('certProgram').value=c.program||'';
+    document.getElementById('certDesc').value=c.desc||'';
+  } else {
+    document.getElementById('certFTitle').textContent='Новый сертификат';
+    ['certId','certName','certPrice','certSubtitle','certProgram','certDesc'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  }
+}
+function hideCertF(){
+  document.getElementById('certsListView').style.display='block';
+  const form=document.getElementById('certForm');
+  form.classList.remove('active');
+  form.style.display='';
+}
+function editCert(id){showCertF(id);}
+function delCert(id){
+  if(!confirm('Удалить сертификат?'))return;
+  adminCerts=adminCerts.filter(c=>c.id!==id);
+  saveCertsToDb();renderAdmCerts();renderCertsPage();toast('Сертификат удалён');
+}
+function saveCert(){
+  const name=document.getElementById('certName').value.trim();
+  const price=parseInt(document.getElementById('certPrice').value);
+  if(!name){toast('Введите название');return;}
+  if(!price||price<=0){toast('Укажите цену');return;}
+  const eid=parseInt(document.getElementById('certId').value)||0;
+  const data={id:eid||Date.now(),name,price,subtitle:document.getElementById('certSubtitle').value.trim(),program:document.getElementById('certProgram').value.trim(),desc:document.getElementById('certDesc').value.trim()};
+  if(eid)adminCerts=adminCerts.map(c=>c.id===eid?data:c);else adminCerts.push(data);
+  saveCertsToDb();hideCertF();renderAdmCerts();renderCertsPage();toast('✓ Сертификат сохранён');
+}
+function saveCertsToDb(){const obj={};adminCerts.forEach(c=>{obj[c.id]=c;});db.ref('adminCerts').set(obj);}
+function loadAdminCerts(){db.ref('adminCerts').once('value',snap=>{const d=snap.val();if(d){adminCerts=Object.values(d);renderCertsPage();}});}
+
+// ===== ADMIN EVENTS =====
+let adminEventsData = [...eventsData];
+function renderAdmEvts(){
+  document.getElementById('sEvtsCount').textContent=adminEventsData.length;
+  document.getElementById('admEvtsList').innerHTML=adminEventsData.map(e=>`
+    <div class="adm-row">
+      <div class="adm-thumb" style="overflow:hidden;border-radius:8px"><img src="${e.img||''}" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'"></div>
+      <div class="adm-rinfo"><strong>${e.title}</strong><small>${e.type||''} · ${e.day||''} ${e.month||''} · ${e.price||''}</small></div>
+      <div class="adm-racts"><button class="adm-btn-sm" onclick="editEvt(${e.id})">✏️</button><button class="adm-btn-sm del" onclick="delEvt(${e.id})">🗑️</button></div>
+    </div>`).join('');
+  document.getElementById('evtsListView').style.display='block';
+  document.getElementById('evtForm').classList.remove('active');
+}
+function showEvtF(id){
+  document.getElementById('evtsListView').style.display='none';
+  const form=document.getElementById('evtForm');
+  form.classList.add('active');
+  form.style.display='flex';
+  if(id){
+    const e=adminEventsData.find(x=>x.id===id);if(!e)return;
+    document.getElementById('evtFTitle').textContent='Редактировать';
+    document.getElementById('evtId').value=e.id;
+    document.getElementById('evtTitle').value=e.title||'';
+    document.getElementById('evtType').value=e.type||'';
+    document.getElementById('evtTypeColor').value=e.typeColor||'#c67d4a';
+    document.getElementById('evtDay').value=e.day||'';
+    document.getElementById('evtMonth').value=e.month||'';
+    document.getElementById('evtDuration').value=e.duration||'';
+    document.getElementById('evtGroup').value=e.group||'';
+    document.getElementById('evtPrice').value=e.price||'';
+    document.getElementById('evtDesc').value=e.desc||'';
+    document.getElementById('evtImg').value=e.img||'';
+    document.getElementById('evtImgUrl').value=e.img||'';
+    if(e.img)showImgPrev('evt',e.img);
+  } else {
+    document.getElementById('evtFTitle').textContent='Новое мероприятие';
+    ['evtId','evtTitle','evtType','evtDay','evtMonth','evtDuration','evtGroup','evtPrice','evtDesc','evtImg','evtImgUrl'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+    document.getElementById('evtTypeColor').value='#c67d4a';
+    resetImgUp('evt');
+  }
+}
+function hideEvtF(){document.getElementById('evtsListView').style.display='block';document.getElementById('evtForm').classList.remove('active');resetImgUp('evt');}
+function editEvt(id){showEvtF(id);}
+function delEvt(id){
+  if(!confirm('Удалить мероприятие?'))return;
+  adminEventsData=adminEventsData.filter(e=>e.id!==id);
+  const idx=eventsData.findIndex(e=>e.id===id);if(idx>=0)eventsData.splice(idx,1);
+  saveEvtsToDb();renderAdmEvts();initEvents();toast('Мероприятие удалено');
+}
+function saveEvt(){
+  const title=document.getElementById('evtTitle').value.trim();
+  if(!title){toast('Введите название');return;}
+  const eid=parseInt(document.getElementById('evtId').value)||0;
+  const data={
+    id:eid||Date.now(),title,
+    type:document.getElementById('evtType').value.trim(),
+    typeColor:document.getElementById('evtTypeColor').value,
+    day:parseInt(document.getElementById('evtDay').value)||1,
+    month:document.getElementById('evtMonth').value.trim(),
+    duration:document.getElementById('evtDuration').value.trim(),
+    group:document.getElementById('evtGroup').value.trim(),
+    price:document.getElementById('evtPrice').value.trim(),
+    desc:document.getElementById('evtDesc').value.trim(),
+    img:document.getElementById('evtImg').value||'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80'
+  };
+  if(eid){adminEventsData=adminEventsData.map(e=>e.id===eid?data:e);const idx=eventsData.findIndex(e=>e.id===eid);if(idx>=0)eventsData[idx]=data;}
+  else{adminEventsData.push(data);eventsData.push(data);}
+  saveEvtsToDb();hideEvtF();renderAdmEvts();initEvents();toast('✓ Мероприятие сохранено');
+}
+function saveEvtsToDb(){const obj={};adminEventsData.forEach(e=>{obj[e.id]=e;});db.ref('adminEvents').set(obj);}
+function loadAdminEvts(){db.ref('adminEvents').once('value',snap=>{const d=snap.val();if(d){adminEventsData=Object.values(d);adminEventsData.forEach(e=>{const idx=eventsData.findIndex(x=>x.id===e.id);if(idx>=0)eventsData[idx]=e;else eventsData.push(e);});}});}
+
 // ===== KIDS EDUCATION =====
 function filterKids(age, btn){
   document.querySelectorAll('.age-tab').forEach(t=>t.classList.remove('active'));
