@@ -71,8 +71,10 @@ section{padding:7rem 3rem}
 .pimg{aspect-ratio:1;position:relative;overflow:hidden;background:var(--sand)}.pimg img{transition:transform .6s}.pcard:hover .pimg img{transform:scale(1.08)}
 .pbadge{position:absolute;top:14px;left:14px;background:var(--terracotta);color:#fff;font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .8rem;border-radius:50px;font-weight:500;z-index:2}
 .pinfo{padding:1.3rem 1.5rem 1.6rem}.pcat{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);margin-bottom:.4rem;font-weight:500}.pname{font-family:var(--font-d);font-size:1.25rem;font-weight:600;margin-bottom:.4rem;color:var(--text-dark)}.pdesc{font-size:.82rem;color:var(--text-muted);line-height:1.5;margin-bottom:1.2rem;font-weight:300}
-.pfooter{display:flex;justify-content:space-between;align-items:center}.pprice{font-family:var(--font-d);font-size:1.3rem;font-weight:600;color:var(--earth)}
-.add-cart{background:var(--clay);border:none;color:#fff;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.3s;font-size:1.1rem}.add-cart:hover{background:var(--clay-dark);transform:scale(1.1)}
+.pfooter{display:flex;justify-content:space-between;align-items:center;gap:.5rem}.pprice{font-family:var(--font-d);font-size:1.2rem;font-weight:600;color:var(--earth);white-space:nowrap}
+.pfooter-btns{display:flex;gap:.4rem;align-items:center;flex-shrink:0}
+.quick-buy{background:transparent;border:1.5px solid var(--clay);color:var(--clay);padding:.4rem .8rem;border-radius:50px;font-family:var(--font-b);font-size:.68rem;cursor:pointer;transition:.3s;white-space:nowrap}.quick-buy:hover{background:var(--clay);color:#fff}
+.add-cart{background:var(--clay);border:none;color:#fff;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.3s;font-size:1rem;flex-shrink:0}.add-cart:hover{background:var(--clay-dark);transform:scale(1.1)}
 
 /* CLASSES */
 #classes{background:var(--sand)}
@@ -832,8 +834,8 @@ function renderP() {
         ${s<=3?`<div class="pstock low">🔥 Осталось: ${s} шт.</div>`:''}
         <div class="pfooter">
           <div class="pprice">${p.price.toLocaleString('ru-RU')} ₽</div>
-          <div style="display:flex;gap:.5rem;align-items:center">
-            <button class="quick-buy" onclick="event.stopPropagation();openQB(${p.id})" title="Купить в 1 клик">1 клик</button>
+          <div class="pfooter-btns">
+            <button class="quick-buy" onclick="event.stopPropagation();openQB(${p.id})">1 клик</button>
             <button class="add-cart" onclick="event.stopPropagation();addCart(${p.id})" title="В корзину">+</button>
           </div>
         </div>
