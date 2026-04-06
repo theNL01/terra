@@ -1008,17 +1008,8 @@ async function aiDescribe(type){
       parts.push({inline_data:{mime_type:imgFile.type||'image/jpeg',data:b64}});
     }catch(e){console.warn('img read err',e);}
   } else if(imgUrl&&imgUrl.startsWith('http')){
-    // Gemini supports image URL via fetch+base64 or fileData — load as base64
-    try{
-      const blob=await fetch(imgUrl).then(r=>r.blob());
-      const b64=await new Promise((res,rej)=>{
-        const r=new FileReader();
-        r.onload=()=>res(r.result.split(',')[1]);
-        r.onerror=rej;
-        r.readAsDataURL(blob);
-      });
-      parts.push({inline_data:{mime_type:blob.type||'image/jpeg',data:b64}});
-    }catch(e){console.warn('url img fetch err',e);}
+    // Pass URL directly via Gemini fileData (no CORS issues)
+    parts.push({file_data:{mime_type:'image/jpeg',file_uri:imgUrl}});
   }
 
   parts.push({text:textPrompt});
@@ -1571,6 +1562,14 @@ async function aiBlogWrite(){
       fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:excerptPrompt}]}]})})
     ]);
     const d1=await r1.json(),d2=await r2.json();
+    console.log('Gemini blog response:', JSON.stringify(d1));
+
+    // Check for blocked content
+    if(d1?.promptFeedback?.blockReason){
+      toast('⚠️ Запрос заблокирован: '+d1.promptFeedback.blockReason);
+      return;
+    }
+
     const text=d1?.candidates?.[0]?.content?.parts?.[0]?.text||'';
     const exc=d2?.candidates?.[0]?.content?.parts?.[0]?.text||'';
     if(text){
