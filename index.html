@@ -234,18 +234,22 @@ footer{background:#3a2d25;padding:2.5rem 3rem;display:flex;justify-content:space
 .proc-adm-fields{display:flex;flex-direction:column;gap:.4rem}
 .proc-adm-fields input{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:.45rem .7rem;font-family:var(--font-b);font-size:.82rem;outline:none;transition:border .2s}.proc-adm-fields input:focus{border-color:var(--clay)}
 
-/* BLOG */
-#blog{background:var(--sand)}
-.blog-grid{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:2rem}
-.blog-card{background:var(--white);border-radius:16px;overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:.4s}.blog-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(92,64,51,.1)}
-.blog-card-img{aspect-ratio:16/9;overflow:hidden;background:var(--sand-deep)}.blog-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}.blog-card:hover .blog-card-img img{transform:scale(1.06)}
-.blog-card-body{padding:1.4rem 1.6rem 1.8rem}
-.blog-card-meta{display:flex;align-items:center;gap:.8rem;margin-bottom:.7rem}
-.blog-card-tag{font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--white);background:var(--clay);padding:.25rem .7rem;border-radius:50px;font-weight:500}
-.blog-card-date{font-size:.72rem;color:var(--text-muted)}
-.blog-card-title{font-family:var(--font-d);font-size:1.2rem;font-weight:600;color:var(--text-dark);margin-bottom:.6rem;line-height:1.3}
-.blog-card-excerpt{font-size:.85rem;color:var(--text-muted);line-height:1.6;font-weight:300;margin-bottom:1.1rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.blog-card-read{font-size:.78rem;color:var(--clay);font-weight:500;letter-spacing:.04em}
+/* BLOG TOP BANNER */
+#blog{background:var(--earth);padding:0 !important}
+.blog-carousel-wrap{display:flex;align-items:stretch;gap:0}
+.blog-carousel{flex:1;overflow:hidden}
+.blog-carousel-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1);will-change:transform}
+.blog-card{flex:0 0 100%;display:flex;align-items:center;gap:0;cursor:pointer;min-height:90px;padding:1.2rem 2rem;transition:background .3s}.blog-card:hover{background:rgba(255,255,255,.05)}
+.blog-card-img-sm{width:72px;height:72px;border-radius:10px;overflow:hidden;flex-shrink:0;background:rgba(255,255,255,.1)}.blog-card-img-sm img{width:100%;height:100%;object-fit:cover}
+.blog-card-body{padding:0 1.4rem;flex:1;min-width:0}
+.blog-card-meta{display:flex;align-items:center;gap:.7rem;margin-bottom:.35rem}
+.blog-card-tag{font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--clay-light);background:rgba(198,125,74,.2);padding:.2rem .6rem;border-radius:50px;font-weight:500;border:1px solid rgba(198,125,74,.3)}
+.blog-card-date{font-size:.68rem;color:rgba(245,239,230,.4)}
+.blog-card-title{font-family:var(--font-d);font-size:1.05rem;font-weight:600;color:var(--sand);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:.25rem}
+.blog-card-excerpt{font-size:.8rem;color:rgba(245,239,230,.55);line-height:1.5;font-weight:300;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.blog-card-read{font-size:.72rem;color:var(--clay-light);font-weight:500;flex-shrink:0;white-space:nowrap;padding-left:1rem}
+.blog-arr{background:rgba(255,255,255,.08);border:none;color:rgba(245,239,230,.6);width:48px;min-width:48px;cursor:pointer;font-size:1rem;flex-shrink:0;transition:.2s;display:flex;align-items:center;justify-content:center}.blog-arr:hover{background:rgba(255,255,255,.15);color:var(--sand)}.blog-arr:disabled{opacity:.2;cursor:default}
+@media(max-width:700px){.blog-card{padding:.9rem 1rem;min-height:70px}.blog-card-img-sm{width:52px;height:52px}.blog-card-excerpt{display:none}.blog-arr{width:36px;min-width:36px}}
 
 /* BLOG MODAL */
 .bm-ov{position:fixed;inset:0;background:rgba(45,36,32,.6);backdrop-filter:blur(6px);z-index:3500;opacity:0;visibility:hidden;transition:.3s}.bm-ov.open{opacity:1;visibility:visible}
@@ -292,6 +296,14 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
     <button class="hamburger" onclick="document.getElementById('mainNav').classList.toggle('open')"><span></span><span></span><span></span></button>
   </div>
 </header>
+
+<section id="blog" style="padding:1.2rem 3rem;background:var(--earth)">
+  <div class="blog-carousel-wrap" style="max-width:1200px;margin:0 auto">
+    <button class="blog-arr blog-arr-l" onclick="blogSlide(-1)" aria-label="Назад">&#8592;</button>
+    <div class="blog-carousel" id="blogCarousel"><div class="loading" style="color:rgba(245,239,230,.5)">Загрузка...</div></div>
+    <button class="blog-arr blog-arr-r" onclick="blogSlide(1)" aria-label="Вперёд">&#8594;</button>
+  </div>
+</section>
 
 <section class="hero">
   <div class="hero-bg-img"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1600&q=80" alt=""></div>
@@ -346,11 +358,6 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
     <div class="proc-step"><div class="proc-img"><img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=400&q=80" alt=""></div><div class="proc-num">03</div><h4>Глазурь</h4><p>Покрываем авторскими глазурями</p></div>
     <div class="proc-step"><div class="proc-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&q=80" alt=""></div><div class="proc-num">04</div><h4>Обжиг</h4><p>Обжигаем при 1200°C</p></div>
   </div>
-</section>
-
-<section id="blog">
-  <div class="sh"><div class="st"><div class="stl"></div><span>Блог</span><div class="stl"></div></div><h2 class="stitle">Истории из <em>мастерской</em></h2><p class="sdesc">Делимся секретами гончарного дела, вдохновением и закулисьем творческого процесса</p></div>
-  <div class="blog-grid" id="blogGrid"><div class="loading">Загрузка...</div></div>
 </section>
 
 <section id="gallery">
@@ -1409,20 +1416,49 @@ function initBlog(){
   });
 }
 
+let blogIdx=0, blogAutoTimer=null;
+
 function renderBlog(){
-  const g=document.getElementById('blogGrid');if(!g)return;
-  if(!blogPosts.length){g.innerHTML='<div class="loading">Статей пока нет</div>';return;}
-  g.innerHTML=blogPosts.map(p=>`
+  const carousel=document.getElementById('blogCarousel');if(!carousel)return;
+  if(!blogPosts.length){carousel.innerHTML='<div style="padding:1.5rem 2rem;color:rgba(245,239,230,.4);font-size:.85rem">Статей пока нет</div>';return;}
+  blogIdx=0;
+  carousel.innerHTML=`<div class="blog-carousel-track" id="blogTrack">${blogPosts.map(p=>`
     <div class="blog-card" onclick="openBM(${p.id})">
-      <div class="blog-card-img"><img src="${p.img}" alt="${p.title}" loading="lazy"></div>
+      <div class="blog-card-img-sm"><img src="${p.img}" alt="${p.title}" loading="lazy"></div>
       <div class="blog-card-body">
         <div class="blog-card-meta"><span class="blog-card-tag">${p.tag||'Блог'}</span><span class="blog-card-date">${fmtDate(p.date)}</span></div>
         <div class="blog-card-title">${p.title}</div>
         <div class="blog-card-excerpt">${p.excerpt}</div>
-        <div class="blog-card-read">Читать далее →</div>
       </div>
-    </div>`).join('');
+      <div class="blog-card-read">Читать →</div>
+    </div>`).join('')}</div>`;
+  updateBlogPos();
+  startBlogAuto();
 }
+
+function updateBlogPos(){
+  const track=document.getElementById('blogTrack');if(!track)return;
+  const w=track.parentElement.offsetWidth;
+  track.style.transform=`translateX(-${blogIdx*w}px)`;
+  const lBtn=document.querySelector('.blog-arr-l'),rBtn=document.querySelector('.blog-arr-r');
+  if(lBtn)lBtn.disabled=blogIdx===0;
+  if(rBtn)rBtn.disabled=blogIdx>=blogPosts.length-1;
+}
+
+function blogSlide(dir){
+  blogIdx=Math.max(0,Math.min(blogIdx+dir,blogPosts.length-1));
+  updateBlogPos();resetBlogAuto();
+}
+
+function startBlogAuto(){
+  if(blogAutoTimer)clearInterval(blogAutoTimer);
+  blogAutoTimer=setInterval(()=>{
+    blogIdx=blogIdx>=blogPosts.length-1?0:blogIdx+1;
+    updateBlogPos();
+  },5000);
+}
+function resetBlogAuto(){clearInterval(blogAutoTimer);startBlogAuto();}
+window.addEventListener('resize',()=>{if(blogPosts.length)updateBlogPos();});
 
 function fmtDate(d){
   if(!d)return'';
