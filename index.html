@@ -605,8 +605,9 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
           <div class="adm-field full"><input type="text" id="pImgUrl" placeholder="https://example.com/photo.jpg" oninput="onImgUrl(this,'p')"></div>
           <div class="adm-form-row"><div class="adm-field"><label>Название</label><input type="text" id="fName"></div><div class="adm-field"><label>Цена (₽)</label><input type="number" id="fPrice"></div></div>
           <div class="adm-form-row"><div class="adm-field"><label>Категория</label><select id="fCat"><option value="tableware">Посуда</option><option value="vases">Вазы</option><option value="decor">Декор</option><option value="gifts">Подарки</option></select></div><div class="adm-field"><label>Бейдж</label><select id="fBadge"><option value="">Нет</option><option value="Хит">Хит</option><option value="Новинка">Новинка</option><option value="Подарок">Подарок</option><option value="Скидка">Скидка</option></select></div></div>
+          <div class="adm-form-row"><div class="adm-field"><label>Остаток (шт.)</label><input type="number" id="fStock" min="0" placeholder="Кол-во на складе"></div><div class="adm-field"><label style="font-size:.65rem;color:var(--text-muted)">⚠️ Если ≤ 3 — покажется «Осталось мало»</label></div></div>
           <div class="adm-field full"><label>Описание</label><textarea id="fDesc"></textarea><button type="button" class="ai-btn" onclick="aiDescribe('p')">✨ Описать с ИИ</button></div>
-          <input type="hidden" id="fId"><input type="hidden" id="fImg">
+          <input type="hidden" id="fId"><input type="hidden" id="fImg"><input type="hidden" id="fStockVal">
           <div class="adm-form-acts"><button class="adm-save" onclick="saveP()">Сохранить</button><button class="adm-cancel" onclick="hidePF()">Отмена</button></div>
         </div>
       </div>
@@ -989,8 +990,8 @@ function renderAdmP(){
 }
 function showPF(id){
   document.getElementById('pListView').style.display='none';document.getElementById('pForm').classList.add('active');
-  if(id){const p=products.find(x=>x.id===id);document.getElementById('pFTitle').textContent='Редактировать';document.getElementById('fId').value=p.id;document.getElementById('fName').value=p.name;document.getElementById('fPrice').value=p.price;document.getElementById('fCat').value=p.category;document.getElementById('fBadge').value=p.badge||'';document.getElementById('fDesc').value=p.desc;document.getElementById('fImg').value=p.img;document.getElementById('pImgUrl').value=p.img.startsWith('http')?p.img:'';showImgPrev('p',p.img);}
-  else{document.getElementById('pFTitle').textContent='Новый товар';['fId','fName','fPrice','fDesc','fImg'].forEach(i=>document.getElementById(i).value='');document.getElementById('fCat').value='tableware';document.getElementById('fBadge').value='';resetImgUp('p');}
+  if(id){const p=products.find(x=>x.id===id);document.getElementById('pFTitle').textContent='Редактировать';document.getElementById('fId').value=p.id;document.getElementById('fName').value=p.name;document.getElementById('fPrice').value=p.price;document.getElementById('fCat').value=p.category;document.getElementById('fBadge').value=p.badge||'';document.getElementById('fDesc').value=p.desc;document.getElementById('fImg').value=p.img;document.getElementById('fStock').value=p.stock!==undefined?p.stock:'';document.getElementById('pImgUrl').value=p.img.startsWith('http')?p.img:'';showImgPrev('p',p.img);}
+  else{document.getElementById('pFTitle').textContent='Новый товар';['fId','fName','fPrice','fDesc','fImg','fStock'].forEach(i=>document.getElementById(i).value='');document.getElementById('fCat').value='tableware';document.getElementById('fBadge').value='';resetImgUp('p');}
 }
 function hidePF(){document.getElementById('pListView').style.display='block';document.getElementById('pForm').classList.remove('active');resetImgUp('p');}
 function editP(id){showPF(id);}
@@ -1004,9 +1005,13 @@ function dbRefreshClasses(){ if(useLocalStorage){ const c=lsGet('classes'); clas
 function delP(id){const p=products.find(x=>x.id===id);if(!confirm('Удалить «'+p.name+'»?'))return;dbRemove('products/'+id);if(useLocalStorage)dbRefreshProducts();toast('Товар удалён');}
 function saveP(){
   const name=document.getElementById('fName').value.trim(),price=parseInt(document.getElementById('fPrice').value),cat=document.getElementById('fCat').value,badge=document.getElementById('fBadge').value,desc=document.getElementById('fDesc').value.trim(),img=document.getElementById('fImg').value,eid=document.getElementById('fId').value;
+  const stockVal=document.getElementById('fStock').value;
+  const stock=stockVal!==''?parseInt(stockVal):undefined;
   if(!name){toast('Введите название');return;}if(!price||price<=0){toast('Укажите цену');return;}if(!img){toast('Добавьте фото');return;}
-  if(eid){dbUpdate('products/'+eid,{name,price,category:cat,badge:badge||'',desc,img});toast('Товар обновлён');}
-  else{const maxId=products.reduce((m,p)=>Math.max(m,p.id),0)+1;dbSave('products/'+maxId,{id:maxId,name,price,category:cat,badge:badge||'',desc,img});toast('Товар добавлен');}
+  const data={name,price,category:cat,badge:badge||'',desc,img};
+  if(stock!==undefined&&!isNaN(stock))data.stock=stock;
+  if(eid){dbUpdate('products/'+eid,data);toast('Товар обновлён');}
+  else{const maxId=products.reduce((m,p)=>Math.max(m,p.id),0)+1;dbSave('products/'+maxId,{id:maxId,...data});toast('Товар добавлен');}
   if(useLocalStorage)dbRefreshProducts();
   hidePF();
 }
