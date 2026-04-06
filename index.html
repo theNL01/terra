@@ -159,7 +159,8 @@ footer{background:#3a2d25;padding:2.5rem 3rem;display:flex;justify-content:space
 .wa-btn{position:fixed;bottom:2rem;right:2rem;width:56px;height:56px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:900;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:.3s;text-decoration:none;font-size:1.6rem}.wa-btn:hover{transform:scale(1.1);box-shadow:0 6px 28px rgba(37,211,102,.5)}
 .wa-tooltip{position:absolute;right:68px;background:var(--earth);color:var(--sand);font-size:.75rem;padding:.4rem .9rem;border-radius:50px;white-space:nowrap;opacity:0;pointer-events:none;transition:.2s}.wa-btn:hover .wa-tooltip{opacity:1}
 
-/* SEARCH HIGHLIGHT */
+.nav-shop.active{color:var(--clay)!important}.nav-shop.active::after{width:100%!important}
+.shop-page-header{background:var(--sand);padding:3rem 3rem 1rem;border-bottom:1px solid var(--border)}
 .search-hl{background:rgba(198,125,74,.2);border-radius:3px}
 
 @media(max-width:700px){.stats-bar{padding:.8rem 1.5rem}.stat-num{font-size:1.2rem}.shop-controls{flex-direction:column;align-items:stretch}.search-wrap{max-width:100%}.wa-btn{bottom:1.2rem;right:1.2rem;width:48px;height:48px;font-size:1.3rem}}
@@ -419,7 +420,14 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
 <header>
   <a href="#" class="logo" style="text-decoration:none">ТЕР<span>Р</span>А</a>
   <nav id="mainNav">
-    <a href="#about">О нас</a><a href="#shop">Магазин</a><a href="#classes">Мастер-классы</a><a href="#blog">Блог</a><a href="#delivery">Доставка</a><a href="#faq">FAQ</a><a href="#reviews">Отзывы</a><a href="#contact">Контакты</a>
+    <a href="#" onclick="showPage('home');return false" class="nav-home">О нас</a>
+    <a href="#" onclick="showPage('shop');return false" class="nav-shop" style="font-weight:500">Магазин</a>
+    <a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('classes').scrollIntoView({behavior:'smooth'}),100);return false">Мастер-классы</a>
+    <a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('blog').scrollIntoView({behavior:'smooth'}),100);return false">Блог</a>
+    <a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('delivery').scrollIntoView({behavior:'smooth'}),100);return false">Доставка</a>
+    <a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('faq').scrollIntoView({behavior:'smooth'}),100);return false">FAQ</a>
+    <a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('reviews').scrollIntoView({behavior:'smooth'}),100);return false">Отзывы</a>
+    <a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100);return false">Контакты</a>
     <button class="cart-btn" onclick="toggleCart()">Корзина<span class="cart-count" id="cartCount">0</span></button>
   </nav>
   <div class="mob-controls" style="display:flex;align-items:center;gap:.8rem">
@@ -428,6 +436,7 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
   </div>
 </header>
 
+<div id="homePage">
 <section class="hero">
   <div class="hero-bg-img"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1600&q=80" alt=""></div>
   <div class="hero-overlay"></div>
@@ -435,7 +444,7 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
     <div class="hero-tag"><div class="hero-tag-line"></div><span>Гончарная мастерская</span></div>
     <h1>Красота,<br>рождённая <em>землёй</em></h1>
     <p>Авторская керамика ручной работы. Каждое изделие хранит тепло рук мастера и неповторимую историю глины</p>
-    <div class="hero-actions"><a href="#shop" class="btn-p">Каталог изделий</a><a href="#classes" class="btn-g">Мастер-классы</a></div>
+    <div class="hero-actions"><a href="#" onclick="showPage('shop');return false" class="btn-p">Каталог изделий</a><a href="#classes" class="btn-g">Мастер-классы</a></div>
   </div>
   <div class="scroll-ind"><div class="scroll-dot"></div><span>Листайте вниз</span></div>
 </section>
@@ -478,16 +487,6 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
       </div>
     </div>
   </div>
-</section>
-
-<section id="shop">
-  <div class="sh"><div class="st"><div class="stl"></div><span>Магазин</span><div class="stl"></div></div><h2 class="stitle">Изделия <em>мастерской</em></h2><p class="sdesc">Каждый предмет уникален — форма, цвет и текстура никогда не повторяются</p></div>
-  <div class="shop-controls">
-    <div class="search-wrap"><span class="search-ico">🔍</span><input type="text" id="shopSearch" placeholder="Поиск по каталогу..." oninput="filterP()"></div>
-    <div class="filters" id="filters" style="margin:0"></div>
-    <div class="sort-wrap"><select id="shopSort" onchange="filterP()"><option value="">По умолчанию</option><option value="price_asc">Цена ↑</option><option value="price_desc">Цена ↓</option><option value="new">Новинки</option></select></div>
-  </div>
-  <div class="pgrid" id="pGrid"><div class="loading">Загрузка товаров...</div></div>
 </section>
 
 <section id="classes">
@@ -572,7 +571,22 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
   </div>
 </section>
 
-<footer><p>© 2026 ТЕРРА — Гончарная мастерская</p><div class="flinks"><a href="#about">О нас</a><a href="#shop">Магазин</a><a href="#classes">Мастер-классы</a><a href="#delivery">Доставка</a><a href="#faq">FAQ</a><a href="#reviews">Отзывы</a><a href="#contact">Контакты</a></div></footer>
+</div><!-- /homePage -->
+
+<!-- SHOP PAGE -->
+<div id="shopPage" style="display:none;padding-top:80px">
+  <section id="shop" style="padding:4rem 3rem">
+    <div class="sh"><div class="st"><div class="stl"></div><span>Магазин</span><div class="stl"></div></div><h2 class="stitle">Изделия <em>мастерской</em></h2><p class="sdesc">Каждый предмет уникален — форма, цвет и текстура никогда не повторяются</p></div>
+    <div class="shop-controls">
+      <div class="search-wrap"><span class="search-ico">🔍</span><input type="text" id="shopSearch" placeholder="Поиск по каталогу..." oninput="filterP()"></div>
+      <div class="filters" id="filters" style="margin:0"></div>
+      <div class="sort-wrap"><select id="shopSort" onchange="filterP()"><option value="">По умолчанию</option><option value="price_asc">Цена ↑</option><option value="price_desc">Цена ↓</option><option value="new">Новинки</option></select></div>
+    </div>
+    <div class="pgrid" id="pGrid"><div class="loading">Загрузка товаров...</div></div>
+  </section>
+</div><!-- /shopPage -->
+
+<footer><p>© 2026 ТЕРРА — Гончарная мастерская</p><div class="flinks"><a href="#" onclick="showPage('home');return false">Главная</a><a href="#" onclick="showPage('shop');return false">Магазин</a><a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('classes').scrollIntoView({behavior:'smooth'}),100);return false">Мастер-классы</a><a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('delivery').scrollIntoView({behavior:'smooth'}),100);return false">Доставка</a><a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),100);return false">Контакты</a></div></footer>
 
 <!-- Product Detail -->
 <div class="pd-ov" id="pdOv" onclick="closePD()"></div>
@@ -2040,6 +2054,25 @@ function getViews(productId,cb){
   db.ref('views/'+productId).once('value',snap=>{
     cb(snap.val()||0);
   });
+}
+
+// ===== PAGE SWITCHING =====
+function showPage(page){
+  const home=document.getElementById('homePage');
+  const shop=document.getElementById('shopPage');
+  const navShop=document.querySelector('.nav-shop');
+  if(page==='shop'){
+    home.style.display='none';
+    shop.style.display='block';
+    navShop.classList.add('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+    renderP();
+  } else {
+    shop.style.display='none';
+    home.style.display='block';
+    navShop.classList.remove('active');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
 }
 
 document.querySelectorAll('#mainNav a').forEach(a=>a.addEventListener('click',()=>document.getElementById('mainNav').classList.remove('open')));
