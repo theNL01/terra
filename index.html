@@ -728,7 +728,13 @@ function showSuccess(oid){
 function sendContact(){
   const n=document.getElementById('cfName').value.trim(),e=document.getElementById('cfEmail').value.trim(),p=document.getElementById('cfPhone').value.trim(),m=document.getElementById('cfMsg').value.trim();
   if(!n||n.length<2){toast('Укажите имя');return;}
-  fetch('https://formspree.io/f/xjgppdnp',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name:n,email:e||'no-email@terra.ru',phone:p||'—',message:'Заявка с сайта:\n'+(m||'—')})}).then(r=>{if(r.ok)toast('Спасибо! Мы скоро ответим');else toast('Ошибка отправки');}).catch(()=>toast('Нет соединения'));
+  fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({
+    access_key:W3F_KEY,
+    to:TERRA_EMAIL,
+    subject:'📩 Новое сообщение с сайта ТЕРРА',
+    from_name:'Сайт ТЕРРА',
+    message:`Имя: ${n}\nТелефон: ${p||'—'}\nEmail: ${e||'—'}\n\nСообщение:\n${m||'—'}`
+  })}).then(r=>r.json()).then(d=>{if(d.success)toast('Спасибо! Мы скоро ответим');else toast('Ошибка отправки');}).catch(()=>toast('Нет соединения'));
   ['cfName','cfEmail','cfPhone','cfMsg'].forEach(id=>{document.getElementById(id).value='';});
 }
 
@@ -997,16 +1003,79 @@ function openCL(id){
   document.body.style.overflow='hidden';
 }
 function closeCL(){document.getElementById('clOv').classList.remove('open');document.getElementById('clMod').classList.remove('open');document.body.style.overflow='';}
-function enrollClass(){
+
+const TERRA_EMAIL = 'q7hoixztfz5j@mail.ru';
+const W3F_KEY = '4de29207-cb46-4eca-973a-4de1f9fc8904'; // Web3Forms public access key
+
+async function enrollClass(){
   const c=classes.find(x=>x.id===currentClassId); if(!c)return;
-  closeCL();
-  // Scroll to contact and pre-fill message
-  document.getElementById('contact').scrollIntoView({behavior:'smooth'});
-  setTimeout(()=>{
-    const msg=document.getElementById('cfMsg');
-    if(msg) msg.value=`Хочу записаться на мастер-класс «${c.name}» (${c.duration}, ${c.price.toLocaleString('ru-RU')} ₽)`;
-  },600);
-  toast('Заполните форму ниже для записи');
+
+  // Show inline enroll form in modal instead of scrolling away
+  const btn=document.querySelector('.cl-enroll');
+  const body=document.getElementById('clMod').querySelector('.cl-body');
+
+  // If form already injected — skip
+  if(document.getElementById('clEnrollForm'))return;
+
+  btn.style.display='none';
+  const form=document.createElement('div');
+  form.id='clEnrollForm';
+  form.style.cssText='display:flex;flex-direction:column;gap:.7rem;margin-top:auto;padding-top:1rem;border-top:1px solid var(--border)';
+  form.innerHTML=`
+    <div style="font-size:.75rem;font-weight:600;color:var(--text-muted);letter-spacing:.08em;text-transform:uppercase">Запись на мастер-класс</div>
+    <input id="clEnrollName" type="text" placeholder="Ваше имя *" maxlength="50" style="background:var(--sand);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;font-family:var(--font-b);font-size:.88rem;outline:none;transition:border .2s" onfocus="this.style.borderColor='var(--clay)'" onblur="this.style.borderColor='var(--border)'">
+    <input id="clEnrollPhone" type="tel" placeholder="Телефон *" maxlength="18" oninput="fmtPhone(this)" style="background:var(--sand);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;font-family:var(--font-b);font-size:.88rem;outline:none;transition:border .2s" onfocus="this.style.borderColor='var(--clay)'" onblur="this.style.borderColor='var(--border)'">
+    <input id="clEnrollEmail" type="email" placeholder="Email (необязательно)" maxlength="100" style="background:var(--sand);border:1px solid var(--border);border-radius:10px;padding:.75rem 1rem;font-family:var(--font-b);font-size:.88rem;outline:none;transition:border .2s" onfocus="this.style.borderColor='var(--clay)'" onblur="this.style.borderColor='var(--border)'">
+    <button onclick="submitEnroll()" style="background:var(--clay);color:#fff;border:none;padding:.95rem;border-radius:50px;font-family:var(--font-b);font-size:.88rem;cursor:pointer;transition:.3s" onmouseover="this.style.background='var(--clay-dark)'" onmouseout="this.style.background='var(--clay)'">Отправить заявку</button>
+    <button onclick="cancelEnroll()" style="background:none;border:none;color:var(--text-muted);font-family:var(--font-b);font-size:.78rem;cursor:pointer;text-decoration:underline">Отмена</button>
+  `;
+  body.appendChild(form);
+}
+
+function cancelEnroll(){
+  const f=document.getElementById('clEnrollForm');
+  if(f)f.remove();
+  const btn=document.querySelector('.cl-enroll');
+  if(btn)btn.style.display='';
+}
+
+async function submitEnroll(){
+  const c=classes.find(x=>x.id===currentClassId); if(!c)return;
+  const name=document.getElementById('clEnrollName').value.trim();
+  const phone=document.getElementById('clEnrollPhone').value.trim();
+  const email=document.getElementById('clEnrollEmail').value.trim();
+  if(!name){toast('Укажите имя');return;}
+  if(phone.replace(/\D/g,'').length<10){toast('Введите корректный телефон');return;}
+
+  const submitBtn=document.querySelector('#clEnrollForm button');
+  submitBtn.textContent='Отправка...';submitBtn.disabled=true;
+
+  try{
+    const r=await fetch('https://api.web3forms.com/submit',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Accept':'application/json'},
+      body:JSON.stringify({
+        access_key: W3F_KEY,
+        to: TERRA_EMAIL,
+        subject: `🏺 Запись на мастер-класс «${c.name}»`,
+        from_name: 'Сайт ТЕРРА',
+        message: `Новая заявка на мастер-класс!\n\nМастер-класс: ${c.name}\nДлительность: ${c.duration}\nСтоимость: ${c.price.toLocaleString('ru-RU')} ₽\n\nКлиент: ${name}\nТелефон: ${phone}\nEmail: ${email||'—'}`
+      })
+    });
+    const d=await r.json();
+    if(d.success){
+      closeCL();
+      toast('✓ Заявка отправлена! Мы свяжемся с вами');
+      // save to Firebase too
+      dbSave('enrollments/'+Date.now(),{class:c.name,name,phone,email:email||'',date:new Date().toISOString()});
+    } else {
+      toast('Ошибка отправки, попробуйте ещё раз');
+      submitBtn.textContent='Отправить заявку';submitBtn.disabled=false;
+    }
+  }catch(e){
+    toast('Нет соединения');
+    submitBtn.textContent='Отправить заявку';submitBtn.disabled=false;
+  }
 }
 
 // ===== SITE CONTENT MANAGEMENT =====
