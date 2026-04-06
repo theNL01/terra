@@ -188,8 +188,51 @@ footer{background:#3a2d25;padding:2.5rem 3rem;display:flex;justify-content:space
 .adm-save{background:var(--clay);color:#fff;border:none;padding:.8rem 2rem;border-radius:50px;font-family:var(--font-b);font-size:.82rem;cursor:pointer;transition:.3s}.adm-save:hover{background:var(--clay-dark)}
 .adm-cancel{background:var(--sand);color:var(--text-body);border:none;padding:.8rem 2rem;border-radius:50px;font-family:var(--font-b);font-size:.82rem;cursor:pointer;transition:.3s}.adm-cancel:hover{background:var(--sand-deep)}
 .ai-btn{background:linear-gradient(135deg,var(--clay),var(--terracotta));color:#fff;border:none;padding:.5rem 1.2rem;border-radius:50px;font-family:var(--font-b);font-size:.72rem;cursor:pointer;transition:.3s;margin-top:.4rem;letter-spacing:.03em}.ai-btn:hover{transform:translateY(-1px);box-shadow:0 4px 15px rgba(198,125,74,.3)}
+.ai-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+.ai-key-block{background:var(--sand);border:1px solid var(--border);border-radius:12px;padding:.9rem 1rem;margin-bottom:1rem;display:flex;flex-direction:column;gap:.4rem}
+.ai-key-block label{font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);font-weight:500}
+.ai-key-row{display:flex;gap:.5rem;align-items:center}
+.ai-key-row input{flex:1;background:var(--white);border:1px solid var(--border);border-radius:8px;padding:.55rem .8rem;font-family:var(--font-b);font-size:.82rem;color:var(--text-dark);outline:none;transition:border .2s}.ai-key-row input:focus{border-color:var(--clay)}
+.ai-key-save{background:var(--clay);color:#fff;border:none;padding:.5rem 1rem;border-radius:8px;font-family:var(--font-b);font-size:.72rem;cursor:pointer;white-space:nowrap;transition:.2s}.ai-key-save:hover{background:var(--clay-dark)}
+.ai-key-hint{font-size:.62rem;color:var(--text-muted);line-height:1.4}
+.ai-key-status{font-size:.68rem;font-weight:500}
+.ai-key-status.ok{color:var(--sage)}.ai-key-status.err{color:var(--terracotta)}
 
-/* TOAST */
+.site-section-title{font-family:var(--font-d);font-size:1rem;color:var(--earth);margin-bottom:.8rem;padding-bottom:.5rem;border-bottom:1px solid var(--border);font-weight:600}
+
+/* CLASS DETAIL MODAL */
+.cl-ov{position:fixed;inset:0;background:rgba(45,36,32,.6);backdrop-filter:blur(6px);z-index:3500;opacity:0;visibility:hidden;transition:.3s}.cl-ov.open{opacity:1;visibility:visible}
+.cl-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);width:820px;max-width:95vw;max-height:90vh;background:var(--white);border-radius:20px;z-index:3501;opacity:0;visibility:hidden;transition:.35s;display:grid;grid-template-columns:1fr 1fr;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.25)}.cl-modal.open{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
+.cl-image{position:relative;background:var(--sand);min-height:400px;overflow:hidden}.cl-image img{width:100%;height:100%;object-fit:cover;transition:transform 8s}.cl-modal.open .cl-image img{transform:scale(1.05)}
+.cl-body{padding:2.5rem;display:flex;flex-direction:column;overflow-y:auto}
+.cl-close{position:absolute;top:16px;right:16px;background:rgba(255,255,255,.85);backdrop-filter:blur(6px);border:none;color:var(--text-body);font-size:1.2rem;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.3s;z-index:2}.cl-close:hover{background:#fff;color:var(--terracotta)}
+.cl-tag{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--sage);font-weight:500;margin-bottom:.6rem}
+.cl-name{font-family:var(--font-d);font-size:1.8rem;font-weight:600;color:var(--text-dark);line-height:1.2;margin-bottom:.8rem}
+.cl-meta{display:flex;gap:1rem;margin-bottom:1.2rem;flex-wrap:wrap}
+.cl-meta-item{display:flex;align-items:center;gap:.4rem;font-size:.82rem;color:var(--text-muted)}.cl-meta-item span{font-weight:500;color:var(--text-body)}
+.cl-price{font-family:var(--font-d);font-size:1.6rem;font-weight:700;color:var(--clay);margin-bottom:1.5rem}
+.cl-div{width:40px;height:2px;background:var(--clay-light);margin-bottom:1.5rem}
+.cl-desc-t{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);font-weight:500;margin-bottom:.6rem}
+.cl-desc{font-size:.92rem;color:var(--text-body);line-height:1.8;font-weight:300;margin-bottom:1.5rem;flex:1}
+.cl-feats{display:flex;gap:1rem;margin-bottom:1.8rem;flex-wrap:wrap}
+.cl-feat{display:flex;align-items:center;gap:.5rem}.cl-feat-icon{width:32px;height:32px;background:var(--sand);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.85rem}.cl-feat-text{font-size:.72rem;color:var(--text-muted);line-height:1.3}.cl-feat-text strong{display:block;color:var(--text-dark);font-weight:500;font-size:.75rem}
+.cl-enroll{width:100%;background:var(--clay);color:#fff;border:none;padding:1rem 2rem;border-radius:50px;font-family:var(--font-b);font-size:.88rem;cursor:pointer;transition:.3s;margin-top:auto}.cl-enroll:hover{background:var(--clay-dark);transform:translateY(-2px)}
+@media(max-width:700px){.cl-modal{grid-template-columns:1fr;max-height:95vh}.cl-image{min-height:220px;max-height:260px}.cl-body{padding:1.5rem}}
+
+/* GALLERY ADMIN ITEMS */
+.gallery-adm-item{display:grid;grid-template-columns:80px 1fr auto;gap:.8rem;align-items:center;padding:.8rem;background:var(--sand);border-radius:10px;margin-bottom:.6rem}
+.gallery-adm-thumb{width:80px;height:60px;object-fit:cover;border-radius:6px;background:var(--sand-deep)}
+.gallery-adm-fields{display:flex;flex-direction:column;gap:.4rem}
+.gallery-adm-fields input{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:.45rem .7rem;font-family:var(--font-b);font-size:.82rem;outline:none;transition:border .2s}.gallery-adm-fields input:focus{border-color:var(--clay)}
+.gallery-adm-del{background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:1rem;width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;transition:.2s;flex-shrink:0}.gallery-adm-del:hover{background:rgba(184,92,56,.1);color:var(--terracotta)}
+
+/* PROC STEP ADMIN */
+.proc-adm-item{display:grid;grid-template-columns:60px 1fr;gap:.8rem;align-items:start;padding:.8rem;background:var(--sand);border-radius:10px;margin-bottom:.6rem}
+.proc-adm-img{width:60px;height:60px;border-radius:50%;overflow:hidden;background:var(--sand-deep);position:relative;cursor:pointer}
+.proc-adm-img img{width:100%;height:100%;object-fit:cover}
+.proc-adm-img input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer}
+.proc-adm-fields{display:flex;flex-direction:column;gap:.4rem}
+.proc-adm-fields input{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:.45rem .7rem;font-family:var(--font-b);font-size:.82rem;outline:none;transition:border .2s}.proc-adm-fields input:focus{border-color:var(--clay)}
 .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:var(--earth);color:var(--sand);padding:.8rem 2rem;border-radius:50px;font-size:.82rem;z-index:99999;transition:transform .4s cubic-bezier(.4,0,.2,1);white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,.2)}.toast.show{transform:translateX(-50%) translateY(0)}
 
 /* LOADING */
@@ -328,6 +371,30 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
   </div>
 </div>
 
+<!-- Class Detail Modal -->
+<div class="cl-ov" id="clOv" onclick="closeCL()"></div>
+<div class="cl-modal" id="clMod">
+  <button class="cl-close" onclick="closeCL()">✕</button>
+  <div class="cl-image" id="clImg"></div>
+  <div class="cl-body">
+    <div class="cl-tag">Мастер-класс</div>
+    <div class="cl-name" id="clName"></div>
+    <div class="cl-meta">
+      <div class="cl-meta-item">⏱ <span id="clDur"></span></div>
+    </div>
+    <div class="cl-price" id="clPrice"></div>
+    <div class="cl-div"></div>
+    <div class="cl-desc-t">Описание</div>
+    <div class="cl-desc" id="clDesc"></div>
+    <div class="cl-feats">
+      <div class="cl-feat"><div class="cl-feat-icon">👥</div><div class="cl-feat-text"><strong>Группа</strong>до 8 чел.</div></div>
+      <div class="cl-feat"><div class="cl-feat-icon">🎁</div><div class="cl-feat-text"><strong>Изделие</strong>забираете домой</div></div>
+      <div class="cl-feat"><div class="cl-feat-icon">☕</div><div class="cl-feat-text"><strong>Угощение</strong>чай включён</div></div>
+    </div>
+    <button class="cl-enroll" onclick="enrollClass()">Записаться на мастер-класс</button>
+  </div>
+</div>
+
 <!-- Cart -->
 <div class="cart-ov" id="cartOv" onclick="toggleCart()"></div>
 <div class="cart-pan" id="cartPan">
@@ -365,7 +432,7 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
 <div class="adm-ov" id="admOv" onclick="closeAdm()"></div>
 <div class="adm-pan" id="admPan">
   <div class="adm-h"><h2>Панель управления</h2><button class="adm-cl" onclick="closeAdm()">✕</button></div>
-  <div class="adm-tabs"><button class="adm-tab active" id="tProd" onclick="switchTab('prod')">Товары</button><button class="adm-tab" id="tCls" onclick="switchTab('cls')">Мастер-классы</button></div>
+  <div class="adm-tabs"><button class="adm-tab active" id="tProd" onclick="switchTab('prod')">Товары</button><button class="adm-tab" id="tCls" onclick="switchTab('cls')">Мастер-классы</button><button class="adm-tab" id="tSite" onclick="switchTab('site')">Сайт</button></div>
   <div class="adm-body">
     <div class="adm-login" id="admLogin">
       <p>Введите пароль для доступа</p>
@@ -374,6 +441,18 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
       <span class="err" id="logErr">Неверный пароль</span>
     </div>
     <div id="admContent" style="display:none">
+      <!-- API Key Block -->
+      <div class="ai-key-block" id="aiKeyBlock">
+        <label>🔑 Google Gemini API Key (бесплатно — для генерации описаний по фото)</label>
+        <div class="ai-key-row">
+          <input type="password" id="aiKeyInput" placeholder="AIzaSy..." autocomplete="off">
+          <button class="ai-key-save" onclick="saveApiKey()">Сохранить</button>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span class="ai-key-hint">Бесплатно: 1500 запросов/день. Получить: <strong>aistudio.google.com</strong> → Get API Key</span>
+          <span class="ai-key-status" id="aiKeyStatus"></span>
+        </div>
+      </div>
       <!-- Products Tab -->
       <div id="tabProd">
         <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sTotal">0</div><div class="adm-stat-l">Товаров</div></div><div class="adm-stat"><div class="adm-stat-n" id="sCats">0</div><div class="adm-stat-l">Категорий</div></div><div class="adm-stat"><div class="adm-stat-n" id="sAvg">0</div><div class="adm-stat-l">Ср. цена</div></div></div>
@@ -408,6 +487,73 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
           <div class="adm-form-acts"><button class="adm-save" onclick="saveC()">Сохранить</button><button class="adm-cancel" onclick="hideCF()">Отмена</button></div>
         </div>
       </div>
+      <!-- Site Tab -->
+      <div id="tabSite" style="display:none">
+
+        <!-- HERO -->
+        <div class="site-section-title">🏠 Главный экран (Hero)</div>
+        <div class="adm-form active" style="margin-bottom:2rem">
+          <div class="adm-img-up" id="heroImgUp"><div class="uicon" id="heroUIco">📷</div><div class="utxt" id="heroUTxt">Фоновое фото</div><div class="uhint">Автозагрузка на ImgBB</div><input type="file" id="heroImgIn" accept="image/*" onchange="hImgSite(event,'hero')"></div>
+          <div class="adm-img-status" id="heroImgStatus"></div>
+          <div class="adm-field full"><input type="text" id="heroImgUrl" placeholder="https://... или вставьте ссылку" oninput="onImgUrlSite(this,'hero')"></div>
+          <div class="adm-field full"><label>Заголовок (H1)</label><input type="text" id="heroTitle" placeholder="Красота, рождённая землёй"></div>
+          <div class="adm-field full"><label>Подзаголовок</label><textarea id="heroSubtitle" style="min-height:60px" placeholder="Авторская керамика ручной работы..."></textarea></div>
+          <div class="adm-form-acts"><button class="adm-save" onclick="saveSiteSection('hero')">Сохранить</button></div>
+        </div>
+
+        <!-- ABOUT -->
+        <div class="site-section-title">🏺 О мастерской (About)</div>
+        <div class="adm-form active" style="margin-bottom:2rem">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+            <div>
+              <div style="font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);font-weight:500;margin-bottom:.4rem">Главное фото</div>
+              <div class="adm-img-up" id="aboutImg1Up"><div class="uicon" id="aboutImg1UIco">📷</div><div class="utxt" id="aboutImg1UTxt">Основное фото</div><div class="uhint">ImgBB</div><input type="file" id="aboutImg1In" accept="image/*" onchange="hImgSite(event,'aboutImg1')"></div>
+              <div class="adm-img-status" id="aboutImg1Status"></div>
+              <input type="text" id="aboutImg1Url" style="margin-top:.4rem;background:var(--sand);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;font-family:var(--font-b);font-size:.82rem;width:100%;outline:none" placeholder="или ссылка..." oninput="onImgUrlSite(this,'aboutImg1')">
+            </div>
+            <div>
+              <div style="font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);font-weight:500;margin-bottom:.4rem">Дополнительное фото</div>
+              <div class="adm-img-up" id="aboutImg2Up"><div class="uicon" id="aboutImg2UIco">📷</div><div class="utxt" id="aboutImg2UTxt">Малое фото</div><div class="uhint">ImgBB</div><input type="file" id="aboutImg2In" accept="image/*" onchange="hImgSite(event,'aboutImg2')"></div>
+              <div class="adm-img-status" id="aboutImg2Status"></div>
+              <input type="text" id="aboutImg2Url" style="margin-top:.4rem;background:var(--sand);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;font-family:var(--font-b);font-size:.82rem;width:100%;outline:none" placeholder="или ссылка..." oninput="onImgUrlSite(this,'aboutImg2')">
+            </div>
+          </div>
+          <div class="adm-field full"><label>Заголовок</label><input type="text" id="aboutTitle" placeholder="Место, где глина оживает"></div>
+          <div class="adm-field full"><label>Текст 1</label><textarea id="aboutText1" style="min-height:70px"></textarea></div>
+          <div class="adm-field full"><label>Текст 2</label><textarea id="aboutText2" style="min-height:70px"></textarea></div>
+          <div class="adm-form-acts"><button class="adm-save" onclick="saveSiteSection('about')">Сохранить</button></div>
+        </div>
+
+        <!-- PROCESS -->
+        <div class="site-section-title">⚙️ Процесс создания</div>
+        <div class="adm-form active" style="margin-bottom:2rem" id="procForm">
+          <div id="procStepsList"></div>
+          <div class="adm-form-acts"><button class="adm-save" onclick="saveSiteSection('process')">Сохранить все шаги</button></div>
+        </div>
+
+        <!-- GALLERY -->
+        <div class="site-section-title">🖼️ Галерея</div>
+        <div class="adm-form active" style="margin-bottom:2rem">
+          <div id="galleryItemsList"></div>
+          <button class="adm-add-btn" onclick="addGalleryItem()" style="margin-bottom:1rem">+ Добавить фото</button>
+          <div class="adm-form-acts"><button class="adm-save" onclick="saveSiteSection('gallery')">Сохранить галерею</button></div>
+        </div>
+
+        <!-- CONTACT -->
+        <div class="site-section-title">📍 Контакты</div>
+        <div class="adm-form active" style="margin-bottom:2rem">
+          <div class="adm-img-up" id="contactImgUp"><div class="uicon" id="contactUIco">📷</div><div class="utxt" id="contactUTxt">Фото мастерской</div><div class="uhint">ImgBB</div><input type="file" id="contactImgIn" accept="image/*" onchange="hImgSite(event,'contact')"></div>
+          <div class="adm-img-status" id="contactImgStatus"></div>
+          <div class="adm-field full"><input type="text" id="contactImgUrl" placeholder="или ссылка..." oninput="onImgUrlSite(this,'contact')"></div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Адрес</label><input type="text" id="contactAddr" placeholder="г. Москва, Гончарная наб., д. 7"></div>
+            <div class="adm-field"><label>Телефон</label><input type="text" id="contactPhone" placeholder="+7 (495) 987-65-43"></div>
+          </div>
+          <div class="adm-field full"><label>Режим работы</label><input type="text" id="contactHours" placeholder="Вт–Вс: 10:00 — 20:00"></div>
+          <div class="adm-form-acts"><button class="adm-save" onclick="saveSiteSection('contact')">Сохранить</button></div>
+        </div>
+
+      </div>
     </div>
   </div>
 </div>
@@ -426,6 +572,7 @@ firebase.initializeApp({
   appId:"1:163776401978:web:402da368bca55d8de59b03"
 });
 const db = firebase.database();
+const useLocalStorage = false;
 const PASS = 'terra2026';
 const catN = {tableware:'Посуда',vases:'Вазы',decor:'Декор',gifts:'Подарки'};
 
@@ -452,8 +599,19 @@ const defClasses = [
 
 let products=[], classes=[], cart=[], activeFilter='all', loggedIn=false, payMethod='card';
 
+// ===== STORAGE HELPERS =====
+function lsGet(key){ try{const v=localStorage.getItem('terra_'+key);return v?JSON.parse(v):null;}catch(e){return null;} }
+function lsSet(key,val){ try{localStorage.setItem('terra_'+key,JSON.stringify(val));}catch(e){} }
+
 // ===== FIREBASE LOAD + REALTIME =====
 function initData() {
+  if(useLocalStorage){
+    // localStorage fallback
+    const p=lsGet('products'); products=p?Object.values(p):[...defProducts]; if(!p)lsSet('products',arrToObj(defProducts));
+    const c=lsGet('classes'); classes=c?Object.values(c):[...defClasses]; if(!c)lsSet('classes',arrToObj(defClasses));
+    renderP(); renderC();
+    return;
+  }
   // Products
   db.ref('products').on('value', snap => {
     const d = snap.val();
@@ -487,7 +645,7 @@ function filterP(c){activeFilter=c;renderP();}
 function renderC() {
   const g=document.getElementById('cGrid');
   if(!classes.length){g.innerHTML='<div class="loading">Нет мастер-классов</div>';return;}
-  g.innerHTML=classes.map(c=>`<div class="ccard"><div class="ccimg"><img src="${c.img}" alt="${c.name}" loading="lazy"></div><div class="ccbody"><h3>${c.name}</h3><p>${c.desc}</p><div class="cmeta"><span class="cdur">${c.duration}</span><span class="cprice">${c.price.toLocaleString('ru-RU')} ₽</span></div></div></div>`).join('');
+  g.innerHTML=classes.map(c=>`<div class="ccard" onclick="openCL(${c.id})" style="cursor:pointer"><div class="ccimg"><img src="${c.img}" alt="${c.name}" loading="lazy"></div><div class="ccbody"><h3>${c.name}</h3><p>${c.desc}</p><div class="cmeta"><span class="cdur">${c.duration}</span><span class="cprice">${c.price.toLocaleString('ru-RU')} ₽</span></div></div></div>`).join('');
 }
 
 // ===== PRODUCT DETAIL =====
@@ -545,8 +703,8 @@ function submitOrder(){
   const payN={card:'На карту',cash:'При получении',sbp:'СБП'};
   const items=cart.map(c=>c.name+' × '+c.qty+' = '+(c.price*c.qty).toLocaleString('ru-RU')+' ₽').join('\n');
 
-  // Save order to Firebase
-  db.ref('orders/'+orderId).set({id:orderId,date:new Date().toISOString(),name,phone,email,address:addr,payment:payN[payMethod],items:cart.map(c=>({name:c.name,qty:c.qty,price:c.price})),total:tot,comment:com});
+  // Save order to Firebase / localStorage
+  dbSave('orders/'+orderId,{id:orderId,date:new Date().toISOString(),name,phone,email,address:addr,payment:payN[payMethod],items:cart.map(c=>({name:c.name,qty:c.qty,price:c.price})),total:tot,comment:com});
 
   // Send to Formspree
   fetch('https://formspree.io/f/xjgppdnp',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name,email:email||'no-email@terra.ru',phone,message:'Заказ: '+orderId+'\n'+items+'\nИтого: '+tot.toLocaleString('ru-RU')+' руб.\nОплата: '+payN[payMethod]+'\nАдрес: '+(addr||'—')+'\nКомментарий: '+(com||'—')})}).catch(()=>{});
@@ -581,8 +739,18 @@ function fmtPhone(inp){let d=inp.value.replace(/\D/g,'');if(d[0]==='8')d='7'+d.s
 // ===== ADMIN =====
 function openAdm(){document.getElementById('admOv').classList.add('open');document.getElementById('admPan').classList.add('open');if(loggedIn){renderAdmP();renderAdmC();}}
 function closeAdm(){document.getElementById('admOv').classList.remove('open');document.getElementById('admPan').classList.remove('open');}
-function doLogin(){if(document.getElementById('admPass').value===PASS){loggedIn=true;document.getElementById('admLogin').style.display='none';document.getElementById('admContent').style.display='block';renderAdmP();}else{document.getElementById('logErr').style.display='block';setTimeout(()=>document.getElementById('logErr').style.display='none',2000);}}
-function switchTab(t){document.getElementById('tabProd').style.display=t==='prod'?'block':'none';document.getElementById('tabCls').style.display=t==='cls'?'block':'none';document.getElementById('tProd').classList.toggle('active',t==='prod');document.getElementById('tCls').classList.toggle('active',t==='cls');if(t==='prod')renderAdmP();if(t==='cls')renderAdmC();}
+function doLogin(){if(document.getElementById('admPass').value===PASS){loggedIn=true;document.getElementById('admLogin').style.display='none';document.getElementById('admContent').style.display='block';renderAdmP();loadApiKeyUI();}else{document.getElementById('logErr').style.display='block';setTimeout(()=>document.getElementById('logErr').style.display='none',2000);}}
+function switchTab(t){
+  document.getElementById('tabProd').style.display=t==='prod'?'block':'none';
+  document.getElementById('tabCls').style.display=t==='cls'?'block':'none';
+  document.getElementById('tabSite').style.display=t==='site'?'block':'none';
+  document.getElementById('tProd').classList.toggle('active',t==='prod');
+  document.getElementById('tCls').classList.toggle('active',t==='cls');
+  document.getElementById('tSite').classList.toggle('active',t==='site');
+  if(t==='prod')renderAdmP();
+  if(t==='cls')renderAdmC();
+  if(t==='site'){if(!Object.keys(siteData).length)loadSiteData();else fillSiteTab();}
+}
 
 // Admin Products
 function renderAdmP(){
@@ -599,12 +767,20 @@ function showPF(id){
 }
 function hidePF(){document.getElementById('pListView').style.display='block';document.getElementById('pForm').classList.remove('active');resetImgUp('p');}
 function editP(id){showPF(id);}
-function delP(id){const p=products.find(x=>x.id===id);if(!confirm('Удалить «'+p.name+'»?'))return;db.ref('products/'+id).remove();toast('Товар удалён');}
+// ===== DB HELPERS =====
+function dbSave(path, val){ if(useLocalStorage){ const parts=path.split('/'); lsSet(parts[0], {...(lsGet(parts[0])||{}), [parts[1]]:val}); } else { db.ref(path).set(val); } }
+function dbUpdate(path, val){ if(useLocalStorage){ const parts=path.split('/'); const obj=lsGet(parts[0])||{}; obj[parts[1]]={...(obj[parts[1]]||{}), ...val}; lsSet(parts[0],obj); } else { db.ref(path).update(val); } }
+function dbRemove(path){ if(useLocalStorage){ const parts=path.split('/'); const obj=lsGet(parts[0])||{}; delete obj[parts[1]]; lsSet(parts[0],obj); } else { db.ref(path).remove(); } }
+function dbRefreshProducts(){ if(useLocalStorage){ const p=lsGet('products'); products=p?Object.values(p):[...defProducts]; renderP(); if(loggedIn)renderAdmP(); } }
+function dbRefreshClasses(){ if(useLocalStorage){ const c=lsGet('classes'); classes=c?Object.values(c):[...defClasses]; renderC(); if(loggedIn)renderAdmC(); } }
+
+function delP(id){const p=products.find(x=>x.id===id);if(!confirm('Удалить «'+p.name+'»?'))return;dbRemove('products/'+id);if(useLocalStorage)dbRefreshProducts();toast('Товар удалён');}
 function saveP(){
   const name=document.getElementById('fName').value.trim(),price=parseInt(document.getElementById('fPrice').value),cat=document.getElementById('fCat').value,badge=document.getElementById('fBadge').value,desc=document.getElementById('fDesc').value.trim(),img=document.getElementById('fImg').value,eid=document.getElementById('fId').value;
   if(!name){toast('Введите название');return;}if(!price||price<=0){toast('Укажите цену');return;}if(!img){toast('Добавьте фото');return;}
-  if(eid){db.ref('products/'+eid).update({name,price,category:cat,badge:badge||'',desc,img});toast('Товар обновлён');}
-  else{const maxId=products.reduce((m,p)=>Math.max(m,p.id),0)+1;db.ref('products/'+maxId).set({id:maxId,name,price,category:cat,badge:badge||'',desc,img});toast('Товар добавлен');}
+  if(eid){dbUpdate('products/'+eid,{name,price,category:cat,badge:badge||'',desc,img});toast('Товар обновлён');}
+  else{const maxId=products.reduce((m,p)=>Math.max(m,p.id),0)+1;dbSave('products/'+maxId,{id:maxId,name,price,category:cat,badge:badge||'',desc,img});toast('Товар добавлен');}
+  if(useLocalStorage)dbRefreshProducts();
   hidePF();
 }
 
@@ -621,12 +797,13 @@ function showCF(id){
 }
 function hideCF(){document.getElementById('cListView').style.display='block';document.getElementById('cForm').classList.remove('active');resetImgUp('c');}
 function editC(id){showCF(id);}
-function delC(id){const c=classes.find(x=>x.id===id);if(!confirm('Удалить «'+c.name+'»?'))return;db.ref('classes/'+id).remove();toast('Мастер-класс удалён');}
+function delC(id){const c=classes.find(x=>x.id===id);if(!confirm('Удалить «'+c.name+'»?'))return;dbRemove('classes/'+id);if(useLocalStorage)dbRefreshClasses();toast('Мастер-класс удалён');}
 function saveC(){
   const name=document.getElementById('cName').value.trim(),desc=document.getElementById('cDesc').value.trim(),dur=document.getElementById('cDur').value.trim(),price=parseInt(document.getElementById('cPrice').value),img=document.getElementById('cImg').value,eid=document.getElementById('cId').value;
   if(!name){toast('Введите название');return;}if(!dur){toast('Укажите длительность');return;}if(!price||price<=0){toast('Укажите цену');return;}if(!img){toast('Добавьте фото');return;}
-  if(eid){db.ref('classes/'+eid).update({name,desc,duration:dur,price,img});toast('Обновлено');}
-  else{const maxId=classes.reduce((m,c)=>Math.max(m,c.id),0)+1;db.ref('classes/'+maxId).set({id:maxId,name,desc,duration:dur,price,img});toast('Мастер-класс добавлен');}
+  if(eid){dbUpdate('classes/'+eid,{name,desc,duration:dur,price,img});toast('Обновлено');}
+  else{const maxId=classes.reduce((m,c)=>Math.max(m,c.id),0)+1;dbSave('classes/'+maxId,{id:maxId,name,desc,duration:dur,price,img});toast('Мастер-класс добавлен');}
+  if(useLocalStorage)dbRefreshClasses();
   hideCF();
 }
 
@@ -698,60 +875,369 @@ function resetImgUp(type){
   document.getElementById(type==='p'?'pImgStatus':'cImgStatus').textContent='';
 }
 
-// ===== AI DESCRIBE =====
-function aiDescribe(type) {
-  const name = document.getElementById(type==='p'?'fName':'cName').value.trim();
-  const imgUrl = document.getElementById(type==='p'?'fImg':'cImg').value;
-  
-  let prompt;
-  if (type === 'p') {
-    const cat = document.getElementById('fCat');
-    const catText = cat.options[cat.selectedIndex].text;
-    prompt = 'Ты — копирайтер гончарной мастерской «ТЕРРА». Напиши короткое продающее описание товара для интернет-магазина (2-3 предложения, до 150 символов).\n\n';
-    prompt += 'Товар: ' + (name || 'керамическое изделие') + '\n';
-    prompt += 'Категория: ' + catText + '\n';
-    prompt += 'Стиль: тёплый, уютный, подчёркивающий ручную работу и уникальность.\n\n';
-    if (imgUrl && imgUrl.startsWith('http')) {
-      prompt += 'Фото товара прикреплено — опиши что видишь на фото и используй это в описании.\n\n';
-    }
-    prompt += 'Дай только текст описания, без кавычек и пояснений.';
-  } else {
-    prompt = 'Ты — копирайтер гончарной мастерской «ТЕРРА». Напиши короткое привлекательное описание мастер-класса (2-3 предложения, до 150 символов).\n\n';
-    prompt += 'Мастер-класс: ' + (name || 'гончарный мастер-класс') + '\n';
-    prompt += 'Стиль: вдохновляющий, тёплый, передающий атмосферу творчества.\n\n';
-    if (imgUrl && imgUrl.startsWith('http')) {
-      prompt += 'Фото прикреплено — опиши что видишь и используй это в описании.\n\n';
-    }
-    prompt += 'Дай только текст описания, без кавычек и пояснений.';
-  }
-
-  // Copy prompt to clipboard
-  navigator.clipboard.writeText(prompt).then(function() {
-    toast('📋 Промпт скопирован! Вставьте в Claude');
-  }).catch(function() {
-    // Fallback
-    const ta = document.createElement('textarea');
-    ta.value = prompt;
-    document.body.appendChild(ta);
-    ta.select();
-    document.execCommand('copy');
-    document.body.removeChild(ta);
-    toast('📋 Промпт скопирован! Вставьте в Claude');
-  });
-
-  // Open Claude in new tab
-  setTimeout(function() {
-    window.open('https://claude.ai/new', '_blank');
-  }, 500);
+// ===== AI DESCRIBE (Google Gemini Flash, vision, бесплатно) =====
+function saveApiKey(){
+  const k=document.getElementById('aiKeyInput').value.trim();
+  const st=document.getElementById('aiKeyStatus');
+  if(!k||k.length<20){st.className='ai-key-status err';st.textContent='Слишком короткий ключ';return;}
+  localStorage.setItem('terra_gemini_key',k);
+  document.getElementById('aiKeyInput').value='AIza...'+k.slice(-6);
+  st.className='ai-key-status ok';st.textContent='✓ Сохранён';
+  setTimeout(()=>{st.textContent='';},3000);
+}
+function loadApiKeyUI(){
+  const k=localStorage.getItem('terra_gemini_key');
+  const st=document.getElementById('aiKeyStatus');
+  if(k){document.getElementById('aiKeyInput').value='AIza...'+k.slice(-6);st.className='ai-key-status ok';st.textContent='✓ Ключ сохранён';}
 }
 
-// ===== NAV =====
+async function aiDescribe(type){
+  const apiKey=localStorage.getItem('terra_gemini_key');
+  if(!apiKey){toast('⚠️ Сначала сохраните Google Gemini API Key в настройках');return;}
+
+  const btn=document.querySelector(`#${type==='p'?'pForm':'cForm'} .ai-btn`);
+  const descEl=document.getElementById(type==='p'?'fDesc':'cDesc');
+  const name=document.getElementById(type==='p'?'fName':'cName').value.trim();
+  const imgUrl=document.getElementById(type==='p'?'fImg':'cImg').value;
+  const imgFile=document.getElementById(type==='p'?'pImgIn':'cImgIn').files[0];
+
+  btn.disabled=true;
+  btn.textContent='⏳ Генерирую...';
+
+  // Build text prompt
+  let textPrompt;
+  if(type==='p'){
+    const cat=document.getElementById('fCat');
+    const catText=cat.options[cat.selectedIndex].text;
+    textPrompt=`Ты — копирайтер гончарной мастерской «ТЕРРА». Напиши короткое продающее описание товара (2-3 предложения, до 200 символов). Стиль: тёплый, уютный, подчёркивает ручную работу.\nТовар: ${name||'керамическое изделие'}\nКатегория: ${catText}\n${imgFile||imgUrl?'На фото — товар, опиши что видишь и включи детали в описание.':''}\nДай только текст описания, без кавычек.`;
+  } else {
+    textPrompt=`Ты — копирайтер гончарной мастерской «ТЕРРА». Напиши короткое вдохновляющее описание мастер-класса (2-3 предложения, до 200 символов). Стиль: тёплый, творческий, атмосферный.\nМастер-класс: ${name||'гончарный мастер-класс'}\n${imgFile||imgUrl?'На фото — мастер-класс, опиши атмосферу и включи в описание.':''}\nДай только текст описания, без кавычек.`;
+  }
+
+  // Build Gemini parts
+  const parts=[];
+
+  // Attach image if available
+  if(imgFile){
+    try{
+      const b64=await new Promise((res,rej)=>{
+        const r=new FileReader();
+        r.onload=()=>res(r.result.split(',')[1]);
+        r.onerror=rej;
+        r.readAsDataURL(imgFile);
+      });
+      parts.push({inline_data:{mime_type:imgFile.type||'image/jpeg',data:b64}});
+    }catch(e){console.warn('img read err',e);}
+  } else if(imgUrl&&imgUrl.startsWith('http')){
+    // Gemini supports image URL via fetch+base64 or fileData — load as base64
+    try{
+      const blob=await fetch(imgUrl).then(r=>r.blob());
+      const b64=await new Promise((res,rej)=>{
+        const r=new FileReader();
+        r.onload=()=>res(r.result.split(',')[1]);
+        r.onerror=rej;
+        r.readAsDataURL(blob);
+      });
+      parts.push({inline_data:{mime_type:blob.type||'image/jpeg',data:b64}});
+    }catch(e){console.warn('url img fetch err',e);}
+  }
+
+  parts.push({text:textPrompt});
+
+  try{
+    const resp=await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({contents:[{parts}]})
+      }
+    );
+
+    if(!resp.ok){
+      const err=await resp.json().catch(()=>({}));
+      const msg=err?.error?.message||resp.statusText;
+      if(resp.status===400&&msg.includes('API_KEY')){toast('❌ Неверный API Key');}
+      else if(resp.status===429){toast('⚠️ Превышен лимит запросов, подождите');}
+      else{toast('❌ Ошибка API: '+msg);}
+      return;
+    }
+
+    const data=await resp.json();
+    const text=data?.candidates?.[0]?.content?.parts?.[0]?.text||'';
+    if(text){
+      descEl.value=text.trim();
+      descEl.style.transition='background .4s';
+      descEl.style.background='rgba(138,154,123,.15)';
+      setTimeout(()=>{descEl.style.background='';},1200);
+      toast('✨ Описание готово!');
+    } else {
+      toast('⚠️ Модель не вернула текст');
+    }
+  }catch(e){
+    toast('❌ Сетевая ошибка: '+e.message);
+  }finally{
+    btn.disabled=false;
+    btn.textContent='✨ Описать с ИИ';
+  }
+}
+
+// ===== CLASS DETAIL MODAL =====
+let currentClassId = null;
+function openCL(id){
+  const c=classes.find(x=>x.id===id); if(!c)return;
+  currentClassId=id;
+  document.getElementById('clImg').innerHTML=`<img src="${c.img}" alt="${c.name}">`;
+  document.getElementById('clName').textContent=c.name;
+  document.getElementById('clDur').textContent=c.duration;
+  document.getElementById('clPrice').textContent=c.price.toLocaleString('ru-RU')+' ₽';
+  document.getElementById('clDesc').innerHTML=(c.desc+'<br><br>Все материалы включены в стоимость. Готовое изделие проходит обжиг и выдаётся через 7–10 дней.').replace(/\n/g,'<br>');
+  document.getElementById('clOv').classList.add('open');
+  document.getElementById('clMod').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCL(){document.getElementById('clOv').classList.remove('open');document.getElementById('clMod').classList.remove('open');document.body.style.overflow='';}
+function enrollClass(){
+  const c=classes.find(x=>x.id===currentClassId); if(!c)return;
+  closeCL();
+  // Scroll to contact and pre-fill message
+  document.getElementById('contact').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>{
+    const msg=document.getElementById('cfMsg');
+    if(msg) msg.value=`Хочу записаться на мастер-класс «${c.name}» (${c.duration}, ${c.price.toLocaleString('ru-RU')} ₽)`;
+  },600);
+  toast('Заполните форму ниже для записи');
+}
+
+// ===== SITE CONTENT MANAGEMENT =====
+const defSite = {
+  hero:{img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1600&q=80',title:'Красота,\nрождённая землёй',subtitle:'Авторская керамика ручной работы. Каждое изделие хранит тепло рук мастера и неповторимую историю глины'},
+  about:{img1:'https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=800&q=80',img2:'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=400&q=80',title:'Место, где глина оживает',text1:'ТЕРРА — это пространство для тех, кто ценит настоящие вещи. Мы создаём керамику, которая несёт в себе тепло ручной работы и красоту природных форм.',text2:'В нашей мастерской вы найдёте авторскую посуду, предметы интерьера и подарки — всё выполнено вручную из натуральной глины с уникальными глазурями.'},
+  process:[
+    {img:'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80',title:'Подготовка',desc:'Замешиваем глину, удаляя пузырьки воздуха'},
+    {img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400&q=80',title:'Формовка',desc:'Создаём форму на гончарном круге'},
+    {img:'https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=400&q=80',title:'Глазурь',desc:'Покрываем авторскими глазурями'},
+    {img:'https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&q=80',title:'Обжиг',desc:'Обжигаем при 1200°C'}
+  ],
+  gallery:[
+    {img:'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&q=80',caption:'Набор «Утро»'},
+    {img:'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600&q=80',caption:'Ваза «Лепесток»'},
+    {img:'https://images.unsplash.com/photo-1612196808214-b7e239e5a5e2?w=600&q=80',caption:'Кашпо «Терра»'},
+    {img:'https://images.unsplash.com/photo-1609881092647-6a89e1e3c060?w=600&q=80',caption:'Тарелки «Песок»'},
+    {img:'https://images.unsplash.com/photo-1607893378714-007fd47c8719?w=600&q=80',caption:'Подсвечник «Арка»'},
+    {img:'https://images.unsplash.com/photo-1576020799627-aeac74d58064?w=600&q=80',caption:'Пиалы «Дзен»'}
+  ],
+  contact:{img:'https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=800&q=80',addr:'г. Москва, Гончарная наб., д. 7',phone:'+7 (495) 987-65-43',hours:'Вт–Вс: 10:00 — 20:00'}
+};
+
+let siteData = {};
+
+function loadSiteData(){
+  db.ref('site').once('value', snap => {
+    const d=snap.val();
+    siteData = d ? {...defSite,...d} : {...defSite};
+    if(!d) db.ref('site').set(defSite);
+    applySiteData();
+  });
+}
+
+function applySiteData(){
+  const s=siteData;
+  // Hero
+  if(s.hero){
+    const hImg=document.querySelector('.hero-bg-img img');
+    if(hImg&&s.hero.img) hImg.src=s.hero.img;
+    const hH1=document.querySelector('.hero h1');
+    if(hH1&&s.hero.title) hH1.innerHTML=s.hero.title.replace(/\n/g,'<br>').replace(/землёй/,'<em>землёй</em>');
+    const hP=document.querySelector('.hero p');
+    if(hP&&s.hero.subtitle) hP.textContent=s.hero.subtitle;
+  }
+  // About
+  if(s.about){
+    const aImg1=document.querySelector('.about-img-main img');
+    if(aImg1&&s.about.img1) aImg1.src=s.about.img1;
+    const aImg2=document.querySelector('.about-img-sec img');
+    if(aImg2&&s.about.img2) aImg2.src=s.about.img2;
+    const aTitle=document.querySelector('.about-text .stitle');
+    if(aTitle&&s.about.title) aTitle.innerHTML=s.about.title.replace(/(оживает)/,'<em>$1</em>');
+    const aPs=document.querySelectorAll('.about-text p');
+    if(aPs[0]&&s.about.text1) aPs[0].textContent=s.about.text1;
+    if(aPs[1]&&s.about.text2) aPs[1].textContent=s.about.text2;
+  }
+  // Process
+  if(s.process&&s.process.length){
+    const steps=document.querySelectorAll('.proc-step');
+    s.process.forEach((p,i)=>{
+      if(!steps[i])return;
+      const img=steps[i].querySelector('.proc-img img');
+      if(img) img.src=p.img;
+      const h4=steps[i].querySelector('h4');
+      if(h4) h4.textContent=p.title;
+      const pd=steps[i].querySelector('p');
+      if(pd) pd.textContent=p.desc;
+    });
+  }
+  // Gallery
+  if(s.gallery&&s.gallery.length){
+    const gmas=document.querySelector('.gmas');
+    if(gmas) gmas.innerHTML=s.gallery.map(g=>`<div class="gitem"><img src="${g.img}" alt="${g.caption}" loading="lazy"><div class="gov"><span>${g.caption}</span></div></div>`).join('');
+  }
+  // Contact
+  if(s.contact){
+    const cImg=document.querySelector('.cont-img img');
+    if(cImg&&s.contact.img) cImg.src=s.contact.img;
+    const cItems=document.querySelectorAll('.citem-text p');
+    if(cItems[0]&&s.contact.addr) cItems[0].textContent=s.contact.addr;
+    if(cItems[1]&&s.contact.phone) cItems[1].textContent=s.contact.phone;
+    if(cItems[2]&&s.contact.hours) cItems[2].textContent=s.contact.hours;
+  }
+}
+
+function fillSiteTab(){
+  const s=siteData;
+  // Hero
+  if(s.hero){
+    showSiteImgPrev('hero',s.hero.img);
+    document.getElementById('heroTitle').value=s.hero.title||'';
+    document.getElementById('heroSubtitle').value=s.hero.subtitle||'';
+  }
+  // About
+  if(s.about){
+    showSiteImgPrev('aboutImg1',s.about.img1||'');
+    showSiteImgPrev('aboutImg2',s.about.img2||'');
+    document.getElementById('aboutTitle').value=s.about.title||'';
+    document.getElementById('aboutText1').value=s.about.text1||'';
+    document.getElementById('aboutText2').value=s.about.text2||'';
+  }
+  // Process
+  renderProcAdmin();
+  // Gallery
+  renderGalleryAdmin();
+  // Contact
+  if(s.contact){
+    showSiteImgPrev('contact',s.contact.img||'');
+    document.getElementById('contactAddr').value=s.contact.addr||'';
+    document.getElementById('contactPhone').value=s.contact.phone||'';
+    document.getElementById('contactHours').value=s.contact.hours||'';
+  }
+}
+
+function renderProcAdmin(){
+  const list=document.getElementById('procStepsList');
+  const steps=siteData.process||defSite.process;
+  list.innerHTML=steps.map((p,i)=>`
+    <div class="proc-adm-item" id="procItem${i}">
+      <div class="proc-adm-img" title="Нажмите для смены фото">
+        <img src="${p.img}" alt="" id="procAdmImg${i}">
+        <input type="file" accept="image/*" onchange="hImgProc(event,${i})">
+      </div>
+      <div class="proc-adm-fields">
+        <input type="text" value="${p.title}" id="procTitle${i}" placeholder="Название шага">
+        <input type="text" value="${p.desc}" id="procDesc${i}" placeholder="Описание">
+        <input type="text" value="${p.img}" id="procImg${i}" placeholder="URL фото" oninput="document.getElementById('procAdmImg'+${i}).src=this.value">
+      </div>
+    </div>`).join('');
+}
+
+function renderGalleryAdmin(){
+  const list=document.getElementById('galleryItemsList');
+  const items=siteData.gallery||defSite.gallery;
+  list.innerHTML=items.map((g,i)=>`
+    <div class="gallery-adm-item" id="galItem${i}">
+      <img class="gallery-adm-thumb" src="${g.img}" alt="" id="galThumb${i}">
+      <div class="gallery-adm-fields">
+        <input type="text" value="${g.img}" id="galImg${i}" placeholder="URL фото" oninput="document.getElementById('galThumb'+${i}).src=this.value">
+        <input type="text" value="${g.caption}" id="galCap${i}" placeholder="Подпись">
+      </div>
+      <button class="gallery-adm-del" onclick="removeGalleryItem(${i})">🗑️</button>
+    </div>`).join('');
+}
+
+function addGalleryItem(){
+  if(!siteData.gallery) siteData.gallery=[...defSite.gallery];
+  siteData.gallery.push({img:'',caption:'Новое фото'});
+  renderGalleryAdmin();
+}
+
+function removeGalleryItem(i){
+  if(!siteData.gallery) siteData.gallery=[...defSite.gallery];
+  siteData.gallery.splice(i,1);
+  renderGalleryAdmin();
+}
+
+function hImgProc(e,idx){
+  const file=e.target.files[0]; if(!file)return;
+  const status=document.getElementById('procImg'+idx);
+  uploadToImgBB(file, url=>{
+    document.getElementById('procAdmImg'+idx).src=url;
+    document.getElementById('procImg'+idx).value=url;
+  }, ()=>toast('Ошибка загрузки фото'));
+}
+
+// Site image upload helpers
+function hImgSite(e,type){
+  const file=e.target.files[0]; if(!file)return;
+  const statusId=type+'ImgStatus'||type+'Status';
+  const st=document.getElementById(type==='hero'?'heroImgStatus':type==='contact'?'contactImgStatus':type+'Status');
+  if(st){st.className='adm-img-status uploading';st.textContent='Загрузка...';}
+  uploadToImgBB(file, url=>{
+    showSiteImgPrev(type,url);
+    if(st){st.className='adm-img-status done';st.textContent='✓ Загружено';}
+  }, ()=>{if(st){st.className='adm-img-status err';st.textContent='Ошибка загрузки';}});
+}
+function onImgUrlSite(inp,type){
+  const url=inp.value.trim();
+  if(url.startsWith('http')) showSiteImgPrev(type,url);
+}
+function showSiteImgPrev(type,src){
+  if(!src)return;
+  const upId={hero:'heroImgUp',aboutImg1:'aboutImg1Up',aboutImg2:'aboutImg2Up',contact:'contactImgUp'}[type];
+  if(!upId)return;
+  const up=document.getElementById(upId); if(!up)return;
+  up.classList.add('has');
+  ['UIco','UTxt'].forEach(s=>{const el=document.getElementById(type+s);if(el)el.style.display='none';});
+  const hint=up.querySelector('.uhint');if(hint)hint.style.display='none';
+  let prev=up.querySelector('.adm-img-prev');
+  if(!prev){prev=document.createElement('img');prev.className='adm-img-prev';up.appendChild(prev);}
+  prev.src=src;
+}
+
+function uploadToImgBB(file, onSuccess, onError){
+  const fd=new FormData(); fd.append('image',file);
+  fetch('https://api.imgbb.com/1/upload?key='+IMGBB_KEY,{method:'POST',body:fd})
+    .then(r=>r.json()).then(d=>{if(d.success)onSuccess(d.data.url);else onError();})
+    .catch(onError);
+}
+
+function saveSiteSection(section){
+  let data={};
+  if(section==='hero'){
+    const img=document.querySelector('#heroImgUp .adm-img-prev')?.src||siteData.hero?.img||defSite.hero.img;
+    data={img,title:document.getElementById('heroTitle').value.trim()||defSite.hero.title,subtitle:document.getElementById('heroSubtitle').value.trim()||defSite.hero.subtitle};
+    siteData.hero=data; db.ref('site/hero').set(data); applySiteData(); toast('✓ Hero сохранён');
+  } else if(section==='about'){
+    const img1=document.querySelector('#aboutImg1Up .adm-img-prev')?.src||siteData.about?.img1||defSite.about.img1;
+    const img2=document.querySelector('#aboutImg2Up .adm-img-prev')?.src||siteData.about?.img2||defSite.about.img2;
+    data={img1,img2,title:document.getElementById('aboutTitle').value.trim()||defSite.about.title,text1:document.getElementById('aboutText1').value.trim()||defSite.about.text1,text2:document.getElementById('aboutText2').value.trim()||defSite.about.text2};
+    siteData.about=data; db.ref('site/about').set(data); applySiteData(); toast('✓ О нас сохранено');
+  } else if(section==='process'){
+    const steps=(siteData.process||defSite.process).map((_,i)=>({img:document.getElementById('procImg'+i)?.value||_.img,title:document.getElementById('procTitle'+i)?.value||_.title,desc:document.getElementById('procDesc'+i)?.value||_.desc}));
+    siteData.process=steps; db.ref('site/process').set(steps); applySiteData(); toast('✓ Процесс сохранён');
+  } else if(section==='gallery'){
+    const items=(siteData.gallery||defSite.gallery).map((_,i)=>({img:document.getElementById('galImg'+i)?.value||_.img,caption:document.getElementById('galCap'+i)?.value||_.caption})).filter(g=>g.img);
+    siteData.gallery=items; db.ref('site/gallery').set(items); applySiteData(); toast('✓ Галерея сохранена');
+  } else if(section==='contact'){
+    const img=document.querySelector('#contactImgUp .adm-img-prev')?.src||siteData.contact?.img||defSite.contact.img;
+    data={img,addr:document.getElementById('contactAddr').value.trim()||defSite.contact.addr,phone:document.getElementById('contactPhone').value.trim()||defSite.contact.phone,hours:document.getElementById('contactHours').value.trim()||defSite.contact.hours};
+    siteData.contact=data; db.ref('site/contact').set(data); applySiteData(); toast('✓ Контакты сохранены');
+  }
+}
 document.querySelectorAll('#mainNav a').forEach(a=>a.addEventListener('click',()=>document.getElementById('mainNav').classList.remove('open')));
 
 // ===== SECRET ACCESS =====
 if(window.location.search.includes('admin'))openAdm();
 let sb='';document.addEventListener('keydown',function(e){
-  if(e.key==='Escape'){if(document.getElementById('pdMod').classList.contains('open')){closePD();return;}if(document.getElementById('coMod').classList.contains('open')){closeCO();return;}if(document.getElementById('cartPan').classList.contains('open')){toggleCart();return;}if(document.getElementById('admPan').classList.contains('open')){closeAdm();return;}}
+  if(e.key==='Escape'){if(document.getElementById('pdMod').classList.contains('open')){closePD();return;}if(document.getElementById('clMod').classList.contains('open')){closeCL();return;}if(document.getElementById('coMod').classList.contains('open')){closeCO();return;}if(document.getElementById('cartPan').classList.contains('open')){toggleCart();return;}if(document.getElementById('admPan').classList.contains('open')){closeAdm();return;}}
   if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
   sb+=e.key.toLowerCase();if(sb.length>10)sb=sb.slice(-10);
   if(sb.endsWith('terra')||sb.endsWith('admin')){sb='';openAdm();}
@@ -759,6 +1245,21 @@ let sb='';document.addEventListener('keydown',function(e){
 
 // ===== INIT =====
 initData();
+loadSiteData();
+
+// Load API key UI after login
+const _origShowAdm=window.openAdm;
+document.addEventListener('DOMContentLoaded',()=>{
+  const origLogin=window.doLogin;
+  if(origLogin){
+    window.doLogin=function(){
+      origLogin();
+      setTimeout(()=>{
+        if(document.getElementById('admContent').style.display!=='none')loadApiKeyUI();
+      },100);
+    };
+  }
+});
 </script>
 </body>
 </html>
