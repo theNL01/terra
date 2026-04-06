@@ -728,13 +728,10 @@ function showSuccess(oid){
 function sendContact(){
   const n=document.getElementById('cfName').value.trim(),e=document.getElementById('cfEmail').value.trim(),p=document.getElementById('cfPhone').value.trim(),m=document.getElementById('cfMsg').value.trim();
   if(!n||n.length<2){toast('Укажите имя');return;}
-  fetch('https://api.web3forms.com/submit',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({
-    access_key:W3F_KEY,
-    to:TERRA_EMAIL,
-    subject:'📩 Новое сообщение с сайта ТЕРРА',
-    from_name:'Сайт ТЕРРА',
+  fetch('https://formspree.io/f/xjgppdnp',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({
+    name:n, email:e||'no-email@terra.ru', phone:p||'—',
     message:`Имя: ${n}\nТелефон: ${p||'—'}\nEmail: ${e||'—'}\n\nСообщение:\n${m||'—'}`
-  })}).then(r=>r.json()).then(d=>{if(d.success)toast('Спасибо! Мы скоро ответим');else toast('Ошибка отправки');}).catch(()=>toast('Нет соединения'));
+  })}).then(r=>{if(r.ok)toast('Спасибо! Мы скоро ответим');else toast('Ошибка отправки');}).catch(()=>toast('Нет соединения'));
   ['cfName','cfEmail','cfPhone','cfMsg'].forEach(id=>{document.getElementById(id).value='';});
 }
 
@@ -1051,22 +1048,17 @@ async function submitEnroll(){
   submitBtn.textContent='Отправка...';submitBtn.disabled=true;
 
   try{
-    const r=await fetch('https://api.web3forms.com/submit',{
+    const r=await fetch('https://formspree.io/f/xjgppdnp',{
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify({
-        access_key: W3F_KEY,
-        to: TERRA_EMAIL,
-        subject: `🏺 Запись на мастер-класс «${c.name}»`,
-        from_name: 'Сайт ТЕРРА',
-        message: `Новая заявка на мастер-класс!\n\nМастер-класс: ${c.name}\nДлительность: ${c.duration}\nСтоимость: ${c.price.toLocaleString('ru-RU')} ₽\n\nКлиент: ${name}\nТелефон: ${phone}\nEmail: ${email||'—'}`
+        name, email:email||'no-email@terra.ru', phone,
+        message:`Новая заявка на мастер-класс!\n\nМастер-класс: ${c.name}\nДлительность: ${c.duration}\nСтоимость: ${c.price.toLocaleString('ru-RU')} ₽\n\nКлиент: ${name}\nТелефон: ${phone}\nEmail: ${email||'—'}`
       })
     });
-    const d=await r.json();
-    if(d.success){
+    if(r.ok){
       closeCL();
       toast('✓ Заявка отправлена! Мы свяжемся с вами');
-      // save to Firebase too
       dbSave('enrollments/'+Date.now(),{class:c.name,name,phone,email:email||'',date:new Date().toISOString()});
     } else {
       toast('Ошибка отправки, попробуйте ещё раз');
