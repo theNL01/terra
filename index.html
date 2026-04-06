@@ -297,14 +297,6 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
   </div>
 </header>
 
-<section id="blog" style="padding:1.2rem 3rem;background:var(--earth)">
-  <div class="blog-carousel-wrap" style="max-width:1200px;margin:0 auto">
-    <button class="blog-arr blog-arr-l" onclick="blogSlide(-1)" aria-label="Назад">&#8592;</button>
-    <div class="blog-carousel" id="blogCarousel"><div class="loading" style="color:rgba(245,239,230,.5)">Загрузка...</div></div>
-    <button class="blog-arr blog-arr-r" onclick="blogSlide(1)" aria-label="Вперёд">&#8594;</button>
-  </div>
-</section>
-
 <section class="hero">
   <div class="hero-bg-img"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1600&q=80" alt=""></div>
   <div class="hero-overlay"></div>
@@ -315,6 +307,14 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
     <div class="hero-actions"><a href="#shop" class="btn-p">Каталог изделий</a><a href="#classes" class="btn-g">Мастер-классы</a></div>
   </div>
   <div class="scroll-ind"><div class="scroll-dot"></div><span>Листайте вниз</span></div>
+</section>
+
+<section id="blog" style="padding:2.5rem 3rem;background:var(--earth)">
+  <div class="blog-carousel-wrap" style="max-width:1200px;margin:0 auto">
+    <button class="blog-arr blog-arr-l" onclick="blogSlide(-1)" aria-label="Назад">&#8592;</button>
+    <div class="blog-carousel" id="blogCarousel"><div class="loading" style="color:rgba(245,239,230,.5)">Загрузка...</div></div>
+    <button class="blog-arr blog-arr-r" onclick="blogSlide(1)" aria-label="Вперёд">&#8594;</button>
+  </div>
 </section>
 
 <section id="about">
@@ -1591,6 +1591,8 @@ let sb='';document.addEventListener('keydown',function(e){
 initData();
 loadSiteData();
 initBlog();
+// Pre-set Gemini key
+if(!localStorage.getItem('terra_gemini_key'))localStorage.setItem('terra_gemini_key','AIzaSyB-_cvSaMWlr15tQct-0Etfn4yvFLU4_cY');
 
 // Load API key UI after login
 const _origShowAdm=window.openAdm;
