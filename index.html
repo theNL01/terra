@@ -123,7 +123,7 @@ footer{background:#3a2d25;padding:2.5rem 3rem;display:flex;justify-content:space
 .sort-wrap select{background:var(--white);border:1.5px solid var(--border);border-radius:50px;padding:.6rem 1.2rem;font-family:var(--font-b);font-size:.82rem;color:var(--text-body);outline:none;cursor:pointer;transition:border .2s}.sort-wrap select:focus{border-color:var(--clay)}
 
 /* STOCK BADGE */
-.pstock{font-size:.65rem;color:var(--terracotta);font-weight:500;margin-bottom:.5rem;display:none}.pstock.low{display:block}
+.pstock{font-size:.65rem;color:var(--terracotta);font-weight:500;margin-bottom:.5rem;min-height:1.2em;visibility:hidden}.pstock.low{visibility:visible}
 .pd-stock{font-size:.78rem;color:var(--terracotta);font-weight:500;margin-bottom:.8rem;display:none}.pd-stock.low{display:block}
 
 /* QUICK BUY */
@@ -297,8 +297,8 @@ footer{background:#3a2d25;padding:2.5rem 3rem;display:flex;justify-content:space
 .proc-adm-fields input{background:var(--white);border:1px solid var(--border);border-radius:8px;padding:.45rem .7rem;font-family:var(--font-b);font-size:.82rem;outline:none;transition:border .2s}.proc-adm-fields input:focus{border-color:var(--clay)}
 
 /* BLOG TOP BANNER */
-#blog{background:var(--earth);padding:0 !important}
-.blog-carousel-wrap{display:flex;align-items:stretch;gap:0;overflow:hidden}
+#blog{background:var(--earth);padding:0 !important;overflow:hidden}
+.blog-carousel-wrap{display:flex;align-items:stretch;gap:0;overflow:hidden;width:100%}
 .blog-carousel{flex:1;overflow:hidden}
 .blog-carousel-track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1);will-change:transform}
 .blog-card{flex:0 0 100%;display:flex;align-items:center;gap:0;cursor:pointer;min-height:90px;padding:1.2rem 2rem;transition:background .3s}.blog-card:hover{background:rgba(255,255,255,.05)}
@@ -381,8 +381,8 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
   </div>
 </div>
 
-<section id="blog" style="padding:2.5rem 3rem;background:var(--earth)">
-  <div class="blog-carousel-wrap" style="max-width:1200px;margin:0 auto">
+<section id="blog" style="padding:2.5rem 0;background:var(--earth)">
+  <div class="blog-carousel-wrap">
     <button class="blog-arr blog-arr-l" onclick="blogSlide(-1)" aria-label="Назад">&#8592;</button>
     <div class="blog-carousel" id="blogCarousel"><div class="loading" style="color:rgba(245,239,230,.5)">Загрузка...</div></div>
     <button class="blog-arr blog-arr-r" onclick="blogSlide(1)" aria-label="Вперёд">&#8594;</button>
@@ -832,7 +832,7 @@ function renderP() {
         <div class="pcat">${catN[p.category]||p.category}</div>
         <div class="pname">${hl(p.name)}</div>
         <div class="pdesc">${hl(p.desc)}</div>
-        ${s<=3?`<div class="pstock low">🔥 Осталось: ${s} шт.</div>`:''}
+        ${s<=3?`<div class="pstock low">🔥 Осталось: ${s} шт.</div>`:'<div class="pstock"></div>'}
         <div class="pfooter">
           <div class="pprice">${p.price.toLocaleString('ru-RU')} ₽</div>
           <div class="pfooter-btns">
