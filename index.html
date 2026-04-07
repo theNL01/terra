@@ -589,73 +589,13 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
     <div class="hero-tag"><div class="hero-tag-line"></div><span>Гончарная мастерская</span></div>
     <h1>Красота,<br>рождённая <em>землёй</em></h1>
     <p>Авторская керамика ручной работы. Каждое изделие хранит тепло рук мастера и неповторимую историю глины</p>
-    <div class="hero-actions"><a href="#" onclick="showPage('shop');return false" class="btn-p">Каталог изделий</a><a href="#classes" class="btn-g">Мастер-классы</a></div>
-  </div>
-  <div class="scroll-ind"><div class="scroll-dot"></div><span>Листайте вниз</span></div>
-</section>
-
-<!-- Stats Bar -->
-<div class="stats-bar">
-  <div class="stats-inner">
-    <div class="stat-item"><div class="stat-num">500+</div><div class="stat-label">Довольных покупателей</div></div>
-    <div class="stat-item"><div class="stat-num">12</div><div class="stat-label">Лет мастерству</div></div>
-    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Ручная работа</div></div>
-    <div class="stat-item"><div class="stat-num">1200°C</div><div class="stat-label">Обжиг</div></div>
-  </div>
-</div>
-
-<section id="blog" style="padding:2.5rem 0;background:var(--earth)">
-  <div class="blog-carousel-wrap">
-    <button class="blog-arr blog-arr-l" onclick="blogSlide(-1)" aria-label="Назад">&#8592;</button>
-    <div class="blog-carousel" id="blogCarousel"><div class="loading" style="color:rgba(245,239,230,.5)">Загрузка...</div></div>
-    <button class="blog-arr blog-arr-r" onclick="blogSlide(1)" aria-label="Вперёд">&#8594;</button>
-  </div>
-</section>
-
-<section id="about">
-  <div class="about-grid">
-    <div class="about-visual">
-      <div class="about-acc"></div>
-      <div class="about-img-main"><img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=800&q=80" alt=""></div>
-      <div class="about-img-sec"><img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=400&q=80" alt=""></div>
-    </div>
-    <div class="about-text">
-      <div class="st"><div class="stl"></div><span>О мастерской</span></div>
-      <h2 class="stitle">Место, где глина <em>оживает</em></h2>
-      <p>ТЕРРА — это пространство для тех, кто ценит настоящие вещи. Мы создаём керамику, которая несёт в себе тепло ручной работы и красоту природных форм.</p>
-      <p>В нашей мастерской вы найдёте авторскую посуду, предметы интерьера и подарки — всё выполнено вручную из натуральной глины с уникальными глазурями.</p>
-      <div class="about-feats">
-        <div class="about-feat"><div class="about-feat-dot"></div><span>Ручная работа</span></div>
-        <div class="about-feat"><div class="about-feat-dot"></div><span>Натуральные глазури</span></div>
-        <div class="about-feat"><div class="about-feat-dot"></div><span>Авторский дизайн</span></div>
-        <div class="about-feat"><div class="about-feat-dot"></div><span>Высокотемпературный обжиг</span></div>
-      </div>
-    </div>
+    <div class="hero-actions"><a href="#" onclick="showPage('shop');return false" class="btn-p">Каталог изделий</a><a href="#kids" class="btn-g">Записать ребёнка</a></div>
   </div>
 </section>
 
 <!-- ДЕТСКАЯ СТУДИЯ -->
 <section id="kids">
   <div class="sh"><div class="st"><div class="stl"></div><span>Детская студия</span><div class="stl"></div></div><h2 class="stitle">Гончарство для <em>детей</em></h2><p class="sdesc">Развиваем творческое мышление, моторику и усидчивость через работу с глиной</p></div>
-
-  <div class="kids-hero">
-    <div class="kids-hero-text">
-      <div class="st" style="justify-content:flex-start"><div class="stl"></div><span>Почему это важно</span></div>
-      <h2 class="stitle" style="text-align:left;font-size:clamp(1.6rem,3vw,2.2rem)">Глина развивает <em>ребёнка</em></h2>
-      <p>Гончарный круг — это не просто лепка. Это концентрация, терпение, пространственное мышление и радость от создания чего-то настоящего своими руками.</p>
-      <p>Наши педагоги работают с детьми с 5 лет. Маленькие группы (до 6 человек) гарантируют внимание каждому ребёнку.</p>
-      <div class="kids-age-tabs">
-        <button class="age-tab active" onclick="filterKids('all',this)">Все возрасты</button>
-        <button class="age-tab" onclick="filterKids('5-7',this)">5–7 лет</button>
-        <button class="age-tab" onclick="filterKids('8-11',this)">8–11 лет</button>
-        <button class="age-tab" onclick="filterKids('12-17',this)">12–17 лет</button>
-      </div>
-      <a href="#enroll" class="btn-p" style="display:inline-block;text-decoration:none">Записать ребёнка →</a>
-    </div>
-    <div class="kids-hero-img">
-      <img src="https://images.unsplash.com/photo-1536094349997-b4f4a3b3c3d8?w=600&q=80" alt="Дети на гончарном кружке" onerror="this.src='https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=600&q=80'">
-    </div>
-  </div>
 
   <div class="kids-programs" id="kidsGrid">
     <div class="kids-card" data-age="5-7">
@@ -715,28 +655,6 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
       </select>
       <button class="enroll-submit" onclick="submitEnroll()">Записаться на занятие →</button>
     </div>
-  </div>
-</section>
-
-<section id="process">
-  <div class="sh"><div class="st"><div class="stl"></div><span>Процесс</span><div class="stl"></div></div><h2 class="stitle">Как рождается <em>керамика</em></h2><p class="sdesc">От куска глины до готового изделия</p></div>
-  <div class="proc-grid">
-    <div class="proc-step"><div class="proc-img"><img src="https://images.unsplash.com/photo-1621939514649-280e2ee25f60?w=400&q=80" alt=""></div><div class="proc-num">01</div><h4>Подготовка</h4><p>Замешиваем глину, удаляя пузырьки воздуха</p></div>
-    <div class="proc-step"><div class="proc-img"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=400&q=80" alt=""></div><div class="proc-num">02</div><h4>Формовка</h4><p>Создаём форму на гончарном круге</p></div>
-    <div class="proc-step"><div class="proc-img"><img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=400&q=80" alt=""></div><div class="proc-num">03</div><h4>Глазурь</h4><p>Покрываем авторскими глазурями</p></div>
-    <div class="proc-step"><div class="proc-img"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&q=80" alt=""></div><div class="proc-num">04</div><h4>Обжиг</h4><p>Обжигаем при 1200°C</p></div>
-  </div>
-</section>
-
-<section id="gallery">
-  <div class="sh"><div class="st"><div class="stl"></div><span>Портфолио</span><div class="stl"></div></div><h2 class="stitle">Наши <em>работы</em></h2></div>
-  <div class="gmas">
-    <div class="gitem"><img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=600&q=80" alt=""><div class="gov"><span>Набор «Утро»</span></div></div>
-    <div class="gitem"><img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=600&q=80" alt=""><div class="gov"><span>Ваза «Лепесток»</span></div></div>
-    <div class="gitem"><img src="https://images.unsplash.com/photo-1612196808214-b7e239e5a5e2?w=600&q=80" alt=""><div class="gov"><span>Кашпо «Терра»</span></div></div>
-    <div class="gitem"><img src="https://images.unsplash.com/photo-1609881092647-6a89e1e3c060?w=600&q=80" alt=""><div class="gov"><span>Тарелки «Песок»</span></div></div>
-    <div class="gitem"><img src="https://images.unsplash.com/photo-1607893378714-007fd47c8719?w=600&q=80" alt=""><div class="gov"><span>Подсвечник «Арка»</span></div></div>
-    <div class="gitem"><img src="https://images.unsplash.com/photo-1576020799627-aeac74d58064?w=600&q=80" alt=""><div class="gov"><span>Пиалы «Дзен»</span></div></div>
   </div>
 </section>
 
