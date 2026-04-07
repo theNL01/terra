@@ -945,7 +945,7 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
 <div class="adm-ov" id="admOv" onclick="closeAdm()"></div>
 <div class="adm-pan" id="admPan">
   <div class="adm-h"><h2>Панель управления</h2><button class="adm-cl" onclick="closeAdm()">✕</button></div>
-  <div class="adm-tabs" style="flex-wrap:wrap"><button class="adm-tab active" id="tProd" onclick="switchTab('prod')">Товары</button><button class="adm-tab" id="tCls" onclick="switchTab('cls')">МК</button><button class="adm-tab" id="tBlog" onclick="switchTab('blog')">Блог</button><button class="adm-tab" id="tSched" onclick="switchTab('sched')">Расписание</button><button class="adm-tab" id="tCerts" onclick="switchTab('certs')">Сертификаты</button><button class="adm-tab" id="tEvts" onclick="switchTab('evts')">Мероприятия</button><button class="adm-tab" id="tOrders" onclick="switchTab('orders')">Заказы</button><button class="adm-tab" id="tSite" onclick="switchTab('site')">Сайт</button></div>
+  <div class="adm-tabs" style="flex-wrap:wrap"><button class="adm-tab active" id="tProd" onclick="switchTab('prod')">Товары</button><button class="adm-tab" id="tCls" onclick="switchTab('cls')">МК</button><button class="adm-tab" id="tBlog" onclick="switchTab('blog')">Блог</button><button class="adm-tab" id="tProgs" onclick="switchTab('progs')">Программы</button><button class="adm-tab" id="tSched" onclick="switchTab('sched')">Расписание</button><button class="adm-tab" id="tCerts" onclick="switchTab('certs')">Сертификаты</button><button class="adm-tab" id="tEvts" onclick="switchTab('evts')">Мероприятия</button><button class="adm-tab" id="tOrders" onclick="switchTab('orders')">Заказы</button><button class="adm-tab" id="tSite" onclick="switchTab('site')">Сайт</button></div>
   <div class="adm-body">
     <div class="adm-login" id="admLogin">
       <p>Введите пароль для доступа</p>
@@ -1029,6 +1029,34 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
       <div id="tabOrders" style="display:none">
         <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sOrdersCount">0</div><div class="adm-stat-l">Заказов</div></div><div class="adm-stat"><div class="adm-stat-n" id="sOrdersSum">0</div><div class="adm-stat-l">Сумма (₽)</div></div></div>
         <div class="orders-list" id="ordersList"><div class="loading">Загрузка заказов...</div></div>
+      </div>
+
+      <!-- Programs Admin Tab -->
+      <div id="tabProgs" style="display:none">
+        <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sProgsCount">0</div><div class="adm-stat-l">Программ</div></div></div>
+        <div id="progsListView"><div class="adm-list" id="admProgsList"></div><button class="adm-add-btn" onclick="showProgF()">+ Добавить программу</button></div>
+        <div class="adm-form" id="progForm">
+          <div class="adm-form-title"><button class="adm-form-back" onclick="hideProgF()">←</button><span id="progFTitle">Новая программа</span></div>
+          <div class="adm-img-up" id="progImgUp"><div class="uicon" id="progUIco">📷</div><div class="utxt" id="progUTxt">Фото программы</div><div class="uhint">Загрузка на ImgBB</div><input type="file" id="progImgIn" accept="image/*" onchange="hImg(event,'prog')"></div>
+          <div class="adm-img-status" id="progImgStatus"></div>
+          <div class="adm-field full"><input type="text" id="progImgUrl" placeholder="или ссылка на фото..." oninput="onImgUrl(this,'prog')"></div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Название</label><input type="text" id="progName" placeholder="Знакомство с кругом"></div>
+            <div class="adm-field"><label>Цена (₽)</label><input type="number" id="progPrice"></div>
+          </div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Формат</label><select id="progFormat"><option value="single">Разовый МК</option><option value="course">Курс</option><option value="kids">Детский</option></select></div>
+            <div class="adm-field"><label>Тип (отображаемый)</label><input type="text" id="progType" placeholder="Разовый МК, Курс, Детский..."></div>
+          </div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Возраст</label><input type="text" id="progAge" placeholder="14+"></div>
+            <div class="adm-field"><label>Цвет бейджа</label><input type="color" id="progAgeColor" value="#c67d4a"></div>
+          </div>
+          <div class="adm-field full"><label>Длительность</label><input type="text" id="progDuration" placeholder="2 часа"></div>
+          <div class="adm-field full"><label>Описание</label><textarea id="progDesc" style="min-height:80px"></textarea></div>
+          <input type="hidden" id="progId"><input type="hidden" id="progImg">
+          <div class="adm-form-acts"><button class="adm-save" onclick="saveProg()">Сохранить</button><button class="adm-cancel" onclick="hideProgF()">Отмена</button></div>
+        </div>
       </div>
 
       <!-- Schedule Admin Tab -->
@@ -1534,7 +1562,7 @@ function openAdm(){document.getElementById('admOv').classList.add('open');docume
 function closeAdm(){document.getElementById('admOv').classList.remove('open');document.getElementById('admPan').classList.remove('open');}
 function doLogin(){if(document.getElementById('admPass').value===PASS){loggedIn=true;document.getElementById('admLogin').style.display='none';document.getElementById('admContent').style.display='block';renderAdmP();loadApiKeyUI();}else{document.getElementById('logErr').style.display='block';setTimeout(()=>document.getElementById('logErr').style.display='none',2000);}}
 function switchTab(t){
-  const tabs=['prod','cls','blog','sched','certs','evts','orders','site'];
+  const tabs=['prod','cls','blog','progs','sched','certs','evts','orders','site'];
   tabs.forEach(tab=>{
     const tabEl=document.getElementById('tab'+tab.charAt(0).toUpperCase()+tab.slice(1));
     const btnEl=document.getElementById('t'+tab.charAt(0).toUpperCase()+tab.slice(1));
@@ -1544,6 +1572,7 @@ function switchTab(t){
   if(t==='prod')renderAdmP();
   if(t==='cls')renderAdmC();
   if(t==='blog')renderAdmBlog();
+  if(t==='progs')renderAdmProgs();
   if(t==='sched')renderAdmSched();
   if(t==='certs')renderAdmCerts();
   if(t==='evts')renderAdmEvts();
@@ -1624,16 +1653,16 @@ function uploadToStorage(file, path, onSuccess, onError){
 function hImg(e,type){
   const file=e.target.files[0];if(!file)return;
   if(file.size>10*1024*1024){toast('Файл слишком большой (макс. 10 МБ)');return;}
-  const statusMap={p:'pImgStatus',c:'cImgStatus',blog:'blogImgStatus',sched:'schedImgStatus',evt:'evtImgStatus'};
+  const statusMap={p:'pImgStatus',c:'cImgStatus',blog:'blogImgStatus',sched:'schedImgStatus',evt:'evtImgStatus',prog:'progImgStatus'};
   const status=document.getElementById(statusMap[type]||'pImgStatus');
   status.textContent='⏳ Загрузка...';status.className='adm-img-status uploading';
   const localReader=new FileReader();
   localReader.onload=ev=>showImgPrev(type,ev.target.result);
   localReader.readAsDataURL(file);
-  const folder={p:'products',c:'classes',blog:'blog',sched:'schedule',evt:'events'}[type]||'misc';
+  const folder={p:'products',c:'classes',blog:'blog',sched:'schedule',evt:'events',prog:'programs'}[type]||'misc';
   uploadToStorage(file, folder, url=>{
-    const hidMap={p:'fImg',c:'cImg',blog:'blogImg',sched:'schedImg',evt:'evtImg'};
-    const urlMap={p:'pImgUrl',c:'cImgUrl',blog:'blogImgUrl',sched:'schedImgUrl',evt:'evtImgUrl'};
+    const hidMap={p:'fImg',c:'cImg',blog:'blogImg',sched:'schedImg',evt:'evtImg',prog:'progImg'};
+    const urlMap={p:'pImgUrl',c:'cImgUrl',blog:'blogImgUrl',sched:'schedImgUrl',evt:'evtImgUrl',prog:'progImgUrl'};
     document.getElementById(hidMap[type]).value=url;
     document.getElementById(urlMap[type]).value=url;
     showImgPrev(type,url);
@@ -1646,15 +1675,15 @@ function hImg(e,type){
 function onImgUrl(inp,type){
   const url=inp.value.trim();
   if(url&&(url.startsWith('http://')||url.startsWith('https://'))){
-    const hidMap={p:'fImg',c:'cImg',blog:'blogImg',sched:'schedImg',evt:'evtImg'};
+    const hidMap={p:'fImg',c:'cImg',blog:'blogImg',sched:'schedImg',evt:'evtImg',prog:'progImg'};
     document.getElementById(hidMap[type]||'fImg').value=url;
     showImgPrev(type,url);
   }
 }
 function showImgPrev(type,src){
-  const upMap={p:'pImgUp',c:'cImgUp',blog:'blogImgUp',sched:'schedImgUp',evt:'evtImgUp'};
-  const icoMap={p:'pUIco',c:'cUIco',blog:'blogUIco',sched:'schedUIco',evt:'evtUIco'};
-  const txtMap={p:'pUTxt',c:'cUTxt',blog:'blogUTxt',sched:'schedUTxt',evt:'evtUTxt'};
+  const upMap={p:'pImgUp',c:'cImgUp',blog:'blogImgUp',sched:'schedImgUp',evt:'evtImgUp',prog:'progImgUp'};
+  const icoMap={p:'pUIco',c:'cUIco',blog:'blogUIco',sched:'schedUIco',evt:'evtUIco',prog:'progUIco'};
+  const txtMap={p:'pUTxt',c:'cUTxt',blog:'blogUTxt',sched:'schedUTxt',evt:'evtUTxt',prog:'progUTxt'};
   const up=document.getElementById(upMap[type]||'pImgUp');if(!up)return;
   up.classList.add('has');
   const ico=document.getElementById(icoMap[type]);if(ico)ico.style.display='none';
@@ -1663,12 +1692,12 @@ function showImgPrev(type,src){
   let prev=up.querySelector('.adm-img-prev');if(!prev){prev=document.createElement('img');prev.className='adm-img-prev';up.appendChild(prev);}prev.src=src;
 }
 function resetImgUp(type){
-  const upMap={p:'pImgUp',c:'cImgUp',blog:'blogImgUp',sched:'schedImgUp',evt:'evtImgUp'};
-  const icoMap={p:'pUIco',c:'cUIco',blog:'blogUIco',sched:'schedUIco',evt:'evtUIco'};
-  const txtMap={p:'pUTxt',c:'cUTxt',blog:'blogUTxt',sched:'schedUTxt',evt:'evtUTxt'};
-  const statusMap={p:'pImgStatus',c:'cImgStatus',blog:'blogImgStatus',sched:'schedImgStatus',evt:'evtImgStatus'};
-  const inMap={p:'pImgIn',c:'cImgIn',blog:'blogImgIn',sched:'schedImgIn',evt:'evtImgIn'};
-  const urlMap={p:'pImgUrl',c:'cImgUrl',blog:'blogImgUrl',sched:'schedImgUrl',evt:'evtImgUrl'};
+  const upMap={p:'pImgUp',c:'cImgUp',blog:'blogImgUp',sched:'schedImgUp',evt:'evtImgUp',prog:'progImgUp'};
+  const icoMap={p:'pUIco',c:'cUIco',blog:'blogUIco',sched:'schedUIco',evt:'evtUIco',prog:'progUIco'};
+  const txtMap={p:'pUTxt',c:'cUTxt',blog:'blogUTxt',sched:'schedUTxt',evt:'evtUTxt',prog:'progUTxt'};
+  const statusMap={p:'pImgStatus',c:'cImgStatus',blog:'blogImgStatus',sched:'schedImgStatus',evt:'evtImgStatus',prog:'progImgStatus'};
+  const inMap={p:'pImgIn',c:'cImgIn',blog:'blogImgIn',sched:'schedImgIn',evt:'evtImgIn',prog:'progImgIn'};
+  const urlMap={p:'pImgUrl',c:'cImgUrl',blog:'blogImgUrl',sched:'schedImgUrl',evt:'evtImgUrl',prog:'progImgUrl'};
   const up=document.getElementById(upMap[type]||'pImgUp');if(!up)return;
   up.classList.remove('has');
   const ico=document.getElementById(icoMap[type]);if(ico)ico.style.display='';
@@ -2563,6 +2592,100 @@ function progEnroll(id){
   document.getElementById('qbModal').querySelector('h3').textContent='Записаться на программу';
 }
 
+// ===== ADMIN PROGRAMS =====
+let adminPrograms = [...programsData];
+function renderAdmProgs(){
+  document.getElementById('sProgsCount').textContent=adminPrograms.length;
+  document.getElementById('admProgsList').innerHTML=adminPrograms.map(p=>`
+    <div class="adm-row">
+      <div class="adm-thumb" style="overflow:hidden;border-radius:8px"><img src="${p.img||''}" alt="" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none'"></div>
+      <div class="adm-rinfo"><strong>${p.name}</strong><small>${p.type||''} · ${p.age||''} · ${p.duration||''}</small></div>
+      <div class="adm-rprice">${(p.price||0).toLocaleString('ru-RU')} ₽</div>
+      <div class="adm-racts"><button class="adm-btn-sm" onclick="editProg(${p.id})">✏️</button><button class="adm-btn-sm del" onclick="delProg(${p.id})">🗑️</button></div>
+    </div>`).join('');
+  document.getElementById('progsListView').style.display='block';
+  document.getElementById('progForm').classList.remove('active');
+  document.getElementById('progForm').style.display='';
+}
+function showProgF(id){
+  document.getElementById('progsListView').style.display='none';
+  const form=document.getElementById('progForm');
+  form.classList.add('active');form.style.display='flex';
+  if(id){
+    const p=adminPrograms.find(x=>x.id===id);if(!p)return;
+    document.getElementById('progFTitle').textContent='Редактировать программу';
+    document.getElementById('progId').value=p.id;
+    document.getElementById('progName').value=p.name||'';
+    document.getElementById('progPrice').value=p.price||'';
+    document.getElementById('progFormat').value=p.format||'single';
+    document.getElementById('progType').value=p.type||'';
+    document.getElementById('progAge').value=p.age||'';
+    document.getElementById('progAgeColor').value=p.ageColor||'#c67d4a';
+    document.getElementById('progDuration').value=p.duration||'';
+    document.getElementById('progDesc').value=p.desc||'';
+    document.getElementById('progImg').value=p.img||'';
+    document.getElementById('progImgUrl').value=p.img||'';
+    if(p.img)showImgPrev('prog',p.img);
+  } else {
+    document.getElementById('progFTitle').textContent='Новая программа';
+    ['progId','progName','progPrice','progType','progAge','progDuration','progDesc','progImg','progImgUrl'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+    document.getElementById('progFormat').value='single';
+    document.getElementById('progAgeColor').value='#c67d4a';
+    resetImgUp('prog');
+  }
+}
+function hideProgF(){
+  document.getElementById('progsListView').style.display='block';
+  const form=document.getElementById('progForm');
+  form.classList.remove('active');form.style.display='';
+  resetImgUp('prog');
+}
+function editProg(id){showProgF(id);}
+function delProg(id){
+  if(!confirm('Удалить программу?'))return;
+  adminPrograms=adminPrograms.filter(p=>p.id!==id);
+  const idx=programsData.findIndex(p=>p.id===id);if(idx>=0)programsData.splice(idx,1);
+  saveProgsToDb();renderAdmProgs();renderProgs();toast('Программа удалена');
+}
+function saveProg(){
+  const name=document.getElementById('progName').value.trim();
+  const price=parseInt(document.getElementById('progPrice').value);
+  if(!name){toast('Введите название');return;}
+  if(!price){toast('Укажите цену');return;}
+  const eid=parseInt(document.getElementById('progId').value)||0;
+  const data={
+    id:eid||Date.now(),
+    name,price,
+    format:document.getElementById('progFormat').value,
+    type:document.getElementById('progType').value.trim()||document.getElementById('progFormat').options[document.getElementById('progFormat').selectedIndex].text,
+    age:document.getElementById('progAge').value.trim(),
+    ageColor:document.getElementById('progAgeColor').value,
+    duration:document.getElementById('progDuration').value.trim(),
+    desc:document.getElementById('progDesc').value.trim(),
+    img:document.getElementById('progImg').value||'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=500&q=80'
+  };
+  if(eid){
+    adminPrograms=adminPrograms.map(p=>p.id===eid?data:p);
+    const idx=programsData.findIndex(p=>p.id===eid);if(idx>=0)programsData[idx]=data;
+  } else {
+    adminPrograms.push(data);
+    programsData.push(data);
+  }
+  saveProgsToDb();hideProgF();renderAdmProgs();renderProgs();toast('✓ Программа сохранена');
+}
+function saveProgsToDb(){const obj={};adminPrograms.forEach(p=>{obj[p.id]=p;});db.ref('adminPrograms').set(obj);}
+function loadAdminProgs(){
+  db.ref('adminPrograms').once('value',snap=>{
+    const d=snap.val();
+    if(d){
+      adminPrograms=Object.values(d);
+      adminPrograms.forEach(p=>{const idx=programsData.findIndex(x=>x.id===p.id);if(idx>=0)programsData[idx]=p;else programsData.push(p);});
+    } else {
+      adminPrograms=[...programsData];
+    }
+  });
+}
+
 // ===== ADMIN SCHEDULE =====
 let adminSchedEvents = [...schedEvents];
 function renderAdmSched(){
@@ -3061,6 +3184,7 @@ initBlog();
 loadAdminSched();
 loadAdminCerts();
 loadAdminEvts();
+loadAdminProgs();
 if(!localStorage.getItem('terra_gemini_key'))localStorage.setItem('terra_gemini_key','AIzaSyB-_cvSaMWlr15tQct-0Etfn4yvFLU4_cY');
 setTimeout(openSub, 15000);
 
