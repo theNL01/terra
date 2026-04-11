@@ -3292,16 +3292,15 @@ function saveSched(){
 }
 function saveSchedToDb(){const obj={};adminSchedEvents.forEach(e=>{obj[e.id]=e;});db.ref('adminSchedule').set(obj);}
 function loadAdminSched(){
+  adminSchedEvents=[...schedEvents];
   db.ref('adminSchedule').once('value',snap=>{
     const d=snap.val();
     if(d){
       const loaded=Object.values(d);
       loaded.forEach(e=>{const idx=schedEvents.findIndex(x=>x.id===e.id);if(idx>=0)schedEvents[idx]=e;else schedEvents.push(e);});
       adminSchedEvents=[...schedEvents];
-    } else {
-      adminSchedEvents=[...schedEvents];
     }
-    // Re-render schedule page if it's currently visible
+    // Re-render schedule page if visible
     const sp=document.getElementById('schedulePage');
     if(sp&&sp.style.display!=='none') initScheduleCards();
   });
@@ -3492,17 +3491,23 @@ function showPage(page){
   if(page==='programs'){progsVisible=8;renderProgs();}
   if(page==='services'){}
   if(page==='schedule'){
-    const grid=document.getElementById('schedCardGrid');
-    if(grid) grid.innerHTML='<div class="loading" style="grid-column:1/-1;text-align:center;padding:3rem;color:var(--text-muted)">Загрузка расписания...</div>';
-    db.ref('adminSchedule').once('value',snap=>{
+    // Render static data immediately so page is never blank
+    adminSchedEvents=[...schedEvents];
+    initScheduleCards();
+    // Then merge any Firebase custom entries on top (silently)
+    db.ref('adminSchedule').once('value').then(snap=>{
       const d=snap.val();
       if(d){
-        const loaded=Object.values(d);
-        loaded.forEach(e=>{const idx=schedEvents.findIndex(x=>x.id===e.id);if(idx>=0)schedEvents[idx]=e;else schedEvents.push(e);});
+        let changed=false;
+        Object.values(d).forEach(e=>{
+          const idx=schedEvents.findIndex(x=>x.id===e.id);
+          if(idx>=0){schedEvents[idx]=e;changed=true;}
+          else{schedEvents.push(e);changed=true;}
+        });
         adminSchedEvents=[...schedEvents];
+        if(changed) initScheduleCards();
       }
-      initScheduleCards();
-    });
+    }).catch(()=>{});
   }
   if(page==='certificates'){initCerts();renderCertsPage();}
   if(page==='events'){loadSobytia('smi');}
