@@ -1969,8 +1969,8 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
             <div class="adm-field"><label>Тип</label><select id="schedType"><option value="kids">Детское</option><option value="adults">Взрослое</option><option value="all">Все возрасты</option></select></div>
           </div>
           <div class="adm-form-row">
-            <div class="adm-field"><label>Начало</label><input type="text" id="schedTime" placeholder="10:00"></div>
-            <div class="adm-field"><label>Конец</label><input type="text" id="schedEndTime" placeholder="11:30"></div>
+            <div class="adm-field"><label>Начало</label><input type="time" id="schedTime" placeholder="10:00"></div>
+            <div class="adm-field"><label>Конец</label><input type="time" id="schedEndTime" placeholder="11:30"></div>
           </div>
           <div class="adm-form-row">
             <div class="adm-field"><label>Цена (₽)</label><input type="number" id="schedPrice"></div>
@@ -3769,9 +3769,12 @@ function delSched(id){
 }
 function saveSched(){
   const name=document.getElementById('schedName').value.trim();
-  const time=document.getElementById('schedTime').value.trim();
+  const rawTime=document.getElementById('schedTime').value.trim();
+  const rawEnd=document.getElementById('schedEndTime').value.trim();
   if(!name){toast('Введите название');return;}
-  if(!time){toast('Введите время начала');return;}
+  if(!rawTime){toast('Введите время начала');return;}
+  const time=normalizeTime(rawTime);
+  const endTime=normalizeTime(rawEnd);
   const eid=parseInt(document.getElementById('schedId').value)||0;
   const data={
     id:eid||Date.now(),
@@ -3780,16 +3783,18 @@ function saveSched(){
     day:parseInt(document.getElementById('schedDay').value)||1,
     type:document.getElementById('schedType').value||'kids',
     time,
-    endTime:document.getElementById('schedEndTime').value.trim(),
+    endTime,
     price:parseInt(document.getElementById('schedPrice').value)||0,
     seats:parseInt(document.getElementById('schedSeats').value)||6,
     desc:document.getElementById('schedDesc').value.trim(),
     important:document.getElementById('schedImportant').value.trim(),
     teacher:document.getElementById('schedTeacher')?.value.trim()||'',
     img:document.getElementById('schedImg').value||'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80',
-    duration:(()=>{try{const [sh,sm]=time.split(':').map(Number);const et=document.getElementById('schedEndTime').value.trim();if(!et)return 60;const [eh,em]=et.split(':').map(Number);return(eh*60+em)-(sh*60+sm);}catch(e){return 60;}})(),
-    tags:[`⏱ ${time}${document.getElementById('schedEndTime').value?'–'+document.getElementById('schedEndTime').value:''}`,document.getElementById('schedAge').value.trim()||'Все']
+    duration:calcDuration(time,endTime),
+    tags:[`${time}${endTime?'–'+endTime:''}`,document.getElementById('schedAge').value.trim()||'Все']
   };
+  // Safety check: replace any NaN values with defaults
+  Object.keys(data).forEach(k=>{if(typeof data[k]==='number'&&isNaN(data[k]))data[k]=0;});
   if(eid){
     adminSchedEvents=adminSchedEvents.map(e=>e.id===eid?data:e);
     const idx=schedEvents.findIndex(e=>e.id===eid);if(idx>=0)schedEvents[idx]=data;
@@ -3798,9 +3803,28 @@ function saveSched(){
     schedEvents.push(data);
   }
   saveSchedToDb();hideSchedF();renderAdmSched();toast('✓ Занятие сохранено');
-  // refresh schedule page if visible
   const sp=document.getElementById('schedulePage');
   if(sp&&sp.style.display!=='none') initScheduleCards();
+}
+function normalizeTime(t){
+  if(!t)return '';
+  t=t.trim().replace(/[^0-9:]/g,'');
+  if(!t.includes(':')){ // e.g. "10" or "1030"
+    if(t.length<=2) return t.padStart(2,'0')+':00';
+    return t.slice(0,-2).padStart(2,'0')+':'+t.slice(-2);
+  }
+  const [h,m]=(t+':00').split(':');
+  return String(parseInt(h)||0).padStart(2,'0')+':'+String(parseInt(m)||0).padStart(2,'0');
+}
+function calcDuration(startTime, endTime){
+  try{
+    const s=normalizeTime(startTime), e2=normalizeTime(endTime);
+    if(!s||!e2)return 60;
+    const [sh,sm]=s.split(':').map(Number);
+    const [eh,em]=e2.split(':').map(Number);
+    const diff=(eh*60+em)-(sh*60+sm);
+    return(isNaN(diff)||diff<=0)?60:diff;
+  }catch(ex){return 60;}
 }
 function saveSchedToDb(){const obj={};adminSchedEvents.forEach(e=>{obj[e.id]=e;});db.ref('adminSchedule').set(obj);}
 function loadAdminSched(){
