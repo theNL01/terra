@@ -3913,4 +3913,16 @@ setTimeout(openSub, 15000);
 // Load API key UI after login
 const _origShowAdm=window.openAdm;
 document.addEventListener('DOMContentLoaded',()=>{
-  const origLogin=wi
+  const origLogin=window.doLogin;
+  if(origLogin){
+    window.doLogin=function(){
+      origLogin();
+      setTimeout(()=>{
+        if(document.getElementById('admContent').style.display!=='none')loadApiKeyUI();
+      },100);
+    };
+  }
+});
+</script>
+</body>
+</html>
