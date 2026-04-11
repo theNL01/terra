@@ -4105,77 +4105,87 @@ function renderSchedGroups() {
   const contactBlock = document.getElementById('schedContactBlock');
   if(!container) return;
 
-  // Filter events with type coercion for safety
-  let evs = [...schedEvents];
-  if(schedFilters.day !== 'all') evs = evs.filter(e=>Number(e.day)===Number(schedFilters.day));
-  if(schedFilters.type !== 'all') evs = evs.filter(e=>e.type===schedFilters.type);
-  if(schedFilters.age !== 'all') {
-    const ageStart = {'5':'5','8':'8','12':'12','18':'18'}[schedFilters.age]||'';
-    evs = evs.filter(e=>e.age&&e.age.includes(ageStart));
-  }
+  try {
+    let evs = schedEvents.filter(e=>e&&e.name&&e.day!==undefined);
+    if(schedFilters.day !== 'all') evs = evs.filter(e=>Number(e.day)===Number(schedFilters.day));
+    if(schedFilters.type !== 'all') evs = evs.filter(e=>e.type===schedFilters.type);
+    if(schedFilters.age !== 'all') {
+      const ageStart = {'5':'5','8':'8','12':'12','18':'18'}[schedFilters.age]||'';
+      if(ageStart) evs = evs.filter(e=>e.age&&String(e.age).includes(ageStart));
+    }
 
-  if(!evs.length) {
-    container.innerHTML='';
-    if(emptyEl) emptyEl.style.display='block';
+    if(!evs.length) {
+      container.innerHTML='';
+      if(emptyEl) emptyEl.style.display='block';
+      if(contactBlock) contactBlock.style.display='block';
+      return;
+    }
+    if(emptyEl) emptyEl.style.display='none';
     if(contactBlock) contactBlock.style.display='block';
-    return;
+
+    const dayOrder = [1,2,3,4,5,6,0];
+    const groups = {};
+    evs.forEach(e=>{ const d=Number(e.day); if(groups[d]===undefined) groups[d]=[]; groups[d].push(e); });
+
+    const parts = [];
+    dayOrder.forEach(d=>{
+      if(!groups[d]||!groups[d].length) return;
+      const dayEvs = groups[d].slice().sort((a,b)=>String(a.time||'').localeCompare(String(b.time||'')));
+      const cnt = dayEvs.length;
+      const cntLabel = cnt===1?'занятие':cnt<5?'занятия':'занятий';
+      const cards = dayEvs.map(e=>{ try{return schedCardHTML(e);}catch(ex){return '';} }).join('');
+      parts.push(
+        '<div class="sched-day-group">' +
+        '<div class="sched-day-header">' +
+        '<div class="sched-day-name">' + (schedDayNames[d]||'') + '</div>' +
+        '<div class="sched-day-count">' + cnt + ' ' + cntLabel + '</div>' +
+        '</div>' +
+        '<div class="sched-day-grid">' + cards + '</div>' +
+        '</div>'
+      );
+    });
+
+    if(parts.length) {
+      container.innerHTML = parts.join('');
+    }
+  } catch(err) {
+    console.error('renderSchedGroups error:', err);
+    // Keep existing static HTML intact on error
   }
-  if(emptyEl) emptyEl.style.display='none';
-  if(contactBlock) contactBlock.style.display='block';
-
-  // Group by day of week
-  const dayOrder = [1,2,3,4,5,6,0];
-  const groups = {};
-  evs.forEach(e=>{ if(!groups[e.day]) groups[e.day]=[]; groups[e.day].push(e); });
-
-  container.innerHTML = dayOrder.filter(d=>groups[d]).map(d=>{
-    const dayEvs = groups[d].sort((a,b)=>a.time.localeCompare(b.time));
-    return `<div class="sched-day-group">
-      <div class="sched-day-header">
-        <div class="sched-day-name">${schedDayNames[d]}</div>
-        <div class="sched-day-count">${dayEvs.length} ${dayEvs.length===1?'занятие':dayEvs.length<5?'занятия':'занятий'}</div>
-      </div>
-      <div class="sched-day-grid">
-        ${dayEvs.map(e=>schedCardHTML(e)).join('')}
-      </div>
-    </div>`;
-  }).join('');
 }
 
 function schedCardHTML(e) {
   const typeColor = schedTypeColors[e.type]||'var(--clay)';
-  const typeLabel = schedTypeLabels[e.type]||e.type;
+  const typeLabel = schedTypeLabels[e.type]||String(e.type||'');
   const img = e.img||'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80';
-  const teacher = e.teacher||(schedTeachers[e.id%schedTeachers.length]);
-  const dur = e.duration ? `${e.duration} мин` : '';
-  const seatsWarn = e.seats<=3 ? `<div class="sched-seats-warn">🔥 Осталось мест: ${e.seats}</div>` : '';
-  return `<div class="sched-card" onclick="openSM(${e.id})">
-    <div class="sched-card-img">
-      <img src="${img}" alt="${e.name}" loading="lazy">
-      <div class="sched-card-type" style="background:${typeColor}">${typeLabel}</div>
-    </div>
-    <div class="sched-card-body">
-      <div class="sched-card-time">
-        <div class="sched-card-time-dot"></div>
-        ${e.time}${e.endTime?'–'+e.endTime:''} · ${schedDayShort[e.day]}
-      </div>
-      <div class="sched-card-name">${e.name}</div>
-      <div class="sched-card-meta">
-        ${e.age?`<span class="sched-card-tag">👤 ${e.age}</span>`:''}
-        ${dur?`<span class="sched-card-tag">⏱ ${dur}</span>`:''}
-        ${e.seats?`<span class="sched-card-tag">👥 ${e.seats} мест</span>`:''}
-      </div>
-      <div class="sched-card-teacher">👩‍🎨 ${teacher}</div>
-      ${seatsWarn}
-      <div class="sched-card-footer">
-        <div class="sched-card-price">
-          ${e.price.toLocaleString('ru-RU')} ₽
-          <small>за занятие</small>
-        </div>
-        <button class="sched-card-btn" onclick="event.stopPropagation();openSM(${e.id})">Записаться</button>
-      </div>
-    </div>
-  </div>`;
+  const teacher = e.teacher||(schedTeachers[Number(e.id)%schedTeachers.length]||'');
+  const dur = e.duration ? (String(e.duration)+' \u043c\u0438\u043d') : '';
+  const price = e.price ? Number(e.price).toLocaleString('ru-RU') : '0';
+  const seatsNum = Number(e.seats)||0;
+  const seatsWarn = seatsNum>0&&seatsNum<=3 ? '<div class="sched-seats-warn">Осталось мест: '+seatsNum+'</div>' : '';
+  const timeStr = String(e.time||'')+String(e.endTime?('\u2013'+e.endTime):'');
+  const dayStr = schedDayShort[Number(e.day)]||'';
+  const ageTxt = e.age ? ('<span class="sched-card-tag">'+e.age+'</span>') : '';
+  const durTxt = dur ? ('<span class="sched-card-tag">'+dur+'</span>') : '';
+  const seatsTxt = seatsNum ? ('<span class="sched-card-tag">'+seatsNum+' \u043c\u0435\u0441\u0442</span>') : '';
+
+  return '<div class="sched-card" onclick="openSM('+e.id+')">' +
+    '<div class="sched-card-img">' +
+      '<img src="'+img+'" alt="'+String(e.name||'')+'" loading="lazy">' +
+      '<div class="sched-card-type" style="background:'+typeColor+'">'+typeLabel+'</div>' +
+    '</div>' +
+    '<div class="sched-card-body">' +
+      '<div class="sched-card-time"><div class="sched-card-time-dot"></div>'+timeStr+' &middot; '+dayStr+'</div>' +
+      '<div class="sched-card-name">'+String(e.name||'')+'</div>' +
+      '<div class="sched-card-meta">'+ageTxt+durTxt+seatsTxt+'</div>' +
+      '<div class="sched-card-teacher">'+teacher+'</div>' +
+      seatsWarn +
+      '<div class="sched-card-footer">' +
+        '<div class="sched-card-price">'+price+' \u20bd<small>\u0437\u0430 \u0437\u0430\u043d\u044f\u0442\u0438\u0435</small></div>' +
+        '<button class="sched-card-btn" onclick="event.stopPropagation();openSM('+e.id+')">\u0417\u0430\u043f\u0438\u0441\u0430\u0442\u044c\u0441\u044f</button>' +
+      '</div>' +
+    '</div>' +
+  '</div>';
 }
 
 // Keep old functions as aliases for backward compatibility
