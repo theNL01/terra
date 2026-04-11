@@ -168,7 +168,30 @@ footer{background:#3a2d25;padding:2.5rem 3rem;display:flex;justify-content:space
 .page-banner h1{font-family:var(--font-d);font-size:clamp(2rem,5vw,3.5rem);color:var(--sand);font-weight:400;margin-bottom:.8rem}.page-banner h1 em{color:var(--clay-light);font-style:italic}
 .page-banner p{font-size:1rem;color:rgba(245,239,230,.65);max-width:540px;line-height:1.7;font-weight:300}
 
-/* PROGRAMS PAGE */
+/* SERVICES PAGE */
+.services-wrap{max-width:100%;padding:0}
+.service-section{display:grid;grid-template-columns:1fr 1fr;min-height:520px}
+.service-section:nth-child(even) .service-img{order:2}
+.service-section:nth-child(even) .service-body{order:1}
+.service-img{position:relative;overflow:hidden;background:var(--sand)}
+.service-img img{width:100%;height:100%;object-fit:cover;transition:transform 8s}
+.service-img:hover img{transform:scale(1.04)}
+.service-img-ov{position:absolute;inset:0;background:linear-gradient(135deg,rgba(45,36,32,.35),transparent)}
+.service-body{padding:4rem 5rem;display:flex;flex-direction:column;justify-content:center;background:var(--cream)}
+.service-section:nth-child(2) .service-body{background:var(--sand)}
+.service-section:nth-child(3) .service-body{background:var(--white)}
+.service-section:nth-child(4) .service-body{background:var(--sand)}
+.service-num{font-family:var(--font-d);font-size:5rem;font-weight:700;color:rgba(92,64,51,.06);line-height:1;margin-bottom:-.5rem}
+.service-tag{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--clay);font-weight:600;margin-bottom:.8rem}
+.service-title{font-family:var(--font-d);font-size:clamp(1.8rem,3vw,2.6rem);font-weight:400;color:var(--text-dark);line-height:1.2;margin-bottom:1.2rem}
+.service-title em{color:var(--clay);font-style:italic}
+.service-desc{font-size:.95rem;color:var(--text-body);line-height:1.85;font-weight:300;margin-bottom:2rem}
+.service-features{display:flex;flex-direction:column;gap:.6rem;margin-bottom:2.2rem}
+.service-feat{display:flex;align-items:center;gap:.8rem;font-size:.88rem;color:var(--text-body)}
+.service-feat::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--clay);flex-shrink:0}
+.service-price{font-family:var(--font-d);font-size:1.1rem;color:var(--earth);margin-bottom:1.5rem;font-weight:500}
+.service-cta{display:inline-block;background:var(--clay);color:#fff;border:none;padding:.9rem 2rem;border-radius:50px;font-family:var(--font-b);font-size:.85rem;cursor:pointer;transition:.3s;text-decoration:none;align-self:flex-start}.service-cta:hover{background:var(--clay-dark);transform:translateY(-2px)}
+@media(max-width:900px){.service-section{grid-template-columns:1fr;min-height:auto}.service-section:nth-child(even) .service-img{order:0}.service-section:nth-child(even) .service-body{order:0}.service-img{height:280px}.service-body{padding:2.5rem 1.5rem}}
 .prog-page-wrap{max-width:100%;margin:0;padding:3rem 0 5rem}
 .prog-filters{display:flex;gap:.6rem;flex-wrap:wrap;margin-bottom:2.5rem;align-items:center;padding:0 3rem}
 .prog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.5rem;padding:0 3rem}
@@ -588,6 +611,7 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
   <nav id="mainNav">
     <a href="#" onclick="showPage('shop');return false" class="nav-page" data-page="shop">Магазин</a>
     <a href="#" onclick="showPage('programs');return false" class="nav-page" data-page="programs">Программы</a>
+    <a href="#" onclick="showPage('services');return false" class="nav-page" data-page="services">Услуги</a>
     <a href="#" onclick="showPage('schedule');return false" class="nav-page" data-page="schedule">Расписание</a>
     <a href="#" onclick="showPage('certificates');return false" class="nav-page" data-page="certificates">Сертификаты</a>
     <a href="#" onclick="showPage('events');return false" class="nav-page" data-page="events">Мероприятия</a>
@@ -746,6 +770,105 @@ footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justi
     <div class="faq-wrap" id="faqWrap"></div>
   </section>
 </div><!-- /shopPage -->
+
+<!-- SERVICES PAGE -->
+<div id="servicesPage" style="display:none;padding-top:80px">
+  <div class="page-banner">
+    <h1>Наши <em>услуги</em></h1>
+    <p>Мастер-классы, абонементы, изделия на заказ и праздники — найдите то, что подходит именно вам</p>
+  </div>
+  <div class="services-wrap">
+
+    <!-- Мастер-классы -->
+    <div class="service-section">
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=900&q=80" alt="Мастер-классы">
+        <div class="service-img-ov"></div>
+      </div>
+      <div class="service-body">
+        <div class="service-num">01</div>
+        <div class="service-tag">Для всех возрастов</div>
+        <h2 class="service-title">Мастер-<em>классы</em></h2>
+        <p class="service-desc">Разовые занятия для тех, кто хочет попробовать гончарство без обязательств. Вы сразу садитесь за круг, лепите изделие и уносите его домой после обжига.</p>
+        <div class="service-features">
+          <div class="service-feat">Подходит для полных новичков</div>
+          <div class="service-feat">Все материалы и инструменты включены</div>
+          <div class="service-feat">Готовое изделие забираете через 7–10 дней</div>
+          <div class="service-feat">Группы до 8 человек, индивидуальный подход</div>
+        </div>
+        <div class="service-price">от 2 800 ₽ за занятие</div>
+        <button class="service-cta" onclick="showPage('schedule')">Выбрать время →</button>
+      </div>
+    </div>
+
+    <!-- Абонементы -->
+    <div class="service-section">
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=900&q=80" alt="Абонементы">
+        <div class="service-img-ov"></div>
+      </div>
+      <div class="service-body">
+        <div class="service-num">02</div>
+        <div class="service-tag">Регулярные занятия</div>
+        <h2 class="service-title"><em>Абонементы</em> на обучение</h2>
+        <p class="service-desc">Для тех, кто хочет развиваться систематически. Абонемент даёт доступ к занятиям по фиксированному расписанию и существенную экономию по сравнению с разовыми посещениями.</p>
+        <div class="service-features">
+          <div class="service-feat">4 или 8 занятий — выберите формат</div>
+          <div class="service-feat">Скидка до 20% относительно разового посещения</div>
+          <div class="service-feat">Действует 2 месяца с момента активации</div>
+          <div class="service-feat">Можно подарить — оформим красивый сертификат</div>
+        </div>
+        <div class="service-price">от 6 500 ₽ (4 занятия)</div>
+        <button class="service-cta" onclick="showPage('certificates')">Оформить абонемент →</button>
+      </div>
+    </div>
+
+    <!-- Изделия на заказ -->
+    <div class="service-section">
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=900&q=80" alt="Изделия на заказ">
+        <div class="service-img-ov"></div>
+      </div>
+      <div class="service-body">
+        <div class="service-num">03</div>
+        <div class="service-tag">Авторская работа</div>
+        <h2 class="service-title">Изделия <em>на заказ</em></h2>
+        <p class="service-desc">Создадим уникальное изделие по вашему заказу — посуду, вазы, декор или подарок с персональным смыслом. Вы описываете идею, мы воплощаем её в глине.</p>
+        <div class="service-features">
+          <div class="service-feat">Любая форма, цвет глазури и размер</div>
+          <div class="service-feat">Персональная гравировка или роспись</div>
+          <div class="service-feat">Корпоративные заказы и наборы</div>
+          <div class="service-feat">Срок изготовления 2–4 недели</div>
+        </div>
+        <div class="service-price">от 3 500 ₽ за изделие</div>
+        <button class="service-cta" onclick="showPage('home');setTimeout(()=>document.getElementById('contact').scrollIntoView({behavior:'smooth'}),300)">Обсудить заказ →</button>
+      </div>
+    </div>
+
+    <!-- Праздники -->
+    <div class="service-section">
+      <div class="service-img">
+        <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=900&q=80" alt="Праздники">
+        <div class="service-img-ov"></div>
+      </div>
+      <div class="service-body">
+        <div class="service-num">04</div>
+        <div class="service-tag">Для компаний и семей</div>
+        <h2 class="service-title"><em>Праздники</em> в студии</h2>
+        <p class="service-desc">День рождения, корпоратив или семейный праздник — мы создадим незабываемое событие за гончарным кругом. Каждый гость лепит изделие и уносит его как память о вечере.</p>
+        <div class="service-features">
+          <div class="service-feat">От 6 до 20 гостей одновременно</div>
+          <div class="service-feat">Украсим студию в вашем стиле</div>
+          <div class="service-feat">Можно принести своё угощение</div>
+          <div class="service-feat">Ведущий мастер на весь праздник</div>
+        </div>
+        <div class="service-price">от 2 500 ₽ с человека</div>
+        <button class="service-cta" onclick="showPage('events')">Узнать подробнее →</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <!-- PROGRAMS PAGE -->
 <div id="programsPage" style="display:none;padding-top:80px">
@@ -1305,7 +1428,7 @@ const PASS = 'terra2026';
 const catN = {tableware:'Посуда',vases:'Вазы',decor:'Декор',gifts:'Подарки'};
 
 // ===== EARLY DECLARATIONS =====
-const allPages = ['home','shop','programs','schedule','certificates','events'];
+const allPages = ['home','shop','programs','services','schedule','certificates','events'];
 const dayNamesShort=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
 const monthNames=['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
 let schedOffset = 0;
@@ -2966,6 +3089,7 @@ function showPage(page){
   window.scrollTo({top:0,behavior:'smooth'});
   if(page==='shop'){renderP();renderReviews();renderFAQ();}
   if(page==='programs'){progsVisible=8;renderProgs();}
+  if(page==='services'){}
   if(page==='schedule')initSchedule();
   if(page==='certificates'){initCerts();renderCertsPage();}
   if(page==='events'){initEvents();}
