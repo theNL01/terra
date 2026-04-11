@@ -721,9 +721,8 @@ footer{background:#3a2d25;padding:0}.flinks{display:flex;gap:2rem}.flinks a{font
 /* RESPONSIVE */
 @media(max-width:1000px){.about-grid{grid-template-columns:1fr;gap:2rem}.cgrid{grid-template-columns:1fr}.cont-wrap{grid-template-columns:1fr}.cont-img{min-height:300px}.gmas{columns:2}.proc-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:700px){
-header{padding:1rem 1.5rem;grid-template-columns:auto 1fr}section{padding:4rem 1.5rem}.hero-content{padding:0 1.5rem}
-.header-center{justify-self:start;gap:.8rem}
-.nav-left{display:none!important}.nav-right{display:none!important}.hamburger{display:flex}.mobile-cart{display:block}.mob-controls{display:flex!important;align-items:center;gap:.6rem}
+header{padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;gap:.5rem}section{padding:4rem 1.5rem}.hero-content{padding:0 1.5rem}
+.nav-left{display:none!important}.nav-right{display:none!important}.hamburger{display:flex}.mobile-cart{display:block}.mob-controls{display:flex!important;align-items:center;gap:.7rem}
 .nav-mobile-placeholder{display:none}
 .pgrid{grid-template-columns:1fr}.gmas{columns:1}.about-feats{grid-template-columns:1fr}.proc-grid{grid-template-columns:1fr}
 footer{flex-direction:column;text-align:center;padding:2rem 1.5rem}.flinks{justify-content:center}
@@ -744,20 +743,17 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
     <a href="#" onclick="showPage('schedule');return false" class="nav-page" data-page="schedule">Расписания</a>
     <a href="#" onclick="showPage('shop');return false" class="nav-page" data-page="shop">Магазин</a>
   </nav>
-  <div class="header-center">
-    <a href="#" class="logo" style="text-decoration:none" onclick="showPage('home');window.scrollTo({top:0,behavior:'smooth'});return false">ТЕР<span>Р</span>А</a>
-    <div class="mob-controls" style="display:flex;align-items:center;gap:.8rem">
-      <button class="mobile-cart" onclick="toggleCart()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span class="cart-count" id="cartCountM">0</span></button>
-      <button class="hamburger" onclick="openMobNav()"><span></span><span></span><span></span></button>
-    </div>
-  </div>
+  <a href="#" class="logo" style="text-decoration:none" onclick="showPage('home');window.scrollTo({top:0,behavior:'smooth'});return false">ТЕР<span>Р</span>А</a>
   <nav id="mainNavRight" class="nav-right">
     <a href="#" onclick="showPage('events');return false" class="nav-page" data-page="events">События</a>
     <a href="#" onclick="showPage('contacts');return false" class="nav-page" data-page="contacts">Контакты</a>
     <a href="#" onclick="showPage('about');return false" class="nav-page" data-page="about">О нас</a>
     <button class="cart-btn" onclick="toggleCart()">Корзина<span class="cart-count" id="cartCount">0</span></button>
   </nav>
-
+  <div class="mob-controls">
+    <button class="mobile-cart" onclick="toggleCart()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span class="cart-count" id="cartCountM">0</span></button>
+    <button class="hamburger" onclick="openMobNav()"><span></span><span></span><span></span></button>
+  </div>
 </header>
 
   <!-- MOBILE MENU BACKDROP -->
