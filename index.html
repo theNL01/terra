@@ -1309,7 +1309,7 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
     <div class="co-sum" id="coSum"></div>
     <div class="co-form" id="coForm">
       <div class="co-row"><div class="co-field"><label>Имя *</label><input type="text" id="coName" placeholder="Ваше имя" maxlength="50" oninput="this.value=this.value.replace(/[^а-яА-ЯёЁa-zA-Z\s\-]/g,'')"></div><div class="co-field"><label>Телефон *</label><input type="tel" id="coPhone" placeholder="+7 (999) 123-45-67" maxlength="18" oninput="fmtPhone(this)"></div></div>
-      <div class="co-field"><label>Email</label><input type="email" id="coEmail" placeholder="email@example.com" maxlength="100"></div>
+      <div class="co-field"><label>Email</label><input type="email" id="coEmail" placeholder="email[at]example.com" maxlength="100"></div>
       <label style="font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);font-weight:500">Адрес доставки</label>
       <div class="co-row"><div class="co-field"><label>Индекс</label><input type="text" id="coIdx" placeholder="123456" maxlength="6" oninput="this.value=this.value.replace(/\D/g,'')"></div><div class="co-field"><label>Область</label><input type="text" id="coReg" placeholder="Московская обл." maxlength="100"></div></div>
       <div class="co-row"><div class="co-field"><label>Город</label><input type="text" id="coCity" placeholder="Москва" maxlength="100"></div><div class="co-field"><label>Улица</label><input type="text" id="coStr" placeholder="ул. Гончарная" maxlength="150"></div></div>
@@ -1647,7 +1647,7 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
             <div class="adm-field"><label>Телефон</label><input type="text" id="admContactPhone" placeholder="+7 (495) 987-65-43"></div>
           </div>
           <div class="adm-form-row">
-            <div class="adm-field"><label>Email</label><input type="text" id="admContactEmail" placeholder="hello@terra-studio.ru"></div>
+            <div class="adm-field"><label>Email</label><input type="text" id="admContactEmail" placeholder="hello [at] terra-studio.ru"></div>
             <div class="adm-field"><label>Режим работы</label><input type="text" id="admContactHours" placeholder="Вт–Вс: 10:00 — 20:00"></div>
           </div>
           <div class="site-section-title" style="margin-top:1rem">🔗 Соцсети</div>
@@ -1750,7 +1750,7 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
 
 <div class="toast" id="toast"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script data-cfasync="false">
 // ===== FIREBASE INIT =====
 firebase.initializeApp({
   apiKey:"AIzaSyC_C3HEWq0q46KpCW5L5ZPLVry079RFOYA",
@@ -1989,7 +1989,7 @@ function submitOrder(){
   dbSave('orders/'+orderId,{id:orderId,date:new Date().toISOString(),name,phone,email,address:addr,payment:payN[payMethod],items:cart.map(c=>({name:c.name,qty:c.qty,price:c.price})),total:tot,comment:com});
 
   // Send to Formspree
-  fetch('https://formspree.io/f/xjgppdnp',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name,email:email||'no-email@terra.ru',phone,message:'Заказ: '+orderId+'\n'+items+'\nИтого: '+tot.toLocaleString('ru-RU')+' руб.\nОплата: '+payN[payMethod]+'\nАдрес: '+(addr||'—')+'\nКомментарий: '+(com||'—')})}).catch(()=>{});
+  fetch('https://formspree.io/f/xjgppdnp',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({name,email:email||'no-email[at]terra.ru',phone,message:'Заказ: '+orderId+'\n'+items+'\nИтого: '+tot.toLocaleString('ru-RU')+' руб.\nОплата: '+payN[payMethod]+'\nАдрес: '+(addr||'—')+'\nКомментарий: '+(com||'—')})}).catch(()=>{});
 
   // Show success
   closeCO();
@@ -2011,7 +2011,7 @@ function sendContact(){
   const n=document.getElementById('cfName').value.trim(),e=document.getElementById('cfEmail').value.trim(),p=document.getElementById('cfPhone').value.trim(),m=document.getElementById('cfMsg').value.trim();
   if(!n||n.length<2){toast('Укажите имя');return;}
   fetch('https://formspree.io/f/xjgppdnp',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify({
-    name:n, email:e||'no-email@terra.ru', phone:p||'—',
+    name:n, email:e||'no-email[at]terra.ru', phone:p||'—',
     message:`Имя: ${n}\nТелефон: ${p||'—'}\nEmail: ${e||'—'}\n\nСообщение:\n${m||'—'}`
   })}).then(r=>{if(r.ok)toast('Спасибо! Мы скоро ответим');else toast('Ошибка отправки');}).catch(()=>toast('Нет соединения'));
   ['cfName','cfEmail','cfPhone','cfMsg'].forEach(id=>{document.getElementById(id).value='';});
@@ -2338,7 +2338,7 @@ function openCL(id){
 }
 function closeCL(){document.getElementById('clOv').classList.remove('open');document.getElementById('clMod').classList.remove('open');document.body.style.overflow='';}
 
-const TERRA_EMAIL = 'q7hoixztfz5j@mail.ru';
+const TERRA_EMAIL = 'q7hoixztfz5j[at]mail.ru';
 const W3F_KEY = '4de29207-cb46-4eca-973a-4de1f9fc8904'; // Web3Forms public access key
 
 async function enrollClass(){
@@ -2389,7 +2389,7 @@ async function submitEnroll(){
       method:'POST',
       headers:{'Content-Type':'application/json','Accept':'application/json'},
       body:JSON.stringify({
-        name, email:email||'no-email@terra.ru', phone,
+        name, email:email||'no-email[at]terra.ru', phone,
         message:`Новая заявка на мастер-класс!\n\nМастер-класс: ${c.name}\nДлительность: ${c.duration}\nСтоимость: ${c.price.toLocaleString('ru-RU')} ₽\n\nКлиент: ${name}\nТелефон: ${phone}\nEmail: ${email||'—'}`
       })
     });
