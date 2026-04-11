@@ -984,19 +984,18 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
 
 <!-- SCHEDULE PAGE -->
 <div id="schedulePage" style="display:none;padding-top:72px">
-  <div class="page-banner">
-    <h1>Расписание <em>занятий</em></h1>
-    <p>Выберите удобное время для себя или ребёнка — запись в один клик</p>
+  <div style="background:linear-gradient(135deg,#5c4033 0%,#4a3828 100%);padding:4rem 3rem 3rem">
+    <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);color:#f5efe6;font-weight:400;margin-bottom:.6rem">Расписание <em style="font-style:italic;color:#d99a6e">занятий</em></h1>
+    <p style="font-size:.95rem;color:rgba(245,239,230,.65);max-width:500px;line-height:1.7">Выберите удобное время — запись в один клик</p>
   </div>
 
-  <!-- ФИЛЬТРЫ в стиле Колокол -->
-  <div class="sched-filters-bar">
-    <div class="sched-filters-inner">
-      <!-- Фильтр по дню -->
-      <div class="sched-filter-group">
-        <div class="sched-filter-label">День недели</div>
-        <div class="sched-filter-btns" id="sfDayBtns">
-          <button class="sched-fbtn active" onclick="setSchedFilter('day','all',this)">Все дни</button>
+  <!-- Фильтры -->
+  <div style="background:#fff;border-bottom:1px solid rgba(92,64,51,.1);padding:1.2rem 2rem">
+    <div style="max-width:1200px;margin:0 auto;display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center">
+      <div>
+        <div style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#9a8d82;font-weight:600;margin-bottom:.4rem">День</div>
+        <div style="display:flex;gap:.3rem;flex-wrap:wrap" id="sfDayBtns">
+          <button class="sched-fbtn active" onclick="setSchedFilter('day','all',this)">Все</button>
           <button class="sched-fbtn" onclick="setSchedFilter('day',1,this)">Пн</button>
           <button class="sched-fbtn" onclick="setSchedFilter('day',2,this)">Вт</button>
           <button class="sched-fbtn" onclick="setSchedFilter('day',3,this)">Ср</button>
@@ -1006,471 +1005,475 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
           <button class="sched-fbtn" onclick="setSchedFilter('day',0,this)">Вс</button>
         </div>
       </div>
-      <!-- Фильтр по типу -->
-      <div class="sched-filter-group">
-        <div class="sched-filter-label">Тип занятия</div>
-        <div class="sched-filter-btns" id="sfTypeBtns">
-          <button class="sched-fbtn active" onclick="setSchedFilter('type','all',this)">Все форматы</button>
+      <div>
+        <div style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#9a8d82;font-weight:600;margin-bottom:.4rem">Тип</div>
+        <div style="display:flex;gap:.3rem;flex-wrap:wrap" id="sfTypeBtns">
+          <button class="sched-fbtn active" onclick="setSchedFilter('type','all',this)">Все</button>
           <button class="sched-fbtn" onclick="setSchedFilter('type','kids',this)">Детские</button>
           <button class="sched-fbtn" onclick="setSchedFilter('type','adults',this)">Взрослые</button>
-          <button class="sched-fbtn" onclick="setSchedFilter('type','all',this)">Семейные</button>
         </div>
       </div>
-      <!-- Фильтр по возрасту -->
-      <div class="sched-filter-group">
-        <div class="sched-filter-label">Возраст</div>
-        <div class="sched-filter-btns" id="sfAgeBtns">
+      <div>
+        <div style="font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#9a8d82;font-weight:600;margin-bottom:.4rem">Возраст</div>
+        <div style="display:flex;gap:.3rem;flex-wrap:wrap" id="sfAgeBtns">
           <button class="sched-fbtn active" onclick="setSchedFilter('age','all',this)">Любой</button>
-          <button class="sched-fbtn" onclick="setSchedFilter('age','5',this)">5–7 лет</button>
-          <button class="sched-fbtn" onclick="setSchedFilter('age','8',this)">8–11 лет</button>
-          <button class="sched-fbtn" onclick="setSchedFilter('age','12',this)">12–17 лет</button>
+          <button class="sched-fbtn" onclick="setSchedFilter('age','5',this)">5-7 лет</button>
+          <button class="sched-fbtn" onclick="setSchedFilter('age','8',this)">8-11 лет</button>
+          <button class="sched-fbtn" onclick="setSchedFilter('age','12',this)">12-17 лет</button>
           <button class="sched-fbtn" onclick="setSchedFilter('age','18',this)">18+</button>
         </div>
       </div>
-      <button class="sched-reset-btn" onclick="resetSchedFilters()">Сбросить всё</button>
+      <button class="sched-reset-btn" onclick="resetSchedFilters()">Сбросить</button>
     </div>
   </div>
 
-  <!-- Результаты -->
-  <div style="max-width:1280px;margin:0 auto;padding:2.5rem 3rem 5rem">
-    <!-- Группировка по дням -->
-    <div id="schedDayGroups">
-<div class="sched-day-group">
-    <div class="sched-day-header">
-      <div class="sched-day-name">Понедельник</div>
-      <div class="sched-day-count">4 занятия</div>
+  <!-- Карточки занятий -->
+  <div style="max-width:1200px;margin:0 auto;padding:2.5rem 2rem 5rem" id="schedDayGroups">
+    <div class="sched-day-group" style="margin-bottom:2.5rem">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;padding-bottom:.7rem;border-bottom:2px solid rgba(92,64,51,.1)">
+        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#5c4033">Понедельник</div>
+        <div style="font-size:.75rem;color:#c67d4a;font-weight:500">4 занятия</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem">
+        <div class="sched-card" data-day="1" data-type="kids" data-age="5–7 лет" onclick="openSM(1)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80" alt="Первые шаги" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#7ab8e8;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Детское</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">10:00&ndash;11:00</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">Первые шаги</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">5–7 лет</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">60 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">6 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Алексей Соколов</div>
+            
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">1 800 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(1)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
+        </div>
+        <div class="sched-card" data-day="1" data-type="kids" data-age="8–11 лет" onclick="openSM(2)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=800&q=80" alt="Гончарный круг" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#7ab8e8;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Детское</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">12:00&ndash;13:30</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">Гончарный круг</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">8–11 лет</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">90 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">4 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Мария Петрова</div>
+            
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">2 200 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(2)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
+        </div>
+        <div class="sched-card" data-day="1" data-type="kids" data-age="12–17 лет" onclick="openSM(3)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=800&q=80" alt="Продвинутый курс" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#7ab8e8;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Детское</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">17:00&ndash;19:00</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">Продвинутый курс</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">12–17 лет</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">120 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">5 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Иван Кузнецов</div>
+            
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">3 500 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(3)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
+        </div>
+        <div class="sched-card" data-day="1" data-type="adults" data-age="18+" onclick="openSM(4)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80" alt="Взрослый МК" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#8a9a7b;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Взрослое МК</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">19:30&ndash;21:30</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">Взрослый МК</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">18+</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">120 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">2 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Елена Соколова</div>
+            <div style="font-size:.65rem;color:#b85c38;font-weight:500;margin-bottom:.4rem">Осталось мест: 2</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">3 100 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(4)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <div class="sched-day-grid">
-      <div class="sched-card" onclick="openSM(1)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80" alt="Первые шаги" loading="lazy">
-        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
+    <div class="sched-day-group" style="margin-bottom:2.5rem">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;padding-bottom:.7rem;border-bottom:2px solid rgba(92,64,51,.1)">
+        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#5c4033">Вторник</div>
+        <div style="font-size:.75rem;color:#c67d4a;font-weight:500">2 занятия</div>
       </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>10:00–11:00 · Пн</div>
-        <div class="sched-card-name">Первые шаги</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">5–7 лет</span>
-          <span class="sched-card-tag">60 мин</span>
-          <span class="sched-card-tag">6 мест</span>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem">
+        <div class="sched-card" data-day="2" data-type="kids" data-age="5–7 лет" onclick="openSM(5)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80" alt="Первые шаги" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#7ab8e8;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Детское</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">10:00&ndash;11:00</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">Первые шаги</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">5–7 лет</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">60 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">6 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Алексей Соколов</div>
+            
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">1 800 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(5)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
         </div>
-        <div class="sched-card-teacher">Алексей Соколов</div>
-        
-        <div class="sched-card-footer">
-          <div class="sched-card-price">1 800 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(1)">Записаться</button>
-        </div>
-      </div>
-    </div><div class="sched-card" onclick="openSM(2)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=800&q=80" alt="Гончарный круг" loading="lazy">
-        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
-      </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>12:00–13:30 · Пн</div>
-        <div class="sched-card-name">Гончарный круг</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">8–11 лет</span>
-          <span class="sched-card-tag">90 мин</span>
-          <span class="sched-card-tag">4 мест</span>
-        </div>
-        <div class="sched-card-teacher">Мария Петрова</div>
-        
-        <div class="sched-card-footer">
-          <div class="sched-card-price">2 200 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(2)">Записаться</button>
-        </div>
-      </div>
-    </div><div class="sched-card" onclick="openSM(3)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=800&q=80" alt="Продвинутый курс" loading="lazy">
-        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
-      </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>17:00–19:00 · Пн</div>
-        <div class="sched-card-name">Продвинутый курс</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">12–17 лет</span>
-          <span class="sched-card-tag">120 мин</span>
-          <span class="sched-card-tag">5 мест</span>
-        </div>
-        <div class="sched-card-teacher">Иван Кузнецов</div>
-        
-        <div class="sched-card-footer">
-          <div class="sched-card-price">3 500 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(3)">Записаться</button>
-        </div>
-      </div>
-    </div><div class="sched-card" onclick="openSM(4)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80" alt="Взрослый МК" loading="lazy">
-        <div class="sched-card-type" style="background:#8a9a7b">Взрослое МК</div>
-      </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>19:30–21:30 · Пн</div>
-        <div class="sched-card-name">Взрослый МК</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">18+</span>
-          <span class="sched-card-tag">120 мин</span>
-          <span class="sched-card-tag">2 мест</span>
-        </div>
-        <div class="sched-card-teacher">Елена Соколова</div>
-        <div class="sched-seats-warn">Осталось мест: 2</div>
-        <div class="sched-card-footer">
-          <div class="sched-card-price">3 100 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(4)">Записаться</button>
+        <div class="sched-card" data-day="2" data-type="kids" data-age="8–11 лет" onclick="openSM(6)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=800&q=80" alt="Гончарный круг" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#7ab8e8;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Детское</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">16:00&ndash;17:30</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">Гончарный круг</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">8–11 лет</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">90 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">5 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Мария Петрова</div>
+            
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">2 200 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(6)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
+    <div class="sched-day-group" style="margin-bottom:2.5rem">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;padding-bottom:.7rem;border-bottom:2px solid rgba(92,64,51,.1)">
+        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#5c4033">Среда</div>
+        <div style="font-size:.75rem;color:#c67d4a;font-weight:500">3 занятия</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem">
+        <div class="sched-card" data-day="3" data-type="kids" data-age="12–17 лет" onclick="openSM(7)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=800&q=80" alt="Продвинутый курс" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#7ab8e8;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Детское</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">10:00&ndash;12:00</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">Продвинутый курс</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">12–17 лет</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">120 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">4 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Иван Кузнецов</div>
+            
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">3 500 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(7)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
+        </div>
+        <div class="sched-card" data-day="3" data-type="adults" data-age="18+" onclick="openSM(8)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80" alt="Взрослый МК" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#8a9a7b;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Взрослое МК</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">18:00&ndash;20:00</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">Взрослый МК</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">18+</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">120 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">6 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Елена Соколова</div>
+            
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">3 100 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(8)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
+        </div>
+        <div class="sched-card" data-day="3" data-type="adults" data-age="18+" onclick="openSM(9)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1609881092647-6a89e1e3c060?w=800&q=80" alt="Чайная церемония" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#8a9a7b;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Взрослое МК</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">20:00&ndash;22:00</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">Чайная церемония</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">18+</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">120 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">3 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Алексей Соколов</div>
+            <div style="font-size:.65rem;color:#b85c38;font-weight:500;margin-bottom:.4rem">Осталось мест: 3</div>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">5 800 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(9)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="sched-day-group" style="margin-bottom:2.5rem">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;padding-bottom:.7rem;border-bottom:2px solid rgba(92,64,51,.1)">
+        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#5c4033">Четверг</div>
+        <div style="font-size:.75rem;color:#c67d4a;font-weight:500">3 занятия</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem">
+        <div class="sched-card" data-day="4" data-type="kids" data-age="5–7 лет" onclick="openSM(10)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80" alt="Первые шаги" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#7ab8e8;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Детское</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">10:00&ndash;11:00</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">Первые шаги</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">5–7 лет</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">60 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">6 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Мария Петрова</div>
+            
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">1 800 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(10)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
+        </div>
+        <div class="sched-card" data-day="4" data-type="kids" data-age="8–11 лет" onclick="openSM(11)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=800&q=80" alt="Гончарный круг" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#7ab8e8;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Детское</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">15:00&ndash;16:30</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">Гончарный круг</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">8–11 лет</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">90 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">5 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Иван Кузнецов</div>
+            
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">2 200 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(11)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
+        </div>
+        <div class="sched-card" data-day="4" data-type="adults" data-age="18+" onclick="openSM(12)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80" alt="Взрослый МК" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#8a9a7b;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Взрослое МК</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">19:30&ndash;21:30</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">Взрослый МК</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">18+</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">120 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">6 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Елена Соколова</div>
+            
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">3 100 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(12)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sched-day-group" style="margin-bottom:2.5rem">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;padding-bottom:.7rem;border-bottom:2px solid rgba(92,64,51,.1)">
+        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#5c4033">Пятница</div>
+        <div style="font-size:.75rem;color:#c67d4a;font-weight:500">2 занятия</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem">
+        <div class="sched-card" data-day="5" data-type="kids" data-age="12–17 лет" onclick="openSM(13)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=800&q=80" alt="Продвинутый курс" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#7ab8e8;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Детское</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">16:00&ndash;18:00</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">Продвинутый курс</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">12–17 лет</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">120 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">5 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Алексей Соколов</div>
+            
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">3 500 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(13)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
+        </div>
+        <div class="sched-card" data-day="5" data-type="adults" data-age="18+" onclick="openSM(14)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1612196808214-b7e239e5a5e2?w=800&q=80" alt="Глазурование" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#8a9a7b;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Взрослое МК</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">18:00&ndash;19:30</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">Глазурование</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">18+</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">90 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">8 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Мария Петрова</div>
+            
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">2 800 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(14)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sched-day-group" style="margin-bottom:2.5rem">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;padding-bottom:.7rem;border-bottom:2px solid rgba(92,64,51,.1)">
+        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#5c4033">Суббота</div>
+        <div style="font-size:.75rem;color:#c67d4a;font-weight:500">2 занятия</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem">
+        <div class="sched-card" data-day="6" data-type="all" data-age="5+ лет" onclick="openSM(15)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800&q=80" alt="Все возрасты" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#c67d4a;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Для всех</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">11:00&ndash;12:30</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">Все возрасты</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">5+ лет</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">90 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">8 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Иван Кузнецов</div>
+            
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">2 500 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(15)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
+        </div>
+        <div class="sched-card" data-day="6" data-type="adults" data-age="18+" onclick="openSM(16)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80" alt="Взрослый МК" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#8a9a7b;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Взрослое МК</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">14:00&ndash;16:00</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">Взрослый МК</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">18+</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">120 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">6 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Елена Соколова</div>
+            
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">3 100 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(16)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="sched-day-group" style="margin-bottom:2.5rem">
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem;padding-bottom:.7rem;border-bottom:2px solid rgba(92,64,51,.1)">
+        <div style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#5c4033">Воскресенье</div>
+        <div style="font-size:.75rem;color:#c67d4a;font-weight:500">2 занятия</div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1.2rem">
+        <div class="sched-card" data-day="0" data-type="all" data-age="5+ лет" onclick="openSM(17)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800&q=80" alt="Все возрасты" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#c67d4a;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Для всех</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">11:00&ndash;12:30</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">Все возрасты</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">5+ лет</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">90 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">8 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Алексей Соколов</div>
+            
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">2 500 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(17)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
+        </div>
+        <div class="sched-card" data-day="0" data-type="all" data-age="Группа" onclick="openSM(18)" style="background:#fff;border:1px solid rgba(92,64,51,.1);border-radius:14px;overflow:hidden;cursor:pointer;transition:.3s">
+          <div style="height:150px;overflow:hidden;position:relative;background:#e8dfd2">
+            <img src="https://images.unsplash.com/photo-1576020799627-aeac74d58064?w=800&q=80" alt="День рождения" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block">
+            <div style="position:absolute;top:10px;left:10px;background:#c67d4a;color:#fff;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:.25rem .7rem;border-radius:50px">Для всех</div>
+          </div>
+          <div style="padding:1rem 1.2rem 1.3rem">
+            <div style="font-size:.78rem;color:#c67d4a;font-weight:600;margin-bottom:.3rem">14:00&ndash;16:30</div>
+            <div style="font-family:'Playfair Display',serif;font-size:1rem;color:#2d2420;margin-bottom:.5rem;line-height:1.3">День рождения</div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem">
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">Группа</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">150 мин</span>
+              <span style="font-size:.68rem;color:#9a8d82;background:#f5efe6;padding:.15rem .55rem;border-radius:4px">12 мест</span>
+            </div>
+            <div style="font-size:.75rem;color:#9a8d82;margin-bottom:.7rem">Мария Петрова</div>
+            
+            <div style="display:flex;justify-content:space-between;align-items:center;padding-top:.7rem;border-top:1px solid rgba(92,64,51,.08)">
+              <div style="font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#5c4033">2 500 &#x20bd;</div>
+              <button onclick="event.stopPropagation();openSM(18)" style="background:#c67d4a;color:#fff;border:none;padding:.45rem 1rem;border-radius:50px;font-size:.75rem;cursor:pointer;font-family:'DM Sans',sans-serif">Записаться</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- /schedDayGroups -->
+  <div id="schedEmpty" style="display:none;text-align:center;padding:4rem 1rem">
+    <div style="font-size:2rem;margin-bottom:1rem">&#128269;</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.3rem;color:#2d2420;margin-bottom:.5rem">Занятий не найдено</div>
+    <div style="font-size:.9rem;color:#9a8d82;margin-bottom:1.5rem">Попробуйте изменить фильтры</div>
+    <button onclick="resetSchedFilters()" class="sched-reset-btn">Сбросить фильтры</button>
   </div>
-<div class="sched-day-group">
-    <div class="sched-day-header">
-      <div class="sched-day-name">Вторник</div>
-      <div class="sched-day-count">2 занятия</div>
-    </div>
-    <div class="sched-day-grid">
-      <div class="sched-card" onclick="openSM(5)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80" alt="Первые шаги" loading="lazy">
-        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
-      </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>10:00–11:00 · Вт</div>
-        <div class="sched-card-name">Первые шаги</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">5–7 лет</span>
-          <span class="sched-card-tag">60 мин</span>
-          <span class="sched-card-tag">6 мест</span>
-        </div>
-        <div class="sched-card-teacher">Алексей Соколов</div>
-        
-        <div class="sched-card-footer">
-          <div class="sched-card-price">1 800 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(5)">Записаться</button>
-        </div>
-      </div>
-    </div><div class="sched-card" onclick="openSM(6)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=800&q=80" alt="Гончарный круг" loading="lazy">
-        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
-      </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>16:00–17:30 · Вт</div>
-        <div class="sched-card-name">Гончарный круг</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">8–11 лет</span>
-          <span class="sched-card-tag">90 мин</span>
-          <span class="sched-card-tag">5 мест</span>
-        </div>
-        <div class="sched-card-teacher">Мария Петрова</div>
-        
-        <div class="sched-card-footer">
-          <div class="sched-card-price">2 200 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(6)">Записаться</button>
-        </div>
-      </div>
-    </div>
-    </div>
-  </div>
-<div class="sched-day-group">
-    <div class="sched-day-header">
-      <div class="sched-day-name">Среда</div>
-      <div class="sched-day-count">3 занятия</div>
-    </div>
-    <div class="sched-day-grid">
-      <div class="sched-card" onclick="openSM(7)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=800&q=80" alt="Продвинутый курс" loading="lazy">
-        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
-      </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>10:00–12:00 · Ср</div>
-        <div class="sched-card-name">Продвинутый курс</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">12–17 лет</span>
-          <span class="sched-card-tag">120 мин</span>
-          <span class="sched-card-tag">4 мест</span>
-        </div>
-        <div class="sched-card-teacher">Иван Кузнецов</div>
-        
-        <div class="sched-card-footer">
-          <div class="sched-card-price">3 500 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(7)">Записаться</button>
-        </div>
-      </div>
-    </div><div class="sched-card" onclick="openSM(8)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80" alt="Взрослый МК" loading="lazy">
-        <div class="sched-card-type" style="background:#8a9a7b">Взрослое МК</div>
-      </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>18:00–20:00 · Ср</div>
-        <div class="sched-card-name">Взрослый МК</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">18+</span>
-          <span class="sched-card-tag">120 мин</span>
-          <span class="sched-card-tag">6 мест</span>
-        </div>
-        <div class="sched-card-teacher">Елена Соколова</div>
-        
-        <div class="sched-card-footer">
-          <div class="sched-card-price">3 100 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(8)">Записаться</button>
-        </div>
-      </div>
-    </div><div class="sched-card" onclick="openSM(9)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1609881092647-6a89e1e3c060?w=800&q=80" alt="Чайная церемония" loading="lazy">
-        <div class="sched-card-type" style="background:#8a9a7b">Взрослое МК</div>
-      </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>20:00–22:00 · Ср</div>
-        <div class="sched-card-name">Чайная церемония</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">18+</span>
-          <span class="sched-card-tag">120 мин</span>
-          <span class="sched-card-tag">3 мест</span>
-        </div>
-        <div class="sched-card-teacher">Алексей Соколов</div>
-        <div class="sched-seats-warn">Осталось мест: 3</div>
-        <div class="sched-card-footer">
-          <div class="sched-card-price">5 800 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(9)">Записаться</button>
-        </div>
-      </div>
-    </div>
-    </div>
-  </div>
-<div class="sched-day-group">
-    <div class="sched-day-header">
-      <div class="sched-day-name">Четверг</div>
-      <div class="sched-day-count">3 занятия</div>
-    </div>
-    <div class="sched-day-grid">
-      <div class="sched-card" onclick="openSM(10)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80" alt="Первые шаги" loading="lazy">
-        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
-      </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>10:00–11:00 · Чт</div>
-        <div class="sched-card-name">Первые шаги</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">5–7 лет</span>
-          <span class="sched-card-tag">60 мин</span>
-          <span class="sched-card-tag">6 мест</span>
-        </div>
-        <div class="sched-card-teacher">Мария Петрова</div>
-        
-        <div class="sched-card-footer">
-          <div class="sched-card-price">1 800 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(10)">Записаться</button>
-        </div>
-      </div>
-    </div><div class="sched-card" onclick="openSM(11)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=800&q=80" alt="Гончарный круг" loading="lazy">
-        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
-      </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>15:00–16:30 · Чт</div>
-        <div class="sched-card-name">Гончарный круг</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">8–11 лет</span>
-          <span class="sched-card-tag">90 мин</span>
-          <span class="sched-card-tag">5 мест</span>
-        </div>
-        <div class="sched-card-teacher">Иван Кузнецов</div>
-        
-        <div class="sched-card-footer">
-          <div class="sched-card-price">2 200 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(11)">Записаться</button>
-        </div>
-      </div>
-    </div><div class="sched-card" onclick="openSM(12)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80" alt="Взрослый МК" loading="lazy">
-        <div class="sched-card-type" style="background:#8a9a7b">Взрослое МК</div>
-      </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>19:30–21:30 · Чт</div>
-        <div class="sched-card-name">Взрослый МК</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">18+</span>
-          <span class="sched-card-tag">120 мин</span>
-          <span class="sched-card-tag">6 мест</span>
-        </div>
-        <div class="sched-card-teacher">Елена Соколова</div>
-        
-        <div class="sched-card-footer">
-          <div class="sched-card-price">3 100 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(12)">Записаться</button>
-        </div>
-      </div>
-    </div>
-    </div>
-  </div>
-<div class="sched-day-group">
-    <div class="sched-day-header">
-      <div class="sched-day-name">Пятница</div>
-      <div class="sched-day-count">2 занятия</div>
-    </div>
-    <div class="sched-day-grid">
-      <div class="sched-card" onclick="openSM(13)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=800&q=80" alt="Продвинутый курс" loading="lazy">
-        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
-      </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>16:00–18:00 · Пт</div>
-        <div class="sched-card-name">Продвинутый курс</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">12–17 лет</span>
-          <span class="sched-card-tag">120 мин</span>
-          <span class="sched-card-tag">5 мест</span>
-        </div>
-        <div class="sched-card-teacher">Алексей Соколов</div>
-        
-        <div class="sched-card-footer">
-          <div class="sched-card-price">3 500 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(13)">Записаться</button>
-        </div>
-      </div>
-    </div><div class="sched-card" onclick="openSM(14)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1612196808214-b7e239e5a5e2?w=800&q=80" alt="Глазурование" loading="lazy">
-        <div class="sched-card-type" style="background:#8a9a7b">Взрослое МК</div>
-      </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>18:00–19:30 · Пт</div>
-        <div class="sched-card-name">Глазурование</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">18+</span>
-          <span class="sched-card-tag">90 мин</span>
-          <span class="sched-card-tag">8 мест</span>
-        </div>
-        <div class="sched-card-teacher">Мария Петрова</div>
-        
-        <div class="sched-card-footer">
-          <div class="sched-card-price">2 800 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(14)">Записаться</button>
-        </div>
-      </div>
-    </div>
-    </div>
-  </div>
-<div class="sched-day-group">
-    <div class="sched-day-header">
-      <div class="sched-day-name">Суббота</div>
-      <div class="sched-day-count">2 занятия</div>
-    </div>
-    <div class="sched-day-grid">
-      <div class="sched-card" onclick="openSM(15)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800&q=80" alt="Все возрасты" loading="lazy">
-        <div class="sched-card-type" style="background:#c67d4a">Для всех</div>
-      </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>11:00–12:30 · Сб</div>
-        <div class="sched-card-name">Все возрасты</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">5+ лет</span>
-          <span class="sched-card-tag">90 мин</span>
-          <span class="sched-card-tag">8 мест</span>
-        </div>
-        <div class="sched-card-teacher">Иван Кузнецов</div>
-        
-        <div class="sched-card-footer">
-          <div class="sched-card-price">2 500 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(15)">Записаться</button>
-        </div>
-      </div>
-    </div><div class="sched-card" onclick="openSM(16)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80" alt="Взрослый МК" loading="lazy">
-        <div class="sched-card-type" style="background:#8a9a7b">Взрослое МК</div>
-      </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>14:00–16:00 · Сб</div>
-        <div class="sched-card-name">Взрослый МК</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">18+</span>
-          <span class="sched-card-tag">120 мин</span>
-          <span class="sched-card-tag">6 мест</span>
-        </div>
-        <div class="sched-card-teacher">Елена Соколова</div>
-        
-        <div class="sched-card-footer">
-          <div class="sched-card-price">3 100 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(16)">Записаться</button>
-        </div>
-      </div>
-    </div>
-    </div>
-  </div>
-<div class="sched-day-group">
-    <div class="sched-day-header">
-      <div class="sched-day-name">Воскресенье</div>
-      <div class="sched-day-count">2 занятия</div>
-    </div>
-    <div class="sched-day-grid">
-      <div class="sched-card" onclick="openSM(17)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800&q=80" alt="Все возрасты" loading="lazy">
-        <div class="sched-card-type" style="background:#c67d4a">Для всех</div>
-      </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>11:00–12:30 · Вс</div>
-        <div class="sched-card-name">Все возрасты</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">5+ лет</span>
-          <span class="sched-card-tag">90 мин</span>
-          <span class="sched-card-tag">8 мест</span>
-        </div>
-        <div class="sched-card-teacher">Алексей Соколов</div>
-        
-        <div class="sched-card-footer">
-          <div class="sched-card-price">2 500 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(17)">Записаться</button>
-        </div>
-      </div>
-    </div><div class="sched-card" onclick="openSM(18)">
-      <div class="sched-card-img">
-        <img src="https://images.unsplash.com/photo-1576020799627-aeac74d58064?w=800&q=80" alt="День рождения" loading="lazy">
-        <div class="sched-card-type" style="background:#c67d4a">Для всех</div>
-      </div>
-      <div class="sched-card-body">
-        <div class="sched-card-time"><div class="sched-card-time-dot"></div>14:00–16:30 · Вс</div>
-        <div class="sched-card-name">День рождения</div>
-        <div class="sched-card-meta">
-          <span class="sched-card-tag">Группа</span>
-          <span class="sched-card-tag">150 мин</span>
-          <span class="sched-card-tag">12 мест</span>
-        </div>
-        <div class="sched-card-teacher">Мария Петрова</div>
-        
-        <div class="sched-card-footer">
-          <div class="sched-card-price">2 500 &#x20BD;<small>за занятие</small></div>
-          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(18)">Записаться</button>
-        </div>
-      </div>
-    </div>
-    </div>
-  </div>
-    </div>
-    <div id="schedEmpty" style="display:none;text-align:center;padding:5rem 1rem">
-      <div style="font-size:3rem;margin-bottom:1rem">🔍</div>
-      <div style="font-family:var(--font-d);font-size:1.4rem;color:var(--text-dark);margin-bottom:.5rem">Занятий не найдено</div>
-      <div style="font-size:.9rem;color:var(--text-muted)">Попробуйте изменить фильтры</div>
-      <button class="sched-reset-btn" style="margin:1.5rem auto 0;display:block" onclick="resetSchedFilters()">Сбросить фильтры</button>
-    </div>
-    <!-- Кнопка «Не нашли подходящее?» -->
-    <div id="schedContactBlock" style="margin-top:3rem;background:var(--sand);border-radius:20px;padding:2rem;text-align:center;display:none">
-      <div style="font-family:var(--font-d);font-size:1.2rem;color:var(--earth);margin-bottom:.5rem">Не нашли подходящее время?</div>
-      <p style="font-size:.88rem;color:var(--text-muted);margin-bottom:1.2rem">Напишите нам — подберём занятие индивидуально</p>
-      <button class="btn-p" onclick="showPage('contacts')">Написать нам →</button>
-    </div>
+  <div id="schedContactBlock" style="max-width:700px;margin:0 auto 4rem;background:#f5efe6;border-radius:16px;padding:2rem;text-align:center">
+    <div style="font-family:'Playfair Display',serif;font-size:1.1rem;color:#5c4033;margin-bottom:.4rem">Не нашли подходящее время?</div>
+    <p style="font-size:.85rem;color:#9a8d82;margin-bottom:1.2rem">Напишите нам &#8212; подберём занятие индивидуально</p>
+    <button onclick="showPage('contacts')" style="background:#c67d4a;color:#fff;border:none;padding:.8rem 2rem;border-radius:50px;font-family:'DM Sans',sans-serif;font-size:.85rem;cursor:pointer">Написать нам &rarr;</button>
   </div>
 </div>
 
@@ -4104,56 +4107,37 @@ function resetSchedFilters() {
 function renderSchedGroups() {
   const container = document.getElementById('schedDayGroups');
   const emptyEl = document.getElementById('schedEmpty');
-  const contactBlock = document.getElementById('schedContactBlock');
   if(!container) return;
 
-  try {
-    let evs = schedEvents.filter(e=>e&&e.name&&e.day!==undefined);
-    if(schedFilters.day !== 'all') evs = evs.filter(e=>Number(e.day)===Number(schedFilters.day));
-    if(schedFilters.type !== 'all') evs = evs.filter(e=>e.type===schedFilters.type);
-    if(schedFilters.age !== 'all') {
-      const ageStart = {'5':'5','8':'8','12':'12','18':'18'}[schedFilters.age]||'';
-      if(ageStart) evs = evs.filter(e=>e.age&&String(e.age).includes(ageStart));
+  // Show/hide cards using data attributes (no innerHTML needed)
+  const cards = container.querySelectorAll('.sched-card');
+  let visible = 0;
+
+  cards.forEach(card=>{
+    const day = Number(card.dataset.day);
+    const type = card.dataset.type;
+    const age = String(card.dataset.age||'');
+
+    let show = true;
+    if(schedFilters.day !== 'all' && day !== Number(schedFilters.day)) show = false;
+    if(schedFilters.type !== 'all' && type !== schedFilters.type) show = false;
+    if(schedFilters.age !== 'all'){
+      const ageMap = {'5':'5','8':'8','12':'12','18':'18+'};
+      const target = ageMap[schedFilters.age]||'';
+      if(target && !age.includes(target.replace('+',''))) show = false;
     }
+    card.style.display = show ? 'block' : 'none';
+    if(show) visible++;
+  });
 
-    if(!evs.length) {
-      container.innerHTML='';
-      if(emptyEl) emptyEl.style.display='block';
-      if(contactBlock) contactBlock.style.display='block';
-      return;
-    }
-    if(emptyEl) emptyEl.style.display='none';
-    if(contactBlock) contactBlock.style.display='block';
+  // Show/hide day groups based on visible cards
+  container.querySelectorAll('.sched-day-group').forEach(group=>{
+    const hasVisible = group.querySelectorAll('.sched-card[style*="block"]').length > 0 ||
+                       Array.from(group.querySelectorAll('.sched-card')).some(c=>c.style.display!=='none');
+    group.style.display = hasVisible ? 'block' : 'none';
+  });
 
-    const dayOrder = [1,2,3,4,5,6,0];
-    const groups = {};
-    evs.forEach(e=>{ const d=Number(e.day); if(groups[d]===undefined) groups[d]=[]; groups[d].push(e); });
-
-    const parts = [];
-    dayOrder.forEach(d=>{
-      if(!groups[d]||!groups[d].length) return;
-      const dayEvs = groups[d].slice().sort((a,b)=>String(a.time||'').localeCompare(String(b.time||'')));
-      const cnt = dayEvs.length;
-      const cntLabel = cnt===1?'занятие':cnt<5?'занятия':'занятий';
-      const cards = dayEvs.map(e=>{ try{return schedCardHTML(e);}catch(ex){return '';} }).join('');
-      parts.push(
-        '<div class="sched-day-group">' +
-        '<div class="sched-day-header">' +
-        '<div class="sched-day-name">' + (schedDayNames[d]||'') + '</div>' +
-        '<div class="sched-day-count">' + cnt + ' ' + cntLabel + '</div>' +
-        '</div>' +
-        '<div class="sched-day-grid">' + cards + '</div>' +
-        '</div>'
-      );
-    });
-
-    if(parts.length) {
-      container.innerHTML = parts.join('');
-    }
-  } catch(err) {
-    console.error('renderSchedGroups error:', err);
-    // Keep existing static HTML intact on error
-  }
+  if(emptyEl) emptyEl.style.display = visible===0 ? 'block' : 'none';
 }
 
 function schedCardHTML(e) {
