@@ -984,6 +984,7 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
 
 <!-- SCHEDULE PAGE -->
 <div id="schedulePage" style="display:none;padding-top:72px">
+  <p style="position:fixed;top:80px;left:10px;z-index:99999;background:red;color:white;padding:5px 10px;font-size:14px;margin:0">SCHEDULE PAGE IS VISIBLE</p>
   <div style="background:linear-gradient(135deg,#5c4033 0%,#4a3828 100%);padding:4rem 3rem 3rem">
     <h1 style="font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);color:#f5efe6;font-weight:400;margin-bottom:.6rem">Расписание <em style="font-style:italic;color:#d99a6e">занятий</em></h1>
     <p style="font-size:.95rem;color:rgba(245,239,230,.65);max-width:500px;line-height:1.7">Выберите удобное время — запись в один клик</p>
@@ -4030,25 +4031,31 @@ function showPage(page){
   if(page==='programs'){progsVisible=8;renderProgs();}
   if(page==='services'){}
   if(page==='schedule'){
-    // Static HTML is pre-rendered in schedDayGroups - just show it
-    // Silently merge Firebase custom entries in background
-    adminSchedEvents=[...schedEvents];
-    db.ref('adminSchedule').once('value').then(snap=>{
-      const d=snap.val();
-      if(d){
-        let changed=false;
-        Object.values(d).forEach(e=>{
-          const idx=schedEvents.findIndex(x=>x.id===e.id);
-          if(idx>=0){schedEvents[idx]=e;changed=true;}
-          else{schedEvents.push(e);changed=true;}
-        });
-        adminSchedEvents=[...schedEvents];
-        if(changed){try{renderSchedGroups();}catch(ex){}}
-      }
-    }).catch(()=>{});
+    // Force show the schedule page with multiple methods
+    const sp = document.getElementById('schedulePage');
+    if(sp){
+      sp.style.display = 'block';
+      sp.style.visibility = 'visible';
+      sp.style.opacity = '1';
+      sp.removeAttribute('hidden');
+    }
     // Show contact block
-    const cb=document.getElementById('schedContactBlock');
-    if(cb) cb.style.display='block';
+    const cb = document.getElementById('schedContactBlock');
+    if(cb) cb.style.display = 'block';
+    // Silently merge Firebase entries in background
+    try{
+      adminSchedEvents=[...schedEvents];
+      db.ref('adminSchedule').once('value').then(snap=>{
+        const d=snap.val();
+        if(d){
+          Object.values(d).forEach(e=>{
+            const idx=schedEvents.findIndex(x=>x.id===e.id);
+            if(idx>=0) schedEvents[idx]=e; else schedEvents.push(e);
+          });
+          adminSchedEvents=[...schedEvents];
+        }
+      }).catch(()=>{});
+    }catch(ex){}
   }
   if(page==='certificates'){initCerts();renderCertsPage();}
   if(page==='events'){loadSobytia('smi');}
