@@ -1866,7 +1866,7 @@ function arrToObj(arr) { const o={}; arr.forEach(i => o[i.id]=i); return o; }
 // ===== RENDER PRODUCTS =====
 function renderP() {
   const g=document.getElementById('pGrid');
-  const search=(document.getElementById('shopSearch')?.value||'').toLowerCase().trim();
+  if(!g) return;
   const sort=document.getElementById('shopSort')?.value||'';
   let f=activeFilter==='all'?[...products]:products.filter(p=>p.category===activeFilter);
   if(search) f=f.filter(p=>p.name.toLowerCase().includes(search)||p.desc.toLowerCase().includes(search));
@@ -1905,6 +1905,7 @@ function filterP(cat){if(cat!==undefined)activeFilter=cat;renderP();}
 // ===== RENDER CLASSES =====
 function renderC() {
   const g=document.getElementById('cGrid');
+  if(!g) return; // element not on current page
   if(!classes.length){g.innerHTML='<div class="loading">Нет мастер-классов</div>';return;}
   g.innerHTML=classes.map(c=>`<div class="ccard" onclick="openCL(${c.id})" style="cursor:pointer"><div class="ccimg"><img src="${c.img}" alt="${c.name}" loading="lazy"></div><div class="ccbody"><h3>${c.name}</h3><p>${c.desc}</p><div class="cmeta"><span class="cdur">${c.duration}</span><span class="cprice">${c.price.toLocaleString('ru-RU')} ₽</span></div></div></div>`).join('');
 }
@@ -2073,15 +2074,16 @@ function saveContactsData(){
 
 // ===== PRESS ADMIN TAB =====
 function renderAdmSobytiaTab(){
-  ['smi','achievements','public'].forEach(cat=>{
-    const elId=cat==='smi'?'admSmiList':cat==='achievements'?'admAchievList':'admPublicList';
-    const el=document.getElementById(elId);if(!el)return;
-    el.innerHTML='<div class="loading">Загрузка...</div>';
-    firebase.database().ref('sobytia').orderByChild('cat').equalTo(cat).once('value').then(snap=>{
-      const items=snap.val()?Object.entries(snap.val()).map(([k,v])=>({...v,fbKey:k})).reverse():[];
-      el.innerHTML=items.length?items.map(s=>`<div class="adm-row"><div class="adm-thumb" style="background:var(--sand-deep);overflow:hidden;border-radius:8px">${s.img?`<img src="${s.img}" alt="" style="width:50px;height:50px;object-fit:cover">`:''}</div><div class="adm-rinfo"><strong>${s.title}</strong><small>${s.type||''} · ${s.day||''} ${s.month||''}</small></div><div class="adm-racts"><button class="adm-btn-sm del" onclick="delSobytiaItem('${s.fbKey}','${cat}');renderAdmSobytiaTab()">🗑️</button></div></div>`).join(''):'<div class="loading" style="text-align:center;padding:1rem">Записей нет</div>';
+  // Load all sobytia once and filter client-side (avoids Firebase index warning)
+  firebase.database().ref('sobytia').once('value').then(snap=>{
+    const all=snap.val()?Object.entries(snap.val()).map(([k,v])=>({...v,fbKey:k})).reverse():[];
+    ['smi','achievements','public'].forEach(cat=>{
+      const elId=cat==='smi'?'admSmiList':cat==='achievements'?'admAchievList':'admPublicList';
+      const el=document.getElementById(elId);if(!el)return;
+      const items=all.filter(s=>s.cat===cat);
+      el.innerHTML=items.length?items.map(s=>`<div class="adm-row"><div class="adm-thumb" style="background:var(--sand-deep);overflow:hidden;border-radius:8px">${s.img?`<img src="${s.img}" alt="" style="width:50px;height:50px;object-fit:cover">`:'📄'}</div><div class="adm-rinfo"><strong>${s.title||'—'}</strong><small>${s.type||''} · ${s.day||''} ${s.month||''}</small></div><div class="adm-racts"><button class="adm-btn-sm del" onclick="delSobytiaItem('${s.fbKey}','${cat}');renderAdmSobytiaTab()">🗑️</button></div></div>`).join(''):'<div class="loading" style="text-align:center;padding:1rem;color:var(--text-muted)">Записей нет</div>';
     });
-  });
+  }).catch(()=>console.log('sobytia load error'));
 }
 function renderAdmPress(){
   const list=document.getElementById('admPressList');if(!list)return;
@@ -3578,8 +3580,9 @@ function loadSobytia(cat){
   const emptyEl=document.getElementById(emptyId);
   if(!grid)return;
   grid.innerHTML='<div class="loading">Загрузка...</div>';
-  firebase.database().ref('sobytia').orderByChild('cat').equalTo(cat).once('value').then(snap=>{
-    const items=snap.val()?Object.entries(snap.val()).map(([k,v])=>({...v,fbKey:k})).reverse():[];
+  firebase.database().ref('sobytia').once('value').then(snap=>{
+    const all=snap.val()?Object.entries(snap.val()).map(([k,v])=>({...v,fbKey:k})):[];
+    const items=all.filter(s=>s.cat===cat).reverse();
     sobytiaCache[cat]=items;
     if(!items.length){
       grid.innerHTML='';
