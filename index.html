@@ -256,6 +256,45 @@ footer{background:#3a2d25;padding:0}.flinks{display:flex;gap:2rem}.flinks a{font
 .sched-page-wrap{max-width:1100px;margin:0 auto;padding:4rem 3rem}
 .sched-week-nav{display:flex;align-items:center;gap:1rem;margin-bottom:2.5rem;flex-wrap:wrap}
 .sched-week-nav h2{font-family:var(--font-d);font-size:1.4rem;color:var(--text-dark);flex:1}
+
+/* SCHEDULE PAGE - Kolokol style */
+.sched-filters-bar{background:var(--white);border-bottom:1px solid var(--border);padding:1.5rem 3rem;position:sticky;top:72px;z-index:50;box-shadow:0 2px 12px rgba(92,64,51,.06)}
+.sched-filters-inner{max-width:1280px;margin:0 auto;display:flex;gap:2rem;align-items:flex-end;flex-wrap:wrap}
+.sched-filter-group{display:flex;flex-direction:column;gap:.5rem}
+.sched-filter-label{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);font-weight:600}
+.sched-filter-btns{display:flex;gap:.35rem;flex-wrap:wrap}
+.sched-fbtn{background:var(--sand);border:1.5px solid transparent;color:var(--text-body);padding:.4rem .9rem;font-family:var(--font-b);font-size:.78rem;cursor:pointer;border-radius:50px;transition:.2s;white-space:nowrap}
+.sched-fbtn:hover{border-color:var(--clay);color:var(--clay)}
+.sched-fbtn.active{background:var(--clay);border-color:var(--clay);color:#fff;font-weight:500}
+.sched-reset-btn{background:none;border:1.5px solid var(--border);color:var(--text-muted);padding:.4rem 1rem;font-family:var(--font-b);font-size:.75rem;cursor:pointer;border-radius:50px;transition:.2s;white-space:nowrap;align-self:flex-end}
+.sched-reset-btn:hover{border-color:var(--terracotta);color:var(--terracotta)}
+.sched-day-group{margin-bottom:3rem}
+.sched-day-header{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding-bottom:.8rem;border-bottom:2px solid var(--border)}
+.sched-day-name{font-family:var(--font-d);font-size:1.4rem;font-weight:400;color:var(--earth)}
+.sched-day-date{font-size:.8rem;color:var(--text-muted);background:var(--sand);padding:.3rem .8rem;border-radius:50px}
+.sched-day-count{font-size:.75rem;color:var(--clay);font-weight:500}
+.sched-day-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}
+.sched-card{background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:.3s;cursor:pointer}
+.sched-card:hover{box-shadow:0 12px 40px rgba(92,64,51,.1);transform:translateY(-3px)}
+.sched-card-img{height:160px;position:relative;overflow:hidden;background:var(--sand-deep)}
+.sched-card-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.sched-card:hover .sched-card-img img{transform:scale(1.05)}
+.sched-card-type{position:absolute;top:10px;left:10px;padding:.28rem .75rem;border-radius:50px;font-size:.62rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff}
+.sched-card-body{padding:1.1rem 1.3rem 1.4rem}
+.sched-card-time{display:flex;align-items:center;gap:.5rem;font-size:.78rem;color:var(--clay);font-weight:600;margin-bottom:.4rem}
+.sched-card-time-dot{width:6px;height:6px;border-radius:50%;background:var(--clay);flex-shrink:0}
+.sched-card-name{font-family:var(--font-d);font-size:1.05rem;color:var(--text-dark);line-height:1.3;margin-bottom:.5rem}
+.sched-card-meta{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:.7rem}
+.sched-card-tag{font-size:.68rem;color:var(--text-muted);background:var(--sand);padding:.2rem .6rem;border-radius:4px}
+.sched-card-teacher{font-size:.75rem;color:var(--text-muted);margin-bottom:.7rem}
+.sched-card-footer{display:flex;justify-content:space-between;align-items:center;padding-top:.8rem;border-top:1px solid var(--border)}
+.sched-card-price{font-family:var(--font-d);font-size:1.1rem;font-weight:700;color:var(--earth)}
+.sched-card-price small{font-size:.65rem;color:var(--text-muted);font-family:var(--font-b);font-weight:400;display:block}
+.sched-card-btn{background:var(--clay);color:#fff;border:none;padding:.5rem 1.1rem;border-radius:50px;font-family:var(--font-b);font-size:.75rem;cursor:pointer;transition:.2s}
+.sched-card-btn:hover{background:var(--clay-dark)}
+.sched-seats-warn{font-size:.65rem;color:var(--terracotta);font-weight:500;margin-bottom:.4rem}
+@media(max-width:900px){.sched-filters-bar{padding:1.2rem 1.5rem;top:60px}.sched-filters-inner{gap:1.2rem}.sched-day-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.sched-day-grid{grid-template-columns:1fr}.sched-filter-group{width:100%}}
 .sched-week-btn{background:var(--white);border:1.5px solid var(--border);color:var(--text-body);padding:.5rem 1.2rem;border-radius:50px;font-family:var(--font-b);font-size:.82rem;cursor:pointer;transition:.2s}.sched-week-btn:hover{border-color:var(--clay);color:var(--clay)}
 .sched-full-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:.6rem}
 .sched-col{background:var(--white);border-radius:14px;overflow:hidden;border:1px solid var(--border)}
@@ -947,23 +986,67 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
 <div id="schedulePage" style="display:none;padding-top:72px">
   <div class="page-banner">
     <h1>Расписание <em>занятий</em></h1>
-    <p>Выберите удобное время для себя или ребёнка. Запись на любое занятие в один клик.</p>
+    <p>Выберите удобное время для себя или ребёнка — запись в один клик</p>
   </div>
-  <!-- Фильтр по типу -->
-  <div style="background:var(--sand);padding:1.2rem 3rem 0;display:flex;gap:.5rem;justify-content:center;flex-wrap:wrap;border-bottom:2px solid var(--border)">
-    <button class="fbtn active" id="sfAll" onclick="filterSched('all',this)">Все занятия</button>
-    <button class="fbtn" id="sfKids" onclick="filterSched('kids',this)">Детские</button>
-    <button class="fbtn" id="sfAdults" onclick="filterSched('adults',this)">Взрослые</button>
-    <button class="fbtn" id="sfAll2" onclick="filterSched('all_ages',this)">Все возрасты</button>
-  </div>
-  <div style="max-width:1200px;margin:0 auto;padding:3rem 3rem 5rem">
-    <div class="sched-legend" style="margin-bottom:2rem;justify-content:center">
-      <div class="sched-legend-item"><div class="sched-legend-dot" style="background:#7ab8e8"></div>Детские</div>
-      <div class="sched-legend-item"><div class="sched-legend-dot" style="background:var(--sage)"></div>Взрослые</div>
-      <div class="sched-legend-item"><div class="sched-legend-dot" style="background:var(--clay)"></div>Все возрасты</div>
+
+  <!-- ФИЛЬТРЫ в стиле Колокол -->
+  <div class="sched-filters-bar">
+    <div class="sched-filters-inner">
+      <!-- Фильтр по дню -->
+      <div class="sched-filter-group">
+        <div class="sched-filter-label">День недели</div>
+        <div class="sched-filter-btns" id="sfDayBtns">
+          <button class="sched-fbtn active" onclick="setSchedFilter('day','all',this)">Все дни</button>
+          <button class="sched-fbtn" onclick="setSchedFilter('day',1,this)">Пн</button>
+          <button class="sched-fbtn" onclick="setSchedFilter('day',2,this)">Вт</button>
+          <button class="sched-fbtn" onclick="setSchedFilter('day',3,this)">Ср</button>
+          <button class="sched-fbtn" onclick="setSchedFilter('day',4,this)">Чт</button>
+          <button class="sched-fbtn" onclick="setSchedFilter('day',5,this)">Пт</button>
+          <button class="sched-fbtn" onclick="setSchedFilter('day',6,this)">Сб</button>
+          <button class="sched-fbtn" onclick="setSchedFilter('day',0,this)">Вс</button>
+        </div>
+      </div>
+      <!-- Фильтр по типу -->
+      <div class="sched-filter-group">
+        <div class="sched-filter-label">Тип занятия</div>
+        <div class="sched-filter-btns" id="sfTypeBtns">
+          <button class="sched-fbtn active" onclick="setSchedFilter('type','all',this)">Все форматы</button>
+          <button class="sched-fbtn" onclick="setSchedFilter('type','kids',this)">Детские</button>
+          <button class="sched-fbtn" onclick="setSchedFilter('type','adults',this)">Взрослые</button>
+          <button class="sched-fbtn" onclick="setSchedFilter('type','all',this)">Семейные</button>
+        </div>
+      </div>
+      <!-- Фильтр по возрасту -->
+      <div class="sched-filter-group">
+        <div class="sched-filter-label">Возраст</div>
+        <div class="sched-filter-btns" id="sfAgeBtns">
+          <button class="sched-fbtn active" onclick="setSchedFilter('age','all',this)">Любой</button>
+          <button class="sched-fbtn" onclick="setSchedFilter('age','5',this)">5–7 лет</button>
+          <button class="sched-fbtn" onclick="setSchedFilter('age','8',this)">8–11 лет</button>
+          <button class="sched-fbtn" onclick="setSchedFilter('age','12',this)">12–17 лет</button>
+          <button class="sched-fbtn" onclick="setSchedFilter('age','18',this)">18+</button>
+        </div>
+      </div>
+      <button class="sched-reset-btn" onclick="resetSchedFilters()">Сбросить всё</button>
     </div>
-    <div id="schedCardGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem"></div>
-    <div id="schedEmpty" style="display:none;text-align:center;padding:4rem;color:var(--text-muted)">Занятий не найдено</div>
+  </div>
+
+  <!-- Результаты -->
+  <div style="max-width:1280px;margin:0 auto;padding:2.5rem 3rem 5rem">
+    <!-- Группировка по дням -->
+    <div id="schedDayGroups"></div>
+    <div id="schedEmpty" style="display:none;text-align:center;padding:5rem 1rem">
+      <div style="font-size:3rem;margin-bottom:1rem">🔍</div>
+      <div style="font-family:var(--font-d);font-size:1.4rem;color:var(--text-dark);margin-bottom:.5rem">Занятий не найдено</div>
+      <div style="font-size:.9rem;color:var(--text-muted)">Попробуйте изменить фильтры</div>
+      <button class="sched-reset-btn" style="margin:1.5rem auto 0;display:block" onclick="resetSchedFilters()">Сбросить фильтры</button>
+    </div>
+    <!-- Кнопка «Не нашли подходящее?» -->
+    <div id="schedContactBlock" style="margin-top:3rem;background:var(--sand);border-radius:20px;padding:2rem;text-align:center;display:none">
+      <div style="font-family:var(--font-d);font-size:1.2rem;color:var(--earth);margin-bottom:.5rem">Не нашли подходящее время?</div>
+      <p style="font-size:.88rem;color:var(--text-muted);margin-bottom:1.2rem">Напишите нам — подберём занятие индивидуально</p>
+      <button class="btn-p" onclick="showPage('contacts')">Написать нам →</button>
+    </div>
   </div>
 </div>
 
@@ -1470,7 +1553,10 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
             <div class="adm-field"><label>Мест</label><input type="number" id="schedSeats" placeholder="6"></div>
           </div>
           <div class="adm-field full"><label>Описание</label><textarea id="schedDesc" style="min-height:80px"></textarea></div>
-          <div class="adm-field full"><label>Важно (необязательно)</label><input type="text" id="schedImportant" placeholder="Важная информация для участников"></div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Преподаватель</label><input type="text" id="schedTeacher" placeholder="Елена Соколова"></div>
+            <div class="adm-field"><label>Важно (необязательно)</label><input type="text" id="schedImportant" placeholder="Важная информация"></div>
+          </div>
           <input type="hidden" id="schedId"><input type="hidden" id="schedImg">
           <div class="adm-form-acts"><button class="adm-save" onclick="saveSched()">Сохранить</button><button class="adm-cancel" onclick="hideSchedF()">Отмена</button></div>
         </div>
@@ -3234,6 +3320,7 @@ function showSchedF(id){
     document.getElementById('schedPrice').value=e.price||'';
     document.getElementById('schedSeats').value=e.seats||'';
     document.getElementById('schedDesc').value=e.desc||'';
+    if(document.getElementById('schedTeacher')) document.getElementById('schedTeacher').value=e.teacher||'';
     document.getElementById('schedImportant').value=e.important||'';
     document.getElementById('schedImg').value=e.img||'';
     document.getElementById('schedImgUrl').value=e.img||'';
@@ -3274,6 +3361,7 @@ function saveSched(){
     seats:parseInt(document.getElementById('schedSeats').value)||6,
     desc:document.getElementById('schedDesc').value.trim(),
     important:document.getElementById('schedImportant').value.trim(),
+    teacher:document.getElementById('schedTeacher')?.value.trim()||'',
     img:document.getElementById('schedImg').value||'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80',
     duration:(()=>{try{const [sh,sm]=time.split(':').map(Number);const et=document.getElementById('schedEndTime').value.trim();if(!et)return 60;const [eh,em]=et.split(':').map(Number);return(eh*60+em)-(sh*60+sm);}catch(e){return 60;}})(),
     tags:[`⏱ ${time}${document.getElementById('schedEndTime').value?'–'+document.getElementById('schedEndTime').value:''}`,document.getElementById('schedAge').value.trim()||'Все']
@@ -3535,47 +3623,118 @@ function switchAboutCat(cat,btn){
 }
 
 // ===== SCHEDULE CARDS =====
-let schedFilterType='all';
-function filterSched(type,btn){
-  schedFilterType=type;
-  document.querySelectorAll('#schedulePage .fbtn').forEach(b=>b.classList.remove('active'));
+// ===== SCHEDULE PAGE - Kolokol style =====
+const schedDayNames = ['Воскресенье','Понедельник','Вторник','Среда','Четверг','Пятница','Суббота'];
+const schedDayShort = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+const schedTypeColors = {kids:'#7ab8e8',adults:'var(--sage)',all:'var(--clay)'};
+const schedTypeLabels = {kids:'Детское',adults:'Взрослое МК',all:'Для всех'};
+const schedTeachers = ['Елена Соколова','Алексей Соколов','Мария Петрова','Иван Кузнецов'];
+
+let schedFilters = {day:'all', type:'all', age:'all'};
+
+function setSchedFilter(key, val, btn) {
+  schedFilters[key] = val;
+  // Update active button in group
+  const groupId = key==='day'?'sfDayBtns':key==='type'?'sfTypeBtns':'sfAgeBtns';
+  const group = document.getElementById(groupId);
+  if(group) group.querySelectorAll('.sched-fbtn').forEach(b=>b.classList.remove('active'));
   if(btn) btn.classList.add('active');
-  else {
-    // highlight correct button by type
-    const map={all:'sfAll',kids:'sfKids',adults:'sfAdults',all_ages:'sfAll2'};
-    const el=document.getElementById(map[type]);
-    if(el) el.classList.add('active');
+  renderSchedGroups();
+}
+
+function resetSchedFilters() {
+  schedFilters = {day:'all', type:'all', age:'all'};
+  ['sfDayBtns','sfTypeBtns','sfAgeBtns'].forEach(gid=>{
+    const g=document.getElementById(gid);
+    if(g){g.querySelectorAll('.sched-fbtn').forEach((b,i)=>b.classList.toggle('active',i===0));}
+  });
+  renderSchedGroups();
+}
+
+function renderSchedGroups() {
+  const container = document.getElementById('schedDayGroups');
+  const emptyEl = document.getElementById('schedEmpty');
+  const contactBlock = document.getElementById('schedContactBlock');
+  if(!container) return;
+
+  // Filter events
+  let evs = [...schedEvents];
+  if(schedFilters.day !== 'all') evs = evs.filter(e=>e.day===schedFilters.day);
+  if(schedFilters.type !== 'all') evs = evs.filter(e=>e.type===schedFilters.type);
+  if(schedFilters.age !== 'all') {
+    const ageMap = {'5':'5–7','8':'8–11','12':'12–17','18':'18+'};
+    const ageStr = ageMap[schedFilters.age]||'';
+    evs = evs.filter(e=>e.age&&e.age.includes(ageStr.split('–')[0]));
   }
-  initScheduleCards();
-}
-function initScheduleCards(){
-  const grid=document.getElementById('schedCardGrid');if(!grid)return;
-  const colorMap={kids:'#7ab8e8',adults:'var(--sage)',all:'var(--clay)'};
-  const dayNamesRu=['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
-  let evs=schedEvents;
-  if(schedFilterType==='kids')evs=evs.filter(e=>e.type==='kids');
-  else if(schedFilterType==='adults')evs=evs.filter(e=>e.type==='adults');
-  else if(schedFilterType==='all_ages')evs=evs.filter(e=>e.type==='all');
-  const empty=document.getElementById('schedEmpty');
-  if(!evs.length){grid.innerHTML='';if(empty)empty.style.display='block';return;}
-  if(empty)empty.style.display='none';
-  grid.innerHTML=evs.map(e=>`
-    <div class="pcard" onclick="openSM(${e.id})" style="cursor:pointer">
-      <div class="pimg" style="aspect-ratio:16/9;position:relative">
-        <img src="${e.img||'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80'}" alt="${e.name}" loading="lazy" style="width:100%;height:100%;object-fit:cover">
-        <div class="pbadge" style="background:${colorMap[e.type]||'var(--clay)'}">${e.type==='kids'?'Детское':e.type==='adults'?'Взрослое':e.type==='all'?'Все возрасты':e.type}</div>
+
+  if(!evs.length) {
+    container.innerHTML='';
+    if(emptyEl) emptyEl.style.display='block';
+    if(contactBlock) contactBlock.style.display='block';
+    return;
+  }
+  if(emptyEl) emptyEl.style.display='none';
+  if(contactBlock) contactBlock.style.display='block';
+
+  // Group by day of week
+  const dayOrder = [1,2,3,4,5,6,0];
+  const groups = {};
+  evs.forEach(e=>{ if(!groups[e.day]) groups[e.day]=[]; groups[e.day].push(e); });
+
+  container.innerHTML = dayOrder.filter(d=>groups[d]).map(d=>{
+    const dayEvs = groups[d].sort((a,b)=>a.time.localeCompare(b.time));
+    return `<div class="sched-day-group">
+      <div class="sched-day-header">
+        <div class="sched-day-name">${schedDayNames[d]}</div>
+        <div class="sched-day-count">${dayEvs.length} ${dayEvs.length===1?'занятие':dayEvs.length<5?'занятия':'занятий'}</div>
       </div>
-      <div class="pinfo">
-        <div class="pcat">${dayNamesRu[e.day]} · ${e.time}–${e.endTime}</div>
-        <div class="pname" style="font-size:1rem">${e.name}</div>
-        <div class="pdesc">${e.age} · ${e.duration} мин${e.desc?'<br><span style="color:var(--text-muted)">'+e.desc.substring(0,90)+'…</span>':''}</div>
-        <div class="pfooter">
-          <div class="pprice">${e.price.toLocaleString('ru-RU')} ₽</div>
-          <button class="quick-buy" onclick="event.stopPropagation();openSM(${e.id})">Записаться</button>
+      <div class="sched-day-grid">
+        ${dayEvs.map(e=>schedCardHTML(e)).join('')}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function schedCardHTML(e) {
+  const typeColor = schedTypeColors[e.type]||'var(--clay)';
+  const typeLabel = schedTypeLabels[e.type]||e.type;
+  const img = e.img||'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=600&q=80';
+  const teacher = e.teacher||(schedTeachers[e.id%schedTeachers.length]);
+  const dur = e.duration ? `${e.duration} мин` : '';
+  const seatsWarn = e.seats<=3 ? `<div class="sched-seats-warn">🔥 Осталось мест: ${e.seats}</div>` : '';
+  return `<div class="sched-card" onclick="openSM(${e.id})">
+    <div class="sched-card-img">
+      <img src="${img}" alt="${e.name}" loading="lazy">
+      <div class="sched-card-type" style="background:${typeColor}">${typeLabel}</div>
+    </div>
+    <div class="sched-card-body">
+      <div class="sched-card-time">
+        <div class="sched-card-time-dot"></div>
+        ${e.time}${e.endTime?'–'+e.endTime:''} · ${schedDayShort[e.day]}
+      </div>
+      <div class="sched-card-name">${e.name}</div>
+      <div class="sched-card-meta">
+        ${e.age?`<span class="sched-card-tag">👤 ${e.age}</span>`:''}
+        ${dur?`<span class="sched-card-tag">⏱ ${dur}</span>`:''}
+        ${e.seats?`<span class="sched-card-tag">👥 ${e.seats} мест</span>`:''}
+      </div>
+      <div class="sched-card-teacher">👩‍🎨 ${teacher}</div>
+      ${seatsWarn}
+      <div class="sched-card-footer">
+        <div class="sched-card-price">
+          ${e.price.toLocaleString('ru-RU')} ₽
+          <small>за занятие</small>
         </div>
+        <button class="sched-card-btn" onclick="event.stopPropagation();openSM(${e.id})">Записаться</button>
       </div>
-    </div>`).join('');
+    </div>
+  </div>`;
 }
+
+// Keep old functions as aliases for backward compatibility
+let schedFilterType='all';
+function filterSched(type,btn){ setSchedFilter('type',type==='all_ages'?'all':type,btn); }
+function initScheduleCards(){ renderSchedGroups(); }
 
 // ===== SOBYTIA (EVENTS PAGE) =====
 let sobytiaCache={};
