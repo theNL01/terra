@@ -1034,7 +1034,431 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
   <!-- Результаты -->
   <div style="max-width:1280px;margin:0 auto;padding:2.5rem 3rem 5rem">
     <!-- Группировка по дням -->
-    <div id="schedDayGroups"></div>
+    <div id="schedDayGroups">
+<div class="sched-day-group">
+    <div class="sched-day-header">
+      <div class="sched-day-name">Понедельник</div>
+      <div class="sched-day-count">4 занятия</div>
+    </div>
+    <div class="sched-day-grid">
+      <div class="sched-card" onclick="openSM(1)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80" alt="Первые шаги" loading="lazy">
+        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>10:00–11:00 · Пн</div>
+        <div class="sched-card-name">Первые шаги</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">5–7 лет</span>
+          <span class="sched-card-tag">60 мин</span>
+          <span class="sched-card-tag">6 мест</span>
+        </div>
+        <div class="sched-card-teacher">Алексей Соколов</div>
+        
+        <div class="sched-card-footer">
+          <div class="sched-card-price">1,800 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(1)">Записаться</button>
+        </div>
+      </div>
+    </div><div class="sched-card" onclick="openSM(2)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=800&q=80" alt="Гончарный круг" loading="lazy">
+        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>12:00–13:30 · Пн</div>
+        <div class="sched-card-name">Гончарный круг</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">8–11 лет</span>
+          <span class="sched-card-tag">90 мин</span>
+          <span class="sched-card-tag">4 мест</span>
+        </div>
+        <div class="sched-card-teacher">Мария Петрова</div>
+        
+        <div class="sched-card-footer">
+          <div class="sched-card-price">2,200 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(2)">Записаться</button>
+        </div>
+      </div>
+    </div><div class="sched-card" onclick="openSM(3)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=800&q=80" alt="Продвинутый курс" loading="lazy">
+        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>17:00–19:00 · Пн</div>
+        <div class="sched-card-name">Продвинутый курс</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">12–17 лет</span>
+          <span class="sched-card-tag">120 мин</span>
+          <span class="sched-card-tag">5 мест</span>
+        </div>
+        <div class="sched-card-teacher">Иван Кузнецов</div>
+        
+        <div class="sched-card-footer">
+          <div class="sched-card-price">3,500 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(3)">Записаться</button>
+        </div>
+      </div>
+    </div><div class="sched-card" onclick="openSM(4)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80" alt="Взрослый МК" loading="lazy">
+        <div class="sched-card-type" style="background:#8a9a7b">Взрослое МК</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>19:30–21:30 · Пн</div>
+        <div class="sched-card-name">Взрослый МК</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">18+</span>
+          <span class="sched-card-tag">120 мин</span>
+          <span class="sched-card-tag">2 мест</span>
+        </div>
+        <div class="sched-card-teacher">Елена Соколова</div>
+        <div class="sched-seats-warn">Осталось мест: 2</div>
+        <div class="sched-card-footer">
+          <div class="sched-card-price">3,100 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(4)">Записаться</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+<div class="sched-day-group">
+    <div class="sched-day-header">
+      <div class="sched-day-name">Вторник</div>
+      <div class="sched-day-count">2 занятия</div>
+    </div>
+    <div class="sched-day-grid">
+      <div class="sched-card" onclick="openSM(5)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80" alt="Первые шаги" loading="lazy">
+        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>10:00–11:00 · Вт</div>
+        <div class="sched-card-name">Первые шаги</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">5–7 лет</span>
+          <span class="sched-card-tag">60 мин</span>
+          <span class="sched-card-tag">6 мест</span>
+        </div>
+        <div class="sched-card-teacher">Алексей Соколов</div>
+        
+        <div class="sched-card-footer">
+          <div class="sched-card-price">1,800 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(5)">Записаться</button>
+        </div>
+      </div>
+    </div><div class="sched-card" onclick="openSM(6)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=800&q=80" alt="Гончарный круг" loading="lazy">
+        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>16:00–17:30 · Вт</div>
+        <div class="sched-card-name">Гончарный круг</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">8–11 лет</span>
+          <span class="sched-card-tag">90 мин</span>
+          <span class="sched-card-tag">5 мест</span>
+        </div>
+        <div class="sched-card-teacher">Мария Петрова</div>
+        
+        <div class="sched-card-footer">
+          <div class="sched-card-price">2,200 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(6)">Записаться</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+<div class="sched-day-group">
+    <div class="sched-day-header">
+      <div class="sched-day-name">Среда</div>
+      <div class="sched-day-count">3 занятия</div>
+    </div>
+    <div class="sched-day-grid">
+      <div class="sched-card" onclick="openSM(7)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=800&q=80" alt="Продвинутый курс" loading="lazy">
+        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>10:00–12:00 · Ср</div>
+        <div class="sched-card-name">Продвинутый курс</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">12–17 лет</span>
+          <span class="sched-card-tag">120 мин</span>
+          <span class="sched-card-tag">4 мест</span>
+        </div>
+        <div class="sched-card-teacher">Иван Кузнецов</div>
+        
+        <div class="sched-card-footer">
+          <div class="sched-card-price">3,500 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(7)">Записаться</button>
+        </div>
+      </div>
+    </div><div class="sched-card" onclick="openSM(8)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80" alt="Взрослый МК" loading="lazy">
+        <div class="sched-card-type" style="background:#8a9a7b">Взрослое МК</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>18:00–20:00 · Ср</div>
+        <div class="sched-card-name">Взрослый МК</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">18+</span>
+          <span class="sched-card-tag">120 мин</span>
+          <span class="sched-card-tag">6 мест</span>
+        </div>
+        <div class="sched-card-teacher">Елена Соколова</div>
+        
+        <div class="sched-card-footer">
+          <div class="sched-card-price">3,100 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(8)">Записаться</button>
+        </div>
+      </div>
+    </div><div class="sched-card" onclick="openSM(9)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1609881092647-6a89e1e3c060?w=800&q=80" alt="Чайная церемония" loading="lazy">
+        <div class="sched-card-type" style="background:#8a9a7b">Взрослое МК</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>20:00–22:00 · Ср</div>
+        <div class="sched-card-name">Чайная церемония</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">18+</span>
+          <span class="sched-card-tag">120 мин</span>
+          <span class="sched-card-tag">3 мест</span>
+        </div>
+        <div class="sched-card-teacher">Алексей Соколов</div>
+        <div class="sched-seats-warn">Осталось мест: 3</div>
+        <div class="sched-card-footer">
+          <div class="sched-card-price">5,800 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(9)">Записаться</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+<div class="sched-day-group">
+    <div class="sched-day-header">
+      <div class="sched-day-name">Четверг</div>
+      <div class="sched-day-count">3 занятия</div>
+    </div>
+    <div class="sched-day-grid">
+      <div class="sched-card" onclick="openSM(10)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80" alt="Первые шаги" loading="lazy">
+        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>10:00–11:00 · Чт</div>
+        <div class="sched-card-name">Первые шаги</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">5–7 лет</span>
+          <span class="sched-card-tag">60 мин</span>
+          <span class="sched-card-tag">6 мест</span>
+        </div>
+        <div class="sched-card-teacher">Мария Петрова</div>
+        
+        <div class="sched-card-footer">
+          <div class="sched-card-price">1,800 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(10)">Записаться</button>
+        </div>
+      </div>
+    </div><div class="sched-card" onclick="openSM(11)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=800&q=80" alt="Гончарный круг" loading="lazy">
+        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>15:00–16:30 · Чт</div>
+        <div class="sched-card-name">Гончарный круг</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">8–11 лет</span>
+          <span class="sched-card-tag">90 мин</span>
+          <span class="sched-card-tag">5 мест</span>
+        </div>
+        <div class="sched-card-teacher">Иван Кузнецов</div>
+        
+        <div class="sched-card-footer">
+          <div class="sched-card-price">2,200 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(11)">Записаться</button>
+        </div>
+      </div>
+    </div><div class="sched-card" onclick="openSM(12)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80" alt="Взрослый МК" loading="lazy">
+        <div class="sched-card-type" style="background:#8a9a7b">Взрослое МК</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>19:30–21:30 · Чт</div>
+        <div class="sched-card-name">Взрослый МК</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">18+</span>
+          <span class="sched-card-tag">120 мин</span>
+          <span class="sched-card-tag">6 мест</span>
+        </div>
+        <div class="sched-card-teacher">Елена Соколова</div>
+        
+        <div class="sched-card-footer">
+          <div class="sched-card-price">3,100 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(12)">Записаться</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+<div class="sched-day-group">
+    <div class="sched-day-header">
+      <div class="sched-day-name">Пятница</div>
+      <div class="sched-day-count">2 занятия</div>
+    </div>
+    <div class="sched-day-grid">
+      <div class="sched-card" onclick="openSM(13)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=800&q=80" alt="Продвинутый курс" loading="lazy">
+        <div class="sched-card-type" style="background:#7ab8e8">Детское</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>16:00–18:00 · Пт</div>
+        <div class="sched-card-name">Продвинутый курс</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">12–17 лет</span>
+          <span class="sched-card-tag">120 мин</span>
+          <span class="sched-card-tag">5 мест</span>
+        </div>
+        <div class="sched-card-teacher">Алексей Соколов</div>
+        
+        <div class="sched-card-footer">
+          <div class="sched-card-price">3,500 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(13)">Записаться</button>
+        </div>
+      </div>
+    </div><div class="sched-card" onclick="openSM(14)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1612196808214-b7e239e5a5e2?w=800&q=80" alt="Глазурование" loading="lazy">
+        <div class="sched-card-type" style="background:#8a9a7b">Взрослое МК</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>18:00–19:30 · Пт</div>
+        <div class="sched-card-name">Глазурование</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">18+</span>
+          <span class="sched-card-tag">90 мин</span>
+          <span class="sched-card-tag">8 мест</span>
+        </div>
+        <div class="sched-card-teacher">Мария Петрова</div>
+        
+        <div class="sched-card-footer">
+          <div class="sched-card-price">2,800 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(14)">Записаться</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+<div class="sched-day-group">
+    <div class="sched-day-header">
+      <div class="sched-day-name">Суббота</div>
+      <div class="sched-day-count">2 занятия</div>
+    </div>
+    <div class="sched-day-grid">
+      <div class="sched-card" onclick="openSM(15)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800&q=80" alt="Все возрасты" loading="lazy">
+        <div class="sched-card-type" style="background:#c67d4a">Для всех</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>11:00–12:30 · Сб</div>
+        <div class="sched-card-name">Все возрасты</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">5+ лет</span>
+          <span class="sched-card-tag">90 мин</span>
+          <span class="sched-card-tag">8 мест</span>
+        </div>
+        <div class="sched-card-teacher">Иван Кузнецов</div>
+        
+        <div class="sched-card-footer">
+          <div class="sched-card-price">2,500 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(15)">Записаться</button>
+        </div>
+      </div>
+    </div><div class="sched-card" onclick="openSM(16)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80" alt="Взрослый МК" loading="lazy">
+        <div class="sched-card-type" style="background:#8a9a7b">Взрослое МК</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>14:00–16:00 · Сб</div>
+        <div class="sched-card-name">Взрослый МК</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">18+</span>
+          <span class="sched-card-tag">120 мин</span>
+          <span class="sched-card-tag">6 мест</span>
+        </div>
+        <div class="sched-card-teacher">Елена Соколова</div>
+        
+        <div class="sched-card-footer">
+          <div class="sched-card-price">3,100 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(16)">Записаться</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+<div class="sched-day-group">
+    <div class="sched-day-header">
+      <div class="sched-day-name">Воскресенье</div>
+      <div class="sched-day-count">2 занятия</div>
+    </div>
+    <div class="sched-day-grid">
+      <div class="sched-card" onclick="openSM(17)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800&q=80" alt="Все возрасты" loading="lazy">
+        <div class="sched-card-type" style="background:#c67d4a">Для всех</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>11:00–12:30 · Вс</div>
+        <div class="sched-card-name">Все возрасты</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">5+ лет</span>
+          <span class="sched-card-tag">90 мин</span>
+          <span class="sched-card-tag">8 мест</span>
+        </div>
+        <div class="sched-card-teacher">Алексей Соколов</div>
+        
+        <div class="sched-card-footer">
+          <div class="sched-card-price">2,500 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(17)">Записаться</button>
+        </div>
+      </div>
+    </div><div class="sched-card" onclick="openSM(18)">
+      <div class="sched-card-img">
+        <img src="https://images.unsplash.com/photo-1576020799627-aeac74d58064?w=800&q=80" alt="День рождения" loading="lazy">
+        <div class="sched-card-type" style="background:#c67d4a">Для всех</div>
+      </div>
+      <div class="sched-card-body">
+        <div class="sched-card-time"><div class="sched-card-time-dot"></div>14:00–16:30 · Вс</div>
+        <div class="sched-card-name">День рождения</div>
+        <div class="sched-card-meta">
+          <span class="sched-card-tag">Группа</span>
+          <span class="sched-card-tag">150 мин</span>
+          <span class="sched-card-tag">12 мест</span>
+        </div>
+        <div class="sched-card-teacher">Мария Петрова</div>
+        
+        <div class="sched-card-footer">
+          <div class="sched-card-price">2,500 &#x20BD;<small>за занятие</small></div>
+          <button class="sched-card-btn" onclick="event.stopPropagation();openSM(18)">Записаться</button>
+        </div>
+      </div>
+    </div>
+    </div>
+  </div>
+    </div>
     <div id="schedEmpty" style="display:none;text-align:center;padding:5rem 1rem">
       <div style="font-size:3rem;margin-bottom:1rem">🔍</div>
       <div style="font-family:var(--font-d);font-size:1.4rem;color:var(--text-dark);margin-bottom:.5rem">Занятий не найдено</div>
@@ -3657,14 +4081,13 @@ function renderSchedGroups() {
   const contactBlock = document.getElementById('schedContactBlock');
   if(!container) return;
 
-  // Filter events
+  // Filter events with type coercion for safety
   let evs = [...schedEvents];
-  if(schedFilters.day !== 'all') evs = evs.filter(e=>e.day===schedFilters.day);
+  if(schedFilters.day !== 'all') evs = evs.filter(e=>Number(e.day)===Number(schedFilters.day));
   if(schedFilters.type !== 'all') evs = evs.filter(e=>e.type===schedFilters.type);
   if(schedFilters.age !== 'all') {
-    const ageMap = {'5':'5–7','8':'8–11','12':'12–17','18':'18+'};
-    const ageStr = ageMap[schedFilters.age]||'';
-    evs = evs.filter(e=>e.age&&e.age.includes(ageStr.split('–')[0]));
+    const ageStart = {'5':'5','8':'8','12':'12','18':'18'}[schedFilters.age]||'';
+    evs = evs.filter(e=>e.age&&e.age.includes(ageStart));
   }
 
   if(!evs.length) {
