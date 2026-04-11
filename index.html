@@ -23,13 +23,13 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--cream)}::-webkit-scrollbar-thumb{background:var(--clay-light);border-radius:10px}
 
 /* HEADER */
-header{position:fixed;top:0;width:100%;z-index:1000;padding:.9rem 1.5rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;background:rgba(250,247,242,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);gap:1rem}
+header{position:fixed;top:0;width:100%;z-index:1000;padding:.9rem 1.5rem;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;background:rgba(250,247,242,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);gap:2.8rem}
 .header-center{display:flex;align-items:center;gap:.8rem;justify-self:center}
 .logo{font-family:var(--font-d);font-size:1.6rem;font-weight:700;color:var(--earth);letter-spacing:.2em;text-transform:uppercase;text-align:center;white-space:nowrap}.logo span{color:var(--clay)}
-.nav-left{display:flex;gap:1.4rem;align-items:center;justify-content:flex-end;flex-wrap:nowrap}
-.nav-right{display:flex;gap:1.4rem;align-items:center;justify-content:flex-start;flex-wrap:nowrap}
+.nav-left{display:flex;gap:2.8rem;align-items:center;justify-content:flex-end;flex-wrap:nowrap}
+.nav-right{display:flex;gap:2.8rem;align-items:center;justify-content:flex-start;flex-wrap:nowrap}
 .nav-left a,.nav-right a{font-size:.78rem;color:var(--text-body);text-decoration:none;letter-spacing:.05em;transition:.3s;position:relative;white-space:nowrap}.nav-left a:hover,.nav-right a:hover{color:var(--clay)}.nav-left a::after,.nav-right a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1.5px;background:var(--clay);transition:.3s}.nav-left a:hover::after,.nav-right a:hover::after{width:100%}
-.cart-btn{position:relative;background:var(--earth);border:none;color:var(--sand);padding:.5rem 1.1rem;font-family:var(--font-b);font-size:.74rem;letter-spacing:.06em;cursor:pointer;border-radius:50px;transition:.3s;white-space:nowrap;flex-shrink:0}.cart-btn:hover{background:var(--clay-dark)}
+.cart-btn{position:relative;background:none;border:none;color:var(--earth);padding:4px;cursor:pointer;border-radius:50%;transition:.3s;line-height:0;flex-shrink:0}.cart-btn:hover{color:var(--clay)}
 .cart-count{position:absolute;top:-5px;right:-5px;background:var(--terracotta);color:#fff;font-size:.6rem;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
 .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none}.hamburger span{width:22px;height:1.5px;background:var(--earth)}
 .mobile-cart{display:none;position:relative;background:none;border:none;color:var(--earth);cursor:pointer;padding:4px;line-height:0}.mobile-cart .cart-count{position:absolute;top:-4px;right:-8px}
@@ -748,7 +748,7 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
     <a href="#" onclick="showPage('events');return false" class="nav-page" data-page="events">События</a>
     <a href="#" onclick="showPage('contacts');return false" class="nav-page" data-page="contacts">Контакты</a>
     <a href="#" onclick="showPage('about');return false" class="nav-page" data-page="about">О нас</a>
-    <button class="cart-btn" onclick="toggleCart()">Корзина<span class="cart-count" id="cartCount">0</span></button>
+    <button class="cart-btn" onclick="toggleCart()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span class="cart-count" id="cartCount">0</span></button>
   </nav>
   <div class="mob-controls">
     <button class="mobile-cart" onclick="toggleCart()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span class="cart-count" id="cartCountM">0</span></button>
