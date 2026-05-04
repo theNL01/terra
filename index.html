@@ -229,7 +229,7 @@ section{padding:7rem 3rem}
 
 /* MK CARDS */
 .mkcards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
-.mkc{cursor:pointer;background:var(--white);transition:.35s;text-align:center}
+.mkc{cursor:pointer;background:transparent;transition:.35s;text-align:center}
 .mkc:hover{transform:translateY(-6px)}
 .mkc:hover .mkc-img img{transform:scale(1.06)}
 .mkc-img{aspect-ratio:3/4;overflow:hidden;position:relative;background:var(--sand-deep);border-radius:50% 50% 0 0 / 40% 40% 0 0;margin-bottom:1.2rem}
@@ -3342,10 +3342,8 @@ function applySiteData(){
   if(s.hero){
     const hImg=document.querySelector('.hero-bg-img img');
     if(hImg&&s.hero.img) hImg.src=s.hero.img;
-    const hH1=document.querySelector('.hero h1');
-    if(hH1&&s.hero.title) hH1.innerHTML=s.hero.title.replace(/\n/g,'<br>').replace(/землёй/,'<em>землёй</em>');
-    const hP=document.querySelector('.hero p');
-    if(hP&&s.hero.subtitle) hP.textContent=s.hero.subtitle;
+    // Hero title and subtitle are managed in HTML - don't overwrite from Firebase
+    // (to change text, edit the HTML directly or save new values via admin)
   }
   // About
   if(s.about){
