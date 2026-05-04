@@ -120,11 +120,18 @@ header{position:fixed;top:0;width:100%;z-index:1000;padding:.9rem 1.5rem;display
 .mob-nav-contact div{font-size:.75rem;color:rgba(245,239,230,.3);line-height:1.8}
 
 /* HERO */
-.hero{height:100vh;display:flex;align-items:center;position:relative;overflow:hidden}
+.hero{height:100vh;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .hero-bg-img{position:absolute;inset:0}.hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(45,36,32,.85) 0%,rgba(45,36,32,.5) 50%,rgba(45,36,32,.2) 100%)}
-.hero-content{position:relative;max-width:620px;padding:0 3rem;animation:fadeUp 1.2s ease-out}
+.hero-content{position:relative;max-width:700px;padding:0 3rem;animation:fadeUp 1.2s ease-out;text-align:center;margin:0 auto}
 @keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
 .hero-tag{display:inline-flex;align-items:center;gap:.6rem;margin-bottom:2rem}.hero-tag-line{width:40px;height:1.5px;background:var(--clay-light)}.hero-tag span{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--clay-light);font-weight:500}
+.hero-subtitle{font-family:var(--font-d);font-size:clamp(1.1rem,2vw,1.5rem);color:rgba(245,239,230,.75);font-weight:400;letter-spacing:.04em;margin-bottom:.8rem;margin-top:-.5rem}
+
+/* HERO PILLS */
+.hero-pills{position:absolute;bottom:3rem;left:0;right:0;display:flex;justify-content:center;gap:1.2rem;flex-wrap:wrap;padding:0 2rem;z-index:2}
+.hero-pill{background:transparent;border:1.5px solid rgba(245,239,230,.6);color:rgba(245,239,230,.9);padding:.65rem 1.8rem;border-radius:50px;font-family:var(--font-b);font-size:.82rem;letter-spacing:.06em;cursor:pointer;transition:.3s;backdrop-filter:blur(4px)}
+.hero-pill:hover{background:rgba(245,239,230,.15);border-color:rgba(245,239,230,.9);color:#fff}
+@media(max-width:700px){.hero-pills{gap:.7rem;bottom:2rem}.hero-pill{font-size:.74rem;padding:.55rem 1.2rem}}
 .hero h1{font-family:var(--font-d);font-size:clamp(3rem,7vw,5.5rem);font-weight:400;line-height:1.1;color:var(--sand);margin-bottom:1.8rem}.hero h1 em{font-style:italic;color:var(--clay-light)}
 .hero p{font-size:1.05rem;color:rgba(245,239,230,.75);line-height:1.8;max-width:480px;margin-bottom:2.5rem;font-weight:300}
 .hero-actions{display:flex;gap:1rem;flex-wrap:wrap}
@@ -195,6 +202,62 @@ section{padding:7rem 3rem}
 .cform{display:flex;flex-direction:column;gap:.9rem}
 .cform input,.cform textarea{background:var(--sand);border:1px solid var(--border);border-radius:10px;color:var(--text-dark);padding:.95rem 1.2rem;font-family:var(--font-b);font-size:.88rem;outline:none;transition:border .3s}.cform input:focus,.cform textarea:focus{border-color:var(--clay)}.cform textarea{min-height:110px;resize:vertical}.cform input::placeholder,.cform textarea::placeholder{color:var(--text-muted)}
 .btn-c{background:var(--clay);color:#fff;border:none;padding:.95rem 2rem;border-radius:50px;font-family:var(--font-b);font-size:.82rem;letter-spacing:.06em;cursor:pointer;transition:.3s;align-self:flex-start}.btn-c:hover{background:var(--clay-dark);transform:translateY(-2px)}
+
+/* QUICK CARDS */
+.qcard{cursor:pointer;text-align:center;transition:.3s}
+.qcard:hover .qcard-img img{transform:scale(1.05)}
+.qcard-img{width:100%;aspect-ratio:1;border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;overflow:hidden;margin-bottom:1.4rem;background:var(--sand)}
+.qcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.qcard-body h3{font-family:var(--font-d);font-size:1.1rem;color:var(--text-dark);margin-bottom:.4rem;font-weight:400}
+.qcard-body p{font-size:.82rem;color:var(--text-muted);font-style:italic;font-family:var(--font-d)}
+
+/* QMODAL */
+.qm-layout{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.qm-img{border-radius:50% 50% 50% 50% / 60% 60% 40% 40%;overflow:hidden;aspect-ratio:.9;background:var(--sand)}
+.qm-img img{width:100%;height:100%;object-fit:cover}
+.qm-title{font-family:var(--font-d);font-size:clamp(1.8rem,3vw,2.5rem);color:var(--text-dark);margin-bottom:.4rem;font-weight:400}
+.qm-price{font-family:var(--font-d);font-size:1.3rem;color:var(--earth);margin-bottom:1.5rem}
+.qm-enroll{background:var(--clay);color:#fff;border:none;padding:.9rem 2.4rem;border-radius:50px;font-family:var(--font-b);font-size:.9rem;cursor:pointer;transition:.3s;margin-bottom:2rem}.qm-enroll:hover{background:var(--clay-dark)}
+.qm-desc{font-size:.95rem;color:var(--text-body);line-height:1.85;font-weight:300}
+.qm-desc p{margin-bottom:.8rem}
+.qm-list{margin:1rem 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.qm-list li{font-size:.9rem;color:var(--text-body);display:flex;align-items:center;gap:.7rem}
+.qm-list li::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--clay);flex-shrink:0}
+.qm-sub{font-size:.78rem;color:var(--text-muted);margin-top:1.2rem;font-style:italic}
+@media(max-width:800px){.qm-layout{grid-template-columns:1fr}.qm-img{max-width:320px;margin:0 auto}}
+@media(max-width:700px){#quickCards{padding:3rem 1.5rem}#quickCards .qcard-img{border-radius:50%}#quickCards>div>div{grid-template-columns:repeat(2,1fr);gap:1.5rem}}
+
+/* MK CARDS */
+.mkcards-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+.mkc{cursor:pointer;background:var(--white);transition:.35s;text-align:center}
+.mkc:hover{transform:translateY(-6px)}
+.mkc:hover .mkc-img img{transform:scale(1.06)}
+.mkc-img{aspect-ratio:3/4;overflow:hidden;position:relative;background:var(--sand-deep);border-radius:50% 50% 0 0 / 40% 40% 0 0;margin-bottom:1.2rem}
+.mkc-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s;display:block}
+.mkc-body{padding:0 .5rem 1.5rem;text-align:center}
+.mkc-body h3{font-family:var(--font-d);font-size:1.05rem;font-weight:400;color:var(--text-dark);margin-bottom:.3rem;line-height:1.3}
+.mkc-meta{font-size:.75rem;color:var(--text-muted);font-style:italic;font-family:var(--font-d);margin-bottom:.5rem}
+.mkc-price{font-family:var(--font-d);font-size:.95rem;color:var(--clay);margin-bottom:.9rem;font-weight:500}
+.mkc-btn{background:none;border:1.5px solid var(--clay);color:var(--clay);padding:.45rem 1.4rem;border-radius:50px;font-family:var(--font-b);font-size:.76rem;cursor:pointer;transition:.25s;letter-spacing:.04em}
+.mkc:hover .mkc-btn{background:var(--clay);color:#fff}
+@media(max-width:1000px){.mkcards-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.mkcards-grid{grid-template-columns:1fr 1fr;gap:1rem}#mainMKSection{padding:3rem 1.5rem}}
+
+/* REVIEWS */
+.review-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:1.6rem 2rem}
+.review-header{display:flex;align-items:center;gap:1rem;margin-bottom:.8rem}
+.review-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-b);font-size:.78rem;font-weight:600;color:var(--earth);flex-shrink:0}
+.review-name{font-size:.9rem;font-weight:500;color:var(--text-dark);margin-bottom:.15rem}
+.review-date{font-size:.75rem;color:#999}
+.review-text{font-size:.88rem;color:var(--text-body);line-height:1.75;font-weight:300}
+
+/* GALLERY */
+.gallery-grid{display:grid;grid-template-columns:repeat(4,1fr);grid-template-rows:repeat(2,280px);gap:8px}
+.gal-item{overflow:hidden;cursor:pointer;position:relative;background:var(--sand)}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease,opacity .3s;display:block}
+.gal-item:hover img{transform:scale(1.06);opacity:.92}
+@media(max-width:900px){.gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(4,220px)}}
+@media(max-width:600px){.gallery-grid{grid-template-columns:repeat(2,1fr);grid-template-rows:repeat(4,160px)}}
 
 /* FOOTER */
 footer{background:#3a2d25;padding:0}.flinks{display:flex;gap:2rem}.flinks a{font-size:.78rem;color:rgba(245,239,230,.5);text-decoration:none;transition:.3s}.flinks a:hover{color:var(--clay-light)}
@@ -612,6 +675,15 @@ footer{background:#3a2d25;padding:0}.flinks{display:flex;gap:2rem}.flinks a{font
 .pay-m{flex:1;min-width:120px;padding:.8rem 1rem;border:1.5px solid var(--border);border-radius:12px;background:var(--sand);cursor:pointer;transition:.3s;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.3rem}.pay-m:hover{border-color:var(--clay-light)}.pay-m.sel{border-color:var(--clay);background:rgba(198,125,74,.08)}.pay-m-icon{font-size:1.3rem}.pay-m-label{font-size:.72rem;color:var(--text-body);font-weight:500}.pay-m-hint{font-size:.6rem;color:var(--text-muted)}
 .co-submit{width:100%;background:var(--clay);color:#fff;border:none;padding:1rem;border-radius:50px;font-family:var(--font-b);font-size:.88rem;cursor:pointer;transition:.3s;margin-top:.5rem}.co-submit:hover{background:var(--clay-dark)}.co-submit:disabled{opacity:.6;cursor:not-allowed}
 
+/* NEW ADMIN NAV */
+.new-adm-nav{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2rem;padding-bottom:1.2rem;border-bottom:2px solid var(--border)}
+.new-adm-navbtn{background:none;border:1.5px solid var(--border);color:var(--text-muted);padding:.55rem 1.1rem;border-radius:50px;font-family:var(--font-b);font-size:.78rem;cursor:pointer;transition:.2s;white-space:nowrap}
+.new-adm-navbtn:hover{border-color:var(--clay);color:var(--clay)}
+.new-adm-navbtn.active{background:var(--clay);border-color:var(--clay);color:#fff;font-weight:500}
+.new-adm-section{display:none}
+.new-adm-section.active{display:block}
+.new-adm-sec-title{font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:var(--clay);font-weight:600;margin-bottom:.8rem;margin-top:.5rem}
+
 /* ADMIN */
 .adm-ov{position:fixed;inset:0;background:rgba(45,36,32,.6);backdrop-filter:blur(6px);z-index:5000;opacity:0;visibility:hidden;transition:.3s}.adm-ov.open{opacity:1;visibility:visible}
 .adm-pan{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.95);width:720px;max-width:95vw;max-height:90vh;background:var(--white);border-radius:20px;z-index:5001;opacity:0;visibility:hidden;transition:.3s;display:flex;flex-direction:column;box-shadow:0 30px 80px rgba(0,0,0,.25)}.adm-pan.open{opacity:1;visibility:visible;transform:translate(-50%,-50%) scale(1)}
@@ -748,19 +820,16 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
 
 <header>
   <nav id="mainNavLeft" class="nav-left">
-    <a href="#" onclick="showPage('services');return false" class="nav-page" data-page="services">Услуги</a>
-    <a href="#" onclick="showPage('schedule');return false" class="nav-page" data-page="schedule">Расписания</a>
+    <a href="#" onclick="showPage('services');return false" class="nav-page" data-page="services">Мастер-классы</a>
     <a href="#" onclick="showPage('shop');return false" class="nav-page" data-page="shop">Магазин</a>
   </nav>
   <a href="#" class="logo" style="text-decoration:none" onclick="showPage('home');window.scrollTo({top:0,behavior:'smooth'});return false">ТЕР<span>Р</span>А</a>
   <nav id="mainNavRight" class="nav-right">
     <a href="#" onclick="showPage('events');return false" class="nav-page" data-page="events">События</a>
-    <a href="#" onclick="showPage('contacts');return false" class="nav-page" data-page="contacts">Контакты</a>
     <a href="#" onclick="showPage('about');return false" class="nav-page" data-page="about">О нас</a>
-    <button class="cart-btn" onclick="toggleCart()"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span class="cart-count" id="cartCount">0</span></button>
+    <a href="#" onclick="showPage('contacts');return false" class="nav-page" data-page="contacts">Контакты</a>
   </nav>
   <div class="mob-controls">
-    <button class="mobile-cart" onclick="toggleCart()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="display:block"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg><span class="cart-count" id="cartCountM">0</span></button>
     <button class="hamburger" onclick="openMobNav()"><span></span><span></span><span></span></button>
   </div>
 </header>
@@ -778,10 +847,10 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
       <div class="mob-nav-logo-sub">Гончарная мастерская</div>
     </div>
     <nav class="mob-nav-links">
-      <a href="#" onclick="closeMobNav();showPage('services');return false">Услуги</a>
-      <a href="#" onclick="closeMobNav();showPage('schedule');return false">Расписания</a>
+      <a href="#" onclick="closeMobNav();showPage('services');return false">Мастер-классы</a>
       <a href="#" onclick="closeMobNav();showPage('shop');return false">Магазин</a>
       <a href="#" onclick="closeMobNav();showPage('events');return false">События</a>
+      <a href="#" onclick="closeMobNav();showPage('about');return false">О нас</a>
       <a href="#" onclick="closeMobNav();showPage('contacts');return false">Контакты</a>
       <a href="#" onclick="closeMobNav();showPage('about');return false">О нас</a>
     </nav>
@@ -810,101 +879,272 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
   <div class="hero-bg-img"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=1600&q=80" alt=""></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-tag"><div class="hero-tag-line"></div><span>Гончарная мастерская</span></div>
-    <h1>Красота,<br>рождённая <em>землёй</em></h1>
+    <h1>Мастерская керамики<br><em>для взрослых и детей</em></h1>
     <p>Авторская керамика ручной работы. Каждое изделие хранит тепло рук мастера и неповторимую историю глины</p>
-    <div class="hero-actions"><a href="#" onclick="showPage('shop');return false" class="btn-p">Каталог изделий</a><a href="#kids" class="btn-g">Записать ребёнка</a></div>
+  </div>
+  <!-- Кнопки Френкель-стиль внизу hero -->
+  <div class="hero-pills">
+    <button class="hero-pill" onclick="openQModal('shop')">магазин</button>
+    <button class="hero-pill" onclick="openQModal('mk')">мастер-классы</button>
+    <button class="hero-pill" onclick="openQModal('kids')">занятия для детей</button>
+    <button class="hero-pill" onclick="openQModal('party')">праздники</button>
   </div>
 </section>
 
-<!-- ДЕТСКАЯ СТУДИЯ -->
-<section id="kids">
-  <div class="sh"><div class="st"><div class="stl"></div><span>Детская студия</span><div class="stl"></div></div><h2 class="stitle">Гончарство для <em>детей</em></h2><p class="sdesc">Развиваем творческое мышление, моторику и усидчивость через работу с глиной</p></div>
+<!-- ОСНОВНЫЕ МК -->
+<section style="background:var(--white);padding:5rem 3rem" id="mainMKSection">
+  <div style="max-width:1200px;margin:0 auto">
+    <div class="mkcards-grid">
 
-  <div class="kids-programs" id="kidsGrid">
-    <div class="kids-card" data-age="5-7">
-      <div class="kids-card-img"><img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=500&q=80" alt="" loading="lazy"><div class="kids-age-badge">5–7 лет</div></div>
-      <div class="kids-card-body">
-        <h3>Первые шаги</h3>
-        <p>Знакомство с глиной через лепку руками. Создаём зверушек, тарелочки и украшения. Развиваем моторику и фантазию.</p>
-        <div class="kids-card-meta"><span class="kids-card-dur">⏱ 1 час · 1 раз/нед.</span><span class="kids-card-price">1 800 ₽</span></div>
-        <button class="kids-enroll-btn" onclick="scrollToEnroll('Первые шаги (5–7 лет)')">Записаться</button>
+      <!-- Гончарный круг -->
+      <div class="mkc" onclick="openQModal('mk_wheel')">
+        <div class="mkc-img">
+          <img src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=800&q=80" alt="Гончарный круг" loading="lazy">
+        </div>
+        <div class="mkc-body">
+          <h3>Гончарный круг</h3>
+          <p class="mkc-meta">Групповое · 2ч 30м</p>
+          <p class="mkc-price">3 000 ₽</p>
+          <button class="mkc-btn">Подробнее</button>
+        </div>
       </div>
-    </div>
-    <div class="kids-card" data-age="8-11">
-      <div class="kids-card-img"><img src="https://images.unsplash.com/photo-1635048424329-a9bfb146d7aa?w=500&q=80" alt="" loading="lazy"><div class="kids-age-badge">8–11 лет</div></div>
-      <div class="kids-card-body">
-        <h3>Гончарный круг</h3>
-        <p>Учимся работать на настоящем гончарном круге. Формуем чашки, миски, вазы. Расписываем глазурями.</p>
-        <div class="kids-card-meta"><span class="kids-card-dur">⏱ 1.5 часа · 1 раз/нед.</span><span class="kids-card-price">2 200 ₽</span></div>
-        <button class="kids-enroll-btn" onclick="scrollToEnroll('Гончарный круг (8–11 лет)')">Записаться</button>
-      </div>
-    </div>
-    <div class="kids-card" data-age="12-17">
-      <div class="kids-card-img"><img src="https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=500&q=80" alt="" loading="lazy"><div class="kids-age-badge">12–17 лет</div></div>
-      <div class="kids-card-body">
-        <h3>Продвинутый курс</h3>
-        <p>Сложные техники: сборка, рельеф, авторская роспись. Создаём полноценные предметы сервировки и декора.</p>
-        <div class="kids-card-meta"><span class="kids-card-dur">⏱ 2 часа · 2 раза/нед.</span><span class="kids-card-price">3 500 ₽</span></div>
-        <button class="kids-enroll-btn" onclick="scrollToEnroll('Продвинутый курс (12–17 лет)')">Записаться</button>
-      </div>
-    </div>
-  </div>
 
-  <div class="kids-features">
-    <div class="kids-feat"><div class="kids-feat-icon">👶</div><h4>С 5 лет</h4><p>Программы адаптированы под каждый возраст</p></div>
-    <div class="kids-feat"><div class="kids-feat-icon">👥</div><h4>До 6 человек</h4><p>Маленькие группы — внимание каждому</p></div>
-    <div class="kids-feat"><div class="kids-feat-icon">🎁</div><h4>Уносят домой</h4><p>Готовое изделие после обжига</p></div>
-    <div class="kids-feat"><div class="kids-feat-icon">🏆</div><h4>Сертификаты</h4><p>Грамоты и дипломы за успехи</p></div>
-  </div>
+      <!-- Ручная лепка -->
+      <div class="mkc" onclick="openQModal('mk_hand')">
+        <div class="mkc-img">
+          <img src="https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=800&q=80" alt="Ручная лепка" loading="lazy">
+        </div>
+        <div class="mkc-body">
+          <h3>Ручная лепка</h3>
+          <p class="mkc-meta">Групповое · 2ч 30м</p>
+          <p class="mkc-price">3 000 ₽</p>
+          <button class="mkc-btn">Подробнее</button>
+        </div>
+      </div>
 
-  <!-- ФОРМА ЗАПИСИ -->
-  <div id="enroll" style="max-width:700px;margin:4rem auto 0">
-    <div class="enroll-form-wrap">
-      <h3>Записать ребёнка</h3>
-      <p class="sub">Мы свяжемся в течение 2 часов и подберём удобное время</p>
-      <div class="enroll-row">
-        <input type="text" id="enrName" placeholder="Имя ребёнка *" maxlength="50">
-        <input type="text" id="enrAge" placeholder="Возраст" maxlength="10">
+      <!-- Детский МК -->
+      <div class="mkc" onclick="openQModal('mk_kids')">
+        <div class="mkc-img">
+          <img src="https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=800&q=80" alt="Детский мастер-класс" loading="lazy">
+        </div>
+        <div class="mkc-body">
+          <h3>Детский мастер-класс</h3>
+          <p class="mkc-meta">До 6 детей · 1–1.5ч</p>
+          <p class="mkc-price">1 000 ₽</p>
+          <button class="mkc-btn">Подробнее</button>
+        </div>
       </div>
-      <div class="enroll-row">
-        <input type="tel" id="enrPhone" placeholder="Телефон родителя *" maxlength="18" oninput="fmtPhone(this)">
-        <input type="email" id="enrEmail" placeholder="Email" maxlength="100">
+
+      <!-- Праздник у нас -->
+      <div class="mkc" onclick="openQModal('mk_party')">
+        <div class="mkc-img">
+          <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800&q=80" alt="Праздник у нас" loading="lazy">
+        </div>
+        <div class="mkc-body">
+          <h3>Праздник у нас</h3>
+          <p class="mkc-meta">До 8 человек · 3ч + фуршет</p>
+          <p class="mkc-price">2 500 – 3 000 ₽</p>
+          <button class="mkc-btn">Подробнее</button>
+        </div>
       </div>
-      <select id="enrProgram" style="margin-bottom:.8rem">
-        <option value="">Выберите программу</option>
-        <option>Первые шаги (5–7 лет)</option>
-        <option>Гончарный круг (8–11 лет)</option>
-        <option>Продвинутый курс (12–17 лет)</option>
-      </select>
-      <button class="enroll-submit" onclick="submitEnroll()">Записаться на занятие →</button>
+
+    </div>
+    <div style="text-align:center;margin-top:3rem">
+      <button onclick="showPage('schedule')" style="background:var(--clay);color:#fff;border:none;padding:1.1rem 4rem;border-radius:50px;font-family:var(--font-d);font-size:1.2rem;font-weight:400;letter-spacing:.06em;cursor:pointer;transition:.3s;box-shadow:0 8px 32px rgba(198,125,74,.3)" onmouseover="this.style.background='var(--clay-dark)';this.style.transform='translateY(-2px)'" onmouseout="this.style.background='var(--clay)';this.style.transform='translateY(0)'">Записаться</button>
     </div>
   </div>
 </section>
 
-<section id="contact">
-  <div class="sh"><div class="st"><div class="stl"></div><span>Контакты</span><div class="stl"></div></div><h2 class="stitle">Приходите в <em>мастерскую</em></h2><p class="sdesc">Ждём вас на чай из наших чашек</p></div>
-  <div class="cont-wrap">
-    <div class="cont-img"><img src="https://images.unsplash.com/photo-1493106641515-6b5631de4bb9?w=800&q=80" alt="">
-      <div class="cont-img-ov"><h3>ТЕРРА</h3>
-        <div class="citem"><div class="cicon">📍</div><div class="citem-text"><label>Адрес</label><p>г. Москва, Гончарная наб., д. 7</p></div></div>
-        <div class="citem"><div class="cicon">📞</div><div class="citem-text"><label>Телефон</label><p>+7 (495) 987-65-43</p></div></div>
-        <div class="citem"><div class="cicon">🕐</div><div class="citem-text"><label>Режим работы</label><p>Вт–Вс: 10:00 — 20:00</p></div></div>
+<!-- АБОНЕМЕНТ / СЕРТИФИКАТ / КОВОРКИНГ -->
+<section style="background:var(--sand);padding:5rem 3rem">
+  <div style="max-width:1100px;margin:0 auto">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:2rem">
+
+      <!-- Абонемент -->
+      <div class="mkc" onclick="showPage('services')">
+        <div class="mkc-img">
+          <img src="https://picsum.photos/seed/abo1/600/750" alt="Абонемент" loading="lazy">
+        </div>
+        <div class="mkc-body">
+          <h3>Абонемент</h3>
+          <p class="mkc-meta">Регулярные занятия со скидкой</p>
+          <p style="font-size:.82rem;color:var(--text-muted);line-height:1.7;margin-bottom:.9rem">Посещайте мастерскую регулярно — абонемент на несколько занятий. Удобно, если хочется развиваться систематически.</p>
+          <button class="mkc-btn">Подробнее</button>
+        </div>
       </div>
-    </div>
-    <div class="cont-form-side"><h3>Напишите нам</h3><p class="sub">Расскажите о вашей идее</p>
-      <div class="cform" id="contactForm">
-        <input type="text" placeholder="Ваше имя" id="cfName" maxlength="50">
-        <input type="email" placeholder="Email" id="cfEmail" maxlength="100">
-        <input type="tel" placeholder="Телефон" id="cfPhone" maxlength="18" oninput="fmtPhone(this)">
-        <textarea placeholder="Расскажите, что бы вы хотели..." id="cfMsg"></textarea>
-        <button class="btn-c" onclick="sendContact()">Отправить</button>
+
+      <!-- Подарочный сертификат -->
+      <div class="mkc" onclick="showPage('certificates')">
+        <div class="mkc-img">
+          <img src="https://picsum.photos/seed/cert1/600/750" alt="Сертификат" loading="lazy">
+        </div>
+        <div class="mkc-body">
+          <h3>Подарочный сертификат</h3>
+          <p class="mkc-meta">Электронный или печатный</p>
+          <p style="font-size:.82rem;color:var(--text-muted);line-height:1.7;margin-bottom:.9rem">Необычный подарок, который точно попадёт в сердце. Получатель сам выбирает мастер-класс.</p>
+          <button class="mkc-btn">Подробнее</button>
+        </div>
       </div>
+
+      <!-- Коворкинг -->
+      <div class="mkc" onclick="showPage('contacts')">
+        <div class="mkc-img">
+          <img src="https://picsum.photos/seed/cowrk1/600/750" alt="Коворкинг" loading="lazy">
+        </div>
+        <div class="mkc-body">
+          <h3>Коворкинг</h3>
+          <p class="mkc-meta">Аренда рабочего места</p>
+          <p style="font-size:.82rem;color:var(--text-muted);line-height:1.7;margin-bottom:.9rem">Для тех, кто уже умеет лепить. Оборудованный стол, инструменты и обжиг. Работайте в своём ритме.</p>
+          <button class="mkc-btn">Подробнее</button>
+        </div>
+      </div>
+
     </div>
   </div>
-  <div style="max-width:1100px;margin:3rem auto 0">
-    <div class="map-wrap">
-      <iframe src="https://yandex.ru/map-widget/v1/?ll=37.658%2C55.742&z=15&pt=37.658,55.742,pm2rdm" allowfullscreen loading="lazy"></iframe>
+</section>
+
+<!-- ГАЛЕРЕЯ ПРОСТРАНСТВА -->
+<section style="background:var(--white);padding:5rem 3rem">
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:3rem">
+      <div class="st" style="justify-content:center;margin-bottom:.8rem"><div class="stl"></div><span>Мастерская</span><div class="stl"></div></div>
+      <h2 class="stitle">Наше <em>пространство</em></h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gal-item" onclick="openLightbox(this)"><img src="https://picsum.photos/seed/pottery1/600/500" alt="Мастерская" loading="lazy"></div>
+      <div class="gal-item" onclick="openLightbox(this)"><img src="https://picsum.photos/seed/pottery2/600/500" alt="Гончарный круг" loading="lazy"></div>
+      <div class="gal-item" onclick="openLightbox(this)"><img src="https://picsum.photos/seed/pottery3/600/500" alt="Изделия" loading="lazy"></div>
+      <div class="gal-item" onclick="openLightbox(this)"><img src="https://picsum.photos/seed/pottery9/600/500" alt="Пространство" loading="lazy"></div>
+      <div class="gal-item" onclick="openLightbox(this)"><img src="https://picsum.photos/seed/pottery4/600/500" alt="Занятие" loading="lazy"></div>
+      <div class="gal-item" onclick="openLightbox(this)"><img src="https://picsum.photos/seed/pottery5/600/500" alt="Праздник" loading="lazy"></div>
+      <div class="gal-item" onclick="openLightbox(this)"><img src="https://picsum.photos/seed/pottery6/600/500" alt="Глазурь" loading="lazy"></div>
+      <div class="gal-item" onclick="openLightbox(this)"><img src="https://picsum.photos/seed/pottery7/600/500" alt="Атмосфера" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ГАЛЕРЕЯ РАБОТ ГОСТЕЙ -->
+<section style="background:var(--cream);padding:5rem 3rem">
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="text-align:center;margin-bottom:3rem">
+      <div class="st" style="justify-content:center;margin-bottom:.8rem"><div class="stl"></div><span>Работы</span><div class="stl"></div></div>
+      <h2 class="stitle">Работы <em>наших гостей</em></h2>
+    </div>
+    <div class="gallery-grid">
+      <div class="gal-item" onclick="openLightbox(this)"><img src="https://picsum.photos/seed/works1/600/500" alt="Работа гостя" loading="lazy"></div>
+      <div class="gal-item" onclick="openLightbox(this)"><img src="https://picsum.photos/seed/works2/600/500" alt="Работа гостя" loading="lazy"></div>
+      <div class="gal-item" onclick="openLightbox(this)"><img src="https://picsum.photos/seed/works3/600/500" alt="Работа гостя" loading="lazy"></div>
+      <div class="gal-item" onclick="openLightbox(this)"><img src="https://picsum.photos/seed/works4/600/500" alt="Работа гостя" loading="lazy"></div>
+      <div class="gal-item" onclick="openLightbox(this)"><img src="https://picsum.photos/seed/works5/600/500" alt="Работа гостя" loading="lazy"></div>
+      <div class="gal-item" onclick="openLightbox(this)"><img src="https://picsum.photos/seed/works6/600/500" alt="Работа гостя" loading="lazy"></div>
+      <div class="gal-item" onclick="openLightbox(this)"><img src="https://picsum.photos/seed/works7/600/500" alt="Работа гостя" loading="lazy"></div>
+      <div class="gal-item" onclick="openLightbox(this)"><img src="https://picsum.photos/seed/works8/600/500" alt="Работа гостя" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ОТЗЫВЫ -->
+<section style="background:var(--white);padding:5rem 3rem">
+  <div style="max-width:800px;margin:0 auto">
+    <!-- Шапка блока -->
+    <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:2rem 2.5rem;margin-bottom:2rem">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1.2rem">
+        <div style="font-family:var(--font-d);font-size:1.1rem;color:var(--text-dark);font-weight:500">ТЕРРА — Гончарная мастерская</div>
+        <div style="font-size:.8rem;color:#999">Яндекс Карты</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.2rem">
+        <div style="font-family:var(--font-d);font-size:3rem;font-weight:700;color:var(--text-dark);line-height:1">5,0</div>
+        <div>
+          <div style="display:flex;gap:3px;margin-bottom:.3rem">
+            <span style="color:#ffa800;font-size:1.3rem">★★★★★</span>
+          </div>
+          <div style="font-size:.78rem;color:#999">18 отзывов · 24 оценки</div>
+        </div>
+      </div>
+      <div style="background:#f7f7f7;border-radius:10px;padding:1rem 1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.8rem">
+        <div style="font-size:.88rem;color:#555">Поставьте нам оценку</div>
+        <a href="https://yandex.ru/maps" target="_blank" style="background:#fc3f1d;color:#fff;border:none;padding:.6rem 1.4rem;border-radius:8px;font-size:.82rem;cursor:pointer;text-decoration:none;font-family:var(--font-b)">Оставить отзыв</a>
+      </div>
+    </div>
+
+    <!-- Отзывы -->
+    <div style="display:flex;flex-direction:column;gap:1.2rem">
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar" style="background:#e8d5c4">АС</div>
+          <div><div class="review-name">Анна Соколова</div><div class="review-date">15 апреля 2026</div></div>
+        </div>
+        <div style="color:#ffa800;margin-bottom:.6rem">★★★★★</div>
+        <p class="review-text">Замечательная студия! Пришли с подругой на мастер-класс по гончарному кругу — получили огромное удовольствие. Преподаватель терпеливо всё объяснял, атмосфера уютная и тёплая. Изделия забрали через 3 недели — очень довольны результатом. Обязательно вернёмся!</p>
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar" style="background:#c4d5e8">МП</div>
+          <div><div class="review-name">Михаил Петров</div><div class="review-date">2 апреля 2026</div></div>
+        </div>
+        <div style="color:#ffa800;margin-bottom:.6rem">★★★★★</div>
+        <p class="review-text">Водили детей на детский мастер-класс. Дети в восторге — лепили, расписывали, смеялись. Педагог нашла подход к каждому ребёнку. Атмосфера студии создаёт ощущение заботы и уюта. Рекомендую всем!</p>
+      </div>
+
+      <div class="review-card">
+        <div class="review-header">
+          <div class="review-avatar" style="background:#d5e8c4">ЕВ</div>
+          <div><div class="review-name">Елена Васильева</div><div class="review-date">20 марта 2026</div></div>
+        </div>
+        <div style="color:#ffa800;margin-bottom:.6rem">★★★★★</div>
+        <p class="review-text">Отмечали день рождения в студии — это было незабываемо! Мы лепили, смеялись, а потом устроили маленький фуршет. Организация на высшем уровне, мастер был с нами весь вечер. Изделия получились у всех разные и очень классные. Спасибо огромное!</p>
+      </div>
+
+    </div>
+
+    <div style="text-align:center;margin-top:2rem">
+      <a href="https://yandex.ru/maps" target="_blank" style="color:var(--clay);font-size:.88rem;text-decoration:none;font-family:var(--font-b);border-bottom:1px solid var(--clay)">Больше отзывов на Яндекс Картах</a>
+    </div>
+  </div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightboxOv" style="display:none;position:fixed;inset:0;z-index:4000;background:rgba(0,0,0,.92);cursor:pointer;display:none;align-items:center;justify-content:center" onclick="closeLightbox()">
+  <button onclick="closeLightbox()" style="position:absolute;top:1.5rem;right:1.5rem;background:none;border:none;color:rgba(255,255,255,.7);font-size:2rem;cursor:pointer;line-height:1;z-index:10">✕</button>
+  <button onclick="lightboxPrev(event)" style="position:absolute;left:1.5rem;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.1);border:none;color:#fff;font-size:1.8rem;cursor:pointer;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.2s" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.1)'">&lsaquo;</button>
+  <button onclick="lightboxNext(event)" style="position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.1);border:none;color:#fff;font-size:1.8rem;cursor:pointer;width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:.2s" onmouseover="this.style.background='rgba(255,255,255,.2)'" onmouseout="this.style.background='rgba(255,255,255,.1)'">›</button>
+  <img id="lightboxImg" src="" alt="" style="max-width:90vw;max-height:90vh;object-fit:contain;border-radius:8px;box-shadow:0 0 80px rgba(0,0,0,.5)">
+</div>
+
+</div>
+
+<!-- КОНТАКТЫ + КАРТА -->
+<section style="position:relative;height:500px;overflow:hidden" id="contact">
+  <!-- Карта на весь блок -->
+  <iframe src="https://yandex.ru/map-widget/v1/?ll=37.658%2C55.742&z=15&pt=37.658,55.742,pm2rdm" style="position:absolute;inset:0;width:100%;height:100%;border:none" allowfullscreen loading="lazy"></iframe>
+  <!-- Контакты поверх карты -->
+  <div style="position:absolute;top:0;left:0;bottom:0;width:360px;background:rgba(255,255,255,.96);padding:3rem 2.5rem;display:flex;flex-direction:column;justify-content:center;gap:1.4rem;z-index:2;box-shadow:4px 0 24px rgba(0,0,0,.08)">
+    <h2 style="font-family:var(--font-d);font-size:1.6rem;font-weight:400;color:var(--text-dark);margin-bottom:.5rem">Наши <em style="color:var(--clay);font-style:italic">контакты</em></h2>
+    <div style="display:flex;flex-direction:column;gap:1rem">
+      <div>
+        <div style="font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.2rem">Телефон</div>
+        <a href="tel:+74959876543" style="font-size:1rem;color:var(--text-dark);text-decoration:none;font-family:var(--font-d)">+7 (495) 987-65-43</a>
+      </div>
+      <div>
+        <div style="font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.2rem">Email</div>
+        <div style="font-size:.9rem;color:var(--text-dark)">hello [at] terra-studio.ru</div>
+      </div>
+      <div>
+        <div style="font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.2rem">Адрес</div>
+        <div style="font-size:.9rem;color:var(--text-dark);line-height:1.5">г. Москва,<br>Гончарная набережная, д. 7</div>
+      </div>
+      <div>
+        <div style="font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.2rem">Режим работы</div>
+        <div style="font-size:.9rem;color:var(--text-dark)">Вт–Вс: 10:00 — 20:00</div>
+      </div>
+    </div>
+    <!-- Соцсети -->
+    <div style="display:flex;gap:.8rem;margin-top:.5rem">
+      <a href="https://t.me/terra_pottery" target="_blank" style="width:40px;height:40px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-dark);text-decoration:none;transition:.2s;font-size:.9rem" onmouseover="this.style.borderColor='var(--clay)';this.style.color='var(--clay)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dark)'"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg></a>
+      <a href="#" style="width:40px;height:40px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-dark);text-decoration:none;transition:.2s;font-size:.9rem" onmouseover="this.style.borderColor='var(--clay)';this.style.color='var(--clay)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dark)'"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+      <a href="#" style="width:40px;height:40px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-dark);text-decoration:none;transition:.2s" onmouseover="this.style.borderColor='var(--clay)';this.style.color='var(--clay)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-dark)'"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M21.543 6.498C22 8.28 22 12 22 12s0 3.72-.457 5.502c-.254.985-.997 1.76-1.938 2.022C17.896 20 12 20 12 20s-5.893 0-7.605-.476c-.945-.266-1.687-1.04-1.938-2.022C2 15.72 2 12 2 12s0-3.72.457-5.502c.254-.985.997-1.76 1.938-2.022C6.107 4 12 4 12 4s5.896 0 7.605.476c.945.266 1.687 1.04 1.938 2.022zM10 15.5l6-3.5-6-3.5v7z"/></svg></a>
     </div>
   </div>
 </section>
@@ -915,6 +1155,12 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
 <div id="shopPage" style="display:none;padding-top:80px">
   <section id="shop" style="padding:4rem 3rem">
     <div class="sh"><div class="st"><div class="stl"></div><span>Магазин</span><div class="stl"></div></div><h2 class="stitle">Изделия <em>мастерской</em></h2><p class="sdesc">Каждый предмет уникален — форма, цвет и текстура никогда не повторяются</p></div>
+    <div style="display:flex;align-items:center;max-width:1200px;margin:0 auto 1rem;justify-content:flex-end">
+      <button class="cart-btn" onclick="toggleCart()" style="display:flex;align-items:center;gap:.5rem;font-family:var(--font-b);font-size:.82rem;color:var(--earth);padding:.5rem .8rem">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Корзина<span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
     <div class="shop-controls">
       <div class="search-wrap"><span class="search-ico">🔍</span><input type="text" id="shopSearch" placeholder="Поиск по каталогу..." oninput="filterP()"></div>
       <div class="filters" id="filters" style="margin:0"></div>
@@ -2073,9 +2319,13 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
 
 <!-- Admin -->
 <div class="adm-ov" id="admOv" onclick="closeAdm()"></div>
-<div class="adm-pan" id="admPan">
-  <div class="adm-h"><h2>Панель управления</h2><button class="adm-cl" onclick="closeAdm()">✕</button></div>
-  <div class="adm-tabs" style="flex-wrap:wrap"><button class="adm-tab active" id="tProd" onclick="switchTab('prod')">Товары</button><button class="adm-tab" id="tCls" onclick="switchTab('cls')">МК</button><button class="adm-tab" id="tBlog" onclick="switchTab('blog')">Блог</button><button class="adm-tab" id="tProgs" onclick="switchTab('progs')">Программы</button><button class="adm-tab" id="tSched" onclick="switchTab('sched')">Расписание</button><button class="adm-tab" id="tCerts" onclick="switchTab('certs')">Сертификаты</button><button class="adm-tab" id="tEvts" onclick="switchTab('evts')">Мероприятия</button><button class="adm-tab" id="tServs" onclick="switchTab('servs')">Услуги</button><button class="adm-tab" id="tSobytia" onclick="switchTab('sobytia')">События</button><button class="adm-tab" id="tContacts" onclick="switchTab('contacts')">Контакты</button><button class="adm-tab" id="tPress" onclick="switchTab('press')">О нас</button><button class="adm-tab" id="tOrders" onclick="switchTab('orders')">Заказы</button><button class="adm-tab" id="tSite" onclick="switchTab('site')">Сайт</button></div>
+<div class="adm-pan" id="admPan" style="max-width:900px">
+  <div class="adm-h">
+    <h2 style="font-family:var(--font-d);font-weight:400">Панель управления</h2>
+    <button class="adm-cl" onclick="closeAdm()">✕</button>
+  </div>
+
+  <!-- LOGIN -->
   <div class="adm-body">
     <div class="adm-login" id="admLogin">
       <p>Введите пароль для доступа</p>
@@ -2083,312 +2333,101 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
       <button class="adm-login-btn" onclick="doLogin()">Войти</button>
       <span class="err" id="logErr">Неверный пароль</span>
     </div>
+
     <div id="admContent" style="display:none">
-      <!-- API Key Block -->
-      <div class="ai-key-block" id="aiKeyBlock">
-        <label>🔑 Google Gemini API Key (бесплатно — для генерации описаний по фото)</label>
-        <div class="ai-key-row">
-          <input type="password" id="aiKeyInput" placeholder="AIzaSy..." autocomplete="off">
-          <button class="ai-key-save" onclick="saveApiKey()">Сохранить</button>
-        </div>
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <span class="ai-key-hint">Бесплатно: 1500 запросов/день. Получить: <strong>aistudio.google.com</strong> → Get API Key</span>
-          <span class="ai-key-status" id="aiKeyStatus"></span>
-        </div>
+
+      <!-- NAV — повторяет структуру лендинга -->
+      <div class="new-adm-nav">
+        <button class="new-adm-navbtn active" id="nav-shop" onclick="newAdmTab('shop',this)">🛍 Магазин</button>
+        <button class="new-adm-navbtn" id="nav-mk" onclick="newAdmTab('mk',this)">🎨 Мастер-классы</button>
+        <button class="new-adm-navbtn" id="nav-schedule" onclick="newAdmTab('schedule',this)">📅 Расписание</button>
+        <button class="new-adm-navbtn" id="nav-events" onclick="newAdmTab('events',this)">📰 События</button>
+        <button class="new-adm-navbtn" id="nav-contacts" onclick="newAdmTab('contacts',this)">📍 Контакты</button>
+        <button class="new-adm-navbtn" id="nav-about" onclick="newAdmTab('about',this)">ℹ О нас</button>
+        <button class="new-adm-navbtn" id="nav-orders" onclick="newAdmTab('orders',this)">📦 Заказы</button>
       </div>
-      <!-- Products Tab -->
-      <div id="tabProd">
-        <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sTotal">0</div><div class="adm-stat-l">Товаров</div></div><div class="adm-stat"><div class="adm-stat-n" id="sCats">0</div><div class="adm-stat-l">Категорий</div></div><div class="adm-stat"><div class="adm-stat-n" id="sAvg">0</div><div class="adm-stat-l">Ср. цена</div></div></div>
+
+      <!-- ===== МАГАЗИН ===== -->
+      <div id="newTab-shop" class="new-adm-section">
+        <div class="new-adm-sec-title">Товары магазина</div>
         <div id="pListView"><div class="adm-list" id="admPList"></div><button class="adm-add-btn" onclick="showPF()">+ Добавить товар</button></div>
         <div class="adm-form" id="pForm">
-          <div class="adm-form-title"><button class="adm-form-back" onclick="hidePF()">←</button><span id="pFTitle">Новый товар</span></div>
-          <div class="adm-img-up" id="pImgUp"><div class="uicon" id="pUIco">📷</div><div class="utxt" id="pUTxt">Нажмите или перетащите фото</div><div class="uhint">Автозагрузка в Firebase</div><input type="file" id="pImgIn" accept="image/*" onchange="hImg(event,'p')"></div>
+          <div class="adm-form-title"><button class="adm-form-back" onclick="hidePF()">←</button><span id="pFormTitle">Новый товар</span></div>
+          <div class="adm-img-up" id="pImgUp"><div class="uicon" id="pUIco">📷</div><div class="utxt" id="pUTxt">Фото товара</div><div class="uhint">Firebase Storage</div><input type="file" id="pImgIn" accept="image/*" onchange="hImg(event,'p')"></div>
           <div class="adm-img-status" id="pImgStatus"></div>
-          <div style="display:flex;align-items:center;gap:.5rem;margin-top:-.5rem"><span style="font-size:.72rem;color:var(--text-muted)">или вставьте ссылку:</span></div>
-          <div class="adm-field full"><input type="text" id="pImgUrl" placeholder="https://example.com/photo.jpg" oninput="onImgUrl(this,'p')"></div>
-          <div class="adm-form-row"><div class="adm-field"><label>Название</label><input type="text" id="fName"></div><div class="adm-field"><label>Цена (₽)</label><input type="number" id="fPrice"></div></div>
-          <div class="adm-form-row"><div class="adm-field"><label>Категория</label><select id="fCat"><option value="tableware">Посуда</option><option value="vases">Вазы</option><option value="decor">Декор</option><option value="gifts">Подарки</option></select></div><div class="adm-field"><label>Бейдж</label><select id="fBadge"><option value="">Нет</option><option value="Хит">Хит</option><option value="Новинка">Новинка</option><option value="Подарок">Подарок</option><option value="Скидка">Скидка</option></select></div></div>
-          <div class="adm-form-row"><div class="adm-field"><label>Остаток (шт.)</label><input type="number" id="fStock" min="0" placeholder="Кол-во на складе"></div><div class="adm-field"><label style="font-size:.65rem;color:var(--text-muted)">⚠️ Если ≤ 3 — покажется «Осталось мало»</label></div></div>
-          <div class="adm-field full"><label>Описание</label><textarea id="fDesc"></textarea><button type="button" class="ai-btn" onclick="aiDescribe('p')">✨ Описать с ИИ</button></div>
-          <input type="hidden" id="fId"><input type="hidden" id="fImg"><input type="hidden" id="fStockVal">
+          <div class="adm-field full"><input type="text" id="pImgUrl" placeholder="или вставьте ссылку на фото..." oninput="onImgUrl(this,'p')"></div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Название</label><input type="text" id="pName"></div>
+            <div class="adm-field"><label>Цена (₽)</label><input type="number" id="pPrice"></div>
+          </div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Категория</label><select id="pCat"><option value="Посуда">Посуда</option><option value="Вазы">Вазы</option><option value="Декор">Декор</option><option value="Подарки">Подарки</option></select></div>
+            <div class="adm-field"><label>Наличие</label><select id="pStock"><option value="В наличии">В наличии</option><option value="Под заказ">Под заказ</option><option value="Нет">Нет в наличии</option></select></div>
+          </div>
+          <div class="adm-field full"><label>Описание</label><textarea id="pDesc"></textarea></div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>Теги (через запятую)</label><input type="text" id="pTags" placeholder="хит, новинка"></div>
+            <div class="adm-field" style="display:flex;align-items:center;gap:.8rem;padding-top:1.5rem"><label style="display:flex;align-items:center;gap:.5rem;cursor:pointer"><input type="checkbox" id="pHit"> Хит</label><label style="display:flex;align-items:center;gap:.5rem;cursor:pointer"><input type="checkbox" id="pNew"> Новинка</label></div>
+          </div>
+          <input type="hidden" id="pId"><input type="hidden" id="pImg">
           <div class="adm-form-acts"><button class="adm-save" onclick="saveP()">Сохранить</button><button class="adm-cancel" onclick="hidePF()">Отмена</button></div>
         </div>
       </div>
-      <!-- Classes Tab -->
-      <div id="tabCls" style="display:none">
-        <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sClasses">0</div><div class="adm-stat-l">Мастер-классов</div></div></div>
-        <div id="cListView"><div class="adm-list" id="admCList"></div><button class="adm-add-btn" onclick="showCF()">+ Добавить мастер-класс</button></div>
-        <div class="adm-form" id="cForm">
-          <div class="adm-form-title"><button class="adm-form-back" onclick="hideCF()">←</button><span id="cFTitle">Новый мастер-класс</span></div>
-          <div class="adm-img-up" id="cImgUp"><div class="uicon" id="cUIco">📷</div><div class="utxt" id="cUTxt">Нажмите или перетащите фото</div><div class="uhint">Автозагрузка в Firebase</div><input type="file" id="cImgIn" accept="image/*" onchange="hImg(event,'c')"></div>
-          <div class="adm-img-status" id="cImgStatus"></div>
-          <div style="display:flex;align-items:center;gap:.5rem;margin-top:-.5rem"><span style="font-size:.72rem;color:var(--text-muted)">или вставьте ссылку:</span></div>
-          <div class="adm-field full"><input type="text" id="cImgUrl" placeholder="https://example.com/photo.jpg" oninput="onImgUrl(this,'c')"></div>
-          <div class="adm-field full"><label>Название</label><input type="text" id="cName"></div>
-          <div class="adm-field full"><label>Описание</label><textarea id="cDesc"></textarea><button type="button" class="ai-btn" onclick="aiDescribe('c')">✨ Описать с ИИ</button></div>
-          <div class="adm-form-row"><div class="adm-field"><label>Длительность</label><input type="text" id="cDur" placeholder="2.5 часа"></div><div class="adm-field"><label>Цена (₽)</label><input type="number" id="cPrice"></div></div>
-          <input type="hidden" id="cId"><input type="hidden" id="cImg">
-          <div class="adm-form-acts"><button class="adm-save" onclick="saveC()">Сохранить</button><button class="adm-cancel" onclick="hideCF()">Отмена</button></div>
-        </div>
-      </div>
-      <!-- Blog Tab -->
-      <div id="tabBlog" style="display:none">
-        <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sBlogPosts">0</div><div class="adm-stat-l">Статей</div></div></div>
-        <div id="blogListView"><div class="adm-list" id="admBlogList"></div><button class="adm-add-btn" onclick="showBF()">+ Написать статью</button></div>
-        <div class="adm-form" id="blogForm">
-          <div class="adm-form-title"><button class="adm-form-back" onclick="hideBF()">←</button><span id="blogFTitle">Новая статья</span></div>
-          <div class="adm-img-up" id="blogImgUp"><div class="uicon" id="blogUIco">📷</div><div class="utxt" id="blogUTxt">Обложка статьи</div><div class="uhint">Автозагрузка в Firebase</div><input type="file" id="blogImgIn" accept="image/*" onchange="hImg(event,'blog')"></div>
-          <div class="adm-img-status" id="blogImgStatus"></div>
-          <div style="display:flex;align-items:center;gap:.5rem;margin-top:-.5rem"><span style="font-size:.72rem;color:var(--text-muted)">или вставьте ссылку:</span></div>
-          <div class="adm-field full"><input type="text" id="blogImgUrl" placeholder="https://example.com/photo.jpg" oninput="onImgUrl(this,'blog')"></div>
-          <div class="adm-form-row">
-            <div class="adm-field"><label>Заголовок</label><input type="text" id="blogTitle"></div>
-            <div class="adm-field"><label>Тег / рубрика</label><input type="text" id="blogTag" placeholder="Мастерство, Глазури, Вдохновение..."></div>
-          </div>
-          <div class="adm-field full"><label>Анонс (краткое описание)</label><textarea id="blogExcerpt" style="min-height:60px"></textarea></div>
-          <div class="adm-field full">
-            <label>Полный текст статьи</label>
-            <textarea id="blogContent" style="min-height:160px"></textarea>
-            <button type="button" class="ai-btn" onclick="aiBlogWrite()">✨ Написать с ИИ</button>
-          </div>
-          <input type="hidden" id="blogId"><input type="hidden" id="blogImg">
-          <div class="adm-form-acts"><button class="adm-save" onclick="saveBlog()">Опубликовать</button><button class="adm-cancel" onclick="hideBF()">Отмена</button></div>
-        </div>
-      </div>
-      <!-- Orders Tab -->
-      <div id="tabOrders" style="display:none">
-        <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sOrdersCount">0</div><div class="adm-stat-l">Заказов</div></div><div class="adm-stat"><div class="adm-stat-n" id="sOrdersSum">0</div><div class="adm-stat-l">Сумма (₽)</div></div></div>
-        <div class="orders-list" id="ordersList"><div class="loading">Загрузка заказов...</div></div>
-      </div>
 
-      <!-- Programs Admin Tab -->
-      <div id="tabProgs" style="display:none">
-        <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sProgsCount">0</div><div class="adm-stat-l">Программ</div></div></div>
-        <div id="progsListView"><div class="adm-list" id="admProgsList"></div><button class="adm-add-btn" onclick="showProgF()">+ Добавить программу</button></div>
-        <div class="adm-form" id="progForm">
-          <div class="adm-form-title"><button class="adm-form-back" onclick="hideProgF()">←</button><span id="progFTitle">Новая программа</span></div>
-          <div class="adm-img-up" id="progImgUp"><div class="uicon" id="progUIco">📷</div><div class="utxt" id="progUTxt">Фото программы</div><div class="uhint">Загрузка на ImgBB</div><input type="file" id="progImgIn" accept="image/*" onchange="hImg(event,'prog')"></div>
-          <div class="adm-img-status" id="progImgStatus"></div>
-          <div class="adm-field full"><input type="text" id="progImgUrl" placeholder="или ссылка на фото..." oninput="onImgUrl(this,'prog')"></div>
-          <div class="adm-form-row">
-            <div class="adm-field"><label>Название</label><input type="text" id="progName" placeholder="Знакомство с кругом"></div>
-            <div class="adm-field"><label>Цена (₽)</label><input type="number" id="progPrice"></div>
-          </div>
-          <div class="adm-form-row">
-            <div class="adm-field"><label>Формат</label><select id="progFormat"><option value="single">Разовый МК</option><option value="course">Курс</option><option value="kids">Детский</option></select></div>
-            <div class="adm-field"><label>Тип (отображаемый)</label><input type="text" id="progType" placeholder="Разовый МК, Курс, Детский..."></div>
-          </div>
-          <div class="adm-form-row">
-            <div class="adm-field"><label>Возраст</label><input type="text" id="progAge" placeholder="14+"></div>
-            <div class="adm-field"><label>Цвет бейджа</label><input type="color" id="progAgeColor" value="#c67d4a"></div>
-          </div>
-          <div class="adm-field full"><label>Длительность</label><input type="text" id="progDuration" placeholder="2 часа"></div>
-          <div class="adm-field full"><label>Описание</label><textarea id="progDesc" style="min-height:80px"></textarea></div>
-          <input type="hidden" id="progId"><input type="hidden" id="progImg">
-          <div class="adm-form-acts"><button class="adm-save" onclick="saveProg()">Сохранить</button><button class="adm-cancel" onclick="hideProgF()">Отмена</button></div>
-        </div>
-      </div>
-
-      <!-- Schedule Admin Tab -->
-      <div id="tabSched" style="display:none">
-        <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sSchedCount">0</div><div class="adm-stat-l">Занятий</div></div></div>
+      <!-- ===== МАСТЕР-КЛАССЫ ===== -->
+      <div id="newTab-mk" class="new-adm-section" style="display:none">
+        <div class="new-adm-sec-title">Расписание мастер-классов</div>
         <div id="schedListView"><div class="adm-list" id="admSchedList"></div><button class="adm-add-btn" onclick="showSchedF()">+ Добавить занятие</button></div>
         <div class="adm-form" id="schedForm">
-          <div class="adm-form-title"><button class="adm-form-back" onclick="hideSchedF()">←</button><span id="schedFTitle">Новое занятие</span></div>
-          <div class="adm-img-up" id="schedImgUp"><div class="uicon" id="schedUIco">📷</div><div class="utxt" id="schedUTxt">Фото занятия</div><div class="uhint">Автозагрузка на ImgBB</div><input type="file" id="schedImgIn" accept="image/*" onchange="hImg(event,'sched')"></div>
+          <div class="adm-form-title"><button class="adm-form-back" onclick="hideSchedF()">←</button><span id="schedFormTitle">Новое занятие</span></div>
+          <div class="adm-img-up" id="schedImgUp"><div class="uicon">📷</div><div class="utxt">Фото занятия</div><div class="uhint">Firebase Storage</div><input type="file" id="schedImgIn" accept="image/*" onchange="hImg(event,'sched')"></div>
           <div class="adm-img-status" id="schedImgStatus"></div>
-          <div class="adm-field full"><input type="text" id="schedImgUrl" placeholder="или ссылка на фото..." oninput="onImgUrl(this,'sched')"></div>
+          <div class="adm-field full"><input type="text" id="schedImg" placeholder="или ссылка на фото..." oninput="onImgUrl(this,'sched')"></div>
           <div class="adm-form-row">
             <div class="adm-field"><label>Название</label><input type="text" id="schedName" placeholder="Гончарный круг"></div>
-            <div class="adm-field"><label>Возраст</label><input type="text" id="schedAge" placeholder="8–11 лет"></div>
+            <div class="adm-field"><label>Возраст</label><input type="text" id="schedAge" placeholder="18+"></div>
           </div>
           <div class="adm-form-row">
             <div class="adm-field"><label>День недели</label><select id="schedDay"><option value="1">Понедельник</option><option value="2">Вторник</option><option value="3">Среда</option><option value="4">Четверг</option><option value="5">Пятница</option><option value="6">Суббота</option><option value="0">Воскресенье</option></select></div>
-            <div class="adm-field"><label>Тип</label><select id="schedType"><option value="kids">Детское</option><option value="adults">Взрослое</option><option value="all">Все возрасты</option></select></div>
+            <div class="adm-field"><label>Тип</label><select id="schedType"><option value="kids">Детское</option><option value="adults">Взрослое</option><option value="all">Для всех</option></select></div>
           </div>
           <div class="adm-form-row">
-            <div class="adm-field"><label>Начало</label><input type="time" id="schedTime" placeholder="10:00"></div>
-            <div class="adm-field"><label>Конец</label><input type="time" id="schedEndTime" placeholder="11:30"></div>
+            <div class="adm-field"><label>Начало</label><input type="time" id="schedTime"></div>
+            <div class="adm-field"><label>Конец</label><input type="time" id="schedEndTime"></div>
           </div>
           <div class="adm-form-row">
             <div class="adm-field"><label>Цена (₽)</label><input type="number" id="schedPrice"></div>
-            <div class="adm-field"><label>Мест</label><input type="number" id="schedSeats" placeholder="6"></div>
+            <div class="adm-field"><label>Мест</label><input type="number" id="schedSeats"></div>
           </div>
+          <div class="adm-field full"><label>Преподаватель</label><input type="text" id="schedTeacher" placeholder="Имя преподавателя"></div>
           <div class="adm-field full"><label>Описание</label><textarea id="schedDesc" style="min-height:80px"></textarea></div>
-          <div class="adm-form-row">
-            <div class="adm-field"><label>Преподаватель</label><input type="text" id="schedTeacher" placeholder="Елена Соколова"></div>
-            <div class="adm-field"><label>Важно (необязательно)</label><input type="text" id="schedImportant" placeholder="Важная информация"></div>
-          </div>
-          <input type="hidden" id="schedId"><input type="hidden" id="schedImg">
+          <div class="adm-field full"><label>Важно (необязательно)</label><input type="text" id="schedImportant"></div>
+          <input type="hidden" id="schedId">
           <div class="adm-form-acts"><button class="adm-save" onclick="saveSched()">Сохранить</button><button class="adm-cancel" onclick="hideSchedF()">Отмена</button></div>
         </div>
       </div>
 
-      <!-- Certificates Admin Tab -->
-      <div id="tabCerts" style="display:none">
-        <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sCertsCount">0</div><div class="adm-stat-l">Сертификатов</div></div></div>
-        <div id="certsListView"><div class="adm-list" id="admCertsList"></div><button class="adm-add-btn" onclick="showCertF()">+ Добавить сертификат</button></div>
-        <div class="adm-form" id="certForm">
-          <div class="adm-form-title"><button class="adm-form-back" onclick="hideCertF()">←</button><span id="certFTitle">Новый сертификат</span></div>
-          <div class="adm-form-row">
-            <div class="adm-field"><label>Название</label><input type="text" id="certName" placeholder="Пробное занятие"></div>
-            <div class="adm-field"><label>Цена (₽)</label><input type="number" id="certPrice"></div>
-          </div>
-          <div class="adm-form-row">
-            <div class="adm-field"><label>Подзаголовок на сертификате</label><input type="text" id="certSubtitle" placeholder="1 занятие"></div>
-            <div class="adm-field"><label>Программа на сертификате</label><input type="text" id="certProgram" placeholder="Знакомство с гончарным кругом"></div>
-          </div>
-          <div class="adm-field full"><label>Описание</label><textarea id="certDesc" style="min-height:80px"></textarea></div>
-          <input type="hidden" id="certId">
-          <div class="adm-form-acts"><button class="adm-save" onclick="saveCert()">Сохранить</button><button class="adm-cancel" onclick="hideCertF()">Отмена</button></div>
-        </div>
+      <!-- ===== РАСПИСАНИЕ (страница расписания) ===== -->
+      <div id="newTab-schedule" class="new-adm-section" style="display:none">
+        <div class="new-adm-sec-title">Страница «Расписания» — занятия</div>
+        <p style="font-size:.85rem;color:var(--text-muted);margin-bottom:1rem">Те же данные что в «Мастер-классы». Переключитесь туда чтобы добавить/редактировать занятия.</p>
+        <div class="adm-list" id="admSchedList2"></div>
+        <button class="adm-add-btn" onclick="newAdmTab('mk',document.getElementById('nav-mk'));showSchedF()">+ Добавить занятие</button>
       </div>
 
-      <!-- Events Admin Tab -->
-      <div id="tabEvts" style="display:none">
-        <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n" id="sEvtsCount">0</div><div class="adm-stat-l">Мероприятий</div></div></div>
-        <div id="evtsListView"><div class="adm-list" id="admEvtsList"></div><button class="adm-add-btn" onclick="showEvtF()">+ Добавить мероприятие</button></div>
-        <div class="adm-form" id="evtForm">
-          <div class="adm-form-title"><button class="adm-form-back" onclick="hideEvtF()">←</button><span id="evtFTitle">Новое мероприятие</span></div>
-          <div class="adm-img-up" id="evtImgUp"><div class="uicon" id="evtUIco">📷</div><div class="utxt" id="evtUTxt">Фото мероприятия</div><div class="uhint">Автозагрузка на ImgBB</div><input type="file" id="evtImgIn" accept="image/*" onchange="hImg(event,'evt')"></div>
-          <div class="adm-img-status" id="evtImgStatus"></div>
-          <div class="adm-field full"><input type="text" id="evtImgUrl" placeholder="или ссылка на фото..." oninput="onImgUrl(this,'evt')"></div>
-          <div class="adm-form-row">
-            <div class="adm-field"><label>Название</label><input type="text" id="evtTitle"></div>
-            <div class="adm-field"><label>Тип</label><input type="text" id="evtType" placeholder="Праздник, Корпоратив, Выставка..."></div>
-          </div>
-          <div class="adm-form-row">
-            <div class="adm-field"><label>Цвет типа</label><input type="color" id="evtTypeColor" value="#c67d4a"></div>
-            <div class="adm-field"><label>Дата (число)</label><input type="number" id="evtDay" min="1" max="31" placeholder="19"></div>
-          </div>
-          <div class="adm-form-row">
-            <div class="adm-field"><label>Месяц</label><input type="text" id="evtMonth" placeholder="апр"></div>
-            <div class="adm-field"><label>Длительность</label><input type="text" id="evtDuration" placeholder="2–3 часа"></div>
-          </div>
-          <div class="adm-form-row">
-            <div class="adm-field"><label>Группа</label><input type="text" id="evtGroup" placeholder="до 12 чел."></div>
-            <div class="adm-field"><label>Цена</label><input type="text" id="evtPrice" placeholder="от 2 500 ₽/чел."></div>
-          </div>
-          <div class="adm-field full"><label>Описание</label><textarea id="evtDesc" style="min-height:80px"></textarea></div>
-          <input type="hidden" id="evtId"><input type="hidden" id="evtImg">
-          <div class="adm-form-acts"><button class="adm-save" onclick="saveEvt()">Сохранить</button><button class="adm-cancel" onclick="hideEvtF()">Отмена</button></div>
-        </div>
+      <!-- ===== СОБЫТИЯ ===== -->
+      <div id="newTab-events" class="new-adm-section" style="display:none">
+        <div class="new-adm-sec-title">📰 Публикации в СМИ</div>
+        <div class="adm-list" id="admSmiList2"></div><button class="adm-add-btn" onclick="openSobytiaModal('smi')">+ Добавить</button>
+        <div class="new-adm-sec-title" style="margin-top:1.5rem">🏆 Достижения учеников</div>
+        <div class="adm-list" id="admAchievList2"></div><button class="adm-add-btn" onclick="openSobytiaModal('achievements')">+ Добавить</button>
+        <div class="new-adm-sec-title" style="margin-top:1.5rem">🎪 Публичные мероприятия</div>
+        <div class="adm-list" id="admPublicList2"></div><button class="adm-add-btn" onclick="openSobytiaModal('public')">+ Добавить</button>
       </div>
 
-      <!-- Site Tab -->
-      <div id="tabSite" style="display:none">
-
-        <!-- HERO -->
-        <div class="site-section-title">🏠 Главный экран (Hero)</div>
-        <div class="adm-form active" style="margin-bottom:2rem">
-          <div class="adm-img-up" id="heroImgUp"><div class="uicon" id="heroUIco">📷</div><div class="utxt" id="heroUTxt">Фоновое фото</div><div class="uhint">Автозагрузка в Firebase</div><input type="file" id="heroImgIn" accept="image/*" onchange="hImgSite(event,'hero')"></div>
-          <div class="adm-img-status" id="heroImgStatus"></div>
-          <div class="adm-field full"><input type="text" id="heroImgUrl" placeholder="https://... или вставьте ссылку" oninput="onImgUrlSite(this,'hero')"></div>
-          <div class="adm-field full"><label>Заголовок (H1)</label><input type="text" id="heroTitle" placeholder="Красота, рождённая землёй"></div>
-          <div class="adm-field full"><label>Подзаголовок</label><textarea id="heroSubtitle" style="min-height:60px" placeholder="Авторская керамика ручной работы..."></textarea></div>
-          <div class="adm-form-acts"><button class="adm-save" onclick="saveSiteSection('hero')">Сохранить</button></div>
-        </div>
-
-        <!-- ABOUT -->
-        <div class="site-section-title">🏺 О мастерской (About)</div>
-        <div class="adm-form active" style="margin-bottom:2rem">
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
-            <div>
-              <div style="font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);font-weight:500;margin-bottom:.4rem">Главное фото</div>
-              <div class="adm-img-up" id="aboutImg1Up"><div class="uicon" id="aboutImg1UIco">📷</div><div class="utxt" id="aboutImg1UTxt">Нажмите или перетащите</div><div class="uhint">Автозагрузка в Firebase</div><input type="file" id="aboutImg1In" accept="image/*" onchange="hImgSite(event,'aboutImg1')"></div>
-              <div class="adm-img-status" id="aboutImg1Status"></div>
-              <input type="text" id="aboutImg1Url" style="margin-top:.4rem;background:var(--sand);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;font-family:var(--font-b);font-size:.82rem;width:100%;outline:none" placeholder="или ссылка..." oninput="onImgUrlSite(this,'aboutImg1')">
-            </div>
-            <div>
-              <div style="font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-muted);font-weight:500;margin-bottom:.4rem">Дополнительное фото</div>
-              <div class="adm-img-up" id="aboutImg2Up"><div class="uicon" id="aboutImg2UIco">📷</div><div class="utxt" id="aboutImg2UTxt">Нажмите или перетащите</div><div class="uhint">Автозагрузка в Firebase</div><input type="file" id="aboutImg2In" accept="image/*" onchange="hImgSite(event,'aboutImg2')"></div>
-              <div class="adm-img-status" id="aboutImg2Status"></div>
-              <input type="text" id="aboutImg2Url" style="margin-top:.4rem;background:var(--sand);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;font-family:var(--font-b);font-size:.82rem;width:100%;outline:none" placeholder="или ссылка..." oninput="onImgUrlSite(this,'aboutImg2')">
-            </div>
-          </div>
-          <div class="adm-field full"><label>Заголовок</label><input type="text" id="aboutTitle" placeholder="Место, где глина оживает"></div>
-          <div class="adm-field full"><label>Текст 1</label><textarea id="aboutText1" style="min-height:70px"></textarea></div>
-          <div class="adm-field full"><label>Текст 2</label><textarea id="aboutText2" style="min-height:70px"></textarea></div>
-          <div class="adm-form-acts"><button class="adm-save" onclick="saveSiteSection('about')">Сохранить</button></div>
-        </div>
-
-        <!-- PROCESS -->
-        <div class="site-section-title">⚙️ Процесс создания</div>
-        <div class="adm-form active" style="margin-bottom:2rem" id="procForm">
-          <div id="procStepsList"></div>
-          <div class="adm-form-acts"><button class="adm-save" onclick="saveSiteSection('process')">Сохранить все шаги</button></div>
-        </div>
-
-        <!-- GALLERY -->
-        <div class="site-section-title">🖼️ Галерея</div>
-        <div class="adm-form active" style="margin-bottom:2rem">
-          <div id="galleryItemsList"></div>
-          <button class="adm-add-btn" onclick="addGalleryItem()" style="margin-bottom:1rem">+ Добавить фото</button>
-          <div class="adm-form-acts"><button class="adm-save" onclick="saveSiteSection('gallery')">Сохранить галерею</button></div>
-        </div>
-
-        <!-- CONTACT -->
-        <div class="site-section-title">📍 Контакты</div>
-        <div class="adm-form active" style="margin-bottom:2rem">
-          <div class="adm-img-up" id="contactImgUp"><div class="uicon" id="contactUIco">📷</div><div class="utxt" id="contactUTxt">Фото мастерской</div><div class="uhint">Firebase</div><input type="file" id="contactImgIn" accept="image/*" onchange="hImgSite(event,'contact')"></div>
-          <div class="adm-img-status" id="contactImgStatus"></div>
-          <div class="adm-field full"><input type="text" id="contactImgUrl" placeholder="или ссылка..." oninput="onImgUrlSite(this,'contact')"></div>
-          <div class="adm-form-row">
-            <div class="adm-field"><label>Адрес</label><input type="text" id="contactAddr" placeholder="г. Москва, Гончарная наб., д. 7"></div>
-            <div class="adm-field"><label>Телефон</label><input type="text" id="contactPhone" placeholder="+7 (495) 987-65-43"></div>
-          </div>
-          <div class="adm-field full"><label>Режим работы</label><input type="text" id="contactHours" placeholder="Вт–Вс: 10:00 — 20:00"></div>
-          <div class="adm-form-acts"><button class="adm-save" onclick="saveSiteSection('contact')">Сохранить</button></div>
-        </div>
-
-      </div>
-
-      <!-- SERVICES ADMIN TAB -->
-      <div id="tabServs" style="display:none">
-        <div class="adm-stats"><div class="adm-stat"><div class="adm-stat-n">4</div><div class="adm-stat-l">Категории услуг</div></div></div>
-        <div class="site-section-title">🎨 Мастер-классы</div>
-        <div class="adm-form active" style="margin-bottom:1.5rem">
-          <div class="adm-field full"><label>Описание</label><textarea id="servMKDesc" style="min-height:80px" placeholder="Разовые занятия для тех..."></textarea></div>
-          <div class="adm-form-row"><div class="adm-field"><label>Цена от (₽)</label><input type="text" id="servMKPrice" placeholder="2 800"></div><div class="adm-field"><label>Тег</label><input type="text" id="servMKTag" placeholder="Для всех возрастов"></div></div>
-          <div class="adm-field full"><label>Фото (ссылка)</label><input type="text" id="servMKImg" placeholder="https://..."></div>
-          <div class="adm-form-acts"><button class="adm-save" onclick="saveServCat('masterklass')">Сохранить</button></div>
-        </div>
-        <div class="site-section-title">📋 Абонементы</div>
-        <div class="adm-form active" style="margin-bottom:1.5rem">
-          <div class="adm-field full"><label>Описание</label><textarea id="servAbDesc" style="min-height:80px" placeholder="Для тех, кто хочет развиваться..."></textarea></div>
-          <div class="adm-form-row"><div class="adm-field"><label>Цена от (₽)</label><input type="text" id="servAbPrice" placeholder="6 500"></div><div class="adm-field"><label>Тег</label><input type="text" id="servAbTag" placeholder="Регулярные занятия"></div></div>
-          <div class="adm-field full"><label>Фото (ссылка)</label><input type="text" id="servAbImg" placeholder="https://..."></div>
-          <div class="adm-form-acts"><button class="adm-save" onclick="saveServCat('abonement')">Сохранить</button></div>
-        </div>
-        <div class="site-section-title">🏺 Изделия на заказ</div>
-        <div class="adm-form active" style="margin-bottom:1.5rem">
-          <div class="adm-field full"><label>Описание</label><textarea id="servZkDesc" style="min-height:80px" placeholder="Создадим уникальное изделие..."></textarea></div>
-          <div class="adm-form-row"><div class="adm-field"><label>Цена от (₽)</label><input type="text" id="servZkPrice" placeholder="3 500"></div><div class="adm-field"><label>Тег</label><input type="text" id="servZkTag" placeholder="Авторская работа"></div></div>
-          <div class="adm-field full"><label>Фото (ссылка)</label><input type="text" id="servZkImg" placeholder="https://..."></div>
-          <div class="adm-form-acts"><button class="adm-save" onclick="saveServCat('zakaz')">Сохранить</button></div>
-        </div>
-        <div class="site-section-title">🎉 Праздники</div>
-        <div class="adm-form active" style="margin-bottom:1.5rem">
-          <div class="adm-field full"><label>Описание</label><textarea id="servPrDesc" style="min-height:80px" placeholder="День рождения, корпоратив..."></textarea></div>
-          <div class="adm-form-row"><div class="adm-field"><label>Цена от (₽)</label><input type="text" id="servPrPrice" placeholder="2 500"></div><div class="adm-field"><label>Тег</label><input type="text" id="servPrTag" placeholder="Для компаний и семей"></div></div>
-          <div class="adm-field full"><label>Фото (ссылка)</label><input type="text" id="servPrImg" placeholder="https://..."></div>
-          <div class="adm-form-acts"><button class="adm-save" onclick="saveServCat('prazdnik')">Сохранить</button></div>
-        </div>
-      </div>
-
-      <!-- EVENTS/SOBYTIA ADMIN TAB -->
-      <div id="tabSobytia" style="display:none">
-        <div class="site-section-title">📰 Публикации в СМИ</div>
-        <div id="smiListView"><div class="adm-list" id="admSmiList"><div class="loading">Записей пока нет</div></div><button class="adm-add-btn" onclick="openSobytiaModal('smi')">+ Добавить публикацию</button></div>
-        <div class="site-section-title" style="margin-top:1.5rem">🏆 Достижения учеников</div>
-        <div id="achievListView"><div class="adm-list" id="admAchievList"><div class="loading">Записей пока нет</div></div><button class="adm-add-btn" onclick="openSobytiaModal('achievements')">+ Добавить достижение</button></div>
-        <div class="site-section-title" style="margin-top:1.5rem">🎪 Публичные мероприятия</div>
-        <div id="publicListView"><div class="adm-list" id="admPublicList"><div class="loading">Записей пока нет</div></div><button class="adm-add-btn" onclick="openSobytiaModal('public')">+ Добавить мероприятие</button></div>
-      </div>
-
-      <!-- CONTACTS ADMIN TAB -->
-      <div id="tabContacts" style="display:none">
-        <div class="site-section-title">📍 Информация на странице Контакты</div>
+      <!-- ===== КОНТАКТЫ ===== -->
+      <div id="newTab-contacts" class="new-adm-section" style="display:none">
+        <div class="new-adm-sec-title">Контактная информация</div>
         <div class="adm-form active">
           <div class="adm-form-row">
             <div class="adm-field"><label>Адрес</label><input type="text" id="admContactAddr" placeholder="г. Москва, Гончарная наб., 7"></div>
@@ -2398,31 +2437,36 @@ footer>div>div:last-child{grid-template-columns:repeat(2,1fr)!important;gap:1.5r
             <div class="adm-field"><label>Email</label><input type="text" id="admContactEmail" placeholder="hello [at] terra-studio.ru"></div>
             <div class="adm-field"><label>Режим работы</label><input type="text" id="admContactHours" placeholder="Вт–Вс: 10:00 — 20:00"></div>
           </div>
-          <div class="site-section-title" style="margin-top:1rem">🔗 Соцсети</div>
-          <div class="adm-form-row">
-            <div class="adm-field"><label>Instagram</label><input type="text" id="admSocInstagram" placeholder="@terra_pottery"></div>
-            <div class="adm-field"><label>ВКонтакте</label><input type="text" id="admSocVk" placeholder="vk.com/terra_pottery"></div>
-          </div>
+          <div class="new-adm-sec-title" style="margin-top:1rem">Соцсети</div>
           <div class="adm-form-row">
             <div class="adm-field"><label>Telegram</label><input type="text" id="admSocTg" placeholder="@terra_pottery_studio"></div>
+            <div class="adm-field"><label>Instagram</label><input type="text" id="admSocInstagram" placeholder="@terra_pottery"></div>
+          </div>
+          <div class="adm-form-row">
+            <div class="adm-field"><label>ВКонтакте</label><input type="text" id="admSocVk" placeholder="vk.com/terra_pottery"></div>
             <div class="adm-field"><label>YouTube</label><input type="text" id="admSocYt" placeholder="Канал"></div>
           </div>
-          <div class="adm-field full"><label>Описание для схемы проезда</label><textarea id="admContactRoute" style="min-height:70px" placeholder="На метро: ст. Таганская..."></textarea></div>
+          <div class="adm-field full"><label>Описание схемы проезда</label><textarea id="admContactRoute" style="min-height:70px" placeholder="На метро: ст. Таганская..."></textarea></div>
           <div class="adm-form-acts"><button class="adm-save" onclick="saveContactsData()">Сохранить контакты</button></div>
         </div>
       </div>
 
-      <!-- PRESS / ABOUT ADMIN TAB -->
-      <div id="tabPress" style="display:none">
-        <div class="site-section-title">📄 Пресс-релизы (страница «О нас»)</div>
-        <div id="pressListView"><div class="adm-list" id="admPressList"><div class="loading">Загрузка...</div></div><button class="adm-add-btn" onclick="openPressModal()">+ Добавить пресс-релиз</button></div>
-        <div class="adm-form" id="pressForm" style="display:none"></div>
+      <!-- ===== О НАС ===== -->
+      <div id="newTab-about" class="new-adm-section" style="display:none">
+        <div class="new-adm-sec-title">Пресс-релизы</div>
+        <div class="adm-list" id="admPressList2"></div>
+        <button class="adm-add-btn" onclick="openPressModal()">+ Добавить пресс-релиз</button>
       </div>
 
-    </div>
-  </div>
-</div>
+      <!-- ===== ЗАКАЗЫ ===== -->
+      <div id="newTab-orders" class="new-adm-section" style="display:none">
+        <div class="new-adm-sec-title">Заказы из магазина</div>
+        <div class="adm-list" id="admOrdersList"></div>
+      </div>
 
+    </div><!-- /admContent -->
+  </div><!-- /adm-body -->
+</div>
 <!-- Telegram -->
 <a class="wa-btn" href="https://t.me/terra_pottery" target="_blank" rel="noopener" title="Написать в Telegram" style="background:#229ED9;box-shadow:0 4px 20px rgba(34,158,217,.4)">
   <svg width="26" height="26" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.962 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
@@ -2709,6 +2753,55 @@ function updCart(){
 function toggleCart(){document.getElementById('cartOv').classList.toggle('open');document.getElementById('cartPan').classList.toggle('open');}
 function openMobNav(){document.getElementById('mobNavOverlay').classList.add('open');document.getElementById('mobNavBackdrop').classList.add('open');document.body.style.overflow='hidden';}
 function closeMobNav(){document.getElementById('mobNavOverlay').classList.remove('open');document.getElementById('mobNavBackdrop').classList.remove('open');document.body.style.overflow='';}
+
+// LIGHTBOX
+let lightboxItems=[];let lightboxIdx=0;
+function openLightbox(el){
+  const imgs=Array.from(document.querySelectorAll('.gal-item img'));
+  lightboxItems=imgs.map(i=>i.src);
+  lightboxIdx=imgs.indexOf(el.querySelector('img'));
+  document.getElementById('lightboxImg').src=lightboxItems[lightboxIdx];
+  const ov=document.getElementById('lightboxOv');
+  ov.style.display='flex';
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(){
+  document.getElementById('lightboxOv').style.display='none';
+  document.body.style.overflow='';
+}
+function lightboxPrev(e){e.stopPropagation();lightboxIdx=(lightboxIdx-1+lightboxItems.length)%lightboxItems.length;document.getElementById('lightboxImg').src=lightboxItems[lightboxIdx];}
+function lightboxNext(e){e.stopPropagation();lightboxIdx=(lightboxIdx+1)%lightboxItems.length;document.getElementById('lightboxImg').src=lightboxItems[lightboxIdx];}
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('lightboxOv').style.display==='flex'){
+    if(e.key==='ArrowLeft')lightboxPrev({stopPropagation:()=>{}});
+    if(e.key==='ArrowRight')lightboxNext({stopPropagation:()=>{}});
+    if(e.key==='Escape')closeLightbox();
+  }
+});
+
+// ===== QUICK CARDS MODALS =====
+const qModalData = {
+  shop:{title:'Магазин',img:'https://images.unsplash.com/photo-1578749556568-bc2c40e68b61?w=900&q=80',price:'',desc:'<p>Авторская керамика ручной работы — посуда, вазы, декор и подарки. Каждое изделие уникально: форма, цвет и текстура никогда не повторяются.</p>',list:['Посуда и кружки','Вазы и декор','Подарочные наборы','Изделия на заказ'],sub:'',btn:'Перейти в магазин',action:"closeQModal();showPage('shop')"},
+  mk:{title:'Мастер-классы',img:'https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=900&q=80',price:'от 1 500 \u20bd',desc:'<p>Разовые занятия в технике гончарного круга, ручной лепки или комбинированном формате. Вы создаёте изделие, декорируете его яркими красками и забираете домой после обжига.</p>',list:['Гончарный круг — 3\u202f000 \u20bd, до 3 чел., 2ч\u202f30м','Ручная лепка — 3\u202f000 \u20bd, до 6 чел., 2ч\u202f30м','Лепка + круг — 3\u202f500 \u20bd, до 4 чел., 3ч','Глазурный МК — 1\u202f500 \u20bd, до 6 чел., 1ч\u202f30м','Семейный МК — 2\u202f000 \u20bd взросл. / 1\u202f000 \u20bd реб.'],sub:'Материалы, обжиги и глянцевая глазурь включены. Изделие забираете через 3–4 недели. Продление: 1ч — 900 \u20bd.',btn:'Записаться',action:"closeQModal();showPage('schedule')"},
+  kids:{title:'Занятия для детей',img:'https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=900&q=80',price:'1\u202f000 \u20bd',desc:'<p>Регулярные групповые занятия для детей от 4 лет. Дети лепят, гончарят и расписывают изделия ангобами. Преподаватель покрывает работы прозрачной глазурью после обжига.</p>',list:['4–6 лет: 1 час','7–14 лет: 1 час 30 минут','До 6 детей в группе','Среда 18:00','Воскресенье: 10:30 / 12:15 / 14:15'],sub:'Все материалы включены в стоимость.',btn:'Записать ребёнка',action:"closeQModal();showPage('schedule')"},
+  party:{title:'Праздники в студии',img:'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=900&q=80',price:'2\u202f500 – 3\u202f000 \u20bd / чел.',desc:'<p>День рождения, корпоратив или любой праздник. Вы лепите изделия, декорируете их красками, в финале — 30 минут для фуршета. Можно принести напитки и угощения, посуда от нас.</p>',list:['До 8 участников','3 часа + 30 мин фуршет','До 5 чел. — 3\u202f000 \u20bd/чел., от 5 чел. — 2\u202f500 \u20bd/чел.','Материалы, обжиги и глазурь включены','Изделия забираете через 3–4 недели'],sub:'Бронирование за 3+ дня. Минимум 5 человек.',btn:'Забронировать',action:"closeQModal();showPage('contacts')"},
+  mk_wheel:{title:'Гончарный круг',img:'https://images.unsplash.com/photo-1604079628040-94301bb21b91?w=900&q=80',price:'3 000 ₽',desc:'<p>На занятии вы создадите одно изделие и задекорируете его яркими глиняными красками. По желанию можно продлить занятие.</p>',list:['До 3 участников','Длительность: 2 часа 30 минут','Материалы, обжиги и глянцевая глазурь включены','Готовое изделие забираете через 3–4 недели','Продление: 1ч — 900 ₽'],sub:'',btn:'Записаться',action:"closeQModal();showPage('schedule')"},
+  mk_hand:{title:'Ручная лепка',img:'https://images.unsplash.com/photo-1565193566173-7a0ee3dbe261?w=900&q=80',price:'3 000 ₽',desc:'<p>Вы создадите одно крупное или несколько изделий среднего размера и задекорируете их яркими глиняными красками.</p>',list:['До 6 участников','Длительность: 2 часа 30 минут','Материалы, обжиги и глянцевая глазурь включены','Готовое изделие забираете через 3–4 недели','Продление: 1ч — 900 ₽/чел'],sub:'',btn:'Записаться',action:"closeQModal();showPage('schedule')"},
+  mk_kids:{title:'Детский мастер-класс',img:'https://images.unsplash.com/photo-1556909114-44e3e70034e2?w=900&q=80',price:'1 000 ₽',desc:'<p>Регулярные групповые занятия. Дети лепят, гончарят и расписывают ангобами свои изделия. После обжига преподаватель покрывает изделия прозрачной глазурью.</p>',list:['4–6 лет: 1 час','7–14 лет: 1 час 30 минут','До 6 детей в группе','Среда 18:00','Воскресенье: 10:30 / 12:15 / 14:15'],sub:'Все материалы включены в стоимость.',btn:'Записать ребёнка',action:"closeQModal();showPage('schedule')"},
+  mk_party:{title:'Праздник у нас',img:'https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=900&q=80',price:'2 500 – 3 000 ₽',desc:'<p>День рождения, корпоратив или семейный праздник в студии. Вы создадите изделия, задекорируете их красками, а в конце — 30 минут фуршета. Можно принести напитки, мы предоставим посуду.</p>',list:['До 8 участников','3 часа + 30 минут фуршет','До 5 чел. — 3 000 ₽/чел.','От 5 чел. — 2 500 ₽/чел.','Материалы, обжиги и глазурь включены','Готовые изделия через 3–4 недели'],sub:'Бронирование за 3+ дня. Минимальная группа — 5 человек.',btn:'Забронировать праздник',action:"closeQModal();showPage('contacts')"}
+};
+function openQModal(key){
+  const d=qModalData[key];if(!d)return;
+  document.getElementById('qModalContent').innerHTML=`<div class="qm-layout"><div class="qm-img"><img src="${d.img}" alt="${d.title}" loading="lazy"></div><div><h2 class="qm-title">${d.title}</h2>${d.price?`<div class="qm-price">${d.price}</div>`:''}<button class="qm-enroll" onclick="${d.action}">${d.btn}</button><div class="qm-desc">${d.desc}</div>${d.list.length?`<ul class="qm-list">${d.list.map(i=>'<li>'+i+'</li>').join('')}</ul>`:''} ${d.sub?`<p class="qm-sub">${d.sub}</p>`:''}</div></div>`;
+  document.getElementById('qModalOv').style.display='block';
+  document.getElementById('qModalPan').style.display='block';
+  document.body.style.overflow='hidden';
+}
+function closeQModal(){
+  document.getElementById('qModalOv').style.display='none';
+  document.getElementById('qModalPan').style.display='none';
+  document.body.style.overflow='';
+}
 function checkout(){if(!cart.length){toast('Корзина пуста');return;}openCO();}
 
 // ===== CHECKOUT =====
@@ -2774,8 +2867,63 @@ function fmtPhone(inp){let d=inp.value.replace(/\D/g,'');if(d[0]==='8')d='7'+d.s
 // ===== ADMIN =====
 function openAdm(){document.getElementById('admOv').classList.add('open');document.getElementById('admPan').classList.add('open');if(loggedIn){renderAdmP();renderAdmC();}}
 function closeAdm(){document.getElementById('admOv').classList.remove('open');document.getElementById('admPan').classList.remove('open');}
-function doLogin(){if(document.getElementById('admPass').value===PASS){loggedIn=true;document.getElementById('admLogin').style.display='none';document.getElementById('admContent').style.display='block';renderAdmP();loadApiKeyUI();
-  // show add buttons if on events/about page
+function newAdmTab(name, btn){
+  document.querySelectorAll('.new-adm-section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.new-adm-navbtn').forEach(b=>b.classList.remove('active'));
+  const sec = document.getElementById('newTab-'+name);
+  if(sec) sec.classList.add('active');
+  if(btn) btn.classList.add('active');
+  // Load data for tabs
+  if(name==='shop') renderAdmP();
+  if(name==='mk'){renderAdmSched();renderAdmSchedList();}
+  if(name==='schedule') renderAdmSchedList2();
+  if(name==='events') renderAdmSobytiaNew();
+  if(name==='contacts') loadContactsAdmin();
+  if(name==='about') renderAdmPressNew();
+  if(name==='orders') renderOrders();
+}
+
+function renderAdmSchedList(){
+  // Render sched list in MK tab
+  const list=document.getElementById('admSchedList');
+  if(!list)return;
+  if(!adminSchedEvents.length){list.innerHTML='<div class="loading" style="text-align:center;padding:1rem">Занятий нет</div>';return;}
+  list.innerHTML=adminSchedEvents.map(e=>`<div class="adm-row"><div class="adm-thumb" style="background:var(--sand)"></div><div class="adm-rinfo"><strong>${e.name}</strong><small>${['Вс','Пн','Вт','Ср','Чт','Пт','Сб'][e.day]||''} ${e.time||''} — ${e.price||0} ₽</small></div><div class="adm-racts"><button class="adm-btn-sm" onclick="editSched(${e.id})">✏️</button><button class="adm-btn-sm del" onclick="delSched(${e.id})">🗑️</button></div></div>`).join('');
+}
+
+function renderAdmSchedList2(){
+  const list=document.getElementById('admSchedList2');
+  if(!list)return;
+  if(!adminSchedEvents.length){list.innerHTML='<div class="loading" style="text-align:center;padding:1rem">Занятий нет — добавьте в разделе «Мастер-классы»</div>';return;}
+  list.innerHTML=adminSchedEvents.map(e=>`<div class="adm-row"><div class="adm-rinfo"><strong>${e.name}</strong><small>${['Вс','Пн','Вт','Ср','Чт','Пт','Сб'][e.day]||''} · ${e.time||''} — ${e.price||0} ₽</small></div></div>`).join('');
+}
+
+function renderAdmSobytiaNew(){
+  ['smi','achievements','public'].forEach(cat=>{
+    const map={smi:'admSmiList2',achievements:'admAchievList2',public:'admPublicList2'};
+    const el=document.getElementById(map[cat]);if(!el)return;
+    el.innerHTML='<div class="loading" style="text-align:center;padding:.5rem">Загрузка...</div>';
+    firebase.database().ref('sobytia').once('value').then(snap=>{
+      const all=snap.val()?Object.entries(snap.val()).map(([k,v])=>({...v,fbKey:k})):[];
+      const items=all.filter(s=>s.cat===cat).reverse();
+      el.innerHTML=items.length?items.map(s=>`<div class="adm-row"><div class="adm-rinfo"><strong>${s.title||'—'}</strong><small>${s.type||''} · ${s.day||''} ${s.month||''}</small></div><div class="adm-racts"><button class="adm-btn-sm del" onclick="delSobytiaItem('${s.fbKey}','${cat}');renderAdmSobytiaNew()">🗑️</button></div></div>`).join(''):'<div class="loading" style="text-align:center;padding:.5rem">Пусто</div>';
+    });
+  });
+}
+
+function renderAdmPressNew(){
+  const list=document.getElementById('admPressList2');if(!list)return;
+  list.innerHTML='<div class="loading">Загрузка...</div>';
+  firebase.database().ref('pressReleases').once('value').then(snap=>{
+    const items=snap.val()?Object.entries(snap.val()).map(([k,v])=>({...v,fbKey:k})).reverse():[];
+    list.innerHTML=items.length?items.map(p=>`<div class="adm-row"><div class="adm-rinfo"><strong>${p.title}</strong><small>${p.date||''}</small></div><div class="adm-racts"><button class="adm-btn-sm" onclick="editPressItem('${p.fbKey}');document.getElementById('pressOv').classList.add('open');document.getElementById('pressPan').classList.add('open')">✏️</button><button class="adm-btn-sm del" onclick="delPressItem('${p.fbKey}');renderAdmPressNew()">🗑️</button></div></div>`).join(''):'<div class="loading" style="text-align:center;padding:.5rem">Пресс-релизов нет</div>';
+  });
+}
+
+function doLogin(){if(document.getElementById('admPass').value===PASS){loggedIn=true;document.getElementById('admLogin').style.display='none';document.getElementById('admContent').style.display='block';
+  // Show first tab
+  newAdmTab('shop', document.getElementById('nav-shop'));
+  loadApiKeyUI();
   document.querySelectorAll('#addSmiBtn,#addAchievBtn,#addPublicEvtBtn,#addPressBtn').forEach(b=>{if(b)b.style.display='block';});
 }else{document.getElementById('logErr').style.display='block';setTimeout(()=>document.getElementById('logErr').style.display='none',2000);}}
 function switchTab(t){
